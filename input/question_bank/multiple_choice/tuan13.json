@@ -1,0 +1,654 @@
+{
+  "GENERATED_QUESTIONS": [
+    {
+      "question_id": "ch10_q1",
+      "question_text": "Câu 1. [Một đáp án đúng] (G2) Theo slide, mục tiêu của máy học là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Xây dựng mô hình có tính tổng quát hóa cao từ dữ liệu",
+        "B": "Giảm kích thước mô hình bằng mọi giá",
+        "C": "Tạo ra dữ liệu mới từ dữ liệu gốc",
+        "D": "Loại bỏ hoàn toàn nhu cầu đánh giá mô hình"
+      },
+      "correct_answer": ["A"],
+      "topic": "Intro Ensemble"
+    },
+    {
+      "question_id": "ch10_q2",
+      "question_text": "Câu 2. [Nhiều đáp án đúng] (G2) Theo slide, có hai cách chính để cải thiện tính tổng quát hóa của mô hình:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Cải thiện hiệu suất của một máy học (model)",
+        "B": "Kết hợp nhiều mô hình và tổng hợp kết quả dự đoán",
+        "C": "Chỉ tăng số lượng đặc trưng đầu vào",
+        "D": "Chỉ tăng kích thước tập train mà không đổi mô hình"
+      },
+      "correct_answer": ["A", "B"],
+      "topic": "Intro Ensemble"
+    },
+    {
+      "question_id": "ch10_q3",
+      "question_text": "Câu 3. [Một đáp án đúng] (G2) Ensemble Learning là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Kết hợp nhiều mô hình và tổng hợp kết quả dự đoán",
+        "B": "Chỉ huấn luyện một mô hình duy nhất với nhiều epoch hơn",
+        "C": "Một kỹ thuật giảm chiều dữ liệu",
+        "D": "Một phương pháp chỉ dùng cho dữ liệu ảnh"
+      },
+      "correct_answer": ["A"],
+      "topic": "Intro Ensemble"
+    },
+    {
+      "question_id": "ch10_q4",
+      "question_text": "Câu 4. [Một đáp án đúng] (G2) Theo slide, Ensemble Learning hiệu quả về mặt giảm variance vì:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Sử dụng nhiều mô hình có thể trung bình giá trị dự đoán gần với giá trị thực tế",
+        "B": "Mỗi mô hình luôn có bias bằng 0",
+        "C": "Mọi mô hình con đều phải là mô hình tuyến tính",
+        "D": "Không cần đánh giá trên tập validation"
+      },
+      "correct_answer": ["A"],
+      "topic": "Why Ensemble"
+    },
+    {
+      "question_id": "ch10_q5",
+      "question_text": "Câu 5. [Một đáp án đúng] (G2) Theo slide, thuật toán nào kết hợp nhiều cây quyết định để giảm variance?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "KNN",
+        "B": "Random Forest",
+        "C": "PCA",
+        "D": "DBSCAN"
+      },
+      "correct_answer": ["B"],
+      "topic": "Why Ensemble"
+    },
+    {
+      "question_id": "ch10_q6",
+      "question_text": "Câu 6. [Một đáp án đúng] (G2) Theo slide, Ensemble Learning còn giúp giảm bias bằng cách:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Kết hợp nhiều mô hình yếu để tận dụng điểm mạnh của từng mô hình",
+        "B": "Chỉ dùng một mô hình mạnh duy nhất",
+        "C": "Loại bỏ hoàn toàn dữ liệu nhiễu trước huấn luyện",
+        "D": "Tăng số chiều dữ liệu đầu vào"
+      },
+      "correct_answer": ["A"],
+      "topic": "Why Ensemble"
+    },
+    {
+      "question_id": "ch10_q7",
+      "question_text": "Câu 7. [Một đáp án đúng] (G2) Theo quiz tuần 13, thuật ngữ 'Weak Learners' trong ensemble learning đề cập đến:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Mô hình có độ chính xác cao",
+        "B": "Mô hình có độ chính xác thấp",
+        "C": "Mô hình không cần huấn luyện",
+        "D": "Mô hình được huấn luyện với toàn bộ dữ liệu và luôn tối ưu"
+      },
+      "correct_answer": ["B"],
+      "topic": "Why Ensemble"
+    },
+    {
+      "question_id": "ch10_q8",
+      "question_text": "Câu 8. [Nhiều đáp án đúng] (G2) Theo slide và quiz, mục tiêu chính của Ensemble Models có thể bao gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Tăng độ chính xác của mô hình",
+        "B": "Giảm variance",
+        "C": "Giảm bias trong một số tình huống",
+        "D": "Tạo ra dữ liệu huấn luyện mới bắt buộc"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Why Ensemble"
+    },
+    {
+      "question_id": "ch10_q9",
+      "question_text": "Câu 9. [Một đáp án đúng] (G2) Theo quiz tuần 13, điểm yếu lớn nhất của hướng tiếp cận ensemble learning là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Độ chính xác thấp",
+        "B": "Mô hình không có độ tổng quát cao",
+        "C": "Mô hình có chi phí tính toán lớn",
+        "D": "Mô hình không thể dùng cho phân loại"
+      },
+      "correct_answer": ["C"],
+      "topic": "Why Ensemble"
+    },
+    {
+      "question_id": "ch10_q10",
+      "question_text": "Câu 10. [Một đáp án đúng] (G2) Kỹ thuật nào sau đây KHÔNG phải là một phần của ensemble learning theo quiz?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Bagging",
+        "B": "Boosting",
+        "C": "Clustering",
+        "D": "Stacking"
+      },
+      "correct_answer": ["C"],
+      "topic": "Intro Ensemble"
+    },
+    {
+      "question_id": "ch10_q11",
+      "question_text": "Câu 11. [Một đáp án đúng] (G2) Theo slide, Voting thường dùng cho bài toán:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Phân loại",
+        "B": "Hồi quy",
+        "C": "Giảm chiều dữ liệu",
+        "D": "Phân cụm"
+      },
+      "correct_answer": ["A"],
+      "topic": "Voting"
+    },
+    {
+      "question_id": "ch10_q12",
+      "question_text": "Câu 12. [Một đáp án đúng] (G2) Theo slide, trong Voting mỗi mô hình được xem như:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Một đặc trưng",
+        "B": "Một cử tri",
+        "C": "Một centroid",
+        "D": "Một siêu tham số"
+      },
+      "correct_answer": ["B"],
+      "topic": "Voting"
+    },
+    {
+      "question_id": "ch10_q13",
+      "question_text": "Câu 13. [Một đáp án đúng] (G2) Trong ví dụ Voting ở slide, nếu lớp 1 nhận 3 phiếu và lớp 2 nhận 1 phiếu, kết quả cuối cùng là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Lớp 1",
+        "B": "Lớp 2",
+        "C": "Không xác định",
+        "D": "Phải dùng trung bình cộng"
+      },
+      "correct_answer": ["A"],
+      "topic": "Voting"
+    },
+    {
+      "question_id": "ch10_q14",
+      "question_text": "Câu 14. [Một đáp án đúng] (G2) Theo quiz tuần 13, kỹ thuật Voting trong Ensemble Models được sử dụng để:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Chọn mô hình tốt nhất",
+        "B": "Kết hợp ý kiến của nhiều mô hình",
+        "C": "Loại bỏ mô hình yếu",
+        "D": "Tạo ra mô hình mới từ dữ liệu"
+      },
+      "correct_answer": ["B"],
+      "topic": "Voting"
+    },
+    {
+      "question_id": "ch10_q15",
+      "question_text": "Câu 15. [Một đáp án đúng] (G2) Theo slide, Averaging thường dùng cho bài toán:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Phân loại",
+        "B": "Hồi quy",
+        "C": "Phân cụm",
+        "D": "Trích chọn đặc trưng"
+      },
+      "correct_answer": ["B"],
+      "topic": "Averaging"
+    },
+    {
+      "question_id": "ch10_q16",
+      "question_text": "Câu 16. [Một đáp án đúng] (G2) Theo slide, Averaging tổng hợp kết quả bằng cách:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Lấy trung bình cộng kết quả của từng mô hình",
+        "B": "Lấy kết quả của mô hình có độ chính xác cao nhất",
+        "C": "Lấy vote nhiều nhất",
+        "D": "Lấy kết quả của meta learner"
+      },
+      "correct_answer": ["A"],
+      "topic": "Averaging"
+    },
+    {
+      "question_id": "ch10_q17",
+      "question_text": "Câu 17. [Một đáp án đúng] (G2) Trong ví dụ Averaging ở slide, với các kết quả 120, 90, 100, 110 thì output cuối là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "100",
+        "B": "102.5",
+        "C": "105",
+        "D": "110"
+      },
+      "correct_answer": ["C"],
+      "topic": "Averaging"
+    },
+    {
+      "question_id": "ch10_q18",
+      "question_text": "Câu 18. [Một đáp án đúng] (G2) Weighted Averaging khác Averaging ở chỗ:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Mỗi mô hình có thể có trọng số khác nhau",
+        "B": "Chỉ dùng cho phân loại",
+        "C": "Không cần kết quả từ mô hình con",
+        "D": "Luôn cần meta learner"
+      },
+      "correct_answer": ["A"],
+      "topic": "Weighted Averaging"
+    },
+    {
+      "question_id": "ch10_q19",
+      "question_text": "Câu 19. [Một đáp án đúng] (G2) Theo slide, trọng số trong Weighted Averaging có thể được tính từ:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Độ chính xác trên tập train/validation",
+        "B": "Số lượng mẫu của toàn bộ dataset",
+        "C": "Số chiều của dữ liệu đầu vào",
+        "D": "Kích thước của mô hình"
+      },
+      "correct_answer": ["A"],
+      "topic": "Weighted Averaging"
+    },
+    {
+      "question_id": "ch10_q20",
+      "question_text": "Câu 20. [Một đáp án đúng] (G2) Theo hình trong slide, Weighted Averaging có dạng gần nhất là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "R1 + R2 + ... + RN",
+        "B": "(R1 + R2 + ... + RN) / N",
+        "C": "w1R1 + w2R2 + ... + wNRN",
+        "D": "max(R1, R2, ..., RN)"
+      },
+      "correct_answer": ["C"],
+      "topic": "Weighted Averaging"
+    },
+    {
+      "question_id": "ch10_q21",
+      "question_text": "Câu 21. [Một đáp án đúng] (G2) Theo slide, Stacking là kỹ thuật:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Sử dụng kết quả dự đoán của tập train làm đặc trưng để huấn luyện meta learner",
+        "B": "Lấy vote số đông của các mô hình con",
+        "C": "Lấy trung bình cộng các dự đoán cho bài toán hồi quy",
+        "D": "Huấn luyện tuần tự các cây để sửa sai"
+      },
+      "correct_answer": ["A"],
+      "topic": "Stacking"
+    },
+    {
+      "question_id": "ch10_q22",
+      "question_text": "Câu 22. [Một đáp án đúng] (G2) Theo quiz tuần 13, mô tả đúng về Stacking là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Kết hợp nhiều mô hình khác nhau để tạo ra một mô hình cuối cùng",
+        "B": "Sử dụng một mô hình duy nhất để giải quyết vấn đề",
+        "C": "Huấn luyện mô hình với một phần nhỏ của dữ liệu",
+        "D": "Tạo ra các nhóm dữ liệu dựa trên độ tương đồng"
+      },
+      "correct_answer": ["A"],
+      "topic": "Stacking"
+    },
+    {
+      "question_id": "ch10_q23",
+      "question_text": "Câu 23. [Một đáp án đúng] (G2) Trong Stacking, mô hình tổng hợp ở tầng trên được gọi là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Weak learner",
+        "B": "Meta learner",
+        "C": "Base scaler",
+        "D": "Validation splitter"
+      },
+      "correct_answer": ["B"],
+      "topic": "Stacking"
+    },
+    {
+      "question_id": "ch10_q24",
+      "question_text": "Câu 24. [Một đáp án đúng] (G2) Theo slide, Blending sử dụng gì để huấn luyện mô hình tổng hợp?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Chỉ kết quả dự đoán của tập train",
+        "B": "Chỉ đặc trưng gốc của tập train",
+        "C": "Đặc trưng + kết quả dự đoán của tập validation",
+        "D": "Chỉ nhãn thật của tập test"
+      },
+      "correct_answer": ["C"],
+      "topic": "Blending"
+    },
+    {
+      "question_id": "ch10_q25",
+      "question_text": "Câu 25. [Một đáp án đúng] (G2) Khác biệt gần nhất giữa Stacking và Blending theo slide là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Stacking dùng dự đoán của tập train, còn Blending dùng đặc trưng + dự đoán của tập validation",
+        "B": "Stacking chỉ dùng cho hồi quy, Blending chỉ dùng cho phân loại",
+        "C": "Stacking luôn tuần tự, Blending luôn đồng thời",
+        "D": "Blending không cần meta learner"
+      },
+      "correct_answer": ["A"],
+      "topic": "Stacking vs Blending"
+    },
+    {
+      "question_id": "ch10_q26",
+      "question_text": "Câu 26. [Một đáp án đúng] (G2) Theo slide, Bagging khác Stacking và Blending ở chỗ:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Bagging sử dụng cùng một thuật toán cho tất cả mô hình con",
+        "B": "Bagging luôn dùng meta learner",
+        "C": "Bagging chỉ dùng cho dữ liệu validation",
+        "D": "Bagging chỉ hoạt động với một mô hình duy nhất"
+      },
+      "correct_answer": ["A"],
+      "topic": "Bagging"
+    },
+    {
+      "question_id": "ch10_q27",
+      "question_text": "Câu 27. [Một đáp án đúng] (G2) Theo slide, Bagging huấn luyện các mô hình con như thế nào?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Huấn luyện tuần tự, mô hình sau sửa lỗi mô hình trước",
+        "B": "Huấn luyện độc lập trên các tập con của dataset",
+        "C": "Huấn luyện chỉ trên tập validation",
+        "D": "Huấn luyện chung trong một meta learner"
+      },
+      "correct_answer": ["B"],
+      "topic": "Bagging"
+    },
+    {
+      "question_id": "ch10_q28",
+      "question_text": "Câu 28. [Một đáp án đúng] (G2) Theo quiz tuần 13, Random Forest là một ví dụ của:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Mô hình Boosting",
+        "B": "Mô hình Bagging",
+        "C": "Mô hình giảm chiều dữ liệu",
+        "D": "Mô hình Stacking"
+      },
+      "correct_answer": ["B"],
+      "topic": "Bagging"
+    },
+    {
+      "question_id": "ch10_q29",
+      "question_text": "Câu 29. [Nhiều đáp án đúng] (G2) Theo slide, ưu điểm của Bagging gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Chính xác, tổng quát hóa cao",
+        "B": "Có thể song song hóa thuật toán",
+        "C": "Ít bị ảnh hưởng bởi outlier, ít khả năng overfitting",
+        "D": "Luôn rất dễ giải thích"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Bagging"
+    },
+    {
+      "question_id": "ch10_q30",
+      "question_text": "Câu 30. [Nhiều đáp án đúng] (G2) Theo slide, Bagging có tính linh hoạt vì:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Dùng cho cả hồi quy và phân lớp",
+        "B": "Có thể thực hiện được trên số đặc trưng lớn mà không cần phân tích đặc trưng",
+        "C": "Bắt buộc dùng Decision Tree",
+        "D": "Chỉ dùng cho bài toán nhị phân"
+      },
+      "correct_answer": ["A", "B"],
+      "topic": "Bagging"
+    },
+    {
+      "question_id": "ch10_q31",
+      "question_text": "Câu 31. [Nhiều đáp án đúng] (G2) Theo slide, một số khuyết điểm của Bagging là:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Khó giải thích mô hình",
+        "B": "Độ phức tạp tính toán cao",
+        "C": "Bias với dữ liệu không cân bằng",
+        "D": "Không thể áp dụng cho hồi quy"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Bagging"
+    },
+    {
+      "question_id": "ch10_q32",
+      "question_text": "Câu 32. [Nhiều đáp án đúng] (G2) Theo slide, các mô hình điển hình của Bagging gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Random Forest",
+        "B": "Bagged CART",
+        "C": "AdaBoost",
+        "D": "GradientBoost"
+      },
+      "correct_answer": ["A", "B"],
+      "topic": "Bagging"
+    },
+    {
+      "question_id": "ch10_q33",
+      "question_text": "Câu 33. [Nhiều đáp án đúng] (G2) Phát biểu nào sau đây về mô hình học kết hợp bagging với mô hình cơ sở Linear Regression là đúng:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Huấn luyện độc lập các mô hình.",
+        "B": "Huấn luyện tuần tự các mô hình.",
+        "C": "Dễ bị overfitting hơn các mô hình như Linear Regression.",
+        "D": "Có độ phức tạp cao hơn so với các mô hình như Linear Regression."
+      },
+      "correct_answer": ["A", "D"],
+      "topic": "Bagging"
+    },
+    {
+      "question_id": "ch10_q34",
+      "question_text": "Câu 34. [Nhiều đáp án đúng] (G2) Theo đề mẫu, với bagging dùng mô hình cơ sở Linear Regression, các phát biểu đúng là:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Huấn luyện độc lập các mô hình",
+        "B": "Có độ phức tạp cao hơn so với các mô hình như Linear Regression",
+        "C": "Huấn luyện tuần tự các mô hình",
+        "D": "Dễ bị overfitting hơn các mô hình như Linear Regression như một kết luận bắt buộc"
+      },
+      "correct_answer": ["A", "B"],
+      "topic": "Bagging"
+    },
+    {
+      "question_id": "ch10_q35",
+      "question_text": "Câu 35. [Một đáp án đúng] (G2) Theo slide, Boosting huấn luyện các mô hình con:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Một cách tuần tự",
+        "B": "Hoàn toàn độc lập",
+        "C": "Song song hóa tuyệt đối từ đầu đến cuối",
+        "D": "Chỉ trên tập validation"
+      },
+      "correct_answer": ["A"],
+      "topic": "Boosting"
+    },
+    {
+      "question_id": "ch10_q36",
+      "question_text": "Câu 36. [Một đáp án đúng] (G2) Theo slide, trong Boosting mô hình sau được train để:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Tái tạo lại toàn bộ dữ liệu đầu vào",
+        "B": "Cố gắng sửa các lỗi sai còn lại của mô hình trước",
+        "C": "Loại bỏ meta learner",
+        "D": "Chỉ tăng số chiều của dữ liệu"
+      },
+      "correct_answer": ["B"],
+      "topic": "Boosting"
+    },
+    {
+      "question_id": "ch10_q37",
+      "question_text": "Câu 37. [Một đáp án đúng] (G2) Điểm khác biệt chính giữa Bagging và Boosting là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Bagging tuần tự còn Boosting độc lập",
+        "B": "Bagging độc lập còn Boosting tuần tự",
+        "C": "Cả hai đều tuần tự như nhau",
+        "D": "Cả hai đều bắt buộc dùng nhiều thuật toán khác nhau"
+      },
+      "correct_answer": ["B"],
+      "topic": "Bagging vs Boosting"
+    },
+    {
+      "question_id": "ch10_q38",
+      "question_text": "Câu 38. [Nhiều đáp án đúng] (G2) Theo đề mẫu, các phát biểu đúng về bagging và boosting là:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Cả bagging và boosting đều kết hợp nhiều mô hình cơ sở",
+        "B": "Boosting kết hợp các mô hình cơ sở một cách tuần tự",
+        "C": "Bagging kết hợp các mô hình cơ sở một cách đồng thời",
+        "D": "Cả bagging và boosting chỉ làm việc với cây quyết định"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Bagging vs Boosting"
+    },
+    {
+      "question_id": "ch10_q39",
+      "question_text": "Câu 39. [Một đáp án đúng] (G2) Theo slide, Gradient Boost có ý tưởng là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Xây dựng chuỗi cây quyết định liên tiếp, cây sau làm giảm sai số dự đoán của các cây trước",
+        "B": "Lấy vote số đông giữa các cây độc lập",
+        "C": "Lấy trung bình cộng của các cây hồi quy không liên hệ nhau",
+        "D": "Chỉ giữ lại cây tốt nhất sau cùng"
+      },
+      "correct_answer": ["A"],
+      "topic": "Gradient Boost"
+    },
+    {
+      "question_id": "ch10_q40",
+      "question_text": "Câu 40. [Một đáp án đúng] (G2) Theo hình minh họa Gradient Boost trong slide, khi thêm cây mới vào chuỗi dự đoán thì:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Residuals có xu hướng nhỏ dần",
+        "B": "Residuals luôn tăng lên",
+        "C": "Số đặc trưng đầu vào giảm một nửa",
+        "D": "Không còn cần dữ liệu huấn luyện"
+      },
+      "correct_answer": ["A"],
+      "topic": "Gradient Boost"
+    },
+    {
+      "question_id": "ch10_q41",
+      "question_text": "Câu 41. [Nhiều đáp án đúng] (G2) Theo slide, một số thuật toán Boosting nổi tiếng gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "AdaBoost",
+        "B": "GradientBoost",
+        "C": "XGBoost",
+        "D": "LightGBM và CatBoost"
+      },
+      "correct_answer": ["A", "B", "C", "D"],
+      "topic": "Boosting"
+    },
+    {
+      "question_id": "ch10_q42",
+      "question_text": "Câu 42. [Một đáp án đúng] (G2) Theo slide, thuật toán nào sau đây KHÔNG thuộc nhóm Boosting nổi tiếng?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "AdaBoost",
+        "B": "Random Forest",
+        "C": "XGBoost",
+        "D": "CatBoost"
+      },
+      "correct_answer": ["B"],
+      "topic": "Boosting"
+    },
+    {
+      "question_id": "ch10_q43",
+      "question_text": "Câu 43. [Một đáp án đúng] (G2) Theo slide, các thuật toán Boosting nổi tiếng được nhắc đến là các thuật toán:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Đạt giải cao trong các cuộc thi của Kaggle",
+        "B": "Chỉ dùng cho dữ liệu văn bản",
+        "C": "Chỉ dùng cho bài toán hồi quy",
+        "D": "Không cần tinh chỉnh siêu tham số"
+      },
+      "correct_answer": ["A"],
+      "topic": "Boosting"
+    },
+    {
+      "question_id": "ch10_q44",
+      "question_text": "Câu 44. [Một đáp án đúng] (G2) Theo quiz tuần 13, mô hình nào thường giành thứ hạng cao trên các cuộc thi Kaggle?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "CatBoost",
+        "B": "Random Forest",
+        "C": "XGBoost",
+        "D": "Kết hợp của nhiều mô hình như trên"
+      },
+      "correct_answer": ["D"],
+      "topic": "Boosting"
+    },
+    {
+      "question_id": "ch10_q45",
+      "question_text": "Câu 45. [Một đáp án đúng] (G2) Với tập dữ liệu một tỷ mẫu, đầu ra có quan hệ phi tuyến với đầu vào và bài toán phân loại 10 lớp, lựa chọn phù hợp nhất theo đề mẫu là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Logistic Regression + Cross-validation + RMSE",
+        "B": "Random Forest + Cross-Validation + Accuracy",
+        "C": "Logistic Regression + Holdout Validation + RMSE",
+        "D": "Random Forest + Holdout Validation + Accuracy"
+      },
+      "correct_answer": ["D"],
+      "topic": "Applied Ensemble"
+    },
+    {
+      "question_id": "ch10_q46",
+      "question_text": "Câu 46. [Một đáp án đúng] (G2) Theo slide tổng kết, Bagging và Boosting là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Hai kỹ thuật nâng cao có tính hiệu quả cao",
+        "B": "Hai kỹ thuật cơ bản dùng thay cho Voting",
+        "C": "Hai kỹ thuật chỉ áp dụng cho dữ liệu ảnh",
+        "D": "Hai kỹ thuật không cần tinh chỉnh tham số"
+      },
+      "correct_answer": ["A"],
+      "topic": "Summary"
+    },
+    {
+      "question_id": "ch10_q47",
+      "question_text": "Câu 47. [Một đáp án đúng] (G2) Theo slide tổng kết, trong quá trình sử dụng ensemble model cần:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Chọn các siêu tham số cho phù hợp bằng phương pháp tinh chỉnh tham số",
+        "B": "Luôn dùng cùng một siêu tham số cho mọi bài toán",
+        "C": "Bỏ qua bước đánh giá mô hình",
+        "D": "Chỉ dùng Voting thay cho mọi kỹ thuật nâng cao"
+      },
+      "correct_answer": ["A"],
+      "topic": "Summary"
+    },
+    {
+      "question_id": "ch10_q48",
+      "question_text": "Câu 48. [Nhiều đáp án đúng] (G2) Theo slide, các kỹ thuật cơ bản của ensemble model gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Voting",
+        "B": "Averaging",
+        "C": "Weighted Averaging",
+        "D": "Blending"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Method Overview"
+    },
+    {
+      "question_id": "ch10_q49",
+      "question_text": "Câu 49. [Nhiều đáp án đúng] (G2) Theo slide, các kỹ thuật nâng cao của ensemble model gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Stacking",
+        "B": "Blending",
+        "C": "Bagging",
+        "D": "Boosting"
+      },
+      "correct_answer": ["A", "B", "C", "D"],
+      "topic": "Method Overview"
+    },
+    {
+      "question_id": "ch10_q50",
+      "question_text": "Câu 50. [Nhiều đáp án đúng] (G2) Chọn các phát biểu đúng về Ensemble Learning theo slide và quiz tuần 13:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Là kỹ thuật quan trọng để mô hình có tính tổng quát cao",
+        "B": "Có thể cải thiện hiệu quả bằng cách kết hợp nhiều mô hình và tổng hợp kết quả dự đoán",
+        "C": "Chi phí tính toán có thể lớn",
+        "D": "Luôn chỉ dùng cho phân loại nhị phân"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Summary"
+    }
+  ]
+}

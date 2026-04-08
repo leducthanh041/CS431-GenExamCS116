@@ -1,0 +1,186 @@
+# ============================================================
+# MCQGen Pipeline Configuration
+# ============================================================
+# Mục đích: Cấu hình tổng thể cho pipeline sinh MCQ cs431mcq
+# Mapping: Bài báo MCQGen → dữ liệu CS116
+# ============================================================
+
+# --- Project & Course ---
+project:
+  name: cs431mcq
+  course_id: CS116
+  course_name: "Lập trình Python cho máy học"
+  institution: "Trường ĐH Công nghệ Thông tin, ĐHQG-HCM"
+  language: vi
+
+# --- I/O Paths ---
+paths:
+  input:
+    slides:     input/slide/
+    transcripts: input/video_transcript/
+    exams:      input/sample_exams/
+    quizzes:    input/question_bank/multiple_choice/
+    coding:     input/question_bank/coding/
+    essays:     input/question_bank/essay_questions/
+  data:
+    raw:         data/raw/
+    processed:   data/processed/
+    concept_kb:  data/indexes/concept_kb/
+    assessment_kb: data/indexes/assessment_kb/
+  prompts:
+    stem_key:   prompts/stem_key/
+    options:    prompts/options/
+    evaluation: prompts/evaluation/
+  outputs:
+    generated:  outputs/generated_questions.jsonl
+    evaluated:  outputs/evaluated_questions.jsonl
+    failed:     outputs/failed_questions.jsonl
+
+# --- MCQ Format ---
+mcq_format:
+  fixed_option_count: 4
+  allowed_correct_answer_counts: [1, 2, 3]
+  type_labels:
+    single_correct: "[Một đáp án đúng]"
+    multiple_correct: "[Nhiều đáp án đúng]"
+  difficulty_labels: [G1, G2, G3]
+
+# --- Chunking Strategy ---
+chunking:
+  strategy: semantic
+  max_tokens: 400
+  overlap_tokens: 50
+  min_tokens: 80
+
+# --- Embedding & Vector DB ---
+embedding:
+  model: BAAI/bge-m3
+  batch_size: 32
+  device: cpu          # Đổi sang cuda nếu có GPU
+  dimension: 1024
+
+vector_db:
+  type: chroma
+  persist_directory: data/indexes
+  collection_concept: concept_chunks
+  collection_assessment: assessment_items
+
+# --- LLM Configuration ---
+llm:
+  generation:
+    provider: openai        # Hoặc "ollama", "vllm"
+    model: gpt-4o
+    temperature: 0.7
+    max_tokens: 2048
+    api_key_env: OPENAI_API_KEY
+  evaluation:
+    provider: anthropic    # Claude cho evaluation
+    model: claude-3-5-sonnet-20241022
+    temperature: 0.3
+    max_tokens: 1024
+    api_key_env: ANTHROPIC_API_KEY
+  # Fallback local LLM (nếu không có API key)
+  local:
+    provider: ollama
+    model: qwen2.5:7b-instruct
+    base_url: http://localhost:11434
+
+# --- Retrieval Settings ---
+retrieval:
+  concept_kb:
+    top_k: 5              # Top-5 context blocks từ concept KB
+    min_similarity: 0.3
+  assessment_kb:
+    top_k: 3              # Top-3 similar MCQs để tham khảo
+    min_similarity: 0.4
+
+# --- Generation Settings ---
+generation:
+  num_questions_per_topic: 5
+  question_mix:
+    single_correct_ratio: 0.6
+    multiple_correct_ratio: 0.4
+  difficulty_distribution:
+    G1: 0.2
+    G2: 0.5
+    G3: 0.3
+  retry_on_failure: 2
+  timeout_per_question_seconds: 120
+
+# --- Evaluation Settings ---
+evaluation:
+  use_llm_judge: true
+  distractor_iwf_enabled: true
+  auto_reject_threshold: 3   # Số lỗi IWF tối đa để accept
+
+# --- Chapters Definition ---
+chapters:
+  - chapter_id: ch04
+    title: "Tiền xử lý dữ liệu"
+    topics:
+      - "Missing Data"
+      - "Outlier Detection"
+      - "Feature Extraction"
+      - "Feature Transformation"
+      - "Feature Selection"
+    slides:
+      - "CS116-Bai04-Data preprocessing.pdf"
+    transcripts:
+      - "4.1.txt" - "4.8.txt"
+  - chapter_id: ch02
+    title: "Popular Libraries"
+    topics:
+      - "NumPy"
+      - "Pandas"
+      - "Matplotlib"
+      - "Scikit-learn"
+  - chapter_id: ch03
+    title: "Pipeline & EDA"
+    topics:
+      - "Pipeline"
+      - "Exploratory Data Analysis"
+  - chapter_id: ch05
+    title: "Đánh giá mô hình"
+    topics:
+      - "Classification Metrics"
+      - "Regression Metrics"
+      - "Cross-validation"
+  - chapter_id: ch06
+    title: "Unsupervised Learning"
+    topics:
+      - "Clustering"
+      - "Dimensionality Reduction"
+  - chapter_id: ch07a
+    title: "Supervised Learning - Regression"
+    topics:
+      - "Linear Regression"
+      - "Regularization"
+  - chapter_id: ch07b
+    title: "Supervised Learning - Classification"
+    topics:
+      - "Logistic Regression"
+      - "Decision Trees"
+      - "SVM"
+  - chapter_id: ch08
+    title: "Deep Learning với CNN"
+    topics:
+      - "Neural Networks"
+      - "CNN"
+  - chapter_id: ch09
+    title: "Parameter Tuning"
+    topics:
+      - "Grid Search"
+      - "Random Search"
+      - "Bayesian Optimization"
+  - chapter_id: ch10
+    title: "Ensemble Models"
+    topics:
+      - "Bagging"
+      - "Boosting"
+      - "Random Forest"
+  - chapter_id: ch11
+    title: "Model Deployment"
+    topics:
+      - "Model Serving"
+      - "API"
+      - "Monitoring"

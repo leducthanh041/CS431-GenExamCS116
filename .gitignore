@@ -1,0 +1,74 @@
+# ============================================================
+# MCQGen Pipeline — .gitignore
+# ============================================================
+
+# ─── Models (too large for git) ────────────────────────────
+models/
+# KEEP these README files if any
+models/**/.gitkeep
+
+# ─── Python ────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyc
+*.egg-info/
+*.egg
+dist/
+build/
+.eggs/
+
+# ─── vLLM cache & compile artifacts ─────────────────────────
+.vllm/
+.cache/vllm/
+.torch_compile_cache/
+.torch_compile_graphs/
+cache/
+
+# ─── SLURM / Job logs ───────────────────────────────────────
+log/
+logs/
+*.out
+*.err
+slurm-*.out
+*.log
+
+# ─── Output & intermediate results ─────────────────────────
+output/
+data/intermediate/
+data/raw/
+
+# ─── ChromaDB indexes (large binary data) ───────────────────
+data/indexes/
+
+# ─── Processed data (generated during pipeline run) ─────────
+data/processed/*.jsonl
+data/processed/*.json
+
+# ─── HuggingFace / sentence-transformers cache ─────────────
+# Keep these on disk, git shouldn't track
+
+# ─── Temporary / IDE ────────────────────────────────────────
+.DS_Store
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+*.iml
+Thumbs.db
+
+# ─── Secrets / Keys ────────────────────────────────────────
+.env
+.env.local
+*.pem
+*.key
+secrets/
+
+# ─── Notebooks ──────────────────────────────────────────────
+*.ipynb
+*.ipynb_checkpoints/
+
+# ─── Misc ───────────────────────────────────────────────────
+*.bak
+*.tmp
+*.temp

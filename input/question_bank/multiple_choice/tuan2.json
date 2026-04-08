@@ -1,0 +1,654 @@
+{
+  "GENERATED_QUESTIONS": [
+    {
+      "question_id": "q1",
+      "question_text": "Câu 1. [Một đáp án đúng] (G2) Thư viện nào dưới đây cho phép thực hiện phép toán trên mảng và ma trận đa chiều hiệu quả trong Python?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Pandas",
+        "B": "NumPy",
+        "C": "Matplotlib",
+        "D": "scikit-learn"
+      },
+      "correct_answer": ["B"],
+      "topic": "NumPy"
+    },
+    {
+      "question_id": "q2",
+      "question_text": "Câu 2. [Một đáp án đúng] (G2) Thư viện nào sau đây thường được sử dụng để trực quan hóa dữ liệu trong Python?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "NumPy",
+        "B": "Matplotlib",
+        "C": "Pandas",
+        "D": "GridSearchCV"
+      },
+      "correct_answer": ["B"],
+      "topic": "Matplotlib"
+    },
+    {
+      "question_id": "q3",
+      "question_text": "Câu 3. [Một đáp án đúng] (G2) Trong pandas, các kiểu object cơ bản thường gặp là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "DataFrame và Series",
+        "B": "Array và Tensor",
+        "C": "Matrix và Vector",
+        "D": "Plot và Subplot"
+      },
+      "correct_answer": ["A"],
+      "topic": "Pandas"
+    },
+    {
+      "question_id": "q4",
+      "question_text": "Câu 4. [Một đáp án đúng] (G2) Kết quả đúng cho phép tính sau: np.array([1, 2, 3]) + np.array([1, 3, 4])",
+      "question_type": "single_correct",
+      "options": {
+        "A": "[2, 5, 7]",
+        "B": "[1, 2, 3, 1, 3, 4]",
+        "C": "array([2, 5, 7])",
+        "D": "Báo lỗi"
+      },
+      "correct_answer": ["C"],
+      "topic": "NumPy"
+    },
+    {
+      "question_id": "q5",
+      "question_text": "Câu 5. [Một đáp án đúng] (G2) Kết quả đúng cho phép tính sau: np.array([1, 2, 3]) + 1",
+      "question_type": "single_correct",
+      "options": {
+        "A": "[2, 3, 4]",
+        "B": "array([2, 3, 4])",
+        "C": "Báo lỗi",
+        "D": "array([1, 2, 3, 1])"
+      },
+      "correct_answer": ["B"],
+      "topic": "NumPy"
+    },
+    {
+      "question_id": "q6",
+      "question_text": "Câu 6. [Một đáp án đúng] (G2) Kết quả đúng cho phép tính sau: np.array([1, 2, 3]) + [1, 3, 4]",
+      "question_type": "single_correct",
+      "options": {
+        "A": "[2, 5, 7]",
+        "B": "[1, 2, 3, 1, 3, 4]",
+        "C": "array([2, 5, 7])",
+        "D": "Báo lỗi"
+      },
+      "correct_answer": ["C"],
+      "topic": "NumPy"
+    },
+    {
+      "question_id": "q7",
+      "question_text": "Câu 7. [Một đáp án đúng] (G2) Kết quả đúng cho phép tính sau: np.array([1, 2, 3]) + np.array([[1, 3, 4]])",
+      "question_type": "single_correct",
+      "options": {
+        "A": "array([2, 5, 7])",
+        "B": "array([[2, 5, 7]])",
+        "C": "Báo lỗi",
+        "D": "array([[2], [5], [7]])"
+      },
+      "correct_answer": ["B"],
+      "topic": "NumPy"
+    },
+    {
+      "question_id": "q8",
+      "question_text": "Câu 8. [Một đáp án đúng] (G2) Sau khi thực thi đoạn mã Python sau đây sử dụng thư viện numpy, giá trị của biến out bằng:\nimport numpy as np\nx, y = np.arange(1, 4), np.array([2, 4, 6])\nout = np.sum(x*y) / (np.sum(x*x)**0.5*np.sum(y*y)**0.5)",
+      "question_type": "single_correct",
+      "options": {
+        "A": "-0.5",
+        "B": "1.0",
+        "C": "-1.0",
+        "D": "0.5"
+      },
+      "correct_answer": ["B"],
+      "topic": "NumPy"
+    },
+    {
+      "question_id": "q9",
+      "question_text": "Câu 9. [Một đáp án đúng] (G2) Trong pandas, câu lệnh nào dùng để nối 2 DataFrame theo cột?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "pd.concat([df_1, df_2], axis=1)",
+        "B": "pd.concat([df_1, df_2], axis=0)",
+        "C": "pd.merge([df_1, df_2], axis=1)",
+        "D": "pd.join([df_1, df_2], axis=1)"
+      },
+      "correct_answer": ["A"],
+      "topic": "Pandas"
+    },
+    {
+      "question_id": "q10",
+      "question_text": "Câu 10. [Một đáp án đúng] (G2) Trong pandas, khi gọi pd.concat([df_1, df_2]) mà không chỉ rõ axis, dữ liệu sẽ được nối theo:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Chiều ngang",
+        "B": "Chiều dọc",
+        "C": "Theo cột khóa",
+        "D": "Không thể nối"
+      },
+      "correct_answer": ["B"],
+      "topic": "Pandas"
+    },
+    {
+      "question_id": "q11",
+      "question_text": "Câu 11. [Một đáp án đúng] (G2) Trong pandas, fillna(value) dùng để:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Xóa các cột bị thiếu dữ liệu",
+        "B": "Điền giá trị cho các phần tử khuyết",
+        "C": "Đổi tên cột",
+        "D": "Tạo cột mới"
+      },
+      "correct_answer": ["B"],
+      "topic": "Pandas"
+    },
+    {
+      "question_id": "q12",
+      "question_text": "Câu 12. [Một đáp án đúng] (G2) Với DataFrame df1 có cột Y, câu lệnh nào lấy tập con theo dòng thỏa điều kiện Y > 10?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "df1[df1.Y > 10]",
+        "B": "df1[df1['Y'] = 10]",
+        "C": "df1.loc['Y' > 10]",
+        "D": "df1['Y' > 10]"
+      },
+      "correct_answer": ["A"],
+      "topic": "Pandas"
+    },
+    {
+      "question_id": "q13",
+      "question_text": "Câu 13. [Một đáp án đúng] (G2) Với DataFrame df1 có cột X, câu lệnh nào lọc các hàng có X thuộc tập {'AB', 'A'}?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "df1[df1.X == ['AB', 'A']]",
+        "B": "df1[df1.X.isin(['AB', 'A'])]",
+        "C": "df1.loc['AB', 'A']",
+        "D": "df1[df1['X'] in ['AB', 'A']]"
+      },
+      "correct_answer": ["B"],
+      "topic": "Pandas"
+    },
+    {
+      "question_id": "q14",
+      "question_text": "Câu 14. [Một đáp án đúng] (G2) Câu lệnh nào lấy ra tập con gồm hai cột X và Z từ DataFrame df1?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "df1[['X', 'Z']]",
+        "B": "df1['X', 'Z']",
+        "C": "df1[['X'], ['Z']]",
+        "D": "df1('X', 'Z')"
+      },
+      "correct_answer": ["A"],
+      "topic": "Pandas"
+    },
+    {
+      "question_id": "q15",
+      "question_text": "Câu 15. [Nhiều đáp án đúng] (G2) Theo slide, cách nào sau đây dùng để lấy một cột X dưới dạng Series từ DataFrame df1?",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "df1.X",
+        "B": "df1['X']",
+        "C": "df1[['X']]",
+        "D": "df1('X')"
+      },
+      "correct_answer": ["A", "B"],
+      "topic": "Pandas"
+    },
+    {
+      "question_id": "q16",
+      "question_text": "Câu 16. [Một đáp án đúng] (G2) Trong ví dụ mở rộng dữ liệu ở slide, cột value được tạo bởi công thức nào?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "stocks['value'] = stocks.open + stocks.close",
+        "B": "stocks['value'] = stocks.close * stocks.volume",
+        "C": "stocks['value'] = stocks.high - stocks.low",
+        "D": "stocks['value'] = stocks.symbol * stocks.volume"
+      },
+      "correct_answer": ["B"],
+      "topic": "Pandas"
+    },
+    {
+      "question_id": "q17",
+      "question_text": "Câu 17. [Một đáp án đúng] (G2) Để đọc dữ liệu bảng từ file csv vào pandas, ta thường dùng:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "pd.read_csv(...)",
+        "B": "pd.load_csv(...)",
+        "C": "pd.DataFrame.read(...)",
+        "D": "np.read_csv(...)"
+      },
+      "correct_answer": ["A"],
+      "topic": "Pandas"
+    },
+    {
+      "question_id": "q18",
+      "question_text": "Câu 18. [Một đáp án đúng] (G2) Trong quy ước trình bày DataFrame ở slide, mỗi hàng dữ liệu được gọi là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Variable",
+        "B": "Observation",
+        "C": "Column",
+        "D": "Index name"
+      },
+      "correct_answer": ["B"],
+      "topic": "Pandas"
+    },
+    {
+      "question_id": "q19",
+      "question_text": "Câu 19. [Một đáp án đúng] (G2) Trong quy ước trình bày DataFrame ở slide, cột dữ liệu tương ứng với khái niệm:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Observation",
+        "B": "Variable",
+        "C": "Tensor",
+        "D": "Axis=0"
+      },
+      "correct_answer": ["B"],
+      "topic": "Pandas"
+    },
+    {
+      "question_id": "q20",
+      "question_text": "Câu 20. [Một đáp án đúng] (G2) Lệnh stocks.pivot(index='date', columns='symbol', values='close') có ý nghĩa chính là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Nối hai bảng theo chiều ngang",
+        "B": "Gom nhóm dữ liệu theo date và symbol để hiển thị giá close",
+        "C": "Thay giá trị khuyết bằng close",
+        "D": "Vẽ biểu đồ cột cho close"
+      },
+      "correct_answer": ["B"],
+      "topic": "Pandas"
+    },
+    {
+      "question_id": "q21",
+      "question_text": "Câu 21. [Một đáp án đúng] (G2) Khi dùng pivot với values=['close', 'volume'], kết quả thường có:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Một cột duy nhất tên values",
+        "B": "Cột nhiều mức (multi-level columns)",
+        "C": "Không thể thực hiện",
+        "D": "Chỉ trả về close"
+      },
+      "correct_answer": ["B"],
+      "topic": "Pandas"
+    },
+    {
+      "question_id": "q22",
+      "question_text": "Câu 22. [Một đáp án đúng] (G2) Trong ví dụ ở slide, pivot_table được dùng với hàm tổng hợp nào?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "np.sum",
+        "B": "np.max",
+        "C": "np.mean",
+        "D": "len"
+      },
+      "correct_answer": ["C"],
+      "topic": "Pandas"
+    },
+    {
+      "question_id": "q23",
+      "question_text": "Câu 23. [Nhiều đáp án đúng] (G2) Theo slide, các nội dung chính của Matplotlib gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Hàm Plot",
+        "B": "Vẽ với Subplot",
+        "C": "Các loại biểu đồ",
+        "D": "Load và hiển thị ảnh"
+      },
+      "correct_answer": ["A", "B", "C", "D"],
+      "topic": "Matplotlib"
+    },
+    {
+      "question_id": "q24",
+      "question_text": "Câu 24. [Một đáp án đúng] (G2) Trong phần vẽ biểu đồ cơ bản của pandas trên slide, ví dụ trực tiếp được minh họa là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "bar và pie",
+        "B": "plot.hist và plot.scatter",
+        "C": "imshow và contour",
+        "D": "boxplot và violinplot"
+      },
+      "correct_answer": ["B"],
+      "topic": "Matplotlib"
+    },
+    {
+      "question_id": "q25",
+      "question_text": "Câu 25. [Một đáp án đúng] (G2) Theo slide về Matplotlib, nội dung nào sau đây KHÔNG phải là một trong các chủ đề chính?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Hàm Plot",
+        "B": "Vẽ với Subplot",
+        "C": "Các loại biểu đồ",
+        "D": "Gom nhóm dữ liệu với pivot"
+      },
+      "correct_answer": ["D"],
+      "topic": "Matplotlib"
+    },
+    {
+      "question_id": "q26",
+      "question_text": "Câu 26. [Nhiều đáp án đúng] (G2) Một mô hình bị hiện tượng quá khớp (overfitting) khi:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Mô hình quá phức tạp và rất linh hoạt khi học",
+        "B": "Mô hình quá hạn chế nên bị giới hạn khả năng biểu diễn",
+        "C": "Mô hình tập trung quá nhiều vào chi tiết nhiễu của tập huấn luyện",
+        "D": "Mô hình có tính tổng quát tốt trên dữ liệu mới"
+      },
+      "correct_answer": ["A", "C"],
+      "topic": "Overfitting"
+    },
+    {
+      "question_id": "q27",
+      "question_text": "Câu 27. [Một đáp án đúng] (G2) Một mô hình đang bị quá khớp (overfitting) khi:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Cả lỗi huấn luyện và lỗi kiểm thử đều cao",
+        "B": "Lỗi huấn luyện thấp nhưng lỗi kiểm thử cao",
+        "C": "Lỗi huấn luyện cao nhưng lỗi kiểm thử thấp",
+        "D": "Cả lỗi huấn luyện và lỗi kiểm thử đều thấp"
+      },
+      "correct_answer": ["B"],
+      "topic": "Overfitting"
+    },
+    {
+      "question_id": "q28",
+      "question_text": "Câu 28. [Nhiều đáp án đúng] (G2) Kiểm định chéo (cross-validation):",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Thường được sử dụng với các bộ dữ liệu nhỏ",
+        "B": "Huấn luyện mô hình nhanh hơn so với hold-out validation",
+        "C": "Đo lường một cách tổng quát hiệu suất của mô hình",
+        "D": "Là một phương pháp để tìm siêu tham số phù hợp"
+      },
+      "correct_answer": ["A", "C", "D"],
+      "topic": "Cross-validation"
+    },
+    {
+      "question_id": "q29",
+      "question_text": "Câu 29. [Nhiều đáp án đúng] (G2) Khi gọi cross_validate(estimator, X, y, cv=5), điều nào sau đây có thể xảy ra?",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "X và y được chia thành 5 phần với các tập kiểm thử không chồng lấn nhau",
+        "B": "estimator.fit được gọi 5 lần, mỗi lần trên một tập huấn luyện khác nhau",
+        "C": "estimator.fit được gọi 1 lần trên toàn bộ dữ liệu",
+        "D": "Có thể dùng để đánh giá tính ổn định của mô hình"
+      },
+      "correct_answer": ["A", "B", "D"],
+      "topic": "Cross-validation"
+    },
+    {
+      "question_id": "q30",
+      "question_text": "Câu 30. [Nhiều đáp án đúng] (G2) Bộ chuẩn hóa StandardScaler trong scikit-learn với tham số mặc định:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Biến đổi các đặc trưng sao cho chúng có phạm vi tương tự nhau",
+        "B": "Biến đổi các đặc trưng để nằm trong phạm vi [0.0, 1.0]",
+        "C": "Biến đổi các giá trị đặc trưng ban đầu chỉ dương thành các giá trị có thể âm hoặc dương",
+        "D": "Có thể giúp hồi quy luận lý hội tụ nhanh hơn"
+      },
+      "correct_answer": ["A", "C", "D"],
+      "topic": "Preprocessing"
+    },
+    {
+      "question_id": "q31",
+      "question_text": "Câu 31. [Một đáp án đúng] (G2) Hàm make_pipeline (cũng như Pipeline) dùng để:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Thực hiện kiểm định chéo tự động",
+        "B": "Kết hợp một hoặc nhiều bộ biến đổi với một mô hình dự đoán",
+        "C": "Thử nghiệm nhiều mô hình cùng lúc",
+        "D": "Tự động vẽ histogram của đặc trưng"
+      },
+      "correct_answer": ["B"],
+      "topic": "Pipeline"
+    },
+    {
+      "question_id": "q32",
+      "question_text": "Câu 32. [Nhiều đáp án đúng] (G2) Mã hóa one-hot:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Tạo thêm một cột cho mỗi loại giá trị phân loại",
+        "B": "Biến đổi các biến dạng chuỗi thành dạng biểu diễn số học",
+        "C": "Luôn giảm số chiều dữ liệu",
+        "D": "Chỉ áp dụng cho biến liên tục"
+      },
+      "correct_answer": ["A", "B"],
+      "topic": "Encoding"
+    },
+    {
+      "question_id": "q33",
+      "question_text": "Câu 33. [Một đáp án đúng] (G2) Trong bài toán phân loại bệnh nhân, đặc trưng tuổi từ 8 đến 100 nên được:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Mã hóa One-hot",
+        "B": "Mã hóa Ordinal",
+        "C": "Mã hóa Label",
+        "D": "Giữ nguyên"
+      },
+      "correct_answer": ["D"],
+      "topic": "Feature representation"
+    },
+    {
+      "question_id": "q34",
+      "question_text": "Câu 34. [Nhiều đáp án đúng] (G2) Mô hình nào dưới đây có khả năng tự động chọn lọc các đặc trưng phù hợp?",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Hồi quy tuyến tính",
+        "B": "Hồi quy tuyến tính với L1 regularization (Lasso)",
+        "C": "Hồi quy tuyến tính có cả L1 và L2 regularization (Elastic Net)",
+        "D": "Hồi quy tuyến tính với L2 regularization (Ridge)"
+      },
+      "correct_answer": ["B", "C"],
+      "topic": "Regularization"
+    },
+    {
+      "question_id": "q35",
+      "question_text": "Câu 35. [Nhiều đáp án đúng] (G2) Các biện pháp để hạn chế overfitting cho cây quyết định gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Áp dụng cắt tỉa (pruning)",
+        "B": "Giới hạn độ sâu của cây (max depth)",
+        "C": "Tăng độ sâu cây không giới hạn",
+        "D": "Sử dụng nhiều cây trong phương pháp học kết hợp"
+      },
+      "correct_answer": ["A", "B", "D"],
+      "topic": "Decision Tree"
+    },
+    {
+      "question_id": "q36",
+      "question_text": "Câu 36. [Nhiều đáp án đúng] (G2) Chọn các phát biểu đúng:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Cả bagging và boosting đều kết hợp nhiều mô hình cơ sở",
+        "B": "Boosting kết hợp các mô hình cơ sở một cách tuần tự",
+        "C": "Bagging kết hợp các mô hình cơ sở một cách đồng thời",
+        "D": "Bagging và boosting chỉ làm việc với cây quyết định"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Ensemble Learning"
+    },
+    {
+      "question_id": "q37",
+      "question_text": "Câu 37. [Một đáp án đúng] (G2) Với tập dữ liệu rất lớn, bài toán phân loại 10 lớp có quan hệ phi tuyến giữa input và output, lựa chọn nào phù hợp hơn?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Logistic Regression + Cross-validation + RMSE",
+        "B": "Random Forest + Cross-validation + Accuracy",
+        "C": "Logistic Regression + Holdout Validation + RMSE",
+        "D": "Random Forest + Holdout Validation + Accuracy"
+      },
+      "correct_answer": ["D"],
+      "topic": "Model selection"
+    },
+    {
+      "question_id": "q38",
+      "question_text": "Câu 38. [Một đáp án đúng] (G2) Trong bài toán phát hiện gian lận khi chấm thi cuối kỳ trên máy tính, mô hình nên được đánh giá dựa trên:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Precision",
+        "B": "Accuracy",
+        "C": "MSE",
+        "D": "R2-score"
+      },
+      "correct_answer": ["A"],
+      "topic": "Evaluation Metrics"
+    },
+    {
+      "question_id": "q39",
+      "question_text": "Câu 39. [Một đáp án đúng] (G2) Với dữ liệu bệnh nhân từ nhiều bệnh viện và các lớp mất cân bằng, chiến lược kiểm định chéo phù hợp nhất để đánh giá mô hình trên bệnh viện chưa xuất hiện ở train là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "StratifiedGroupKFold",
+        "B": "GroupKFold",
+        "C": "StratifiedKFold",
+        "D": "KFold"
+      },
+      "correct_answer": ["A"],
+      "topic": "Cross-validation"
+    },
+    {
+      "question_id": "q40",
+      "question_text": "Câu 40. [Một đáp án đúng] (G2) Hiệu ứng của việc tăng giá trị điều chỉnh λ (regularization strength) trong mô hình Ridge Regression nhằm:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Làm co các trọng số của đặc trưng về gần bằng 0",
+        "B": "Làm cho tất cả các trọng số bằng nhau",
+        "C": "Làm cho tất cả trọng số của đặc trưng bằng 0",
+        "D": "Ràng buộc tất cả các trọng số phải dương"
+      },
+      "correct_answer": ["A"],
+      "topic": "Regularization"
+    },
+    {
+      "question_id": "q41",
+      "question_text": "Câu 41. [Một đáp án đúng] (G2) Mục đích của PCA trong feature engineering là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Giảm số chiều của dữ liệu",
+        "B": "Tăng số chiều của dữ liệu",
+        "C": "Giữ nguyên số chiều nhưng chỉ đổi tên cột",
+        "D": "Mã hóa one-hot cho dữ liệu"
+      },
+      "correct_answer": ["A"],
+      "topic": "Feature Engineering"
+    },
+    {
+      "question_id": "q42",
+      "question_text": "Câu 42. [Một đáp án đúng] (G2) Vai trò của hệ số tương quan (correlation coefficient) là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Đo lường độ nghiêng của dữ liệu",
+        "B": "Đo lường mức độ liên quan tuyến tính giữa hai biến",
+        "C": "Xác định độ lệch chuẩn của một biến",
+        "D": "Đo lường mức độ phân tán của dữ liệu"
+      },
+      "correct_answer": ["B"],
+      "topic": "Statistics for ML"
+    },
+    {
+      "question_id": "q43",
+      "question_text": "Câu 43. [Nhiều đáp án đúng] (G2) Chọn các phát biểu đúng về RandomizedSearchCV và GridSearchCV:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "RandomizedSearchCV có chi phí tính toán cố định qua n_iter",
+        "B": "RandomizedSearchCV luôn kiểm tra tất cả tổ hợp siêu tham số",
+        "C": "GridSearchCV có chi phí tính toán lớn khi số lượng siêu tham số tăng lên",
+        "D": "Cả hai luôn chọn siêu tham số bằng phân phối xác suất"
+      },
+      "correct_answer": ["A", "C"],
+      "topic": "Hyperparameter Tuning"
+    },
+    {
+      "question_id": "q44",
+      "question_text": "Câu 44. [Một đáp án đúng] (G2) Khi nào nên ưu tiên StandardScaler hơn Normalizer?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Khi thuật toán giả định dữ liệu phân phối chuẩn",
+        "B": "Khi dữ liệu cần nằm trong [0,1]",
+        "C": "Khi dùng Decision Tree vì mô hình này rất nhạy với scaling",
+        "D": "Khi cần biến đổi dữ liệu sang không gian phi tuyến"
+      },
+      "correct_answer": ["A"],
+      "topic": "Preprocessing"
+    },
+    {
+      "question_id": "q45",
+      "question_text": "Câu 45. [Một đáp án đúng] (G2) Mô hình nào dưới đây nhạy cảm hơn với outlier vì các giá trị ngoại lai có thể làm lệch đáng kể trọng số đặc trưng?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Cây quyết định",
+        "B": "Hồi quy tuyến tính",
+        "C": "Naive Bayes",
+        "D": "KNNImputer"
+      },
+      "correct_answer": ["B"],
+      "topic": "Robustness"
+    },
+    {
+      "question_id": "q46",
+      "question_text": "Câu 46. [Một đáp án đúng] (G2) Khi dữ liệu chứa nhiều outlier, cách thay thế giá trị thiếu nào thường có lợi hơn?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Dùng mean vì phản ánh trung tâm tốt hơn",
+        "B": "Dùng median vì ít nhạy cảm với outlier hơn",
+        "C": "Dùng 0 cho mọi cột",
+        "D": "Dùng one-hot encoding"
+      },
+      "correct_answer": ["B"],
+      "topic": "Missing Data"
+    },
+    {
+      "question_id": "q47",
+      "question_text": "Câu 47. [Một đáp án đúng] (G2) Target encoding khác one-hot encoding ở điểm nào và có rủi ro gì?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Thay category bằng giá trị trung bình của target và có nguy cơ data leakage",
+        "B": "Tạo vector nhị phân cho category và luôn giảm số chiều dữ liệu",
+        "C": "Thay category bằng số nguyên cố định và luôn tăng bộ nhớ",
+        "D": "Chỉ dùng được cho biến liên tục"
+      },
+      "correct_answer": ["A"],
+      "topic": "Encoding"
+    },
+    {
+      "question_id": "q48",
+      "question_text": "Câu 48. [Một đáp án đúng] (G2) Một nút phân chia trong DecisionTreeClassifier thực hiện:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Phân làm hai nhánh dựa trên một đặc trưng duy nhất tại một thời điểm",
+        "B": "Phân làm hai nhánh dựa trên tất cả đặc trưng",
+        "C": "Phân làm nhiều nhánh dựa trên một đặc trưng duy nhất",
+        "D": "Phân nhánh bằng một tổ hợp phi tuyến của tất cả đặc trưng"
+      },
+      "correct_answer": ["A"],
+      "topic": "Decision Tree"
+    },
+    {
+      "question_id": "q49",
+      "question_text": "Câu 49. [Nhiều đáp án đúng] (G2) Việc chuẩn hóa dữ liệu trước khi huấn luyện:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Thường hiệu quả cho các mô hình tuyến tính có regularization",
+        "B": "Luôn cần thiết cho mọi mô hình",
+        "C": "Có thể tăng tốc độ huấn luyện mô hình",
+        "D": "Không ảnh hưởng đến lựa chọn regularized parameter tối ưu"
+      },
+      "correct_answer": ["A", "C"],
+      "topic": "Preprocessing"
+    },
+    {
+      "question_id": "q50",
+      "question_text": "Câu 50. [Một đáp án đúng] (G2) Với KNNImputer trong sklearn, phát biểu nào sau đây đúng?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Giá trị bị thiếu của mỗi đặc trưng được gán bằng -0.1",
+        "B": "Giá trị dự đoán được tính theo trọng số là khoảng cách đến điểm xa nhất",
+        "C": "Giá trị bị thiếu của mỗi đặc trưng được dự đoán từ K điểm dữ liệu gần nhất",
+        "D": "KNNImputer chỉ áp dụng cho dữ liệu không có missing value"
+      },
+      "correct_answer": ["C"],
+      "topic": "Missing Data"
+    }
+  ]
+}

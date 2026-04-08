@@ -1,0 +1,654 @@
+{
+  "GENERATED_QUESTIONS": [
+    {
+      "question_id": "ch6_q1",
+      "question_text": "Câu 1. [Một đáp án đúng] (G2) Học không giám sát (unsupervised learning) là một nhánh của ML có nhiệm vụ chính là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Học ánh xạ từ đầu vào sang nhãn đầu ra đã biết",
+        "B": "Học phân bố của dữ liệu để biểu diễn dữ liệu hiệu quả hơn",
+        "C": "Chỉ tối ưu độ chính xác trên tập train",
+        "D": "Sinh thêm dữ liệu mới từ dữ liệu gốc"
+      },
+      "correct_answer": ["B"],
+      "topic": "Intro UL"
+    },
+    {
+      "question_id": "ch6_q2",
+      "question_text": "Câu 2. [Nhiều đáp án đúng] (G2) Phát biểu nào sau đây đúng về học không giám sát?",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Không cần gán nhãn cho dữ liệu",
+        "B": "Chỉ cần dữ liệu đầu vào x",
+        "C": "Không cần nhãn đầu ra tương ứng",
+        "D": "Luôn phải có biến mục tiêu y"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Intro UL"
+    },
+    {
+      "question_id": "ch6_q3",
+      "question_text": "Câu 3. [Một đáp án đúng] (G2) Theo slide, dữ liệu cho thuật toán học không giám sát:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Bắt buộc phải có nhãn",
+        "B": "Chỉ cần đầu ra, không cần đầu vào",
+        "C": "Không cần gán nhãn",
+        "D": "Phải chia thành positive và negative"
+      },
+      "correct_answer": ["C"],
+      "topic": "Intro UL"
+    },
+    {
+      "question_id": "ch6_q4",
+      "question_text": "Câu 4. [Nhiều đáp án đúng] (G2) Một số chủ đề chính của học không giám sát được nêu trong slide gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Gom nhóm dữ liệu",
+        "B": "Giảm chiều dữ liệu",
+        "C": "Hồi quy tuyến tính",
+        "D": "Phân lớp nhị phân có nhãn"
+      },
+      "correct_answer": ["A", "B"],
+      "topic": "Intro UL"
+    },
+    {
+      "question_id": "ch6_q5",
+      "question_text": "Câu 5. [Một đáp án đúng] (G2) Trong ví dụ “An có điểm TB là 8.8. Hỏi An xếp loại giỏi, khá hay trung bình?”, slide nhấn mạnh rằng:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Có thể xác định ngay chỉ từ giá trị 8.8",
+        "B": "Không thể biết nếu không biết phân bố dữ liệu",
+        "C": "8.8 luôn là loại giỏi",
+        "D": "8.8 luôn là loại khá"
+      },
+      "correct_answer": ["B"],
+      "topic": "Intro UL"
+    },
+    {
+      "question_id": "ch6_q6",
+      "question_text": "Câu 6. [Một đáp án đúng] (G2) Ý nghĩa của ví dụ phân bố dữ liệu trong slide là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Cùng một giá trị có thể mang ý nghĩa khác nhau tùy phân bố dữ liệu",
+        "B": "Mọi điểm số đều phải chuẩn hóa về [0,1]",
+        "C": "Dữ liệu số không cần trực quan hóa",
+        "D": "Histogram chỉ dùng cho dữ liệu phân loại"
+      },
+      "correct_answer": ["A"],
+      "topic": "Intro UL"
+    },
+    {
+      "question_id": "ch6_q7",
+      "question_text": "Câu 7. [Một đáp án đúng] (G2) Trong ví dụ biểu diễn dữ liệu, thay vì lưu dữ liệu “thô”, ta có thể lưu:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Toàn bộ dữ liệu lặp lại nhiều lần",
+        "B": "Đặc trưng học lực theo nhóm",
+        "C": "Chỉ nhãn đầu ra có sẵn",
+        "D": "Chỉ ID của từng bản ghi"
+      },
+      "correct_answer": ["B"],
+      "topic": "Intro UL"
+    },
+    {
+      "question_id": "ch6_q8",
+      "question_text": "Câu 8. [Nhiều đáp án đúng] (G2) Theo ví dụ trong slide, việc biểu diễn dữ liệu theo nhóm có thể giúp:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Giảm chiều dữ liệu",
+        "B": "Thể hiện được đặc trưng theo nhóm của mẫu dữ liệu",
+        "C": "Bắt buộc khôi phục chính xác dữ liệu gốc",
+        "D": "Biểu diễn dữ liệu hiệu quả hơn"
+      },
+      "correct_answer": ["A", "B", "D"],
+      "topic": "Intro UL"
+    },
+    {
+      "question_id": "ch6_q9",
+      "question_text": "Câu 9. [Một đáp án đúng] (G2) Theo lưu ý trong slide, các khái niệm như “yếu”, “xuất sắc”, “trung bình” trong ví dụ chỉ là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Nhãn thật bắt buộc của thuật toán UL",
+        "B": "Cách minh họa bằng khái niệm đời sống; thực tế thuật toán mã hóa bằng cluster ID",
+        "C": "Kết quả của supervised learning",
+        "D": "Các giá trị luôn có thứ tự tuyến tính"
+      },
+      "correct_answer": ["B"],
+      "topic": "Intro UL"
+    },
+    {
+      "question_id": "ch6_q10",
+      "question_text": "Câu 10. [Một đáp án đúng] (G2) Gom nhóm (clustering) là bài toán:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Dự đoán giá trị liên tục",
+        "B": "Gom các đối tượng theo từng cụm sao cho các đối tượng trong cùng cụm tương đồng hơn",
+        "C": "Tìm đường hồi quy tốt nhất",
+        "D": "Đánh giá mô hình phân lớp"
+      },
+      "correct_answer": ["B"],
+      "topic": "Clustering Basics"
+    },
+    {
+      "question_id": "ch6_q11",
+      "question_text": "Câu 11. [Một đáp án đúng] (G2) Trong clustering, các đối tượng trong cùng một cụm cần:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Khác biệt hoàn toàn với nhau",
+        "B": "Có sự tương đồng với nhau hơn so với các đối tượng thuộc cụm khác",
+        "C": "Có cùng ID dữ liệu",
+        "D": "Có cùng nhãn thật"
+      },
+      "correct_answer": ["B"],
+      "topic": "Clustering Basics"
+    },
+    {
+      "question_id": "ch6_q12",
+      "question_text": "Câu 12. [Nhiều đáp án đúng] (G2) Một số thuật toán gom nhóm dữ liệu được liệt kê trong slide gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "K-Means",
+        "B": "DBSCAN",
+        "C": "Hierarchical clustering",
+        "D": "Gaussian Mixture Models (GMM)"
+      },
+      "correct_answer": ["A", "B", "C", "D"],
+      "topic": "Clustering Basics"
+    },
+    {
+      "question_id": "ch6_q13",
+      "question_text": "Câu 13. [Một đáp án đúng] (G2) Thuật toán nào sau đây cũng được slide liệt kê là một phương pháp gom nhóm dữ liệu?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Spectral clustering",
+        "B": "Linear Regression",
+        "C": "Logistic Regression",
+        "D": "Naive Bayes"
+      },
+      "correct_answer": ["A"],
+      "topic": "Clustering Basics"
+    },
+    {
+      "question_id": "ch6_q14",
+      "question_text": "Câu 14. [Một đáp án đúng] (G2) Theo slide, việc sử dụng phương pháp gom nhóm nào phụ thuộc vào:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Màu sắc của biểu đồ",
+        "B": "Tính chất dữ liệu và mục tiêu cụ thể",
+        "C": "Kích thước font chữ trong báo cáo",
+        "D": "Chỉ số lượng CPU"
+      },
+      "correct_answer": ["B"],
+      "topic": "Clustering Basics"
+    },
+    {
+      "question_id": "ch6_q15",
+      "question_text": "Câu 15. [Một đáp án đúng] (G2) Ý tưởng của K-Means bắt đầu bằng việc:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Khởi tạo ngẫu nhiên K tâm cụm",
+        "B": "Ước lượng ma trận hiệp phương sai",
+        "C": "Tìm epsilon tối ưu",
+        "D": "Gán toàn bộ điểm thành nhiễu"
+      },
+      "correct_answer": ["A"],
+      "topic": "KMeans"
+    },
+    {
+      "question_id": "ch6_q16",
+      "question_text": "Câu 16. [Một đáp án đúng] (G2) Sau bước khởi tạo trong K-Means, mỗi điểm dữ liệu được:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Gán vào trọng tâm xa nhất",
+        "B": "Gán ngẫu nhiên vào một cụm bất kỳ",
+        "C": "Gán vào trọng tâm gần nhất",
+        "D": "Loại bỏ khỏi tập dữ liệu"
+      },
+      "correct_answer": ["C"],
+      "topic": "KMeans"
+    },
+    {
+      "question_id": "ch6_q17",
+      "question_text": "Câu 17. [Một đáp án đúng] (G2) Quá trình của K-Means được lặp lại cho đến khi:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Số mẫu giảm về 0",
+        "B": "Các trọng tâm không thay đổi nữa",
+        "C": "Loss luôn bằng 1",
+        "D": "Tất cả điểm đều thành nhiễu"
+      },
+      "correct_answer": ["B"],
+      "topic": "KMeans"
+    },
+    {
+      "question_id": "ch6_q18",
+      "question_text": "Câu 18. [Nhiều đáp án đúng] (G2) Ưu điểm của K-Means theo slide gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Đơn giản, dễ cài đặt",
+        "B": "Hiệu quả với dữ liệu lớn",
+        "C": "Không cần biết trước số cụm",
+        "D": "Luôn xử lý tốt dữ liệu không phải dạng hình cầu"
+      },
+      "correct_answer": ["A", "B"],
+      "topic": "KMeans"
+    },
+    {
+      "question_id": "ch6_q19",
+      "question_text": "Câu 19. [Nhiều đáp án đúng] (G2) Khuyết điểm của K-Means theo slide gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Cần biết trước số lượng cụm K",
+        "B": "Dễ bị rơi vào cực tiểu cục bộ",
+        "C": "Phụ thuộc vào tâm cụm khởi tạo",
+        "D": "Không hoạt động tốt với dữ liệu có phân bố phức tạp, không phải dạng hình cầu"
+      },
+      "correct_answer": ["A", "B", "C", "D"],
+      "topic": "KMeans"
+    },
+    {
+      "question_id": "ch6_q20",
+      "question_text": "Câu 20. [Một đáp án đúng] (G2) Phát biểu đúng về K-Means là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Không cần chọn số cụm K",
+        "B": "Chỉ dùng được cho dữ liệu có nhãn",
+        "C": "Phụ thuộc vào tâm cụm khởi tạo",
+        "D": "Luôn tốt hơn DBSCAN"
+      },
+      "correct_answer": ["C"],
+      "topic": "KMeans"
+    },
+    {
+      "question_id": "ch6_q21",
+      "question_text": "Câu 21. [Một đáp án đúng] (G2) Vì sao K-Means có thể cho kết quả chưa tối ưu?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Vì luôn hội tụ về cực đại toàn cục",
+        "B": "Vì có thể rơi vào cực tiểu cục bộ",
+        "C": "Vì không sử dụng khoảng cách",
+        "D": "Vì bắt buộc cần dữ liệu danh mục"
+      },
+      "correct_answer": ["B"],
+      "topic": "KMeans"
+    },
+    {
+      "question_id": "ch6_q22",
+      "question_text": "Câu 22. [Một đáp án đúng] (G2) Loại dữ liệu nào K-Means được slide cảnh báo là không hoạt động tốt?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Dữ liệu có phân bố phức tạp, không phải dạng hình cầu",
+        "B": "Dữ liệu có đúng 2 chiều",
+        "C": "Dữ liệu rất nhỏ",
+        "D": "Dữ liệu chỉ gồm số nguyên"
+      },
+      "correct_answer": ["A"],
+      "topic": "KMeans"
+    },
+    {
+      "question_id": "ch6_q23",
+      "question_text": "Câu 23. [Một đáp án đúng] (G2) DBSCAN là thuật toán phân cụm dựa trên:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Mật độ",
+        "B": "Nhãn lớp",
+        "C": "Hồi quy tuyến tính",
+        "D": "Ma trận nhầm lẫn"
+      },
+      "correct_answer": ["A"],
+      "topic": "DBSCAN"
+    },
+    {
+      "question_id": "ch6_q24",
+      "question_text": "Câu 24. [Một đáp án đúng] (G2) Theo ý tưởng của DBSCAN, các điểm được gom vào cùng cụm khi:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Có cùng giá trị đầu ra",
+        "B": "Có khoảng cách nhỏ hơn epsilon và mật độ đủ cao",
+        "C": "Có cùng số chiều",
+        "D": "Có tổng đặc trưng bằng nhau"
+      },
+      "correct_answer": ["B"],
+      "topic": "DBSCAN"
+    },
+    {
+      "question_id": "ch6_q25",
+      "question_text": "Câu 25. [Nhiều đáp án đúng] (G2) Các tham số/khái niệm quan trọng được nêu trong DBSCAN là:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "epsilon (ε)",
+        "B": "minPts",
+        "C": "noise",
+        "D": "learning rate"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "DBSCAN"
+    },
+    {
+      "question_id": "ch6_q26",
+      "question_text": "Câu 26. [Một đáp án đúng] (G2) Trong DBSCAN, các điểm nằm trong các vùng mật độ thấp thường được gán là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "centroid",
+        "B": "outcome",
+        "C": "noise",
+        "D": "feature importance"
+      },
+      "correct_answer": ["C"],
+      "topic": "DBSCAN"
+    },
+    {
+      "question_id": "ch6_q27",
+      "question_text": "Câu 27. [Nhiều đáp án đúng] (G2) Ưu điểm của DBSCAN theo slide gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Không cần biết trước số cụm",
+        "B": "Hiệu quả với dữ liệu mật độ cao",
+        "C": "Luôn đơn giản hơn K-Means về tham số",
+        "D": "Luôn phù hợp với dữ liệu có mật độ biến động"
+      },
+      "correct_answer": ["A", "B"],
+      "topic": "DBSCAN"
+    },
+    {
+      "question_id": "ch6_q28",
+      "question_text": "Câu 28. [Nhiều đáp án đúng] (G2) Khuyết điểm của DBSCAN theo slide gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Không hiệu quả khi dữ liệu có mật độ biến động",
+        "B": "Phải chọn tham số ε và minPts",
+        "C": "Bắt buộc phải biết trước số cụm K",
+        "D": "Không thể phát hiện nhiễu"
+      },
+      "correct_answer": ["A", "B"],
+      "topic": "DBSCAN"
+    },
+    {
+      "question_id": "ch6_q29",
+      "question_text": "Câu 29. [Một đáp án đúng] (G2) Điểm khác biệt nổi bật giữa DBSCAN và K-Means theo slide là DBSCAN:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Bắt buộc chọn trước K",
+        "B": "Không cần biết trước số cụm",
+        "C": "Chỉ làm việc với dữ liệu có nhãn",
+        "D": "Không dùng khoảng cách"
+      },
+      "correct_answer": ["B"],
+      "topic": "DBSCAN"
+    },
+    {
+      "question_id": "ch6_q30",
+      "question_text": "Câu 30. [Một đáp án đúng] (G2) Tình huống nào sau đây làm DBSCAN kém hiệu quả theo slide?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Dữ liệu mật độ biến động",
+        "B": "Dữ liệu có nhiều điểm tập trung",
+        "C": "Dữ liệu không có nhiễu",
+        "D": "Dữ liệu có 2 chiều"
+      },
+      "correct_answer": ["A"],
+      "topic": "DBSCAN"
+    },
+    {
+      "question_id": "ch6_q31",
+      "question_text": "Câu 31. [Một đáp án đúng] (G2) Trong DBSCAN, việc chọn ε cố định có thể không hiệu quả khi:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Số điểm giảm hoặc mật độ thay đổi",
+        "B": "Dữ liệu đã được chuẩn hóa",
+        "C": "Dữ liệu có đúng 3 cụm",
+        "D": "K quá lớn"
+      },
+      "correct_answer": ["A"],
+      "topic": "DBSCAN"
+    },
+    {
+      "question_id": "ch6_q32",
+      "question_text": "Câu 32. [Một đáp án đúng] (G2) Theo slide so sánh các toy example, thuật toán nào thường bắt tốt hơn các cấu trúc cụm không phải dạng hình cầu?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "K-Means",
+        "B": "DBSCAN",
+        "C": "Cả hai luôn như nhau",
+        "D": "Linear Regression"
+      },
+      "correct_answer": ["B"],
+      "topic": "KMeans vs DBSCAN"
+    },
+    {
+      "question_id": "ch6_q33",
+      "question_text": "Câu 33. [Một đáp án đúng] (G2) Với dữ liệu dạng vòng tròn đồng tâm hoặc hình cong phức tạp, lựa chọn nào thường hợp lý hơn theo slide minh họa?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "K-Means luôn phù hợp hơn",
+        "B": "DBSCAN thường phù hợp hơn",
+        "C": "Chỉ dùng PCA",
+        "D": "Chỉ dùng hồi quy"
+      },
+      "correct_answer": ["B"],
+      "topic": "KMeans vs DBSCAN"
+    },
+    {
+      "question_id": "ch6_q34",
+      "question_text": "Câu 34. [Một đáp án đúng] (G2) Với dữ liệu lớn và cụm tương đối đơn giản, slide cho thấy ưu điểm nổi bật của K-Means là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Không cần tham số",
+        "B": "Hiệu quả với dữ liệu lớn",
+        "C": "Luôn phát hiện nhiễu",
+        "D": "Luôn bắt được cấu trúc phi tuyến"
+      },
+      "correct_answer": ["B"],
+      "topic": "KMeans vs DBSCAN"
+    },
+    {
+      "question_id": "ch6_q35",
+      "question_text": "Câu 35. [Một đáp án đúng] (G2) Giảm chiều dữ liệu là quá trình:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Chuyển dữ liệu từ không gian đa chiều sang không gian ít chiều hơn",
+        "B": "Tăng số chiều để mô hình học tốt hơn",
+        "C": "Chỉ xóa ngẫu nhiên các dòng dữ liệu",
+        "D": "Đổi dữ liệu số thành dữ liệu chữ"
+      },
+      "correct_answer": ["A"],
+      "topic": "Dimensionality Reduction"
+    },
+    {
+      "question_id": "ch6_q36",
+      "question_text": "Câu 36. [Một đáp án đúng] (G2) Mục tiêu của giảm chiều dữ liệu theo slide là để biểu diễn không gian ít chiều vẫn:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Giữ được một số tính chất có ý nghĩa của dữ liệu gốc",
+        "B": "Giống hệt dữ liệu gốc ở mọi chi tiết",
+        "C": "Chỉ chứa dữ liệu phân loại",
+        "D": "Luôn không mất mát thông tin"
+      },
+      "correct_answer": ["A"],
+      "topic": "Dimensionality Reduction"
+    },
+    {
+      "question_id": "ch6_q37",
+      "question_text": "Câu 37. [Nhiều đáp án đúng] (G2) Một số thuật toán giảm chiều dữ liệu được liệt kê trong slide gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "PCA",
+        "B": "t-SNE",
+        "C": "Decision Tree",
+        "D": "Naive Bayes"
+      },
+      "correct_answer": ["A", "B"],
+      "topic": "Dimensionality Reduction"
+    },
+    {
+      "question_id": "ch6_q38",
+      "question_text": "Câu 38. [Một đáp án đúng] (G2) Trong ví dụ PCA ở slide, chiều dữ liệu nào có thể loại bỏ?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Chiều ít biến động",
+        "B": "Chiều có phương sai lớn nhất",
+        "C": "Chiều có nhiều giá trị khác nhau nhất",
+        "D": "Chiều xuất hiện đầu tiên trong bảng"
+      },
+      "correct_answer": ["A"],
+      "topic": "PCA"
+    },
+    {
+      "question_id": "ch6_q39",
+      "question_text": "Câu 39. [Một đáp án đúng] (G2) Trong ví dụ đầu của PCA, cột Văn có thể bị loại bỏ vì:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Độ lệch bằng 0",
+        "B": "Là dữ liệu danh mục",
+        "C": "Có giá trị lớn nhất",
+        "D": "Không liên quan đến toán"
+      },
+      "correct_answer": ["A"],
+      "topic": "PCA"
+    },
+    {
+      "question_id": "ch6_q40",
+      "question_text": "Câu 40. [Một đáp án đúng] (G2) Trong ví dụ PCA trên slide, việc xóa 1 cột trong 4 cột giúp giảm khoảng:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "10% dữ liệu",
+        "B": "20% dữ liệu",
+        "C": "25% dữ liệu",
+        "D": "50% dữ liệu"
+      },
+      "correct_answer": ["C"],
+      "topic": "PCA"
+    },
+    {
+      "question_id": "ch6_q41",
+      "question_text": "Câu 41. [Một đáp án đúng] (G2) Trong ví dụ PCA khác trên slide, dù vẫn giảm được dữ liệu, nhưng:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Luôn khôi phục được dữ liệu gốc hoàn toàn",
+        "B": "Không khôi phục được dữ liệu gốc hoàn toàn",
+        "C": "Không thể tính điểm trung bình",
+        "D": "Bắt buộc phải tăng số chiều trở lại ngay"
+      },
+      "correct_answer": ["B"],
+      "topic": "PCA"
+    },
+    {
+      "question_id": "ch6_q42",
+      "question_text": "Câu 42. [Một đáp án đúng] (G2) PCA tìm một:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Không gian con tuyến tính mới",
+        "B": "Tập nhãn mới",
+        "C": "Hàm mất mát phi tuyến bắt buộc",
+        "D": "Cây quyết định tối ưu"
+      },
+      "correct_answer": ["A"],
+      "topic": "PCA"
+    },
+    {
+      "question_id": "ch6_q43",
+      "question_text": "Câu 43. [Một đáp án đúng] (G2) Trong không gian mới của PCA, các chiều được chọn sao cho:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Tối thiểu hóa phương sai",
+        "B": "Tối đa hóa phương sai",
+        "C": "Tối đa hóa số nhãn",
+        "D": "Giảm mọi giá trị về 0"
+      },
+      "correct_answer": ["B"],
+      "topic": "PCA"
+    },
+    {
+      "question_id": "ch6_q44",
+      "question_text": "Câu 44. [Nhiều đáp án đúng] (G2) Ưu điểm của PCA theo slide gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Nhanh, hiệu quả với dữ liệu lớn do thực hiện biến đổi tuyến tính",
+        "B": "Giữ lại các thành phần chính với phương sai lớn",
+        "C": "Có khả năng bắt cấu trúc phi tuyến rất tốt",
+        "D": "Thường được dùng chủ yếu để trực quan hóa hơn t-SNE"
+      },
+      "correct_answer": ["A", "B"],
+      "topic": "PCA"
+    },
+    {
+      "question_id": "ch6_q45",
+      "question_text": "Câu 45. [Nhiều đáp án đúng] (G2) Khuyết điểm của PCA theo slide gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Khả năng bắt cấu trúc phi tuyến kém",
+        "B": "Dễ bị ảnh hưởng bởi nhiễu (outlier)",
+        "C": "Không ổn định do yếu tố ngẫu nhiên",
+        "D": "Độ phức tạp cao hơn t-SNE trong trực quan hóa"
+      },
+      "correct_answer": ["A", "B"],
+      "topic": "PCA"
+    },
+    {
+      "question_id": "ch6_q46",
+      "question_text": "Câu 46. [Một đáp án đúng] (G2) Theo quiz tuần 6 và nội dung slide, PCA thường phù hợp hơn khi dữ liệu:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Dạng số và có quan hệ tuyến tính",
+        "B": "Là dữ liệu danh mục thuần túy",
+        "C": "Chỉ có cấu trúc phi tuyến phức tạp",
+        "D": "Cần gán nhãn trước khi giảm chiều"
+      },
+      "correct_answer": ["A"],
+      "topic": "PCA"
+    },
+    {
+      "question_id": "ch6_q47",
+      "question_text": "Câu 47. [Một đáp án đúng] (G2) t-SNE là kỹ thuật giảm chiều:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Tuyến tính",
+        "B": "Phi tuyến tính",
+        "C": "Dành riêng cho dữ liệu có nhãn",
+        "D": "Chỉ dùng cho dữ liệu 1 chiều"
+      },
+      "correct_answer": ["B"],
+      "topic": "tSNE"
+    },
+    {
+      "question_id": "ch6_q48",
+      "question_text": "Câu 48. [Một đáp án đúng] (G2) Mục đích sử dụng phổ biến nhất của t-SNE theo slide là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Dự đoán giá trị liên tục",
+        "B": "Trực quan hóa dữ liệu đa chiều trong không gian thấp hơn",
+        "C": "Tìm số cụm tối ưu cho K-Means",
+        "D": "Thay thế hoàn toàn PCA trong mọi trường hợp"
+      },
+      "correct_answer": ["B"],
+      "topic": "tSNE"
+    },
+    {
+      "question_id": "ch6_q49",
+      "question_text": "Câu 49. [Một đáp án đúng] (G2) Ý tưởng của t-SNE theo slide là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Tạo ra một phân phối xác suất tương tự trong không gian có số chiều thấp hơn",
+        "B": "Giữ nguyên mọi vector gốc và chỉ đổi tên cột",
+        "C": "Loại bỏ mọi chiều có giá trị âm",
+        "D": "Tìm các trọng tâm cụm gần nhất"
+      },
+      "correct_answer": ["A"],
+      "topic": "tSNE"
+    },
+    {
+      "question_id": "ch6_q50",
+      "question_text": "Câu 50. [Nhiều đáp án đúng] (G2) So với PCA, t-SNE trong slide có các đặc điểm nào sau đây?",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Có khả năng bắt cấu trúc phi tuyến",
+        "B": "Thường được sử dụng để trực quan hóa dữ liệu",
+        "C": "Không ổn định do yếu tố ngẫu nhiên",
+        "D": "Khó giải thích hơn so với PCA"
+      },
+      "correct_answer": ["A", "B", "C", "D"],
+      "topic": "PCA vs tSNE"
+    }
+  ]
+}

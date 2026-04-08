@@ -1,0 +1,100 @@
+[
+  {
+    "id": "coding_practice_004",
+    "type": "fill_in_the_blank",
+    "topic": "ml_pipeline_ridge_regression_gridsearch",
+    "difficulty": "medium",
+    "description": "Câu 1. (2 điểm) (G1) Hãy hoàn thiện đoạn mã nguồn dưới đây bằng cách áp dụng thư viện scikit-learn trong môi trường Python 3.\n\n**Mục tiêu:** Xây dựng mô hình hồi quy (Regression) dự đoán giá nhà (cột 'price') từ các đặc trưng đầu vào. Dữ liệu được cung cấp dưới dạng 2 file cục bộ là 'data/train.csv' và 'data/test.csv'.\n\n**Yêu cầu và ràng buộc:**\n- Hoàn thành đoạn mã bằng cách điền vào các vị trí {{BLANK}}.\n- Sử dụng Pipeline bao gồm bước chuẩn hóa dữ liệu và mô hình hồi quy.\n- Lựa chọn đúng các thư viện đã được import (lưu ý có các thư viện không phù hợp với bài toán).\n- Tối ưu mô hình bằng GridSearchCV.\n- Tính và in ra chỉ số Mean Squared Error (MSE) trên tập kiểm thử.",
+    "code_template": "import pandas as pd\nfrom sklearn.pipeline import Pipeline\nfrom sklearn.model_selection import GridSearchCV\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.preprocessing import MinMaxScaler\nfrom sklearn.linear_model import Ridge\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.metrics import mean_squared_error\n\n# Đọc tập dữ liệu huấn luyện và kiểm thử từ thư mục 'data/'\ntrain_df = pd.read_csv('data/train.csv')\ntest_df = pd.read_csv('data/test.csv')\n\n# Tách biến độc lập (X) và biến phụ thuộc (y) với cột mục tiêu là 'price'\n{{BLANK_1}}\n\n# Tạo pipeline gồm các bước:\n# i) StandardScaler để chuẩn hóa dữ liệu\n# ii) Ridge regression để dự đoán\n{{BLANK_2}}\n\n# Thiết lập không gian tìm kiếm siêu tham số cho GridSearchCV:\n# - Ridge: tham số alpha thử các giá trị [0.1, 1.0, 10.0]\n{{BLANK_3}}\n\n# Sử dụng GridSearchCV với kiểm định chéo 4 lần (cv=4),\n# scoring là 'neg_mean_squared_error' để chọn siêu tham số tốt nhất\n# và tiến hành huấn luyện mô hình\n{{BLANK_4}}\n\n# Dự đoán trên tập kiểm thử (X_test), tính và in ra chỉ số Mean Squared Error (MSE)\n{{BLANK_5}}",
+    "answers": {
+      "{{BLANK_1}}": "X_train = train_df.drop(columns=['price'])\ny_train = train_df['price']\nX_test = test_df.drop(columns=['price'])\ny_test = test_df['price']",
+      "{{BLANK_2}}": "pipe = Pipeline([\n    ('scaler', StandardScaler()),\n    ('model', Ridge())\n])",
+      "{{BLANK_3}}": "param_grid = {\n    'model__alpha': [0.1, 1.0, 10.0]\n}",
+      "{{BLANK_4}}": "grid_search = GridSearchCV(pipe, param_grid, cv=4, scoring='neg_mean_squared_error')\ngrid_search.fit(X_train, y_train)",
+      "{{BLANK_5}}": "best_model = grid_search.best_estimator_\ny_pred = best_model.predict(X_test)\nprint(mean_squared_error(y_test, y_pred))"
+    }
+  },
+  {
+    "id": "coding_classification_pipeline_gridsearch_021",
+    "type": "fill_in_the_blank",
+    "topic": "classification_pipeline_logistic_gridsearch",
+    "difficulty": "medium",
+    "description": "Câu 1. (2 điểm) (G1) Bạn được yêu cầu xây dựng mô hình phân lớp (Classification) để dự đoán nhãn y_test từ các đặc trưng trong X_test.\n\nDữ liệu đã được nạp sẵn vào bộ nhớ với các biến:\n- X_train: tập huấn luyện (numpy array)\n- y_train: nhãn huấn luyện\n- X_test: tập kiểm thử\n- y_test: nhãn kiểm thử\n\nYêu cầu và ràng buộc:\n- Hoàn thành đoạn mã bằng cách điền vào các vị trí {{BLANK}}.\n- Sử dụng Pipeline gồm bước chuẩn hóa dữ liệu và mô hình LogisticRegression.\n- Chỉ được sử dụng các thư viện đã import (có chứa một số thư viện 'bẫy').\n- Sử dụng GridSearchCV để tối ưu siêu tham số C với các giá trị [0.1, 1.0, 10.0].\n- Sử dụng kiểm định chéo 5 lần (cv=5) và scoring là 'accuracy'.\n- Dự đoán trên tập kiểm thử và in ra chỉ số accuracy_score.",
+    "code_template": "import numpy as np\nfrom sklearn.pipeline import Pipeline\nfrom sklearn.model_selection import GridSearchCV\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.preprocessing import MinMaxScaler\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.linear_model import Ridge\nfrom sklearn.metrics import accuracy_score\n\n# Giả sử dữ liệu đã được nạp sẵn:\n# X_train, y_train, X_test, y_test\n\n# Tạo pipeline gồm:\n# i) StandardScaler để chuẩn hóa dữ liệu\n# ii) LogisticRegression để phân loại\n{{BLANK_1}}\n\n# Thiết lập không gian tìm kiếm siêu tham số:\n# - LogisticRegression: tham số C = [0.1, 1.0, 10.0]\n{{BLANK_2}}\n\n# Sử dụng GridSearchCV với cv=5 và scoring='accuracy'\n# Sau đó huấn luyện mô hình trên tập train\n{{BLANK_3}}\n\n# Dự đoán trên tập kiểm thử và in ra accuracy\n{{BLANK_4}}",
+    "answers": {
+      "{{BLANK_1}}": "pipe = Pipeline([\n ('scaler', StandardScaler()),\n ('clf', LogisticRegression(max_iter=1000))\n])",
+      "{{BLANK_2}}": "param_grid = {\n 'clf__C': [0.1, 1.0, 10.0]\n}",
+      "{{BLANK_3}}": "grid_search = GridSearchCV(pipe, param_grid, cv=5, scoring='accuracy')\ngrid_search.fit(X_train, y_train)",
+      "{{BLANK_4}}": "y_pred = grid_search.best_estimator_.predict(X_test)\nprint(accuracy_score(y_test, y_pred))"
+    }
+  },
+  {
+    "id": "coding_classification_preloaded_001",
+    "type": "fill_in_the_blank",
+    "topic": "classification_pipeline_svc_gridsearch",
+    "difficulty": "medium",
+    "description": "Câu 1. (2 điểm) (G1) Bạn được yêu cầu xây dựng mô hình phân lớp (Classification) để dự đoán nhãn của tập dữ liệu.\n\nGiả sử trong môi trường lập trình của bạn đã được nạp sẵn các biến dữ liệu dạng pandas DataFrame/Series bao gồm: X_train, X_test, y_train, y_test. Bạn KHÔNG cần phải đọc dữ liệu từ file hay chia tập dữ liệu nữa.\n\nYêu cầu và ràng buộc:\n- Hoàn thành đoạn mã nguồn bằng cách điền vào các vị trí {{BLANK}}.\n- Xây dựng một Pipeline bao gồm bước chuẩn hóa dữ liệu và mô hình phân lớp Support Vector Machine (SVC).\n- Hãy cẩn thận lựa chọn đúng thư viện cần thiết từ danh sách đã import (trong danh sách có chứa các thư viện 'bẫy' của bài toán hồi quy).\n- Tối ưu hóa mô hình bằng GridSearchCV.\n- Đánh giá và in ra màn hình độ chính xác (accuracy score) trên tập kiểm thử.",
+    "code_template": "from sklearn.pipeline import Pipeline\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.preprocessing import MinMaxScaler\nfrom sklearn.svm import SVC\nfrom sklearn.linear_model import LinearRegression\nfrom sklearn.model_selection import GridSearchCV\nfrom sklearn.metrics import accuracy_score\nfrom sklearn.metrics import mean_squared_error\n\n# Giả sử X_train, X_test, y_train, y_test đã có sẵn trong bộ nhớ\n\n# Tạo pipeline gồm các bước:\n# i) StandardScaler để chuẩn hóa dữ liệu\n# ii) SVC với random_state=42 để phân loại\n{{BLANK_1}}\n\n# Thiết lập không gian tìm kiếm siêu tham số cho GridSearchCV:\n# - SVC: tham số C thử các giá trị [0.1, 1, 10]\n{{BLANK_2}}\n\n# Sử dụng GridSearchCV với kiểm định chéo 5 lần (cv=5),\n# scoring là 'accuracy' để chọn siêu tham số tốt nhất\n# và tiến hành huấn luyện mô hình với tập train\n{{BLANK_3}}\n\n# Dự đoán trên tập kiểm thử (X_test), tính và in ra chỉ số độ chính xác (Accuracy)\n{{BLANK_4}}",
+    "answers": {
+      "{{BLANK_1}}": "pipe = Pipeline([\n    ('scaler', StandardScaler()),\n    ('clf', SVC(random_state=42))\n])",
+      "{{BLANK_2}}": "param_grid = {'clf__C': [0.1, 1, 10]}",
+      "{{BLANK_3}}": "grid_search = GridSearchCV(pipe, param_grid, cv=5, scoring='accuracy')\ngrid_search.fit(X_train, y_train)",
+      "{{BLANK_4}}": "y_pred = grid_search.best_estimator_.predict(X_test)\nprint(accuracy_score(y_test, y_pred))"
+    }
+  },
+  {
+    "id": "coding_classification_preloaded_f1_001",
+    "type": "fill_in_the_blank",
+    "topic": "classification_pipeline_dt_gridsearch_f1",
+    "difficulty": "medium",
+    "description": "Câu 1. (2 điểm) (G1) Bạn được yêu cầu xây dựng mô hình phân lớp (Classification) bằng thuật toán Cây quyết định (Decision Tree).\n\nGiả sử trong môi trường lập trình của bạn đã được nạp sẵn các biến dữ liệu dạng pandas DataFrame/Series bao gồm: X_train, X_test, y_train, y_test. Bạn KHÔNG cần phải đọc dữ liệu từ file hay chia tập dữ liệu.\n\nYêu cầu và ràng buộc:\n- Hoàn thành đoạn mã nguồn bằng cách điền vào các vị trí {{BLANK}}.\n- Xây dựng một Pipeline bao gồm bước chuẩn hóa dữ liệu và mô hình phân lớp DecisionTreeClassifier.\n- Hãy lựa chọn cẩn thận đúng thư viện cần thiết từ danh sách đã import (chú ý: có chứa các thư viện 'bẫy' thuộc về bài toán hồi quy).\n- Tối ưu hóa siêu tham số mô hình bằng GridSearchCV.\n- Dự đoán và in ra màn hình chỉ số f1-score (với average='weighted') trên tập kiểm thử.",
+    "code_template": "from sklearn.pipeline import Pipeline\nfrom sklearn.preprocessing import StandardScaler\nfrom sklearn.preprocessing import MinMaxScaler\nfrom sklearn.tree import DecisionTreeClassifier\nfrom sklearn.linear_model import LinearRegression\nfrom sklearn.model_selection import GridSearchCV\nfrom sklearn.metrics import f1_score\nfrom sklearn.metrics import mean_absolute_error\n\n# Giả sử X_train, X_test, y_train, y_test đã có sẵn trong bộ nhớ\n\n# Tạo pipeline gồm các bước:\n# i) StandardScaler để chuẩn hóa dữ liệu\n# ii) DecisionTreeClassifier với random_state=42 để phân loại\n{{BLANK_1}}\n\n# Thiết lập không gian tìm kiếm siêu tham số cho GridSearchCV:\n# - DecisionTreeClassifier: tham số max_depth thử các giá trị [3, 5, 7]\n{{BLANK_2}}\n\n# Sử dụng GridSearchCV với kiểm định chéo 5 lần (cv=5),\n# scoring là 'f1_weighted' để chọn siêu tham số tốt nhất\n# và tiến hành huấn luyện mô hình với tập train\n{{BLANK_3}}\n\n# In ra màn hình bộ siêu tham số tối ưu từ GridSearchCV\n{{BLANK_4}}\n\n# Dự đoán trên tập kiểm thử (X_test), tính và in ra chỉ số F1-score \n# với tham số average='weighted'\n{{BLANK_5}}",
+    "answers": {
+      "{{BLANK_1}}": "pipe = Pipeline([\n    ('scaler', StandardScaler()),\n    ('clf', DecisionTreeClassifier(random_state=42))\n])",
+      "{{BLANK_2}}": "param_grid = {'clf__max_depth': [3, 5, 7]}",
+      "{{BLANK_3}}": "grid_search = GridSearchCV(pipe, param_grid, cv=5, scoring='f1_weighted')\ngrid_search.fit(X_train, y_train)",
+      "{{BLANK_4}}": "print(grid_search.best_params_)",
+      "{{BLANK_5}}": "y_pred = grid_search.best_estimator_.predict(X_test)\nprint(f1_score(y_test, y_pred, average='weighted'))"
+    }
+  },
+  {
+  "id": "coding_mixed_data_column_transformer_031",
+  "type": "fill_in_the_blank",
+  "topic": "column_transformer_mixed_data_classification",
+  "difficulty": "hard",
+  "description": "Câu 1. (2 điểm) (G2, G3) Bạn được yêu cầu xây dựng mô hình phân loại để dự đoán biến mục tiêu y_test từ dữ liệu đầu vào X_test.\n\nDữ liệu bao gồm cả thuộc tính số (numerical) và thuộc tính phân loại (categorical):\n- numerical_features: ['age', 'hours_per_week']\n- categorical_features: ['workclass', 'education']\n\nYêu cầu và ràng buộc:\n- Hoàn thành đoạn mã bằng cách điền vào các vị trí {{BLANK}}.\n- Phải xử lý riêng biệt dữ liệu số và dữ liệu phân loại.\n- Dữ liệu số: sử dụng SimpleImputer(strategy='mean') và StandardScaler.\n- Dữ liệu phân loại: sử dụng SimpleImputer(strategy='most_frequent') và OneHotEncoder(handle_unknown='ignore').\n- Sử dụng ColumnTransformer để kết hợp các bước tiền xử lý.\n- Sử dụng LogisticRegression làm mô hình phân loại.\n- KHÔNG được sử dụng GridSearchCV.\n- In ra classification_report trên tập kiểm thử.",
+  "code_template": "import pandas as pd\nfrom sklearn.model_selection import train_test_split\nfrom sklearn.preprocessing import OneHotEncoder, StandardScaler\nfrom sklearn.impute import SimpleImputer\nfrom sklearn.compose import ColumnTransformer\nfrom sklearn.pipeline import Pipeline\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.metrics import classification_report\n\n# Giả sử dữ liệu đã được load sẵn\n# X (DataFrame), y (Series)\n\nnumerical_features = ['age', 'hours_per_week']\ncategorical_features = ['workclass', 'education']\n\n# Chia dữ liệu train/test với test_size=0.2, random_state=42\n{{BLANK_1}}\n\n# Pipeline cho dữ liệu số\n{{BLANK_2}}\n\n# Pipeline cho dữ liệu phân loại\n{{BLANK_3}}\n\n# Kết hợp bằng ColumnTransformer\n{{BLANK_4}}\n\n# Tạo pipeline hoàn chỉnh với LogisticRegression\n{{BLANK_5}}\n\n# Huấn luyện mô hình\n{{BLANK_6}}\n\n# Dự đoán và in classification_report\n{{BLANK_7}}",
+  "answers": {
+    "{{BLANK_1}}": "X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)",
+    
+    "{{BLANK_2}}": "num_pipeline = Pipeline([\n    ('imputer', SimpleImputer(strategy='mean')),\n    ('scaler', StandardScaler())\n])",
+    
+    "{{BLANK_3}}": "cat_pipeline = Pipeline([\n    ('imputer', SimpleImputer(strategy='most_frequent')),\n    ('encoder', OneHotEncoder(handle_unknown='ignore'))\n])",
+    
+    "{{BLANK_4}}": "preprocessor = ColumnTransformer([\n    ('num', num_pipeline, numerical_features),\n    ('cat', cat_pipeline, categorical_features)\n])",
+    
+    "{{BLANK_5}}": "model = Pipeline([\n    ('preprocessor', preprocessor),\n    ('clf', LogisticRegression(max_iter=1000))\n])",
+    
+    "{{BLANK_6}}": "model.fit(X_train, y_train)",
+    
+    "{{BLANK_7}}": "y_pred = model.predict(X_test)\nprint(classification_report(y_test, y_pred))"
+  }
+},
+  {
+    "id": "coding_pca_classification_pipeline_041",
+    "type": "free_form_code",
+    "topic": "pca_pipeline_classification_gridsearch",
+    "difficulty": "hard",
+    "description": "Câu 3. (2 điểm) (G2, G3) Bạn được yêu cầu xây dựng mô hình phân lớp (Classification) để dự đoán nhãn y_test từ các đặc trưng trong X_test.\n\nBộ dữ liệu huấn luyện và kiểm tra được cung cấp như sau:\n- X_train (120, 50): Mảng với 120 mẫu và 50 đặc trưng\n- y_train (120,): Nhãn phân lớp (đa lớp)\n- X_test (40, 50): Tập kiểm thử\n- y_test (40,): Nhãn kiểm thử\n\nTrong bộ dữ liệu này, số chiều của dữ liệu khá lớn và có thể chứa nhiều nhiễu. Do đó, cần thực hiện giảm chiều dữ liệu trước khi đưa vào mô hình để cải thiện hiệu năng.\n\nYêu cầu và ràng buộc:\n- Bắt buộc sử dụng PCA để giữ lại 95% phương sai (variance) của dữ liệu.\n- Phải xây dựng toàn bộ pipeline trong một Pipeline duy nhất.\n- Chỉ được sử dụng một mô hình duy nhất từ các thư viện đã import.\n- Được phép sử dụng GridSearchCV nhưng chỉ với 1 siêu tham số duy nhất.\n- Tối ưu mô hình theo F1-score (macro).\n- In ra:\n  + Số chiều sau khi PCA\n  + Bộ siêu tham số tốt nhất\n  + F1-score (macro) trên tập kiểm thử.",
+    "code_template": "import numpy as np\nfrom sklearn.decomposition import PCA\nfrom sklearn.pipeline import Pipeline\nfrom sklearn.model_selection import GridSearchCV\nfrom sklearn.preprocessing import StandardScaler, MinMaxScaler\nfrom sklearn.linear_model import LogisticRegression, LinearRegression\nfrom sklearn.ensemble import RandomForestClassifier\nfrom sklearn.metrics import f1_score, mean_squared_error\n\n# Load dữ liệu\ntrain_data = np.load('train_data.npz')\nX_train = train_data['X_train']\ny_train = train_data['y_train']\n\ntest_data = np.load('test_data.npz')\nX_test = test_data['X_test']\ny_test = test_data['y_test']\n\n### BEGIN SOLUTION\n\n# Xây dựng pipeline gồm:\n# - StandardScaler\n# - PCA giữ 95% variance\n# - LogisticRegression\n\n{{BLANK_1}}\n\n# Thiết lập GridSearchCV với 1 tham số:\n# - C của LogisticRegression: [0.1, 1, 10]\n\n{{BLANK_2}}\n\n# Huấn luyện mô hình\n\n{{BLANK_3}}\n\n# In ra số chiều sau PCA\n\n{{BLANK_4}}\n\n# In ra tham số tốt nhất\n\n{{BLANK_5}}\n\n# Dự đoán và in F1-score (macro)\n\n{{BLANK_6}}",
+    "answers": {
+      "{{BLANK_1}}": "pipe = Pipeline([('scaler', StandardScaler()), ('pca', PCA(n_components=0.95)), ('clf', LogisticRegression(max_iter=1000))])",
+      "{{BLANK_2}}": "param_grid = {'clf__C': [0.1, 1, 10]}\ngrid_search = GridSearchCV(pipe, param_grid, cv=5, scoring='f1_macro')",
+      "{{BLANK_3}}": "grid_search.fit(X_train, y_train)",
+      "{{BLANK_4}}": "best_model = grid_search.best_estimator_\nprint(best_model.named_steps['pca'].n_components_)",
+      "{{BLANK_5}}": "print(grid_search.best_params_)",
+      "{{BLANK_6}}": "y_pred = best_model.predict(X_test)\nprint(f1_score(y_test, y_pred, average='macro'))"
+    }
+  }
+
+]

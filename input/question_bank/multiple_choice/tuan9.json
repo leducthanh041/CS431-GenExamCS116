@@ -1,0 +1,654 @@
+{
+  "GENERATED_QUESTIONS": [
+    {
+      "question_id": "ch8_q1",
+      "question_text": "Câu 1. [Một đáp án đúng] (G2) Theo quiz tuần 9, động lực chính của mạng CNN khi dùng mạng neural network để giải quyết bài toán trên ảnh là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Vấn đề vanishing gradient",
+        "B": "Vấn đề overfitting",
+        "C": "Vấn đề underfitting",
+        "D": "NN không thể giải các bài toán phức tạp"
+      },
+      "correct_answer": ["B"],
+      "topic": "Intro CNN"
+    },
+    {
+      "question_id": "ch8_q2",
+      "question_text": "Câu 2. [Một đáp án đúng] (G2) Trong ví dụ mạng fully connected ở slide, với ảnh 200x200 và 40K nút ẩn, số lượng tham số của tầng này xấp xỉ là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "1.6M",
+        "B": "16M",
+        "C": "1.6B",
+        "D": "160B"
+      },
+      "correct_answer": ["C"],
+      "topic": "Intro CNN"
+    },
+    {
+      "question_id": "ch8_q3",
+      "question_text": "Câu 3. [Một đáp án đúng] (G2) Theo slide, trong mạng fully connected dùng cho ảnh, mỗi node ẩn:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Chỉ kết nối với một vùng nhỏ của ảnh",
+        "B": "Kết nối với tất cả pixel",
+        "C": "Chỉ kết nối với các pixel biên",
+        "D": "Không kết nối trực tiếp với ảnh"
+      },
+      "correct_answer": ["B"],
+      "topic": "Intro CNN"
+    },
+    {
+      "question_id": "ch8_q4",
+      "question_text": "Câu 4. [Một đáp án đúng] (G2) Ý tưởng cốt lõi của CNN được slide mô tả là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Dùng hoàn toàn kết nối đầy đủ giữa mọi pixel và mọi node",
+        "B": "Weight-sharing và locally connected",
+        "C": "Chỉ dùng PCA để rút trích đặc trưng",
+        "D": "Không sử dụng tham số học được"
+      },
+      "correct_answer": ["B"],
+      "topic": "Intro CNN"
+    },
+    {
+      "question_id": "ch8_q5",
+      "question_text": "Câu 5. [Một đáp án đúng] (G2) Theo slide, phép convolution là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Một phép biến đổi tuyến tính dùng để rút trích đặc trưng hình ảnh",
+        "B": "Một phép biến đổi phi tuyến chỉ dùng cho pooling",
+        "C": "Một phép mã hóa one-hot cho ảnh",
+        "D": "Một phép biến đổi chỉ áp dụng cho dữ liệu chuỗi"
+      },
+      "correct_answer": ["A"],
+      "topic": "Convolution Basics"
+    },
+    {
+      "question_id": "ch8_q6",
+      "question_text": "Câu 6. [Nhiều đáp án đúng] (G2) Theo slide, các loại ảnh phổ biến được giới thiệu gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Ảnh xám",
+        "B": "Ảnh RGB",
+        "C": "Ảnh one-hot",
+        "D": "Ảnh stride"
+      },
+      "correct_answer": ["A", "B"],
+      "topic": "Image Representation"
+    },
+    {
+      "question_id": "ch8_q7",
+      "question_text": "Câu 7. [Một đáp án đúng] (G2) So với ảnh xám, ảnh RGB được biểu diễn thêm theo chiều:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "width",
+        "B": "height",
+        "C": "depth",
+        "D": "stride"
+      },
+      "correct_answer": ["C"],
+      "topic": "Image Representation"
+    },
+    {
+      "question_id": "ch8_q8",
+      "question_text": "Câu 8. [Nhiều đáp án đúng] (G2) Với ảnh RGB theo slide, dữ liệu ảnh thường được mô tả bởi các chiều:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "width",
+        "B": "height",
+        "C": "depth",
+        "D": "epoch"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Image Representation"
+    },
+    {
+      "question_id": "ch8_q9",
+      "question_text": "Câu 9. [Một đáp án đúng] (G2) Theo quiz tuần 9, mạng CNN có thể coi là một mạng Neural Network đặc biệt:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Có",
+        "B": "Không",
+        "C": "Chỉ với ảnh xám",
+        "D": "Chỉ với ảnh RGB"
+      },
+      "correct_answer": ["A"],
+      "topic": "Intro CNN"
+    },
+    {
+      "question_id": "ch8_q10",
+      "question_text": "Câu 10. [Một đáp án đúng] (G2) Điểm khác biệt chính giữa CNN và ANN truyền thống theo quiz là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "CNN không dùng hàm kích hoạt",
+        "B": "CNN không có tầng ẩn",
+        "C": "CNN sử dụng các tầng convolutional",
+        "D": "ANN không thể xử lý dữ liệu hình ảnh"
+      },
+      "correct_answer": ["C"],
+      "topic": "Intro CNN"
+    },
+    {
+      "question_id": "ch8_q11",
+      "question_text": "Câu 11. [Nhiều đáp án đúng] (G2) Theo slide kiến trúc phổ dụng của CNN, các thành phần chính gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Tầng convolution",
+        "B": "Tầng activation (ReLU)",
+        "C": "Tầng pooling (optional)",
+        "D": "Tầng fully connected"
+      },
+      "correct_answer": ["A", "B", "C", "D"],
+      "topic": "CNN Architecture"
+    },
+    {
+      "question_id": "ch8_q12",
+      "question_text": "Câu 12. [Một đáp án đúng] (G2) Theo slide, tầng pooling trong CNN kiến trúc cơ bản là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Bắt buộc",
+        "B": "Tùy chọn (optional)",
+        "C": "Chỉ dùng cho ảnh xám",
+        "D": "Chỉ dùng cho fully connected"
+      },
+      "correct_answer": ["B"],
+      "topic": "CNN Architecture"
+    },
+    {
+      "question_id": "ch8_q13",
+      "question_text": "Câu 13. [Một đáp án đúng] (G2) Theo slide, trong CNN tầng ReLU thường:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Theo sau tầng convolution",
+        "B": "Theo sau flatten",
+        "C": "Theo sau softmax",
+        "D": "Đứng trước input"
+      },
+      "correct_answer": ["A"],
+      "topic": "Activation"
+    },
+    {
+      "question_id": "ch8_q14",
+      "question_text": "Câu 14. [Nhiều đáp án đúng] (G2) Theo quiz tuần 9, các ví dụ về hàm kích hoạt có thể dùng trong CNN gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Sigmoid",
+        "B": "Softmax",
+        "C": "ReLU",
+        "D": "PCA"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Activation"
+    },
+    {
+      "question_id": "ch8_q15",
+      "question_text": "Câu 15. [Một đáp án đúng] (G2) Trong slide 2D convolution, ký hiệu x*w biểu diễn:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Filter",
+        "B": "Feature map",
+        "C": "Padding",
+        "D": "Stride"
+      },
+      "correct_answer": ["B"],
+      "topic": "Convolution Basics"
+    },
+    {
+      "question_id": "ch8_q16",
+      "question_text": "Câu 16. [Một đáp án đúng] (G2) Với ảnh RGB, filter trong convolution cần có depth:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Bằng 1",
+        "B": "Bằng với depth của ảnh đầu vào",
+        "C": "Luôn bằng 2",
+        "D": "Không phụ thuộc ảnh đầu vào"
+      },
+      "correct_answer": ["B"],
+      "topic": "Convolution Basics"
+    },
+    {
+      "question_id": "ch8_q17",
+      "question_text": "Câu 17. [Một đáp án đúng] (G2) Trong ví dụ ở slide, đầu vào 28x28x3 đi qua một filter 5x5x3 cho ra một đặc trưng có kích thước:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "28x28",
+        "B": "26x26",
+        "C": "24x24",
+        "D": "5x5"
+      },
+      "correct_answer": ["C"],
+      "topic": "Convolution Basics"
+    },
+    {
+      "question_id": "ch8_q18",
+      "question_text": "Câu 18. [Một đáp án đúng] (G2) Nếu input có kích thước W x H x D và dùng K filter kích thước F x F x D, slide cho biết output của tầng convolution có dạng:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "W x H x K",
+        "B": "W' x H' x K",
+        "C": "F x F x K",
+        "D": "K x W x H x D"
+      },
+      "correct_answer": ["B"],
+      "topic": "Convolution Basics"
+    },
+    {
+      "question_id": "ch8_q19",
+      "question_text": "Câu 19. [Nhiều đáp án đúng] (G2) Theo slide, trong mô tả tầng convolution:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "x là ảnh",
+        "B": "w là filter",
+        "C": "x*w là feature map",
+        "D": "x là padding"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Convolution Basics"
+    },
+    {
+      "question_id": "ch8_q20",
+      "question_text": "Câu 20. [Một đáp án đúng] (G2) Khi chồng các feature từ nhiều filter, ta thu được:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Một vector 1D",
+        "B": "Một khối 3D là output của tầng convolution",
+        "C": "Một ma trận nhầm lẫn",
+        "D": "Một hàm mất mát"
+      },
+      "correct_answer": ["B"],
+      "topic": "Convolution Basics"
+    },
+    {
+      "question_id": "ch8_q21",
+      "question_text": "Câu 21. [Một đáp án đúng] (G2) Trong ví dụ ảnh 5x5 và filter 3x3 ở slide, phần tử đầu tiên của feature map là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "0",
+        "B": "1",
+        "C": "5",
+        "D": "8"
+      },
+      "correct_answer": ["B"],
+      "topic": "Convolution Example"
+    },
+    {
+      "question_id": "ch8_q22",
+      "question_text": "Câu 22. [Một đáp án đúng] (G2) Trong cùng ví dụ 5x5 và filter 3x3, giá trị ở giữa của feature map là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "5",
+        "B": "7",
+        "C": "8",
+        "D": "9"
+      },
+      "correct_answer": ["D"],
+      "topic": "Convolution Example"
+    },
+    {
+      "question_id": "ch8_q23",
+      "question_text": "Câu 23. [Một đáp án đúng] (G2) Trong ví dụ 5x5 với filter 3x3 và stride mặc định S=1, feature map thu được có kích thước:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "5x5",
+        "B": "4x4",
+        "C": "3x3",
+        "D": "2x2"
+      },
+      "correct_answer": ["C"],
+      "topic": "Convolution Example"
+    },
+    {
+      "question_id": "ch8_q24",
+      "question_text": "Câu 24. [Một đáp án đúng] (G2) Theo slide, stride (S) là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Số lượng filter",
+        "B": "Độ dài bước trượt của filter",
+        "C": "Số lớp fully connected",
+        "D": "Kích thước padding"
+      },
+      "correct_answer": ["B"],
+      "topic": "Stride"
+    },
+    {
+      "question_id": "ch8_q25",
+      "question_text": "Câu 25. [Một đáp án đúng] (G2) Với ví dụ ảnh 5x5 và filter 3x3 trong slide, khi tăng stride từ 1 lên 2 thì kích thước feature map đổi từ:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "3x3 thành 2x2",
+        "B": "3x3 thành 1x1",
+        "C": "2x2 thành 3x3",
+        "D": "5x5 thành 3x3"
+      },
+      "correct_answer": ["A"],
+      "topic": "Stride"
+    },
+    {
+      "question_id": "ch8_q26",
+      "question_text": "Câu 26. [Một đáp án đúng] (G2) Trong ví dụ stride S=2 ở slide, phần tử góc dưới bên phải của feature map 2x2 là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "2",
+        "B": "5",
+        "C": "7",
+        "D": "9"
+      },
+      "correct_answer": ["B"],
+      "topic": "Stride"
+    },
+    {
+      "question_id": "ch8_q27",
+      "question_text": "Câu 27. [Nhiều đáp án đúng] (G2) Theo slide, khi thực hiện convolution nếu không padding thì:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Thông tin ở biên bức ảnh bị mất",
+        "B": "Kích thước ảnh giảm nhanh",
+        "C": "Luôn tăng số chiều của dữ liệu",
+        "D": "Không cần dùng filter"
+      },
+      "correct_answer": ["A", "B"],
+      "topic": "Padding"
+    },
+    {
+      "question_id": "ch8_q28",
+      "question_text": "Câu 28. [Một đáp án đúng] (G2) Zero padding là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Thêm các số 1 vào biên của ảnh",
+        "B": "Thêm các số 0 vào biên của ảnh",
+        "C": "Nhân toàn bộ ảnh với 0",
+        "D": "Thay toàn bộ ảnh bằng ma trận 0"
+      },
+      "correct_answer": ["B"],
+      "topic": "Padding"
+    },
+    {
+      "question_id": "ch8_q29",
+      "question_text": "Câu 29. [Một đáp án đúng] (G2) Trong ví dụ ảnh 3x3 và filter 3x3 không padding, feature map thu được có kích thước:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "1x1",
+        "B": "2x2",
+        "C": "3x3",
+        "D": "5x5"
+      },
+      "correct_answer": ["A"],
+      "topic": "Padding"
+    },
+    {
+      "question_id": "ch8_q30",
+      "question_text": "Câu 30. [Một đáp án đúng] (G2) Trong ví dụ ảnh 3x3 được zero padding kích thước (1,1), feature map đầu ra có kích thước:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "1x1",
+        "B": "2x2",
+        "C": "3x3",
+        "D": "5x5"
+      },
+      "correct_answer": ["C"],
+      "topic": "Padding"
+    },
+    {
+      "question_id": "ch8_q31",
+      "question_text": "Câu 31. [Một đáp án đúng] (G2) Theo quiz tuần 9, mục đích chính của padding trong một lớp tích chập là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Giảm độ phức tạp tính toán",
+        "B": "Ngăn chặn overfitting",
+        "C": "Duy trì cùng kích thước đầu vào và đầu ra",
+        "D": "Kiểm soát tốc độ huấn luyện"
+      },
+      "correct_answer": ["C"],
+      "topic": "Padding"
+    },
+    {
+      "question_id": "ch8_q32",
+      "question_text": "Câu 32. [Một đáp án đúng] (G2) Hàm ReLU trong slide có công thức:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "R(z) = z^2",
+        "B": "R(z) = max(0, z)",
+        "C": "R(z) = 1 / (1 + e^-z)",
+        "D": "R(z) = tanh(z)"
+      },
+      "correct_answer": ["B"],
+      "topic": "Activation"
+    },
+    {
+      "question_id": "ch8_q33",
+      "question_text": "Câu 33. [Một đáp án đúng] (G2) Khi áp dụng ReLU, một giá trị âm sẽ được biến đổi thành:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "1",
+        "B": "Giữ nguyên",
+        "C": "0",
+        "D": "-1"
+      },
+      "correct_answer": ["C"],
+      "topic": "Activation"
+    },
+    {
+      "question_id": "ch8_q34",
+      "question_text": "Câu 34. [Một đáp án đúng] (G2) Trong bài tập ReLU ở slide, output của ma trận đầu tiên có bao nhiêu phần tử khác 0?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "0",
+        "B": "1",
+        "C": "2",
+        "D": "3"
+      },
+      "correct_answer": ["B"],
+      "topic": "Activation"
+    },
+    {
+      "question_id": "ch8_q35",
+      "question_text": "Câu 35. [Một đáp án đúng] (G2) Trong bài tập ReLU ở slide, output của ma trận thứ hai có bao nhiêu phần tử khác 0?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "0",
+        "B": "1",
+        "C": "2",
+        "D": "3"
+      },
+      "correct_answer": ["B"],
+      "topic": "Activation"
+    },
+    {
+      "question_id": "ch8_q36",
+      "question_text": "Câu 36. [Một đáp án đúng] (G2) Theo quiz tuần 9, mục đích chính của tầng pooling trong CNN là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Tăng độ chính xác của mô hình",
+        "B": "Giảm kích thước không gian của đặc trưng",
+        "C": "Tạo ra các đặc trưng mới",
+        "D": "Ngăn chặn hiện tượng overfitting"
+      },
+      "correct_answer": ["B"],
+      "topic": "Pooling"
+    },
+    {
+      "question_id": "ch8_q37",
+      "question_text": "Câu 37. [Một đáp án đúng] (G2) Trong ví dụ pooling với ảnh 4x4, filter 2x2, stride 2, kết quả max pooling là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "[[1, 2], [2, 3]]",
+        "B": "[[2, 4], [3, 5]]",
+        "C": "[[2, 3], [4, 5]]",
+        "D": "[[0, 4], [3, 5]]"
+      },
+      "correct_answer": ["B"],
+      "topic": "Pooling"
+    },
+    {
+      "question_id": "ch8_q38",
+      "question_text": "Câu 38. [Một đáp án đúng] (G2) Trong ví dụ pooling với ảnh 4x4, filter 2x2, stride 2, kết quả average pooling là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "[[1, 2], [2, 3]]",
+        "B": "[[2, 4], [3, 5]]",
+        "C": "[[1, 1], [2, 2]]",
+        "D": "[[0, 2], [1, 3]]"
+      },
+      "correct_answer": ["A"],
+      "topic": "Pooling"
+    },
+    {
+      "question_id": "ch8_q39",
+      "question_text": "Câu 39. [Một đáp án đúng] (G2) Theo slide, trong pooling stride thường:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Bằng 1 dù filter bao nhiêu",
+        "B": "Có kích thước bằng với kích thước filter",
+        "C": "Luôn lớn hơn filter",
+        "D": "Luôn nhỏ hơn filter"
+      },
+      "correct_answer": ["B"],
+      "topic": "Pooling"
+    },
+    {
+      "question_id": "ch8_q40",
+      "question_text": "Câu 40. [Một đáp án đúng] (G2) Theo slide, filter trong pooling được áp dụng:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Phụ thuộc chéo giữa các chiều depth",
+        "B": "Độc lập trên chiều depth",
+        "C": "Chỉ trên chiều width",
+        "D": "Chỉ trên chiều height"
+      },
+      "correct_answer": ["B"],
+      "topic": "Pooling"
+    },
+    {
+      "question_id": "ch8_q41",
+      "question_text": "Câu 41. [Một đáp án đúng] (G2) Flattening là quá trình:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Duỗi tensor 3D thành tensor 1D để làm đầu vào cho fully connected",
+        "B": "Biến tensor 1D thành tensor 3D",
+        "C": "Thay toàn bộ giá trị âm thành 0",
+        "D": "Nhân thêm các filter mới"
+      },
+      "correct_answer": ["A"],
+      "topic": "Flattening"
+    },
+    {
+      "question_id": "ch8_q42",
+      "question_text": "Câu 42. [Một đáp án đúng] (G2) Trong ví dụ flattening ở slide, tensor 2x2x2 sau khi flatten sẽ có độ dài:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "4",
+        "B": "6",
+        "C": "8",
+        "D": "12"
+      },
+      "correct_answer": ["C"],
+      "topic": "Flattening"
+    },
+    {
+      "question_id": "ch8_q43",
+      "question_text": "Câu 43. [Một đáp án đúng] (G2) Trong sơ đồ kiến trúc phổ dụng ở slide, sau khối feature learning, chuỗi xử lý cuối thường là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Flatten -> Fully Connected -> Softmax",
+        "B": "Softmax -> Flatten -> Pooling",
+        "C": "Padding -> Flatten -> ReLU",
+        "D": "Pooling -> Padding -> PCA"
+      },
+      "correct_answer": ["A"],
+      "topic": "CNN Architecture"
+    },
+    {
+      "question_id": "ch8_q44",
+      "question_text": "Câu 44. [Nhiều đáp án đúng] (G2) Theo slide tổng kết, CNN kế thừa từ mạng Neural Network các ý tưởng:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Chia sẻ trọng số",
+        "B": "Kết nối cục bộ",
+        "C": "Mã hóa one-hot",
+        "D": "Chuẩn hóa Z-score"
+      },
+      "correct_answer": ["A", "B"],
+      "topic": "CNN Summary"
+    },
+    {
+      "question_id": "ch8_q45",
+      "question_text": "Câu 45. [Một đáp án đúng] (G2) Trong slide ứng dụng, bài toán gán nhãn cho một đối tượng duy nhất và đồng thời xác định vị trí của nó bằng khung bao được gọi là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Classification",
+        "B": "Classification + Localization",
+        "C": "Object Detection",
+        "D": "Instance Segmentation"
+      },
+      "correct_answer": ["B"],
+      "topic": "CNN Applications"
+    },
+    {
+      "question_id": "ch8_q46",
+      "question_text": "Câu 46. [Một đáp án đúng] (G2) Theo sơ đồ LeNet trong slide, kích thước input là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "28x28",
+        "B": "30x30",
+        "C": "32x32",
+        "D": "64x64"
+      },
+      "correct_answer": ["C"],
+      "topic": "LeNet"
+    },
+    {
+      "question_id": "ch8_q47",
+      "question_text": "Câu 47. [Một đáp án đúng] (G2) Theo kiến trúc LeNet trong slide, C1 có:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "6 feature maps kích thước 28x28",
+        "B": "6 feature maps kích thước 14x14",
+        "C": "16 feature maps kích thước 10x10",
+        "D": "16 feature maps kích thước 5x5"
+      },
+      "correct_answer": ["A"],
+      "topic": "LeNet"
+    },
+    {
+      "question_id": "ch8_q48",
+      "question_text": "Câu 48. [Một đáp án đúng] (G2) Theo kiến trúc LeNet trong slide, S2 có:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "6 feature maps kích thước 28x28",
+        "B": "6 feature maps kích thước 14x14",
+        "C": "16 feature maps kích thước 10x10",
+        "D": "16 feature maps kích thước 5x5"
+      },
+      "correct_answer": ["B"],
+      "topic": "LeNet"
+    },
+    {
+      "question_id": "ch8_q49",
+      "question_text": "Câu 49. [Nhiều đáp án đúng] (G2) Theo sơ đồ LeNet trong slide, các phát biểu nào sau đây đúng?",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "C3 có 16 feature maps kích thước 10x10",
+        "B": "S4 có 16 feature maps kích thước 5x5",
+        "C": "C5 là layer 120",
+        "D": "Output của mạng là 84"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "LeNet"
+    },
+    {
+      "question_id": "ch8_q50",
+      "question_text": "Câu 50. [Nhiều đáp án đúng] (G2) Theo slide ứng dụng, CNN có thể được dùng cho:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Classification",
+        "B": "Object Detection",
+        "C": "K-Fold Cross Validation",
+        "D": "Instance Segmentation"
+      },
+      "correct_answer": ["A", "B", "D"],
+      "topic": "CNN Applications"
+    }
+  ]
+}

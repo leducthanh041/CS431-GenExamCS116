@@ -1,0 +1,132 @@
+# ============================================================
+# Bloom's Taxonomy + Difficulty Mapping
+# ============================================================
+# MCQGen sử dụng Bloom's Taxonomy để phân loại độ khó MCQ
+# Mapping: Bloom Level → G1/G2/G3 (dùng trong dữ liệu CS116)
+# ============================================================
+
+bloom_taxonomy:
+  levels:
+    - level: 1
+      name: "Remember (Nhớ)"
+      verbs: ["nhận biết", "liệt kê", "định nghĩa", "nhắc lại", "xác định", "trình bày"]
+      cognitive_action: "Recall"
+      description: "Sinh viên nhớ lại thông tin đã học: định nghĩa, thuật ngữ, sự kiện"
+
+    - level: 2
+      name: "Understand (Hiểu)"
+      verbs: ["giải thích", "mô tả", "tóm tắt", "diễn giải", "phân biệt", "so sánh"]
+      cognitive_action: "Interpret"
+      description: "Sinh viên hiểu ý nghĩa, dịch thông tin sang dạng khác"
+
+    - level: 3
+      name: "Apply (Áp dụng)"
+      verbs: ["áp dụng", "sử dụng", "tính toán", "thực hiện", "giải quyết"]
+      cognitive_action: "Execute"
+      description: "Sinh viên áp dụng kiến thức vào tình huống mới"
+
+    - level: 4
+      name: "Analyze (Phân tích)"
+      verbs: ["phân tích", "phân loại", "so sánh", "liên hệ", "tìm mối liên hệ", "giải thích nguyên nhân"]
+      cognitive_action: "Differentiate"
+      description: "Sinh viên phân tách thông tin thành các thành phần, tìm mối quan hệ"
+
+    - level: 5
+      name: "Evaluate (Đánh giá)"
+      verbs: ["đánh giá", "lựa chọn", "phê phán", "kiểm chứng", "nhận xét"]
+      cognitive_action: "Check"
+      description: "Sinh viên đánh giá dựa trên tiêu chí, phân biệt giải pháp tốt/kém"
+
+    - level: 6
+      name: "Create (Sáng tạo)"
+      verbs: ["thiết kế", "xây dựng", "đề xuất", "phát triển", "sáng tạo"]
+      cognitive_action: "Produce"
+      description: "Sinh viên kết hợp các yếu tố để tạo cấu trúc mới"
+
+# ============================================================
+# Mapping Bloom → G1/G2/G3 (dùng trong đề thi CS116)
+# ============================================================
+bloom_to_difficulty:
+  # G1: Recall + Understand — câu hỏi cơ bản
+  G1:
+    bloom_levels: [1, 2]
+    description: "Nhớ và Hiểu — câu hỏi nhận biết, định nghĩa, so sánh đơn giản"
+    example_patterns:
+      - "Đâu là...?"
+      - "... là gì?"
+      - "Phương pháp nào...?"
+      - "Câu nào đúng/sai?"
+    distractor_characteristics:
+      - "Chứa từ khóa đúng nhưng sai ngữ cảnh"
+      - "Đảo ngược quan hệ nhân quả"
+      - "Một từ sai nhưng cùng trường nghĩa"
+
+  # G2: Apply + Analyze — câu hỏi trung bình
+  G2:
+    bloom_levels: [3, 4]
+    description: "Áp dụng và Phân tích — câu hỏi tính toán, phân tích tình huống"
+    example_patterns:
+      - "Kết quả của... là gì?"
+      - "Nếu... thì...?"
+      - "Tại sao...?"
+      - "Phương pháp nào phù hợp nhất...?"
+    distractor_characteristics:
+      - "Đáp án đúng nhưng thiếu điều kiện"
+      - "Sai một bước trong quy trình"
+      - "Lẫn lộn giữa 2 khái niệm tương tự"
+
+  # G3: Evaluate + Create — câu hỏi khó
+  G3:
+    bloom_levels: [5, 6]
+    description: "Đánh giá và Sáng tạo — câu hỏi phê phán, thiết kế giải pháp"
+    example_patterns:
+      - "Đánh giá...?"
+      - "Giải pháp nào tốt nhất... và tại sao?"
+      - "Nhận xét nào đúng nhất...?"
+      - "Trường hợp nào thì...?"
+    distractor_characteristics:
+      - "Tất cả đáp án đều có vẻ đúng, cần phân tích kỹ"
+      - "Chứa nửa đúng nửa sai"
+      - "Yêu cầu kiến thức tổng hợp nhiều chủ đề"
+
+# ============================================================
+# Prompt templates cho từng difficulty level
+# ============================================================
+difficulty_prompts:
+  G1:
+    stem_style: "direct_question"
+    distractors_should: "contain_correct_keyword_in_wrong_context"
+    avoid: ["phân tích", "đánh giá", "so sánh phức tạp"]
+    cognitive_keywords: ["nhớ", "nhận biết", "định nghĩa"]
+
+  G2:
+    stem_style: "applied_scenario"
+    distractors_should: "test_partial_knowledge_and_precision"
+    avoid: ["hoàn toàn sai", "trái ngược hoàn toàn"]
+    cognitive_keywords: ["áp dụng", "phân tích", "tính toán"]
+
+  G3:
+    stem_style: "complex_scenario_or_evaluation"
+    distractors_should: "test_deep_understanding_and_edge_cases"
+    avoid: ["quá rõ ràng", "chỉ một từ khác nhau đơn giản"]
+    cognitive_keywords: ["đánh giá", "phê phán", "tổng hợp", "thiết kế"]
+
+# ============================================================
+# Validation rules
+# ============================================================
+validation_rules:
+  G1:
+    min_options_identical_keywords: 1   # Ít nhất 1 từ khóa trùng giữa options
+    max_distractors_with_absolute_terms: 1
+    allow_vague_distractors: true
+
+  G2:
+    min_options_identical_keywords: 0
+    max_distractors_with_absolute_terms: 0
+    allow_vague_distractors: false
+
+  G3:
+    min_options_identical_keywords: 0
+    max_distractors_with_absolute_terms: 0
+    allow_vague_distractors: false
+    require_multi_step_reasoning: true

@@ -1,0 +1,376 @@
+[
+  {
+    "id": "essay_001",
+    "type": "essay",
+    "topic": "customer_churn_prediction",
+    "question": "Bạn được thuê làm Kỹ sư AI cho một công ty viễn thông lớn. Công ty đang đối mặt với tỷ lệ khách hàng rời bỏ dịch vụ (churn) tăng cao và yêu cầu bạn thiết kế một hệ thống dự đoán sớm những khách hàng có khả năng hủy hợp đồng.\n\nThông tin đầu vào từ hệ thống CRM bao gồm:\n- Mã khách hàng (int)\n- Cước phí hàng tháng (float)\n- Tổng thời gian đã sử dụng dịch vụ (tháng – int)\n- Loại hợp đồng (string – ví dụ: 'Tháng', '1 Năm', '2 Năm')\n- Phương thức thanh toán (string – 'Thẻ tín dụng', 'Chuyển khoản')\n- Số lần gọi tổng đài hỗ trợ trong 3 tháng qua (int)\n- Trễ hạn thanh toán (int – 0: Không, 1: Có).\n\nBiến mục tiêu là trạng thái Rời bỏ (1: Có, 0: Không).\n\nTrình bày quy trình thiết kế mô hình máy học để thuyết phục Giám đốc kinh doanh theo đúng chuẩn quy trình end-to-end, giải thích rõ các kỹ thuật áp dụng.",
+    "answer": {
+      "steps": [
+        {
+          "title": "Phương pháp thu thập và đánh giá dữ liệu",
+          "content": "Thu thập dữ liệu trên cơ sở dữ liệu hiện có với các thông tin về khách hàng, cước phí tháng,... Sử dụng thư viện pandas đọc dữ liệu. Đánh giá chất lượng bằng cách dùng hàm isnull().sum() để đếm số lượng giá trị khuyết thiếu. Kiểm tra độ mất cân bằng của biến mục tiêu (Churn) bằng hàm value_counts() vì khách hàng rời bỏ thường chiếm tỷ lệ nhỏ. Dùng boxplot kiểm tra ngoại lai ở cột 'Cước phí hàng tháng'."
+        },
+        {
+          "title": "Tiền xử lý dữ liệu",
+          "content": "Sử dụng SimpleImputer(strategy='median') để điền giá trị thiếu cho các đặc trưng số. Dùng OneHotEncoder để mã hóa các biến danh mục ('Loại hợp đồng', 'Phương thức thanh toán'). Chuẩn hóa các cột số học bằng StandardScaler để mô hình tối ưu hội tụ tốt hơn."
+        },
+        {
+          "title": "Feature Engineering",
+          "content": "Tạo đặc trưng mới: Tính 'Tổng chi phí ước tính' bằng cách nhân 'Cước phí hàng tháng' với 'Tổng thời gian đã sử dụng'. Sử dụng seaborn.heatmap để xem ma trận tương quan (correlation), loại bỏ các đặc trưng có độ tương quan đa cộng tuyến quá cao."
+        },
+        {
+          "title": "Lựa chọn mô hình máy học",
+          "content": "Đây là bài toán Binary Classification. Đề xuất sử dụng LogisticRegression làm baseline (với hàm loss là Binary Cross Entropy - BCE). Sau đó dùng RandomForestClassifier để xử lý quan hệ phi tuyến và giảm Variance (chống Overfitting) nhờ cơ chế học Ensemble."
+        },
+        {
+          "title": "Huấn luyện và tinh chỉnh tham số",
+          "content": "Chia tập dữ liệu bằng train_test_split với tham số stratify=y để giữ nguyên tỷ lệ nhãn. Sử dụng GridSearchCV kết hợp với K-Fold Cross Validation để tìm siêu tham số tối ưu như n_estimators và max_depth cho mô hình Random Forest."
+        },
+        {
+          "title": "Đánh giá mô hình",
+          "content": "Không sử dụng Accuracy do dữ liệu mất cân bằng. Bắt buộc dùng classification_report để xem precision, recall và f1-score. Cần tối ưu hóa metric Recall để đảm bảo mô hình không bỏ sót khách hàng sắp rời đi, kết hợp phân tích Confusion Matrix."
+        }
+      ]
+    }
+  },
+  {
+    "id": "essay_house_pricing_002",
+    "type": "essay",
+    "topic": "house_pricing",
+    "question": "Bạn được yêu cầu thiết kế một giải pháp để dự đoán giá bán nhà đất cho một công ty bất động sản.\n\nDữ liệu đầu vào được thu thập từ hai bảng khác nhau:\n\n1. Bảng thông tin nhà (House Table):\n- Mã nhà (HouseID – int)\n- Diện tích sử dụng (float)\n- Số phòng ngủ (int)\n- Số phòng tắm (int)\n- Năm xây dựng (int)\n- Loại nhà (string: apartment, villa, townhouse)\n\n2. Bảng thông tin giao dịch và khu vực (Transaction & Location Table):\n- Mã nhà (HouseID – int)\n- Giá bán (SalePrice – float)\n- Ngày giao dịch (string)\n- Khu vực (string)\n- Khoảng cách đến trung tâm thành phố (float)\n- Điểm tiện ích khu vực (float)\n\nLưu ý: Hai bảng dữ liệu cần được kết hợp với nhau thông qua Mã nhà (HouseID) để tạo thành tập dữ liệu hoàn chỉnh.\n\nTrình bày quy trình xây dựng mô hình dự đoán giá nhà để thuyết phục công ty triển khai hệ thống. Cần chú trọng giải thích rõ cách thu thập, kết hợp dữ liệu, tiền xử lý, lựa chọn mô hình phù hợp và đánh giá hiệu quả mô hình.",
+    "answer": {
+      "steps": [
+        {
+          "title": "Thu thập và đánh giá dữ liệu",
+          "content": "Thu thập dữ liệu từ hai bảng House và Transaction. Kết hợp dữ liệu bằng pandas.merge(df_house, df_transaction, on='HouseID'). Kiểm tra missing bằng df.isnull().sum(). Sử dụng df.describe() để phân tích thống kê. Vẽ histogram cho SalePrice để kiểm tra phân bố và boxplot để phát hiện outliers ở diện tích và giá."
+        },
+        {
+          "title": "Tiền xử lý dữ liệu",
+          "content": "Xử lý missing bằng SimpleImputer(strategy='mean') cho numerical và strategy='most_frequent' cho categorical. Chuyển đổi biến ngày bằng pandas.to_datetime() và trích xuất year/month nếu cần. Encode biến categorical (Loại nhà, Khu vực) bằng OneHotEncoder(handle_unknown='ignore'). Chuẩn hóa dữ liệu bằng StandardScaler."
+        },
+        {
+          "title": "Feature Engineering",
+          "content": "Tạo feature Age = current_year - YearBuilt. Tạo feature Price_per_area = SalePrice / Area (chỉ dùng để phân tích, không đưa vào model để tránh leakage). Kiểm tra tương quan bằng heatmap (seaborn.heatmap) và loại bỏ feature tương quan cao."
+        },
+        {
+          "title": "Lựa chọn mô hình",
+          "content": "Đây là bài toán regression. Sử dụng LinearRegression làm baseline và RandomForestRegressor để mô hình hóa quan hệ phi tuyến. Random Forest giúp giảm variance và ít bị ảnh hưởng bởi outliers."
+        },
+        {
+          "title": "Huấn luyện và tuning",
+          "content": "Chia dữ liệu bằng train_test_split(test_size=0.2, random_state=42). Sử dụng GridSearchCV để tìm tham số tối ưu cho RandomForestRegressor (n_estimators, max_depth, min_samples_split)."
+        },
+        {
+          "title": "Đánh giá mô hình",
+          "content": "Sử dụng các metrics: MSE, RMSE, MAE và R2_score. RMSE được chọn làm metric chính vì nhạy với sai số lớn. Dùng cross_val_score() để đánh giá tổng quát mô hình."
+        }
+      ]
+    }
+  },
+  {
+    "id": "essay_customer_classification_006",
+    "type": "essay",
+    "topic": "customer_classification",
+    "question": "Bạn là Data Scientist tại một chuỗi nhà hàng F&B. Ban quản lý muốn phân loại khách hàng thành các nhóm (Khách vãng lai, Khách quen, Khách VIP) để thiết kế chương trình khách hàng thân thiết.\n\nDữ liệu được thu thập từ hai hệ thống:\n\n1. Bảng thông tin khách hàng (Customer Profile Table – từ hệ thống CRM):\n- CustomerID (int)\n- Độ tuổi (int)\n- Giới tính (string – 'Nam', 'Nữ', 'Khác')\n- Dị ứng thực phẩm (mảng string – ví dụ: ['Hải sản', 'Đậu phộng'])\n\n2. Bảng lịch sử giao dịch (Transaction Table – từ hệ thống POS):\n- CustomerID (int)\n- Tổng chi tiêu trong 3 tháng (float)\n- Số lần ghé quán (int)\n- Khung giờ ghé phổ biến (string – 'Sáng', 'Trưa', 'Tối')\n\nDo hệ thống chưa có sẵn nhãn, nhóm khách hàng được xây dựng dựa trên luật nghiệp vụ:\n- Khách VIP: Tổng chi tiêu > 10 triệu và số lần ghé > 15\n- Khách quen: Tổng chi tiêu từ 3–10 triệu\n- Khách vãng lai: còn lại\n\nLưu ý: Cần kết hợp dữ liệu từ hai bảng bằng pandas.merge() theo CustomerID.\n\nHãy trình bày quy trình xây dựng mô hình phân loại khách hàng, bao gồm xử lý dữ liệu dạng mảng, thiết kế đặc trưng và lựa chọn mô hình phù hợp.",
+    "answer": {
+      "steps": [
+        {
+          "title": "Thu thập và đánh giá dữ liệu",
+          "content": "Dữ liệu được thu thập từ hệ thống CRM (thông tin khách hàng) và POS (lịch sử giao dịch). Kết hợp dữ liệu bằng pandas.merge(df_profile, df_transaction, on='CustomerID'). Tạo nhãn dựa trên rule business bằng điều kiện (if-else hoặc numpy.select). Kiểm tra missing bằng isnull().sum(). Phân tích phân bố nhãn bằng value_counts() để phát hiện imbalance (VIP thường ít). Dùng boxplot để kiểm tra outliers trong chi tiêu."
+        },
+        {
+          "title": "Tiền xử lý dữ liệu (Preprocessing)",
+          "content": "Xử lý missing bằng SimpleImputer(strategy='median' cho số, 'most_frequent' cho categorical). Encode 'Giới tính' và 'Khung giờ' bằng OneHotEncoder. Với dữ liệu mảng 'Dị ứng', sử dụng MultiLabelBinarizer để chuyển thành vector nhị phân. Chuẩn hóa các biến số bằng StandardScaler."
+        },
+        {
+          "title": "Feature Engineering",
+          "content": "Tạo feature 'LTV' = Tổng chi tiêu. Tạo 'Visit_frequency' = số lần ghé / 90 ngày. Tạo feature 'Spending_per_visit' = Tổng chi tiêu / Số lần ghé. Các feature này giúp phân biệt rõ VIP vs khách thường. Kiểm tra tương quan bằng heatmap để loại bỏ feature dư thừa."
+        },
+        {
+          "title": "Lựa chọn mô hình",
+          "content": "Đây là bài toán Multi-class Classification. Sử dụng LogisticRegression (multi_class='multinomial') làm baseline. Sử dụng RandomForestClassifier để bắt quan hệ phi tuyến và giảm variance. Có thể cân nhắc class_weight='balanced' để xử lý mất cân bằng dữ liệu."
+        },
+        {
+          "title": "Huấn luyện và tinh chỉnh tham số",
+          "content": "Chia dữ liệu bằng train_test_split(test_size=0.2, stratify=y). Sử dụng StratifiedKFold cross-validation để đảm bảo phân bố lớp. Dùng GridSearchCV để tuning tham số (n_estimators, max_depth). Điều này giúp tìm điểm cân bằng giữa bias và variance."
+        },
+        {
+          "title": "Đánh giá mô hình",
+          "content": "Sử dụng classification_report với f1_score (average='macro') để đánh giá công bằng giữa các lớp. Vẽ confusion_matrix để kiểm tra lỗi phân loại, đặc biệt là việc nhầm VIP thành khách thường. Ngoài ra có thể đánh giá Precision@TopK nếu hệ thống dùng để target marketing."
+        }
+      ]
+    }
+  },
+  {
+    "id": "essay_online_learning_engagement_007",
+    "type": "essay",
+    "topic": "online_learning_engagement",
+    "question": "Bạn được yêu cầu thiết kế một giải pháp để dự đoán mức độ tương tác của sinh viên trên một nền tảng học trực tuyến.\n\nDữ liệu đầu vào được thu thập từ hai nguồn khác nhau:\n\n1. Bảng thông tin sinh viên (User Table):\n- Mã sinh viên (UserID – int)\n- Tuổi (int)\n- Giới tính (string)\n- Ngành học (string)\n- Trình độ học vấn (string)\n\n2. Bảng dữ liệu hoạt động học tập (Activity Logs Table):\n- Mã sinh viên (UserID – int)\n- Số lần đăng nhập trong tuần (int)\n- Tổng thời gian học trong tuần (float – giờ)\n- Số bài học đã hoàn thành (int)\n- Số lần tương tác (comment, hỏi đáp) (int)\n- Điểm quiz trung bình (float)\n- Mức độ tương tác (Engagement Level – int, từ 0 đến 3)\n\nLưu ý: Hai bảng cần được kết hợp với nhau thông qua Mã sinh viên (UserID). Mức độ tương tác là biến thứ tự (ordinal).\n\nTrình bày quy trình xây dựng mô hình dự đoán mức độ tương tác của sinh viên để hỗ trợ nền tảng cá nhân hóa trải nghiệm học tập. Cần chú trọng giải thích cách thu thập và kết hợp dữ liệu, xử lý dữ liệu, lựa chọn mô hình phù hợp và đánh giá hiệu quả mô hình.",
+    "answer": {
+      "steps": [
+        {
+          "title": "Thu thập và đánh giá dữ liệu",
+          "content": "Thu thập dữ liệu từ User Table và Activity Logs Table. Kết hợp bằng pandas.merge(df_user, df_logs, on='UserID'). Kiểm tra missing bằng df.isnull().sum(). Kiểm tra phân bố nhãn Engagement bằng value_counts(). Vẽ histogram cho thời gian học và boxplot để phát hiện outliers."
+        },
+        {
+          "title": "Tiền xử lý dữ liệu",
+          "content": "Xử lý missing bằng SimpleImputer(strategy='mean') cho numerical và strategy='most_frequent' cho categorical. Encode categorical (Giới tính, Ngành học, Trình độ) bằng OneHotEncoder. Chuẩn hóa dữ liệu bằng StandardScaler."
+        },
+        {
+          "title": "Feature Engineering",
+          "content": "Tạo feature Engagement_rate = interactions / login_count. Tạo feature Avg_time_per_session = total_time / login_count. Kiểm tra tương quan bằng heatmap và loại bỏ feature dư thừa."
+        },
+        {
+          "title": "Lựa chọn mô hình",
+          "content": "Đây là bài toán ordinal classification. Có thể sử dụng LogisticRegression (multi-class) hoặc RandomForestClassifier. Random Forest phù hợp với dữ liệu phi tuyến và ít nhạy với nhiễu."
+        },
+        {
+          "title": "Huấn luyện và tuning",
+          "content": "Chia dữ liệu bằng train_test_split(test_size=0.2, stratify=y, random_state=42). Sử dụng GridSearchCV để tuning tham số (n_estimators, max_depth)."
+        },
+        {
+          "title": "Đánh giá mô hình",
+          "content": "Sử dụng Accuracy, F1-score và Confusion Matrix. Có thể dùng Quadratic Weighted Kappa (QWK) để đánh giá tốt hơn cho bài toán ordinal. Dùng Stratified K-Fold Cross Validation để đảm bảo phân bố lớp cân bằng."
+        }
+      ]
+    }
+  },
+  {
+    "id": "essay_008",
+    "type": "essay",
+    "topic": "course_recommendation_system",
+    "question": "Phòng Đào tạo Đại học muốn tự động hóa quy trình tư vấn học vụ bằng cách xây dựng một Hệ thống gợi ý môn học (Course Recommendation) nhằm đề xuất các môn tự chọn phù hợp nhất cho sinh viên.\n\nThông tin đầu vào gồm:\n- Mã sinh viên (int)\n- Danh sách các môn đã học (mảng string – ví dụ: ['CS114', 'CS115'])\n- Điểm GPA (float)\n- Chuyên ngành (string)\n- Lịch sử từ khóa tìm kiếm trên thư viện (mảng string)\n- Đánh giá (Rating) của sinh viên cho các môn cũ (thang 1-5, float).\n\nTrình bày chi tiết cách tiếp cận để tạo ra thuật toán gợi ý dựa trên lịch sử của sinh viên.",
+    "answer": {
+      "steps": [
+        {
+          "title": "Thu thập và đánh giá dữ liệu",
+          "content": "Vào website trường đại học đó lấy dữ liệu về, hoặc yêu cầu trường đại học cung cấp các thông tin chính xác cho hệ thống. Đọc dữ liệu từ log sinh viên. Tạo ma trận tương tác (User-Item Matrix) với hàng là Sinh viên, cột là Môn học và giá trị là Rating. Đánh giá tính thưa thớt (sparsity) của ma trận này bằng cách đếm tỷ lệ các ô NaN."
+        },
+        {
+          "title": "Tiền xử lý dữ liệu (Preprocessing)",
+          "content": "Sử dụng SimpleImputer điền khuyết giá trị Rating bằng 0 hoặc giá trị trung bình. Dùng OneHotEncoder cho cột 'Chuyên ngành'. Chuẩn hóa 'GPA' bằng MinMaxScaler để đưa về khoảng [0, 1]."
+        },
+        {
+          "title": "Feature Engineering",
+          "content": "Xử lý văn bản 'Danh sách môn đã học' và 'Từ khóa tìm kiếm' bằng hàm TfidfVectorizer từ thư viện sklearn. Việc này biến chuỗi text thành ma trận vector đặc trưng, giúp đo lường khoảng cách về sở thích học thuật giữa các sinh viên."
+        },
+        {
+          "title": "Lựa chọn mô hình",
+          "content": "Đề xuất thuật toán K-Nearest Neighbors (KNeighborsRegressor) kết hợp metric='cosine'. Đây là phương pháp Collaborative Filtering dựa trên khoảng cách (distance-based learning). KNN sẽ tìm ra K sinh viên có vector đặc trưng giống hệt với sinh viên hiện tại để nội suy điểm Rating."
+        },
+        {
+          "title": "Huấn luyện và tuning",
+          "content": "Với bản chất của KNN là Lazy Learning, mô hình không thực sự 'train' (cập nhật trọng số) mà chỉ lưu dữ liệu vào bộ nhớ. Cần dùng GridSearchCV để tune siêu tham số n_neighbors (số lượng sinh viên lân cận) thông qua K-Fold Cross Validation trên tập rating đã biết."
+        },
+        {
+          "title": "Đánh giá mô hình",
+          "content": "Thay vì Accuracy, tính Root Mean Squared Error (RMSE) của các rating được dự đoán so với rating thật. Đánh giá hệ thống xếp hạng bằng độ đo Precision@K và Recall@K (ví dụ top 5 môn gợi ý có thực sự được sinh viên đăng ký học không)."
+        }
+      ]
+    }
+  },
+  {
+    "id": "essay_009",
+    "type": "essay",
+    "topic": "sales_revenue_prediction",
+    "question": "Bạn làm việc tại chuỗi cửa hàng tiện lợi Z. Ban giám đốc yêu cầu xây dựng mô hình Học máy để dự báo Doanh thu bán hàng của tháng tiếp theo cho từng chi nhánh, từ đó tối ưu hóa việc phân bổ ngân sách marketing và nhập hàng.\n\nThông tin đầu vào (theo từng cửa hàng) gồm:\n- Mã cửa hàng (int)\n- Diện tích (m2 – float)\n- Số lượng nhân viên trực ca (int)\n- Lưu lượng khách đi bộ trung bình qua khu vực (int)\n- Vị trí (string – 'Mặt phố', 'TTTM', 'Ngõ')\n- Khoảng cách đến đối thủ cạnh tranh (km – float)\n- Ngân sách marketing đã chi (Triệu VNĐ – float).\n\nBiến đầu ra là Doanh thu (Tỷ VNĐ – float).\n\nTrình bày quy trình xây dựng Pipeline dự báo doanh thu và lập luận về cách xử lý các đặc trưng có nguy cơ đa cộng tuyến.",
+    "answer": {
+      "steps": [
+        {
+          "title": "Thu thập và đánh giá dữ liệu",
+          "content": "Dùng info() và describe(). Dùng seaborn.scatterplot để trực quan hóa mối quan hệ giữa 'Lưu lượng khách' và 'Doanh thu'. Dùng boxplot kiểm tra outliers của 'Khoảng cách đến đối thủ'. Kiểm tra phân bố Doanh thu, nếu bị lệch phải có thể cần biến đổi logarit (np.log1p)."
+        },
+        {
+          "title": "Preprocessing",
+          "content": "Xử lý khuyết bằng SimpleImputer. Mã hóa 'Vị trí' bằng OneHotEncoder. Bắt buộc áp dụng StandardScaler chuẩn hóa 'Lưu lượng khách', 'Ngân sách', 'Diện tích' vì các thuật toán tối ưu (Gradient Descent) rất nhạy cảm với các biến có thang đo chênh lệch lớn."
+        },
+        {
+          "title": "Feature Engineering",
+          "content": "Dùng heatmap correlation để loại bỏ các biến đa cộng tuyến. Khởi tạo PolynomialFeatures(degree=2) tạo biến tương tác (ví dụ Diện tích * Nhân sự). Thêm đặc trưng kinh doanh 'Mật độ khách' = Lưu lượng / Diện tích."
+        },
+        {
+          "title": "Lựa chọn mô hình",
+          "content": "Bài toán Regression liên tục. Do Feature Engineering tạo ra nhiều biến bậc 2 phức tạp dễ gây High Variance, đề xuất dùng Elastic Net (hồi quy tuyến tính kết hợp L1 + L2). L1 (Lasso) làm feature selection loại bỏ biến vô dụng, L2 (Ridge) giảm overfitting."
+        },
+        {
+          "title": "Huấn luyện và tinh chỉnh tham số",
+          "content": "Tạo Pipeline(steps=[('scaler', StandardScaler()), ('model', ElasticNet())]). Sử dụng GridSearchCV với K-Fold Validation để tìm tối ưu 2 hyperparameter là alpha (tổng lực phạt) và l1_ratio (tỷ lệ pha trộn Lasso/Ridge)."
+        },
+        {
+          "title": "Đánh giá mô hình",
+          "content": "Sử dụng Mean Squared Error (MSE) làm loss function để trừng phạt mạnh dự đoán sai lớn. Xuất báo cáo kết hợp MAE (sai số tuyệt đối trung bình theo tỷ VNĐ) và R2_score để đánh giá sự phù hợp của mô hình với thực tế kinh doanh."
+        }
+      ]
+    }
+  },
+  {
+    "id": "essay_010",
+    "type": "essay",
+    "topic": "app_usage_time_prediction",
+    "question": "Giám đốc Sản phẩm (Product Manager) của một công ty ứng dụng di động muốn dự đoán tổng thời gian một người dùng sẽ dành cho ứng dụng trong ngày hôm nay để tối ưu hóa thời điểm gửi quảng cáo.\n\nThông tin lịch sử bao gồm:\n- Mã người dùng (int)\n- Độ tuổi (int)\n- Hệ điều hành (string – 'iOS', 'Android')\n- Kết nối mạng (string – 'WiFi', '4G')\n- Bật thông báo push (int – 1: Bật, 0: Tắt)\n- Số lần mở app trung bình tuần qua (int)\n- Thời gian mỗi phiên (session) tuần qua (phút – float)\n- Mức pin thiết bị hiện tại (% – float).\n\nBiến mục tiêu là Tổng thời gian sử dụng trong ngày (phút – float).\n\nTrình bày quy trình làm ML Pipeline, tập trung vào cách tránh underfitting/overfitting khi lựa chọn thuật toán dựa trên Tree.",
+    "answer": {
+      "steps": [
+        {
+          "title": "Thu thập và đánh giá dữ liệu",
+          "content": "Dùng isnull().sum() để kiểm tra missing data. Dùng seaborn.histplot để kiểm tra phân bố biến mục tiêu (Thời gian sử dụng). Chạy df.corr() để xem mức pin hay tuổi tác có tác động tuyến tính đến thời gian dùng app hay không."
+        },
+        {
+          "title": "Tiền xử lý dữ liệu",
+          "content": "Điền khuyết Độ tuổi bằng SimpleImputer. Dùng OneHotEncoder cho Hệ điều hành và Kết nối mạng. Chuẩn hóa các số liên tục (Số lần mở app, Thời gian phiên, Mức pin) bằng StandardScaler."
+        },
+        {
+          "title": "Feature Engineering",
+          "content": "Tính đặc trưng mới 'Lịch sử ước tính' = 'Số lần mở app' * 'Thời gian mỗi phiên'. Khai báo log transform (np.log1p) lên biến mục tiêu nếu đồ thị phân bố có dạng đuôi dài (nhiều người dùng rất ngắn, ít người cày app rất lâu)."
+        },
+        {
+          "title": "Lựa chọn mô hình Học máy",
+          "content": "Bài toán Hồi quy (Regression). Nếu dùng DecisionTreeRegressor cơ bản, cây dễ phân nhánh quá mức dẫn tới Overfitting (Low Bias, High Variance). Đề xuất nâng cấp sang thuật toán Random Forest Regressor (Ensemble learning) để giảm Variance thông qua việc trung bình hóa kết quả nhiều cây dự đoán ngẫu nhiên."
+        },
+        {
+          "title": "Huấn luyện và tinh chỉnh tham số",
+          "content": "Chia tập dữ liệu train_test_split. Khởi chạy phương pháp Bayesian Optimization (hoặc RandomizedSearchCV) để tối ưu hóa các siêu tham số như max_depth (hạn chế cây quá sâu) và min_samples_split, giúp tìm cấu hình tốt nhanh hơn Grid Search trong không gian rộng."
+        },
+        {
+          "title": "Đánh giá mô hình",
+          "content": "Sử dụng metric chính là Mean Squared Error (MSE) làm Loss function. Tính thêm RMSE và R2 Score để xác thực độ chính xác. Báo cáo bằng Mean Absolute Error (MAE) để diễn giải sai số phút thực tế cho Product Manager dễ hiểu."
+        }
+      ]
+    }
+  },
+  {
+     "id": "essay_news_ranking_011",
+    "type": "essay",
+    "topic": "ranking",
+    "question": "Bạn được yêu cầu xây dựng hệ thống xếp hạng bài viết (News Feed Ranking) cho một nền tảng mạng xã hội.\n\nThông tin đầu vào sẽ bao gồm:\n- Mã người dùng (int)\n- Mã bài viết (int)\n- Thời gian người dùng đã tương tác với bài viết (float – giây)\n- Số lượt thích bài viết (int)\n- Số lượt chia sẻ (int)\n- Chủ đề bài viết (string)\n- Lịch sử tương tác của người dùng với các bài viết (List[int])\n- Thời gian đăng bài (timestamp)\n\nOutput là điểm ranking score (float) để sắp xếp bài viết.\n\nTrình bày quy trình xây dựng hệ thống ranking này.",
+    "answer": {
+      "steps": [
+        {
+          "title": "Thu thập và đánh giá dữ liệu",
+          "content": "Thu thập từ cơ sở dữ liệu nền tảng trực tuyến, API công khai. Load dữ liệu bằng pandas. Đánh giá chất lượng (độ tin cậy, chính xác, tính nhất quán, độ đầy đủ). Kiểm tra missing bằng isnull().sum(). Kiểm tra phân bố engagement bằng histogram để hiểu dữ liệu lệch."
+        },
+        {
+          "title": "Tiền xử lý dữ liệu",
+          "content": "Dùng SimpleImputer(strategy='mean'). Encode topic bằng OneHotEncoder. Chuẩn hóa feature bằng StandardScaler."
+        },
+        {
+          "title": "Feature Engineering",
+          "content": "Tạo feature: engagement_score = likes + shares. Tạo time_decay feature từ timestamp. Dùng CountVectorizer cho lịch sử tương tác."
+        },
+        {
+          "title": "Lựa chọn mô hình",
+          "content": "Sử dụng GradientBoostingRegressor hoặc XGBRegressor để dự đoán ranking score vì phù hợp bài toán ranking dạng regression."
+        },
+        {
+          "title": "Huấn luyện và tuning",
+          "content": "Chia train/test. Sử dụng RandomizedSearchCV để tuning learning_rate, n_estimators."
+        },
+        {
+          "title": "Đánh giá mô hình",
+          "content": "Sử dụng MSE, RMSE để đánh giá score prediction. Ngoài ra dùng Precision@K để đánh giá chất lượng ranking top bài viết."
+        }
+      ]
+    }
+  },
+  {
+    "id": "essay_012",
+    "type": "essay",
+    "topic": "energy_consumption_prediction",
+    "question": "Bạn được yêu cầu thiết kế hệ thống dự đoán mức tiêu thụ điện năng của hộ gia đình.\n\nThông tin đầu vào bao gồm:\n- Mã hộ gia đình (int)\n- Nhiệt độ môi trường (float)\n- Độ ẩm (float)\n- Số lượng thiết bị điện đang sử dụng (int)\n- Thời gian sử dụng điện trong ngày (float – giờ)\n- Loại nhà (string: apartment, house)\n- Số người trong gia đình (int)\n\nOutput là lượng điện tiêu thụ (kWh – float).\n\nTrình bày quy trình xây dựng mô hình.",
+    "answer": {
+      "steps": [
+        {
+          "title": "Thu thập và đánh giá dữ liệu",
+          "content": "Lấy dữ liệu về mức độ tiêu thụ điện của các hộ gia đình dựa trên các website uy tín, lấy API, crawl dữ liệu về. Khảo sát tính toàn vẹn của dữ liệu với isnull().sum(). Dùng seaborn.scatterplot để xem xét mức độ tương quan tuyến tính giữa Nhiệt độ, Diện tích nhà so với Sản lượng điện năng. Kiểm tra ngoại lai bằng boxplot."
+        },
+        {
+          "title": "Tiền xử lý dữ liệu",
+          "content": "Dùng SimpleImputer xử lý dữ liệu rỗng. Do các biến 'Diện tích' (hàng trăm), 'Nhiệt độ' (vài chục), 'Số thiết bị' (một chữ số) lệch thang đo nghiêm trọng, bắt buộc phải chuẩn hóa bằng StandardScaler để thuật toán không học thiên lệch (Bias) vào biến Diện tích."
+        },
+        {
+          "title": "Feature Engineering",
+          "content": "Mối quan hệ có thể không tuyến tính (VD: Nhiệt độ tăng cao, tiêu thụ điện của máy lạnh tăng theo hàm mũ). Sinh thêm các đặc trưng bằng PolynomialFeatures (đặc trưng bậc 2, bậc 3 của Nhiệt độ, Số thiết bị làm mát)."
+        },
+        {
+          "title": "Lựa chọn mô hình Học máy",
+          "content": "Bài toán dự đoán giá trị liên tục. Đề xuất Neural Network (MLPRegressor) hoặc mô hình tuyến tính có điều chuẩn như Ridge Regression (L2 penalty). Lý do: Mạng nơ-ron học phi tuyến tốt, nhưng nếu dữ liệu ít sẽ gây High Variance. Dùng Ridge Regression sẽ giúp giảm Variance thông qua việc kiểm soát độ lớn trọng số mô hình."
+        },
+        {
+          "title": "Huấn luyện và tuning",
+          "content": "Sử dụng K-Fold cross validation trong lúc train để đánh giá trung bình. Cấu hình GridSearchCV để dò tìm siêu tham số alpha (hệ số điều chuẩn L2) để quyết định mức độ phạt sự phức tạp của mô hình."
+        },
+        {
+          "title": "Đánh giá mô hình",
+          "content": "Vì việc điều tiết điện bị sai lệch số lượng lớn (gây mất điện diện rộng) có hậu quả cực cao, bắt buộc sử dụng Mean Squared Error (MSE) làm hàm mất mát lõi vì MSE phạt lũy thừa các sai số lớn. Kết hợp R2 Score để đo mức độ khớp của mô hình."
+        }
+      ]
+    }
+  },
+  {
+    "id": "essay_job_recommendation_013",
+    "type": "essay",
+    "topic": "job_recommendation",
+    "question": "Bạn là Data Scientist tại một nền tảng tuyển dụng trực tuyến. Nhiệm vụ của bạn là xây dựng hệ thống gợi ý và xếp hạng (ranking) các công việc phù hợp nhất cho từng người dùng nhằm tăng tỷ lệ ứng tuyển.\n\nDữ liệu được thu thập từ hệ thống gồm ba bảng:\n\n1. Bảng thông tin người dùng (User Profile Table):\n- UserID (int)\n- Kỹ năng chính (string)\n- Số năm kinh nghiệm (int)\n- Ngành nghề (string)\n- Trình độ học vấn (string)\n- Vị trí mong muốn (string)\n\n2. Bảng tương tác công việc (Job Interaction Table):\n- UserID (int)\n- JobID (int)\n- Số lần xem job (int)\n- Số lần click (int)\n- Có apply hay không (int – 1: Có, 0: Không)\n- Thời gian xem (float – giây)\n\n3. Bảng thông tin công việc (Job Table):\n- JobID (int)\n- Required Skills (string)\n- Job Title (string)\n- Mức lương (float)\n- Kinh nghiệm yêu cầu (int)\n\nLưu ý: Cần kết hợp các bảng bằng pandas.merge() theo UserID và JobID để tạo dataset dạng (user, job).\n\nThay vì xây dựng mô hình ranking phức tạp, hãy thiết kế hệ thống dự đoán xác suất người dùng sẽ apply vào một job, sau đó sử dụng xác suất này để sắp xếp (ranking) các job.\n\nHãy trình bày quy trình xây dựng hệ thống, bao gồm tạo label hợp lý, feature matching giữa user-job, lựa chọn mô hình và cách đánh giá hệ thống.",
+    "answer": {
+      "steps": [
+        {
+          "title": "Thu thập và đánh giá dữ liệu",
+          "content": "Dữ liệu được thu thập từ hệ thống website/app tuyển dụng, bao gồm hồ sơ người dùng, thông tin job và log hành vi. Kết hợp dữ liệu bằng pandas.merge(df_user, df_interaction, on='UserID') và tiếp tục merge với df_job bằng JobID. Biến mục tiêu là 'apply' (1/0). Kiểm tra missing bằng isnull().sum(). Phân tích phân bố label bằng value_counts() để phát hiện imbalance (apply thường rất ít so với không apply)."
+        },
+        {
+          "title": "Tiền xử lý dữ liệu",
+          "content": "Xử lý missing bằng SimpleImputer(strategy='most_frequent' cho categorical, 'mean' cho numerical). Encode các biến categorical như ngành nghề, job title bằng OneHotEncoder. Với dữ liệu text như skills, có thể dùng TfidfVectorizer để chuyển thành vector số. Chuẩn hóa các biến số bằng StandardScaler."
+        },
+        {
+          "title": "Feature Engineering",
+          "content": "Xây dựng các feature matching giữa user và job: skill_match = số kỹ năng trùng nhau giữa user và job. Tạo experience_gap = số năm kinh nghiệm user - yêu cầu job. Tạo engagement_score = click + time_view. Có thể dùng cosine similarity giữa vector TF-IDF của user skills và job skills để đo độ phù hợp."
+        },
+        {
+          "title": "Lựa chọn mô hình",
+          "content": "Chuyển bài toán thành Binary Classification: dự đoán xác suất apply. Sử dụng LogisticRegression làm baseline. Sử dụng XGBoost hoặc LightGBM để học quan hệ phi tuyến giữa user và job. Các model này phù hợp với dữ liệu tabular và thường cho hiệu quả cao."
+        },
+        {
+          "title": "Huấn luyện và tuning",
+          "content": "Chia dữ liệu bằng train_test_split(test_size=0.2, stratify=y). Sử dụng GridSearchCV hoặc RandomizedSearchCV để tuning các tham số như learning_rate, max_depth, n_estimators. Có thể sử dụng scale_pos_weight trong XGBoost để xử lý imbalance."
+        },
+        {
+          "title": "Đánh giá mô hình",
+          "content": "Đánh giá classification bằng ROC-AUC và F1-score. Để đánh giá ranking, với mỗi user, sắp xếp các job theo xác suất dự đoán và tính Precision@K (ví dụ top 5 job). Metric này phản ánh chất lượng gợi ý thực tế của hệ thống."
+        }
+      ]
+    }
+  },
+  {
+    "id": "essay_014",
+    "type": "essay",
+    "topic": "medical_cost_prediction",
+    "question": "Bạn là chuyên gia AI tại một công ty Bảo hiểm Y tế. Công ty muốn xây dựng mô hình dự đoán chính xác Chi phí y tế mà họ phải chi trả cho một khách hàng trong năm tới, từ đó tính toán được mức phí bảo hiểm hợp lý.\n\nThông tin khách hàng thu thập lúc ký hợp đồng gồm:\n- Mã khách hàng (int)\n- Tuổi (int)\n- Chỉ số khối cơ thể BMI (float)\n- Hút thuốc (int – 1: Có, 0: Không)\n- Vùng miền (string – 'Bắc', 'Trung', 'Nam')\n- Số lượng con cái/người phụ thuộc (int)\n- Tiền sử bệnh nền (int – 1: Có, 0: Không).\n\nBiến mục tiêu là Chi phí Y tế ước tính (đơn vị Triệu VNĐ – float).\n\nTrình bày quy trình xây dựng Pipeline giải bài toán trên, thiết kế các Feature có khả năng phân tách cao và chiến lược điều chuẩn (Regularization) chống overfitting.",
+    "answer": {
+      "steps": [
+        {
+          "title": "Thu thập và đánh giá dữ liệu",
+          "content": "Thu thập dữ liệu khách hàng từ website công ty ra yêu cầu hoặc sẽ được công ty cung cấp về các dữ liệu trong các năm trước đó. Dùng info() kiểm tra cấu trúc. Kiểm tra khuyết thiếu bằng isnull().sum(). Trực quan hóa tương quan bằng heatmap. Kiểm tra biến đầu ra 'Chi phí Y tế' bằng histogram, thường chi phí y tế sẽ lệch phải (nhiều người chi phí thấp, ít bệnh nhân chi phí khổng lồ)."
+        },
+        {
+          "title": "Tiền xử lý dữ liệu",
+          "content": "Điền giá trị rỗng bằng SimpleImputer(strategy='median'). Áp dụng OneHotEncoder cho biến phân loại 'Vùng miền'. Sử dụng StandardScaler chuẩn hóa các biến liên tục như 'Tuổi', 'BMI' về trung bình 0, phương sai 1 để tối ưu quá trình huấn luyện."
+        },
+        {
+          "title": "Feature Engineering",
+          "content": "Sự kết hợp giữa BMI cao và Hút thuốc thường tạo ra chi phí y tế đột biến. Dùng hàm PolynomialFeatures(degree=2) sinh ra các đặc trưng tương tác ($x_1 * x_2$) và bậc hai ($x^2$). Điều này giúp giảm Bias (ngăn Underfitting) bằng cách tăng độ phức tạp mô hình."
+        },
+        {
+          "title": "Lựa chọn mô hình",
+          "content": "Sau khi sinh PolynomialFeatures, số biến tăng mạnh tạo ra nguy cơ Overfitting (High Variance). Đề xuất dùng Lasso Regression (áp dụng L1 Regularization). Lý do: L1 có khả năng Feature Selection, tự động ép trọng số của các tương tác nhiễu về đúng bằng 0, chỉ giữ lại các đặc trưng cốt lõi."
+        },
+        {
+          "title": "Huấn luyện và Tối ưu hóa mô hình",
+          "content": "Sử dụng Pipeline nối PolynomialFeatures, StandardScaler và Lasso. Thực hiện GridSearchCV kết hợp với 5-Fold Cross Validation trên tập train để dò tìm cường độ phạt (alpha) của Lasso, nhằm đưa mô hình về điểm tối ưu Trade-off Bias-Variance."
+        },
+        {
+          "title": "Đánh giá mô hình",
+          "content": "Mô hình hồi quy đánh giá bằng hàm mất mát MSE (Mean Squared Error). Do MSE bình phương sai số nên sẽ trừng phạt rất mạnh các dự đoán sai lệch lớn. Báo cáo bằng MAE và R2 Score."
+        }
+      ]
+    }
+  }
+]
