@@ -1,0 +1,654 @@
+{
+  "GENERATED_QUESTIONS": [
+    {
+      "question_id": "p3_q1",
+      "question_text": "Câu 1. [Một đáp án đúng] (G2) Hàm make_pipeline (cũng như Pipeline):",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Thử nghiệm nhiều mô hình cùng một lúc",
+        "B": "Kết hợp một hoặc nhiều bộ biến đổi và một mô hình dự đoán",
+        "C": "Tự động vẽ biểu đồ histogram của các đặc trưng",
+        "D": "Thực hiện kiểm định chéo sử dụng các bộ biến đổi và mô hình dự đoán được truyền vào làm tham số"
+      },
+      "correct_answer": ["B"],
+      "topic": "Pipeline"
+    },
+    {
+      "question_id": "p3_q2",
+      "question_text": "Câu 2. [Một đáp án đúng] (G2) Pipeline Machine Learning là gì?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Một kỹ thuật học máy được sử dụng để giảm kích thước dữ liệu",
+        "B": "Một loại mô hình học máy huấn luyện từ dữ liệu theo thời gian",
+        "C": "Một quy trình tự động hóa việc xây dựng, huấn luyện, triển khai và quản lý các mô hình học máy",
+        "D": "Một thuật toán học máy được sử dụng để phân loại dữ liệu"
+      },
+      "correct_answer": ["C"],
+      "topic": "Pipeline"
+    },
+    {
+      "question_id": "p3_q3",
+      "question_text": "Câu 3. [Một đáp án đúng] (G2) Bước nào sau đây KHÔNG phải là bước trong một Pipeline Machine Learning điển hình?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Thu thập dữ liệu",
+        "B": "Tiền xử lý dữ liệu",
+        "C": "Chọn lựa mô hình",
+        "D": "Sử dụng mô hình để dự đoán"
+      },
+      "correct_answer": ["D"],
+      "topic": "Pipeline"
+    },
+    {
+      "question_id": "p3_q4",
+      "question_text": "Câu 4. [Một đáp án đúng] (G2) Lợi ích chính nào sau đây KHÔNG phải là lợi ích của việc sử dụng Pipeline Machine Learning?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Tự động hóa",
+        "B": "Khả năng tái tạo",
+        "C": "Hiệu quả",
+        "D": "Khả năng giải thích"
+      },
+      "correct_answer": ["D"],
+      "topic": "Pipeline"
+    },
+    {
+      "question_id": "p3_q5",
+      "question_text": "Câu 5. [Một đáp án đúng] (G2) Theo slide, trong bước Model evaluation, nếu kết quả đánh giá không tốt thì:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Qua bước tiếp theo ngay lập tức",
+        "B": "Quay lại các pha trước",
+        "C": "Triển khai mô hình luôn",
+        "D": "Bỏ qua bước kiểm định mô hình"
+      },
+      "correct_answer": ["B"],
+      "topic": "Model Evaluation"
+    },
+    {
+      "question_id": "p3_q6",
+      "question_text": "Câu 6. [Một đáp án đúng] (G2) Exploratory Data Analysis (EDA) là gì?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Một thuật toán học máy để dự đoán giá trị tương lai của dữ liệu",
+        "B": "Một quy trình để làm sạch và chuẩn bị dữ liệu cho việc phân tích",
+        "C": "Một phương pháp trực quan hóa dữ liệu để khám phá các mẫu và xu hướng",
+        "D": "Quá trình phân tích dữ liệu sơ bộ để hiểu rõ hơn về đặc điểm, xu hướng và mối quan hệ của dữ liệu"
+      },
+      "correct_answer": ["D"],
+      "topic": "EDA"
+    },
+    {
+      "question_id": "p3_q7",
+      "question_text": "Câu 7. [Một đáp án đúng] (G2) Bước nào sau đây KHÔNG phải là bước trong EDA?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Thu thập dữ liệu",
+        "B": "Đặt câu hỏi về dữ liệu",
+        "C": "Huấn luyện mô hình học máy",
+        "D": "Mô tả dữ liệu"
+      },
+      "correct_answer": ["C"],
+      "topic": "EDA"
+    },
+    {
+      "question_id": "p3_q8",
+      "question_text": "Câu 8. [Nhiều đáp án đúng] (G2) Theo slide, các công cụ trực quan trong EDA gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Histogram",
+        "B": "Box plot",
+        "C": "Ma trận tương quan",
+        "D": "One-hot encoding"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "EDA Tools"
+    },
+    {
+      "question_id": "p3_q9",
+      "question_text": "Câu 9. [Một đáp án đúng] (G2) EDA có thể giúp cải thiện độ chính xác và hiệu quả của các mô hình học máy như thế nào?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Bằng cách giúp các nhà khoa học dữ liệu hiểu rõ hơn về dữ liệu",
+        "B": "Bằng cách xác định các vấn đề tiềm ẩn trong dữ liệu có thể ảnh hưởng đến hiệu suất của mô hình",
+        "C": "Bằng cách giúp các nhà khoa học dữ liệu chọn các thuật toán và kỹ thuật mô hình phù hợp",
+        "D": "Tất cả các cách trên"
+      },
+      "correct_answer": ["D"],
+      "topic": "EDA"
+    },
+    {
+      "question_id": "p3_q10",
+      "question_text": "Câu 10. [Một đáp án đúng] (G2) Theo slide, sau khi phát hiện các vấn đề như thiếu dữ liệu, trùng lặp, nhiễu hoặc dữ liệu lỗi/không nhất quán, một hướng xử lý là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Xóa / điền khuyết / giữ nguyên",
+        "B": "Triển khai mô hình ngay",
+        "C": "Bỏ qua dữ liệu đó hoàn toàn trong mọi trường hợp",
+        "D": "Chỉ vẽ thêm biểu đồ"
+      },
+      "correct_answer": ["A"],
+      "topic": "EDA"
+    },
+    {
+      "question_id": "p3_q11",
+      "question_text": "Câu 11. [Một đáp án đúng] (G2) Theo slide, Machine Learning Pipeline là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Chuỗi các bước xử lý dữ liệu, xây dựng mô hình được liên kết với nhau",
+        "B": "Một kỹ thuật thay thế dữ liệu bị thiếu",
+        "C": "Một dạng biểu đồ trực quan hóa dữ liệu",
+        "D": "Một độ đo đánh giá mô hình"
+      },
+      "correct_answer": ["A"],
+      "topic": "Pipeline"
+    },
+    {
+      "question_id": "p3_q12",
+      "question_text": "Câu 12. [Nhiều đáp án đúng] (G2) Theo slide, lợi ích của Machine Learning Pipeline gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Tăng tính hiệu quả nhờ quy trình hóa và tự động hóa",
+        "B": "Tăng khả năng tái lập kết quả",
+        "C": "Bắt buộc làm cho mô hình dễ giải thích hơn",
+        "D": "Dễ cộng tác và dễ tái sử dụng"
+      },
+      "correct_answer": ["A", "B", "D"],
+      "topic": "Pipeline"
+    },
+    {
+      "question_id": "p3_q13",
+      "question_text": "Câu 13. [Nhiều đáp án đúng] (G2) Raw data trong pipeline có thể có các đặc điểm nào sau đây?",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Tổng hợp từ nhiều nguồn như log, database, survey",
+        "B": "Đã luôn được kiểm tra và tiền xử lý đầy đủ",
+        "C": "Có thể không đầy đủ, nhiễu, chứa thông tin nhạy cảm",
+        "D": "Luôn sẵn sàng cho huấn luyện mà không cần kiểm tra thêm"
+      },
+      "correct_answer": ["A", "C"],
+      "topic": "Pipeline Components"
+    },
+    {
+      "question_id": "p3_q14",
+      "question_text": "Câu 14. [Nhiều đáp án đúng] (G2) Data validation có vai trò nào sau đây?",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Đảm bảo dữ liệu đầu vào phù hợp và chất lượng",
+        "B": "Kiểm tra tính nhất quán, tính đầy đủ, dữ liệu ngoại lệ",
+        "C": "Thường được thực hiện với EDA",
+        "D": "Thay thế hoàn toàn bước model evaluation"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Data Validation"
+    },
+    {
+      "question_id": "p3_q15",
+      "question_text": "Câu 15. [Nhiều đáp án đúng] (G2) Data preprocessing thường bao gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Làm sạch dữ liệu, chuẩn hóa dữ liệu",
+        "B": "Xử lý dữ liệu bị thiếu và dữ liệu ngoại lệ",
+        "C": "Tạo mới đặc trưng và chọn lựa đặc trưng",
+        "D": "Đóng gói và chuyển giao mô hình"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Data Preprocessing"
+    },
+    {
+      "question_id": "p3_q16",
+      "question_text": "Câu 16. [Một đáp án đúng] (G2) Model training trong pipeline chủ yếu là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Khởi tạo mô hình với các tham số (nếu có) và huấn luyện mô hình với dữ liệu đã chuẩn bị",
+        "B": "Chỉ đo độ chính xác của mô hình",
+        "C": "Chỉ kiểm tra rò rỉ dữ liệu huấn luyện",
+        "D": "Chuyển giao mô hình cho môi trường thực tế"
+      },
+      "correct_answer": ["A"],
+      "topic": "Model Training"
+    },
+    {
+      "question_id": "p3_q17",
+      "question_text": "Câu 17. [Một đáp án đúng] (G2) Model evaluation trong pipeline được thực hiện như thế nào?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Đánh giá mô hình một cách định lượng bằng bộ dữ liệu thử nghiệm khách quan và metric cụ thể",
+        "B": "Chỉ quan sát đồ thị loss trên train",
+        "C": "Được thực hiện sau model deployment",
+        "D": "Nếu kết quả không tốt thì vẫn chuyển sang bước tiếp theo"
+      },
+      "correct_answer": ["A"],
+      "topic": "Model Evaluation"
+    },
+    {
+      "question_id": "p3_q18",
+      "question_text": "Câu 18. [Nhiều đáp án đúng] (G2) Model validation trong pipeline thường quan tâm đến:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Mô hình có chính xác trên dữ liệu chưa từng thấy hay không",
+        "B": "Tốc độ thực thi có được đảm bảo hay không",
+        "C": "Có bị rò rỉ thông tin dữ liệu huấn luyện hay không",
+        "D": "Luôn phải được thực hiện bởi chính đội huấn luyện mô hình"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Model Validation"
+    },
+    {
+      "question_id": "p3_q19",
+      "question_text": "Câu 19. [Một đáp án đúng] (G2) Model deployment là bước:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Triển khai mô hình trên môi trường thực tế",
+        "B": "Làm sạch dữ liệu đầu vào",
+        "C": "Tạo thêm đặc trưng mới",
+        "D": "Kiểm tra outlier bằng IQR"
+      },
+      "correct_answer": ["A"],
+      "topic": "Model Deployment"
+    },
+    {
+      "question_id": "p3_q20",
+      "question_text": "Câu 20. [Nhiều đáp án đúng] (G2) Model feedback bao gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Phản hồi chủ quan: nhận xét, đánh giá trực tiếp của người dùng",
+        "B": "Phản hồi khách quan: thông qua các chỉ báo trung gian",
+        "C": "Chỉ là bước huấn luyện lại mô hình từ đầu",
+        "D": "Một phần của pipeline sau triển khai"
+      },
+      "correct_answer": ["A", "B", "D"],
+      "topic": "Model Feedback"
+    },
+    {
+      "question_id": "p3_q21",
+      "question_text": "Câu 21. [Nhiều đáp án đúng] (G2) Tại sao cần phân tích dữ liệu?",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Để hiểu rõ số đặc trưng, số mẫu, loại đặc trưng và phân bố dữ liệu",
+        "B": "Để hiểu mối quan hệ hoặc xu hướng trong dữ liệu",
+        "C": "Để thay thế hoàn toàn bước huấn luyện mô hình",
+        "D": "Để hỗ trợ quyết định xóa/điền khuyết/giữ nguyên dữ liệu"
+      },
+      "correct_answer": ["A", "B", "D"],
+      "topic": "Why EDA"
+    },
+    {
+      "question_id": "p3_q22",
+      "question_text": "Câu 22. [Nhiều đáp án đúng] (G2) Trong làm sạch dữ liệu, EDA có thể giúp xác định các vấn đề nào?",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Thiếu dữ liệu",
+        "B": "Trùng lặp",
+        "C": "Nhiễu, dữ liệu lỗi hoặc không nhất quán",
+        "D": "Luôn chọn được mô hình tối ưu tuyệt đối"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Why EDA"
+    },
+    {
+      "question_id": "p3_q23",
+      "question_text": "Câu 23. [Nhiều đáp án đúng] (G2) Theo slide, EDA là tiền đề để:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Chọn lựa đặc trưng tốt cho bài toán",
+        "B": "Tạo ra đặc trưng mới tốt hơn",
+        "C": "Chuẩn hóa đặc trưng về dạng phù hợp mô hình máy học",
+        "D": "Loại bỏ hoàn toàn nhu cầu đánh giá mô hình"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Why EDA"
+    },
+    {
+      "question_id": "p3_q24",
+      "question_text": "Câu 24. [Nhiều đáp án đúng] (G2) EDA giúp lường trước các tình huống nào sau đây?",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Mất cân bằng, thiên lệch dữ liệu",
+        "B": "Rò rỉ thông tin, vi phạm dữ liệu",
+        "C": "Luôn giảm số chiều dữ liệu",
+        "D": "Giúp giải thích vấn đề với người không chuyên môn"
+      },
+      "correct_answer": ["A", "B", "D"],
+      "topic": "Why EDA"
+    },
+    {
+      "question_id": "p3_q25",
+      "question_text": "Câu 25. [Một đáp án đúng] (G2) Theo slide, EDA còn là công cụ truyền thông vì:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Trực quan hóa giúp giải thích vấn đề với người không chuyên môn",
+        "B": "Nó luôn thay thế được báo cáo kỹ thuật",
+        "C": "Nó bắt buộc làm mô hình chính xác hơn",
+        "D": "Nó tự động tạo feature mới"
+      },
+      "correct_answer": ["A"],
+      "topic": "Why EDA"
+    },
+    {
+      "question_id": "p3_q26",
+      "question_text": "Câu 26. [Nhiều đáp án đúng] (G2) Theo slide, các công cụ trực quan trong EDA gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Histogram",
+        "B": "Box plot",
+        "C": "Ma trận tương quan",
+        "D": "KNNImputer"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "EDA Tools"
+    },
+    {
+      "question_id": "p3_q27",
+      "question_text": "Câu 27. [Nhiều đáp án đúng] (G2) Các chỉ số thống kê được nêu trong slide công cụ EDA gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Trung bình",
+        "B": "Trung vị",
+        "C": "Phương sai và độ lệch chuẩn",
+        "D": "Precision và Recall"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "EDA Tools"
+    },
+    {
+      "question_id": "p3_q28",
+      "question_text": "Câu 28. [Nhiều đáp án đúng] (G2) Một số công cụ/khái niệm được slide nêu ra để hỗ trợ EDA gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Hồi quy tuyến tính",
+        "B": "Hệ số tương đồng Pearson",
+        "C": "Phân tích tương quan: đơn biến, đa biến",
+        "D": "Dropout"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "EDA Tools"
+    },
+    {
+      "question_id": "p3_q29",
+      "question_text": "Câu 29. [Một đáp án đúng] (G2) Theo slide, có bao nhiêu kiểu phân tích dữ liệu chính?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "2",
+        "B": "3",
+        "C": "4",
+        "D": "5"
+      },
+      "correct_answer": ["B"],
+      "topic": "EDA Types"
+    },
+    {
+      "question_id": "p3_q30",
+      "question_text": "Câu 30. [Một đáp án đúng] (G2) Phân tích đơn biến là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Chỉ quan tâm đến một đặc trưng / cột trong dữ liệu",
+        "B": "Phân tích mối quan hệ giữa nhiều biến cùng lúc",
+        "C": "Chỉ dùng cho dữ liệu phân loại",
+        "D": "Chỉ dùng cho dữ liệu có nhãn"
+      },
+      "correct_answer": ["A"],
+      "topic": "Univariate Analysis"
+    },
+    {
+      "question_id": "p3_q31",
+      "question_text": "Câu 31. [Nhiều đáp án đúng] (G2) Trong phân tích đơn biến bằng thống kê, xu hướng tập trung (Central Tendency) bao gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Trung bình",
+        "B": "Trung vị",
+        "C": "Mode",
+        "D": "Correlation"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Univariate Analysis"
+    },
+    {
+      "question_id": "p3_q32",
+      "question_text": "Câu 32. [Một đáp án đúng] (G2) Khoảng giá trị (Range) là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Khoảng cách giữa giá trị tối đa và tối thiểu trong dữ liệu",
+        "B": "Giá trị trung bình cộng của dữ liệu",
+        "C": "Độ lệch chuẩn của dữ liệu",
+        "D": "Hệ số tương quan giữa hai biến"
+      },
+      "correct_answer": ["A"],
+      "topic": "Univariate Analysis"
+    },
+    {
+      "question_id": "p3_q33",
+      "question_text": "Câu 33. [Nhiều đáp án đúng] (G2) Theo slide, phân tích đơn biến bằng biểu đồ có thể dùng:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Histogram",
+        "B": "Biểu đồ mật độ",
+        "C": "Box-plot",
+        "D": "Clustered Bar Chart"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Univariate Analysis"
+    },
+    {
+      "question_id": "p3_q34",
+      "question_text": "Câu 34. [Một đáp án đúng] (G2) Histogram là biểu đồ trong đó:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Tần số của dữ liệu được biểu thị bằng các thanh hình chữ nhật",
+        "B": "Chỉ hiển thị giá trị trung bình và độ lệch chuẩn",
+        "C": "Chỉ dùng để so sánh hai biến phân loại",
+        "D": "Mọi điểm dữ liệu được thể hiện thành các điểm rời rạc trên mặt phẳng"
+      },
+      "correct_answer": ["A"],
+      "topic": "Univariate Analysis"
+    },
+    {
+      "question_id": "p3_q35",
+      "question_text": "Câu 35. [Một đáp án đúng] (G2) Biểu đồ mật độ là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Một phiên bản liên tục của biểu đồ histogram",
+        "B": "Một dạng box plot mở rộng",
+        "C": "Một biểu đồ cột theo cụm",
+        "D": "Một ma trận tương quan"
+      },
+      "correct_answer": ["A"],
+      "topic": "Univariate Analysis"
+    },
+    {
+      "question_id": "p3_q36",
+      "question_text": "Câu 36. [Nhiều đáp án đúng] (G2) Theo slide, box-plot thể hiện các thông tin nào sau đây?",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Giá trị nhỏ nhất",
+        "B": "Tứ phân vị thứ nhất, trung vị, tứ phân vị thứ ba",
+        "C": "Giá trị lớn nhất",
+        "D": "Hệ số tương quan Pearson"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Univariate Analysis"
+    },
+    {
+      "question_id": "p3_q37",
+      "question_text": "Câu 37. [Một đáp án đúng] (G2) Phân tích hai biến nhằm:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Xác định xem có tồn tại mối liên hệ thống kê giữa hai biến hay không",
+        "B": "Tìm mọi giá trị bị thiếu trong dữ liệu",
+        "C": "Chỉ chuẩn hóa dữ liệu số",
+        "D": "Triển khai mô hình lên môi trường thực tế"
+      },
+      "correct_answer": ["A"],
+      "topic": "Bivariate Analysis"
+    },
+    {
+      "question_id": "p3_q38",
+      "question_text": "Câu 38. [Nhiều đáp án đúng] (G2) Theo slide, có ba loại phân tích hai biến chính là:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Số - số (numeric - numeric)",
+        "B": "Số - phân loại (numeric - category)",
+        "C": "Phân loại - phân loại (category - category)",
+        "D": "Chuỗi - ma trận (string - matrix)"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Bivariate Analysis"
+    },
+    {
+      "question_id": "p3_q39",
+      "question_text": "Câu 39. [Nhiều đáp án đúng] (G2) Với phân tích dạng số - số, một số phương pháp trực quan có thể được sử dụng là:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Biểu đồ phân tán (Scatter plot)",
+        "B": "Biểu đồ cặp (Pair plot)",
+        "C": "Ma trận tương quan (Correlation matrix)",
+        "D": "Stacked Bar Chart"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Numeric-Numeric"
+    },
+    {
+      "question_id": "p3_q40",
+      "question_text": "Câu 40. [Nhiều đáp án đúng] (G2) Với phân tích dạng số - phân loại, một số phương pháp trực quan có thể được sử dụng là:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Multiple density / histogram",
+        "B": "Box-plot",
+        "C": "Scatter plot",
+        "D": "Correlation matrix"
+      },
+      "correct_answer": ["A", "B"],
+      "topic": "Numeric-Category"
+    },
+    {
+      "question_id": "p3_q41",
+      "question_text": "Câu 41. [Nhiều đáp án đúng] (G2) Với phân tích dạng phân loại - phân loại, một số phương pháp trực quan có thể được sử dụng là:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Biểu đồ cột xếp chồng (Stacked Bar Chart)",
+        "B": "Biểu đồ cột theo cụm (Clustered Bar Chart)",
+        "C": "Scatter plot",
+        "D": "Histogram"
+      },
+      "correct_answer": ["A", "B"],
+      "topic": "Category-Category"
+    },
+    {
+      "question_id": "p3_q42",
+      "question_text": "Câu 42. [Một đáp án đúng] (G2) Phân tích đa biến là khi:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Phân tích nhiều hơn 2 biến cùng lúc",
+        "B": "Chỉ phân tích một đặc trưng",
+        "C": "Chỉ phân tích hai biến số",
+        "D": "Chỉ dùng các chỉ số thống kê đơn giản"
+      },
+      "correct_answer": ["A"],
+      "topic": "Multivariate Analysis"
+    },
+    {
+      "question_id": "p3_q43",
+      "question_text": "Câu 43. [Một đáp án đúng] (G2) Theo slide, để phát hiện dữ liệu bị thiếu có thể sử dụng hàm nào của DataFrame?",
+      "question_type": "single_correct",
+      "options": {
+        "A": ".isnull()",
+        "B": ".describe()",
+        "C": ".pivot()",
+        "D": ".corr()"
+      },
+      "correct_answer": ["A"],
+      "topic": "Missing Data"
+    },
+    {
+      "question_id": "p3_q44",
+      "question_text": "Câu 44. [Một đáp án đúng] (G2) Trong pandas, để loại bỏ các dòng chứa giá trị NaN hoặc rỗng, hàm phù hợp là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "dropna()",
+        "B": "fillna()",
+        "C": "replace()",
+        "D": "isnull()"
+      },
+      "correct_answer": ["A"],
+      "topic": "Missing Data"
+    },
+    {
+      "question_id": "p3_q45",
+      "question_text": "Câu 45. [Một đáp án đúng] (G2) Để xác định các giá trị ngoại lệ với dữ liệu dạng Gaussian hoặc tương tự Gaussian, theo slide có thể dùng:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Phương pháp tính trung bình và độ lệch chuẩn",
+        "B": "One-hot encoding",
+        "C": "KNNImputer",
+        "D": "Label encoding"
+      },
+      "correct_answer": ["A"],
+      "topic": "Outlier Detection"
+    },
+    {
+      "question_id": "p3_q46",
+      "question_text": "Câu 46. [Một đáp án đúng] (G2) Với dữ liệu phân phối không phải Gaussian, theo slide có thể dùng phương pháp nào để xác định các giá trị ngoại lệ?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Interquartile Range (IQR)",
+        "B": "StandardScaler",
+        "C": "Pearson correlation",
+        "D": "Cross-validation"
+      },
+      "correct_answer": ["A"],
+      "topic": "Outlier Detection"
+    },
+    {
+      "question_id": "p3_q47",
+      "question_text": "Câu 47. [Một đáp án đúng] (G2) Vai trò của hệ số tương quan (correlation coefficient) là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Đo lường độ nghiêng của dữ liệu",
+        "B": "Đo lường mức độ liên quan tuyến tính giữa hai biến",
+        "C": "Xác định độ lệch chuẩn của một biến",
+        "D": "Đo lường mức độ phân tán của dữ liệu"
+      },
+      "correct_answer": ["B"],
+      "topic": "Statistics for ML"
+    },
+    {
+      "question_id": "p3_q48",
+      "question_text": "Câu 48. [Nhiều đáp án đúng] (G2) Lựa chọn đặc trưng là:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Lựa chọn các đặc trưng tương quan tuyến tính với các đặc trưng khác để loại bỏ",
+        "B": "Tìm các đặc trưng không liên quan đến biến dự đoán (output) để loại bỏ",
+        "C": "Tăng cường đặc trưng cho bài toán",
+        "D": "Tăng cường số mẫu cho bài toán"
+      },
+      "correct_answer": ["A", "B"],
+      "topic": "Feature Selection"
+    },
+    {
+      "question_id": "p3_q49",
+      "question_text": "Câu 49. [Nhiều đáp án đúng] (G2) Bộ chuẩn hóa StandardScaler trong scikit-learn với tham số mặc định:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Biến đổi các đặc trưng sao cho chúng có phạm vi tương tự nhau",
+        "B": "Biến đổi các đặc trưng để nằm trong phạm vi [0.0, 1.0]",
+        "C": "Biến đổi các giá trị đặc trưng ban đầu chỉ dương thành các giá trị có thể âm hoặc dương",
+        "D": "Có thể giúp hồi quy luận lý (logistic) hội tụ nhanh hơn"
+      },
+      "correct_answer": ["A", "C", "D"],
+      "topic": "Preprocessing"
+    },
+    {
+      "question_id": "p3_q50",
+      "question_text": "Câu 50. [Nhiều đáp án đúng] (G2) Kiểm định chéo (cross-validation):",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Thường được sử dụng với các bộ dữ liệu nhỏ",
+        "B": "Huấn luyện mô hình nhanh hơn so với hold-out validation",
+        "C": "Đo lường một cách tổng quát hiệu suất của mô hình",
+        "D": "Là một phương pháp để tìm siêu tham số phù hợp"
+      },
+      "correct_answer": ["A", "C", "D"],
+      "topic": "Cross-validation"
+    }
+  ]
+}

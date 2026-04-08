@@ -1,0 +1,654 @@
+{
+  "GENERATED_QUESTIONS": [
+    {
+      "question_id": "ch7b_q1",
+      "question_text": "Câu 1. [Một đáp án đúng] (G2) Theo slide, Logistic Regression là mô hình dùng cho bài toán:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Hồi quy với đầu ra liên tục",
+        "B": "Phân lớp với nhãn y=1 hoặc y=0",
+        "C": "Gom nhóm dữ liệu",
+        "D": "Giảm chiều dữ liệu"
+      },
+      "correct_answer": ["B"],
+      "topic": "Logistic Regression"
+    },
+    {
+      "question_id": "ch7b_q2",
+      "question_text": "Câu 2. [Một đáp án đúng] (G2) Hàm mô hình dự đoán của Logistic Regression trong slide có dạng:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "ŷ = β̂x",
+        "B": "ŷ = σ(β̂x)",
+        "C": "ŷ = log(β̂x)",
+        "D": "ŷ = β̂ + x"
+      },
+      "correct_answer": ["B"],
+      "topic": "Logistic Regression"
+    },
+    {
+      "question_id": "ch7b_q3",
+      "question_text": "Câu 3. [Một đáp án đúng] (G2) Hàm độ lỗi dự đoán được nêu cho Logistic Regression là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "MSE",
+        "B": "MAE",
+        "C": "BCE",
+        "D": "RMSE"
+      },
+      "correct_answer": ["C"],
+      "topic": "Logistic Regression"
+    },
+    {
+      "question_id": "ch7b_q4",
+      "question_text": "Câu 4. [Một đáp án đúng] (G2) Trên hình minh họa Logistic Regression, đường biên quyết định tương ứng với:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "β̂x > 0",
+        "B": "β̂x < 0",
+        "C": "β̂x = 0",
+        "D": "σ(β̂x) = 1"
+      },
+      "correct_answer": ["C"],
+      "topic": "Logistic Regression"
+    },
+    {
+      "question_id": "ch7b_q5",
+      "question_text": "Câu 5. [Một đáp án đúng] (G2) Theo hình trong slide, miền có β̂x > 0 tương ứng gần nhất với:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "y = 1",
+        "B": "y = 0",
+        "C": "cả y = 0 và y = 1 như nhau",
+        "D": "miền không thể phân loại"
+      },
+      "correct_answer": ["A"],
+      "topic": "Logistic Regression"
+    },
+    {
+      "question_id": "ch7b_q6",
+      "question_text": "Câu 6. [Một đáp án đúng] (G2) Theo hình trong slide, miền có β̂x < 0 tương ứng gần nhất với:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "y = 1",
+        "B": "y = 0",
+        "C": "miền nhiễu",
+        "D": "miền không có dữ liệu"
+      },
+      "correct_answer": ["B"],
+      "topic": "Logistic Regression"
+    },
+    {
+      "question_id": "ch7b_q7",
+      "question_text": "Câu 7. [Nhiều đáp án đúng] (G2) Ưu điểm của Logistic Regression theo slide gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Đơn giản, dễ cài đặt",
+        "B": "Có thể mở rộng sang bài toán phân loại nhiều lớp",
+        "C": "Luôn giải quyết tốt dữ liệu rất phức tạp",
+        "D": "Không bị ảnh hưởng bởi dữ liệu nhiễu"
+      },
+      "correct_answer": ["A", "B"],
+      "topic": "Logistic Regression"
+    },
+    {
+      "question_id": "ch7b_q8",
+      "question_text": "Câu 8. [Nhiều đáp án đúng] (G2) Khuyết điểm của Logistic Regression theo slide gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Không giải quyết được với dữ liệu phức tạp",
+        "B": "Dễ bị ảnh hưởng bởi dữ liệu nhiễu",
+        "C": "Không thể dùng cho phân loại nhị phân",
+        "D": "Bắt buộc cần hidden layer"
+      },
+      "correct_answer": ["A", "B"],
+      "topic": "Logistic Regression"
+    },
+    {
+      "question_id": "ch7b_q9",
+      "question_text": "Câu 9. [Một đáp án đúng] (G2) Biên quyết định (decision boundary) của một mô hình Logistic Regression cơ bản:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Phân chia các lớp sử dụng chỉ một đặc trưng đầu vào",
+        "B": "Phân chia các lớp sử dụng sự kết hợp của các đặc trưng đầu vào",
+        "C": "Thường luôn có dạng cong",
+        "D": "Không phụ thuộc vào đặc trưng đầu vào"
+      },
+      "correct_answer": ["B"],
+      "topic": "Logistic Regression"
+    },
+    {
+      "question_id": "ch7b_q10",
+      "question_text": "Câu 10. [Một đáp án đúng] (G2) Theo slide, nội dung chính thứ hai của bài là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Đánh giá mô hình bằng cross-validation",
+        "B": "Mô hình với dữ liệu có quan hệ phi tuyến",
+        "C": "Tiền xử lý dữ liệu thiếu",
+        "D": "Học không giám sát"
+      },
+      "correct_answer": ["B"],
+      "topic": "Classification Models"
+    },
+    {
+      "question_id": "ch7b_q11",
+      "question_text": "Câu 11. [Một đáp án đúng] (G2) KNNClassifier là mô hình phân loại dựa trên:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Xác suất hậu nghiệm của Naive Bayes",
+        "B": "Nhãn của K đặc trưng có khoảng cách gần nhất",
+        "C": "Gradient descent trên BCE",
+        "D": "Information Gain"
+      },
+      "correct_answer": ["B"],
+      "topic": "KNN"
+    },
+    {
+      "question_id": "ch7b_q12",
+      "question_text": "Câu 12. [Một đáp án đúng] (G2) Theo slide, KNN là mô hình:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "có tham số",
+        "B": "không tham số",
+        "C": "luôn tuyến tính",
+        "D": "chỉ dùng cho hồi quy"
+      },
+      "correct_answer": ["B"],
+      "topic": "KNN"
+    },
+    {
+      "question_id": "ch7b_q13",
+      "question_text": "Câu 13. [Một đáp án đúng] (G2) Trong hình minh họa KNN với K=3, nhãn dự đoán cho điểm mới là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "cam",
+        "B": "hồng",
+        "C": "đen",
+        "D": "không xác định"
+      },
+      "correct_answer": ["C"],
+      "topic": "KNN"
+    },
+    {
+      "question_id": "ch7b_q14",
+      "question_text": "Câu 14. [Một đáp án đúng] (G2) Nếu thay KNNClassifier bằng mô hình dựa trên trọng số đã học trước từ dữ liệu, phát biểu đó:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Phù hợp với mô tả trong slide",
+        "B": "Không phù hợp vì slide nhấn mạnh KNN là mô hình không tham số",
+        "C": "Chỉ đúng với K=1",
+        "D": "Chỉ đúng với dữ liệu 2 chiều"
+      },
+      "correct_answer": ["B"],
+      "topic": "KNN"
+    },
+    {
+      "question_id": "ch7b_q15",
+      "question_text": "Câu 15. [Một đáp án đúng] (G2) Điểm cốt lõi của KNN trong slide là việc ra quyết định dựa trên:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "một hàm sigmoid",
+        "B": "khoảng cách đến các điểm lân cận",
+        "C": "một cây quyết định đã cắt tỉa",
+        "D": "một hidden layer"
+      },
+      "correct_answer": ["B"],
+      "topic": "KNN"
+    },
+    {
+      "question_id": "ch7b_q16",
+      "question_text": "Câu 16. [Một đáp án đúng] (G2) MLPClassifier theo slide sử dụng thêm:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "các centroid",
+        "B": "các lớp ẩn (hidden layer)",
+        "C": "entropy",
+        "D": "epsilon và minPts"
+      },
+      "correct_answer": ["B"],
+      "topic": "MLP"
+    },
+    {
+      "question_id": "ch7b_q17",
+      "question_text": "Câu 17. [Một đáp án đúng] (G2) Vai trò của hidden layer trong MLP theo slide là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "học các đặc trưng trung gian, giúp việc ra quyết định dễ hơn",
+        "B": "chỉ chuẩn hóa dữ liệu đầu vào",
+        "C": "thay thế hoàn toàn nhãn đầu ra",
+        "D": "giảm số lượng mẫu dữ liệu"
+      },
+      "correct_answer": ["A"],
+      "topic": "MLP"
+    },
+    {
+      "question_id": "ch7b_q18",
+      "question_text": "Câu 18. [Một đáp án đúng] (G2) Trong sơ đồ MLP ở slide, hidden layer nằm:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "sau output",
+        "B": "giữa input và output",
+        "C": "trước input",
+        "D": "tách rời hoàn toàn khỏi input và output"
+      },
+      "correct_answer": ["B"],
+      "topic": "MLP"
+    },
+    {
+      "question_id": "ch7b_q19",
+      "question_text": "Câu 19. [Một đáp án đúng] (G2) Decision Tree là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "một cấu trúc phân cấp không tham số",
+        "B": "một mô hình chỉ dùng cho dữ liệu số",
+        "C": "một mô hình bắt buộc dùng BCE",
+        "D": "một thuật toán giảm chiều dữ liệu"
+      },
+      "correct_answer": ["A"],
+      "topic": "Decision Tree"
+    },
+    {
+      "question_id": "ch7b_q20",
+      "question_text": "Câu 20. [Một đáp án đúng] (G2) Theo slide, mỗi nút trong cây quyết định đại diện cho:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "một nhãn đầu ra",
+        "B": "một thuộc tính hay đặc trưng",
+        "C": "một bộ dữ liệu huấn luyện",
+        "D": "một centroid"
+      },
+      "correct_answer": ["B"],
+      "topic": "Decision Tree"
+    },
+    {
+      "question_id": "ch7b_q21",
+      "question_text": "Câu 21. [Một đáp án đúng] (G2) Theo slide, mỗi nhánh từ một nút trong cây quyết định tương ứng với:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "một trong số khả năng của thuộc tính đó",
+        "B": "toàn bộ tập huấn luyện",
+        "C": "một trọng số đã học",
+        "D": "một hidden layer"
+      },
+      "correct_answer": ["A"],
+      "topic": "Decision Tree"
+    },
+    {
+      "question_id": "ch7b_q22",
+      "question_text": "Câu 22. [Một đáp án đúng] (G2) Mỗi nút lá trong Decision Tree:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "đưa ra quyết định phân loại cuối cùng",
+        "B": "luôn chứa tất cả đặc trưng",
+        "C": "là một bước chuẩn hóa dữ liệu",
+        "D": "đại diện cho BCE thấp nhất"
+      },
+      "correct_answer": ["A"],
+      "topic": "Decision Tree"
+    },
+    {
+      "question_id": "ch7b_q23",
+      "question_text": "Câu 23. [Một đáp án đúng] (G2) Trong ví dụ chơi cầu lông ở slide, nếu Weather = Cloudy thì quyết định là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "No",
+        "B": "Yes",
+        "C": "phụ thuộc Humidity",
+        "D": "phụ thuộc Wind"
+      },
+      "correct_answer": ["B"],
+      "topic": "Decision Tree"
+    },
+    {
+      "question_id": "ch7b_q24",
+      "question_text": "Câu 24. [Một đáp án đúng] (G2) Trong ví dụ chơi cầu lông ở slide, nếu Weather = Sunny và Humidity = High thì quyết định là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Yes",
+        "B": "No",
+        "C": "phụ thuộc Wind",
+        "D": "không xác định"
+      },
+      "correct_answer": ["B"],
+      "topic": "Decision Tree"
+    },
+    {
+      "question_id": "ch7b_q25",
+      "question_text": "Câu 25. [Một đáp án đúng] (G2) Trong ví dụ chơi cầu lông ở slide, nếu Weather = Sunny và Humidity = Normal thì quyết định là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Yes",
+        "B": "No",
+        "C": "phụ thuộc Temperature",
+        "D": "phụ thuộc Day"
+      },
+      "correct_answer": ["A"],
+      "topic": "Decision Tree"
+    },
+    {
+      "question_id": "ch7b_q26",
+      "question_text": "Câu 26. [Một đáp án đúng] (G2) Trong ví dụ chơi cầu lông ở slide, nếu Weather = Rainy và Wind = Strong thì quyết định là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Yes",
+        "B": "No",
+        "C": "phụ thuộc Humidity",
+        "D": "phụ thuộc Temperature"
+      },
+      "correct_answer": ["B"],
+      "topic": "Decision Tree"
+    },
+    {
+      "question_id": "ch7b_q27",
+      "question_text": "Câu 27. [Một đáp án đúng] (G2) Trong ví dụ chơi cầu lông ở slide, nếu Weather = Rainy và Wind = Weak thì quyết định là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Yes",
+        "B": "No",
+        "C": "phụ thuộc Humidity",
+        "D": "không thể suy ra"
+      },
+      "correct_answer": ["A"],
+      "topic": "Decision Tree"
+    },
+    {
+      "question_id": "ch7b_q28",
+      "question_text": "Câu 28. [Một đáp án đúng] (G2) Theo slide, để xây dựng một cây quyết định từ bộ dữ liệu huấn luyện, ta dựa trên:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "RMSE",
+        "B": "Information Gain",
+        "C": "K nearest neighbors",
+        "D": "StandardScaler"
+      },
+      "correct_answer": ["B"],
+      "topic": "Decision Tree"
+    },
+    {
+      "question_id": "ch7b_q29",
+      "question_text": "Câu 29. [Một đáp án đúng] (G2) Entropy trong slide thể hiện:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "mức độ đa dạng của các loại đối tượng trong tập S",
+        "B": "số lượng đặc trưng trong tập S",
+        "C": "độ lớn của hệ số hồi quy",
+        "D": "số lần mô hình dự đoán đúng"
+      },
+      "correct_answer": ["A"],
+      "topic": "Decision Tree"
+    },
+    {
+      "question_id": "ch7b_q30",
+      "question_text": "Câu 30. [Một đáp án đúng] (G2) Công thức đúng của Information Gain theo slide là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "InfoGain = E[Entropy(children)] - Entropy(Parent)",
+        "B": "InfoGain = Entropy(Parent) - E[Entropy(children)]",
+        "C": "InfoGain = Entropy(S) + Entropy(children)",
+        "D": "InfoGain = log(Entropy(Parent))"
+      },
+      "correct_answer": ["B"],
+      "topic": "Decision Tree"
+    },
+    {
+      "question_id": "ch7b_q31",
+      "question_text": "Câu 31. [Một đáp án đúng] (G2) Nếu một phép chia làm giảm entropy của tập cha nhiều hơn, theo slide phép chia đó có:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Information Gain cao hơn",
+        "B": "Information Gain thấp hơn",
+        "C": "không thay đổi Information Gain",
+        "D": "không liên quan đến Information Gain"
+      },
+      "correct_answer": ["A"],
+      "topic": "Decision Tree"
+    },
+    {
+      "question_id": "ch7b_q32",
+      "question_text": "Câu 32. [Một đáp án đúng] (G2) Một nút phân chia trong DecisionTreeClassifier của scikit-learn thực hiện:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "phân làm hai nhánh dựa trên tất cả đặc trưng",
+        "B": "phân làm hai nhánh dựa trên một đặc trưng duy nhất tại một thời điểm",
+        "C": "phân làm nhiều nhánh dựa trên một đặc trưng duy nhất",
+        "D": "phân làm hai nhánh dựa trên một tổ hợp phi tuyến của tất cả đặc trưng"
+      },
+      "correct_answer": ["B"],
+      "topic": "Decision Tree"
+    },
+    {
+      "question_id": "ch7b_q33",
+      "question_text": "Câu 33. [Nhiều đáp án đúng] (G2) Ưu điểm của Decision Tree theo slide gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Tính giải thích mô hình nhờ khả năng trực quan hóa với cấu trúc cây",
+        "B": "Có thể làm việc được trên cả đặc trưng dạng số lẫn phân loại",
+        "C": "Phi tham số, không đưa ra giả định về phân bố của biến và quan hệ với output",
+        "D": "Luôn ổn định trước mọi thay đổi nhỏ của dữ liệu"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Decision Tree"
+    },
+    {
+      "question_id": "ch7b_q34",
+      "question_text": "Câu 34. [Một đáp án đúng] (G2) Theo slide, Decision Tree dễ bị overfitting khi:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "cây được cắt tỉa đúng mức",
+        "B": "cây quá sâu hoặc không được cắt tỉa",
+        "C": "dữ liệu có rất ít đặc trưng",
+        "D": "mô hình dùng entropy"
+      },
+      "correct_answer": ["B"],
+      "topic": "Decision Tree"
+    },
+    {
+      "question_id": "ch7b_q35",
+      "question_text": "Câu 35. [Một đáp án đúng] (G2) Theo slide, Decision Tree không ổn định vì:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "cần gradient descent",
+        "B": "chỉ cần thay đổi dữ liệu một phần nhỏ, cây có thể thay đổi hoàn toàn",
+        "C": "không làm việc được với dữ liệu số",
+        "D": "luôn yêu cầu dữ liệu chuẩn hóa"
+      },
+      "correct_answer": ["B"],
+      "topic": "Decision Tree"
+    },
+    {
+      "question_id": "ch7b_q36",
+      "question_text": "Câu 36. [Một đáp án đúng] (G2) Theo slide, để xử lý tính không ổn định của cây quyết định có thể dùng kỹ thuật ensemble với:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Logistic Regression",
+        "B": "Random Forest",
+        "C": "KNNImputer",
+        "D": "PCA"
+      },
+      "correct_answer": ["B"],
+      "topic": "Decision Tree"
+    },
+    {
+      "question_id": "ch7b_q37",
+      "question_text": "Câu 37. [Một đáp án đúng] (G2) Theo slide, việc tìm cây tối ưu:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "đơn giản và ít tốn chi phí",
+        "B": "tốn nhiều chi phí tính toán, heuristic không đảm bảo tối ưu",
+        "C": "luôn cho nghiệm duy nhất",
+        "D": "không liên quan đến dữ liệu huấn luyện"
+      },
+      "correct_answer": ["B"],
+      "topic": "Decision Tree"
+    },
+    {
+      "question_id": "ch7b_q38",
+      "question_text": "Câu 38. [Một đáp án đúng] (G2) Theo slide, Decision Tree có xu hướng bias về các đặc trưng:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "có ít giá trị hoặc phạm vi nhỏ hơn",
+        "B": "có nhiều giá trị (biến phân loại) hoặc phạm vi lớn hơn (biến số)",
+        "C": "bị thiếu dữ liệu",
+        "D": "đã chuẩn hóa về [0,1]"
+      },
+      "correct_answer": ["B"],
+      "topic": "Decision Tree"
+    },
+    {
+      "question_id": "ch7b_q39",
+      "question_text": "Câu 39. [Một đáp án đúng] (G2) Trong ví dụ Titanic ở slide, nút gốc của cây đầu tiên chia theo:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Age ≤ 6.5",
+        "B": "Pclass ≤ 2.5",
+        "C": "Sex ≤ 0.5",
+        "D": "LogFare ≤ 3.31"
+      },
+      "correct_answer": ["C"],
+      "topic": "Decision Tree"
+    },
+    {
+      "question_id": "ch7b_q40",
+      "question_text": "Câu 40. [Một đáp án đúng] (G2) So với cây bên trái trong ví dụ Titanic, cây bên phải trong slide:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "đơn giản hơn và có ít nút hơn",
+        "B": "sâu hơn và có nhiều phép chia hơn",
+        "C": "không còn dùng chỉ số gini",
+        "D": "không dùng dữ liệu Titanic"
+      },
+      "correct_answer": ["B"],
+      "topic": "Decision Tree"
+    },
+    {
+      "question_id": "ch7b_q41",
+      "question_text": "Câu 41. [Nhiều đáp án đúng] (G2) Theo slide “Một số mô hình phân lớp khác”, các mô hình được liệt kê gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Support Vector Machine",
+        "B": "Naïve Bayes Classifier",
+        "C": "Random Forest",
+        "D": "Gradient Boost, XGBoost, LightGBM, CatBoost Classifier"
+      },
+      "correct_answer": ["A", "B", "C", "D"],
+      "topic": "Other Classification Models"
+    },
+    {
+      "question_id": "ch7b_q42",
+      "question_text": "Câu 42. [Một đáp án đúng] (G2) Mô hình nào sau đây KHÔNG được liệt kê trong slide “Một số mô hình phân lớp khác”?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Support Vector Machine",
+        "B": "Naïve Bayes Classifier",
+        "C": "LinearRegression",
+        "D": "Random Forest"
+      },
+      "correct_answer": ["C"],
+      "topic": "Other Classification Models"
+    },
+    {
+      "question_id": "ch7b_q43",
+      "question_text": "Câu 43. [Một đáp án đúng] (G2) Mô hình nào sau đây thuộc nhóm boosting classifier được nêu trong slide?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "CatBoost Classifier",
+        "B": "LinearRegression",
+        "C": "KNNImputer",
+        "D": "StandardScaler"
+      },
+      "correct_answer": ["A"],
+      "topic": "Other Classification Models"
+    },
+    {
+      "question_id": "ch7b_q44",
+      "question_text": "Câu 44. [Một đáp án đúng] (G2) Mô hình nào sau đây phù hợp với mô tả “không tham số” trong slide?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Logistic Regression",
+        "B": "KNNClassifier",
+        "C": "BCE",
+        "D": "StandardScaler"
+      },
+      "correct_answer": ["B"],
+      "topic": "KNN"
+    },
+    {
+      "question_id": "ch7b_q45",
+      "question_text": "Câu 45. [Một đáp án đúng] (G2) Mô hình nào trong slide sử dụng thêm hidden layer để học đặc trưng trung gian?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Logistic Regression",
+        "B": "KNNClassifier",
+        "C": "MLPClassifier",
+        "D": "Decision Tree"
+      },
+      "correct_answer": ["C"],
+      "topic": "MLP"
+    },
+    {
+      "question_id": "ch7b_q46",
+      "question_text": "Câu 46. [Một đáp án đúng] (G2) Mô hình nào trong slide ra quyết định bằng cấu trúc phân cấp gồm nút, nhánh và lá?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Decision Tree",
+        "B": "Logistic Regression",
+        "C": "KNNClassifier",
+        "D": "MLPClassifier"
+      },
+      "correct_answer": ["A"],
+      "topic": "Decision Tree"
+    },
+    {
+      "question_id": "ch7b_q47",
+      "question_text": "Câu 47. [Nhiều đáp án đúng] (G2) Chọn các phát biểu đúng theo quiz tuần 8:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Nếu tăng tính linh hoạt của mô hình với tập train cố định, lỗi huấn luyện có thể giảm xuống",
+        "B": "Nếu tăng tính linh hoạt của mô hình với tập train cố định, chênh lệch giữa lỗi train và test có thể lớn hơn",
+        "C": "Nếu tăng số lượng mẫu huấn luyện khi tham số cố định, lỗi train luôn giảm xuống",
+        "D": "Nếu tăng số lượng mẫu huấn luyện khi tham số cố định, chênh lệch giữa lỗi train và test có thể nhỏ hơn"
+      },
+      "correct_answer": ["A", "B", "D"],
+      "topic": "Generalization"
+    },
+    {
+      "question_id": "ch7b_q48",
+      "question_text": "Câu 48. [Một đáp án đúng] (G2) Khi cố định các tham số của mô hình, nếu tăng số lượng mẫu huấn luyện, theo quiz tuần 8 ta có khả năng quan sát thấy:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Lỗi huấn luyện giảm xuống rõ rệt trong mọi trường hợp",
+        "B": "Sự chênh lệch lớn hơn giữa lỗi huấn luyện và lỗi kiểm thử",
+        "C": "Sự chênh lệch nhỏ hơn giữa lỗi huấn luyện và lỗi kiểm thử",
+        "D": "Mô hình chắc chắn overfit hơn"
+      },
+      "correct_answer": ["C"],
+      "topic": "Generalization"
+    },
+    {
+      "question_id": "ch7b_q49",
+      "question_text": "Câu 49. [Một đáp án đúng] (G2) Trong các mô hình sau, mô hình nào phù hợp nhất với mô tả “phân loại dựa trên nhãn của K điểm gần nhất”?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "KNNClassifier",
+        "B": "MLPClassifier",
+        "C": "Decision Tree",
+        "D": "Naïve Bayes Classifier"
+      },
+      "correct_answer": ["A"],
+      "topic": "KNN"
+    },
+    {
+      "question_id": "ch7b_q50",
+      "question_text": "Câu 50. [Một đáp án đúng] (G2) Trong các mô hình sau, mô hình nào phù hợp nhất với mô tả “đơn giản, dễ cài đặt, có thể mở rộng sang phân loại nhiều lớp nhưng khó xử lý dữ liệu phức tạp và nhạy với nhiễu”?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Logistic Regression",
+        "B": "KNNClassifier",
+        "C": "Decision Tree",
+        "D": "Random Forest"
+      },
+      "correct_answer": ["A"],
+      "topic": "Logistic Regression"
+    }
+  ]
+}

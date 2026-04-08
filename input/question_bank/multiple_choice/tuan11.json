@@ -1,0 +1,654 @@
+{
+  "GENERATED_QUESTIONS": [
+    {
+      "question_id": "ch9_q1",
+      "question_text": "Câu 1. [Một đáp án đúng] (G2) Theo slide, tham số mô hình (parameter) là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Các cấu hình của mô hình trước khi train",
+        "B": "Các biến số mô hình học từ dữ liệu train",
+        "C": "Các metric dùng để đánh giá mô hình",
+        "D": "Các bước tiền xử lý dữ liệu"
+      },
+      "correct_answer": ["B"],
+      "topic": "Parameter vs Hyperparameter"
+    },
+    {
+      "question_id": "ch9_q2",
+      "question_text": "Câu 2. [Một đáp án đúng] (G2) Theo slide, ví dụ của tham số mô hình trong Neural Network là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Số lớp",
+        "B": "Số neuron của một lớp",
+        "C": "Trọng số và bias",
+        "D": "Learning rate"
+      },
+      "correct_answer": ["C"],
+      "topic": "Parameter vs Hyperparameter"
+    },
+    {
+      "question_id": "ch9_q3",
+      "question_text": "Câu 3. [Một đáp án đúng] (G2) Siêu tham số (hyper-parameter) là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Các biến số mô hình học từ dữ liệu huấn luyện",
+        "B": "Các cấu hình của mô hình trước khi train",
+        "C": "Kết quả dự đoán của mô hình",
+        "D": "Các tham số chỉ xuất hiện sau khi đánh giá"
+      },
+      "correct_answer": ["B"],
+      "topic": "Parameter vs Hyperparameter"
+    },
+    {
+      "question_id": "ch9_q4",
+      "question_text": "Câu 4. [Nhiều đáp án đúng] (G2) Theo slide, ví dụ của siêu tham số trong Neural Network gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Số lớp",
+        "B": "Số neuron của một lớp",
+        "C": "Trọng số của từng connection",
+        "D": "Bias của từng neuron"
+      },
+      "correct_answer": ["A", "B"],
+      "topic": "Parameter vs Hyperparameter"
+    },
+    {
+      "question_id": "ch9_q5",
+      "question_text": "Câu 5. [Một đáp án đúng] (G2) Theo slide, siêu tham số được thiết lập:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Chỉ do mô hình tự học hoàn toàn từ dữ liệu",
+        "B": "Thủ công hoặc thông qua quá trình tinh chỉnh siêu tham số",
+        "C": "Chỉ bởi thuật toán gradient descent",
+        "D": "Sau khi triển khai mô hình"
+      },
+      "correct_answer": ["B"],
+      "topic": "Parameter vs Hyperparameter"
+    },
+    {
+      "question_id": "ch9_q6",
+      "question_text": "Câu 6. [Một đáp án đúng] (G2) Theo sơ đồ quy trình trong slide, tinh chỉnh tham số diễn ra chủ yếu ở giai đoạn:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Raw data và data validation",
+        "B": "Model training và model evaluation",
+        "C": "Model deployment và model feedback",
+        "D": "Chỉ ở model deployment"
+      },
+      "correct_answer": ["B"],
+      "topic": "Tuning Position"
+    },
+    {
+      "question_id": "ch9_q7",
+      "question_text": "Câu 7. [Nhiều đáp án đúng] (G2) Theo slide, cần tinh chỉnh tham số vì:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Giúp mô hình đạt độ chính xác cao hơn, hiệu quả hơn",
+        "B": "Giúp hạn chế nguy cơ overfitting hoặc underfitting",
+        "C": "Siêu tham số ảnh hưởng đến thời gian và tài nguyên tính toán",
+        "D": "Giúp mô hình phù hợp hơn với đặc trưng riêng của dữ liệu"
+      },
+      "correct_answer": ["A", "B", "C", "D"],
+      "topic": "Why Tuning"
+    },
+    {
+      "question_id": "ch9_q8",
+      "question_text": "Câu 8. [Một đáp án đúng] (G2) Theo slide, phát biểu nào sau đây là đúng?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Siêu tham số không ảnh hưởng đến hiệu suất mô hình",
+        "B": "Siêu tham số chỉ ảnh hưởng đến phần cứng, không ảnh hưởng mô hình",
+        "C": "Siêu tham số ảnh hưởng đến độ chính xác và tài nguyên huấn luyện",
+        "D": "Siêu tham số chỉ quan trọng với dữ liệu ảnh"
+      },
+      "correct_answer": ["C"],
+      "topic": "Why Tuning"
+    },
+    {
+      "question_id": "ch9_q9",
+      "question_text": "Câu 9. [Một đáp án đúng] (G2) Ý tưởng chính của Grid Search theo slide là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Tìm kiếm ngẫu nhiên một vài tổ hợp tham số",
+        "B": "Vét cạn các tổ hợp tham số có khả năng xảy ra",
+        "C": "Tìm kiếm bằng đạo hàm của hàm mất mát",
+        "D": "Chỉ thử các tham số gần nhau"
+      },
+      "correct_answer": ["B"],
+      "topic": "Grid Search"
+    },
+    {
+      "question_id": "ch9_q10",
+      "question_text": "Câu 10. [Một đáp án đúng] (G2) Theo quiz tuần 11, Grid Search thực hiện:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Tìm kiếm tuần tự",
+        "B": "Tìm kiếm ngẫu nhiên",
+        "C": "Tìm kiếm toàn bộ không gian tham số",
+        "D": "Tìm kiếm dựa trên gradient"
+      },
+      "correct_answer": ["C"],
+      "topic": "Grid Search"
+    },
+    {
+      "question_id": "ch9_q11",
+      "question_text": "Câu 11. [Nhiều đáp án đúng] (G2) Ưu điểm của Grid Search theo slide gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Thuật toán đơn giản",
+        "B": "Tìm kiếm toàn diện không gian tham số",
+        "C": "Kế thừa thông tin của các lần thử trước",
+        "D": "Luôn hiệu quả với không gian rất lớn"
+      },
+      "correct_answer": ["A", "B"],
+      "topic": "Grid Search"
+    },
+    {
+      "question_id": "ch9_q12",
+      "question_text": "Câu 12. [Nhiều đáp án đúng] (G2) Khuyết điểm của Grid Search theo slide gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Đánh đồng vai trò của các siêu tham số",
+        "B": "Không gian tham số lớn khiến chi phí tính toán lớn",
+        "C": "Không hiệu quả do không kế thừa kết quả tìm kiếm trước đó",
+        "D": "Kết quả luôn không nhất quán do yếu tố ngẫu nhiên"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Grid Search"
+    },
+    {
+      "question_id": "ch9_q13",
+      "question_text": "Câu 13. [Một đáp án đúng] (G2) Theo slide, Grid Search có thể kém hiệu quả vì:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Các lần thử luôn phụ thuộc ngẫu nhiên vào nhau",
+        "B": "Không kế thừa thông tin từ các lần tìm kiếm trước",
+        "C": "Không thể áp dụng cho Neural Network",
+        "D": "Không thể dùng với cross-validation"
+      },
+      "correct_answer": ["B"],
+      "topic": "Grid Search"
+    },
+    {
+      "question_id": "ch9_q14",
+      "question_text": "Câu 14. [Một đáp án đúng] (G2) Theo slide, khi không gian tham số quá lớn, Grid Search thường:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Tiết kiệm chi phí tính toán hơn",
+        "B": "Có chi phí tính toán lớn",
+        "C": "Luôn tìm ra tối ưu toàn cục rất nhanh",
+        "D": "Không cần đánh giá mô hình"
+      },
+      "correct_answer": ["B"],
+      "topic": "Grid Search"
+    },
+    {
+      "question_id": "ch9_q15",
+      "question_text": "Câu 15. [Một đáp án đúng] (G2) Theo phần so sánh trong slide, Grid Search có ưu điểm nổi bật so với Random Search là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Tìm kiếm toàn diện",
+        "B": "Các lần thử có liên hệ với nhau",
+        "C": "Chi phí cố định qua n_iter",
+        "D": "Phù hợp hơn với acquisition function"
+      },
+      "correct_answer": ["A"],
+      "topic": "Grid Search"
+    },
+    {
+      "question_id": "ch9_q16",
+      "question_text": "Câu 16. [Một đáp án đúng] (G2) Nhận xét nào sau đây đúng nhất về Grid Search?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Đơn giản nhưng có thể tốn chi phí lớn khi số siêu tham số tăng",
+        "B": "Phức tạp hơn Bayesian Optimization",
+        "C": "Luôn tốt hơn Random Search trong mọi trường hợp",
+        "D": "Chỉ dùng được khi có đúng 2 siêu tham số"
+      },
+      "correct_answer": ["A"],
+      "topic": "Grid Search"
+    },
+    {
+      "question_id": "ch9_q17",
+      "question_text": "Câu 17. [Một đáp án đúng] (G2) Trong thực tế, khi thử mọi tổ hợp của nhiều giá trị siêu tham số trong scikit-learn, phương pháp phù hợp nhất là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "RandomizedSearchCV",
+        "B": "GridSearchCV",
+        "C": "PCA",
+        "D": "EarlyStopping"
+      },
+      "correct_answer": ["B"],
+      "topic": "Grid Search"
+    },
+    {
+      "question_id": "ch9_q18",
+      "question_text": "Câu 18. [Một đáp án đúng] (G2) Theo đề mẫu, phát biểu đúng về GridSearchCV và RandomizedSearchCV là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "GridSearchCV có chi phí tính toán lớn khi số lượng siêu tham số tăng lên",
+        "B": "GridSearchCV chọn giá trị siêu tham số bằng phân phối xác suất",
+        "C": "RandomizedSearchCV luôn kiểm tra tất cả tổ hợp tham số",
+        "D": "Hai phương pháp luôn có cùng chi phí tính toán"
+      },
+      "correct_answer": ["A"],
+      "topic": "Grid Search"
+    },
+    {
+      "question_id": "ch9_q19",
+      "question_text": "Câu 19. [Một đáp án đúng] (G2) Ý tưởng chính của Random Search theo slide là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Chọn ngẫu nhiên các tổ hợp tham số thay vì lấy mẫu đều",
+        "B": "Vét cạn toàn bộ không gian tham số",
+        "C": "Dựa trên gradient của hàm mục tiêu",
+        "D": "Dùng lý thuyết xác suất để xây dựng posterior"
+      },
+      "correct_answer": ["A"],
+      "topic": "Random Search"
+    },
+    {
+      "question_id": "ch9_q20",
+      "question_text": "Câu 20. [Một đáp án đúng] (G2) Theo quiz tuần 11, khi nào nên sử dụng Random Search thay vì Grid Search?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Khi không gian tham số quá lớn",
+        "B": "Khi mô hình quá đơn giản",
+        "C": "Khi có nhiều dữ liệu",
+        "D": "Khi chỉ có một siêu tham số"
+      },
+      "correct_answer": ["A"],
+      "topic": "Random Search"
+    },
+    {
+      "question_id": "ch9_q21",
+      "question_text": "Câu 21. [Nhiều đáp án đúng] (G2) Ưu điểm của Random Search theo slide gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Đơn giản, dễ cài đặt",
+        "B": "Hiệu quả với không gian tìm kiếm lớn",
+        "C": "Tìm kiếm toàn diện không gian tham số",
+        "D": "Luôn cho kết quả nhất quán"
+      },
+      "correct_answer": ["A", "B"],
+      "topic": "Random Search"
+    },
+    {
+      "question_id": "ch9_q22",
+      "question_text": "Câu 22. [Nhiều đáp án đúng] (G2) Khuyết điểm của Random Search theo slide gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Khó tìm được điểm tối ưu toàn cục nếu không gian tìm kiếm lớn",
+        "B": "Các lần thử độc lập, không kế thừa thông tin các lần thử trước",
+        "C": "Kết quả không nhất quán do yếu tố ngẫu nhiên",
+        "D": "Bắt buộc phải tìm kiếm toàn diện"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Random Search"
+    },
+    {
+      "question_id": "ch9_q23",
+      "question_text": "Câu 23. [Một đáp án đúng] (G2) So với Grid Search, Random Search trong slide được mô tả là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Lấy mẫu đều toàn bộ lưới tham số",
+        "B": "Chọn ngẫu nhiên các điểm trong không gian tham số",
+        "C": "Luôn dùng acquisition function",
+        "D": "Bắt buộc sử dụng mô hình xác suất"
+      },
+      "correct_answer": ["B"],
+      "topic": "Random Search"
+    },
+    {
+      "question_id": "ch9_q24",
+      "question_text": "Câu 24. [Một đáp án đúng] (G2) Theo slide, kết quả của Random Search có thể không nhất quán vì:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Do dùng BCE",
+        "B": "Do yếu tố ngẫu nhiên",
+        "C": "Do luôn phải train nhiều epoch",
+        "D": "Do phụ thuộc vào padding"
+      },
+      "correct_answer": ["B"],
+      "topic": "Random Search"
+    },
+    {
+      "question_id": "ch9_q25",
+      "question_text": "Câu 25. [Một đáp án đúng] (G2) Theo phần so sánh trong slide, Random Search có một hạn chế rõ ràng là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Không tìm kiếm toàn diện",
+        "B": "Không dùng được với không gian lớn",
+        "C": "Không thể dùng cho Neural Network",
+        "D": "Luôn tốn chi phí hơn Grid Search"
+      },
+      "correct_answer": ["A"],
+      "topic": "Random Search"
+    },
+    {
+      "question_id": "ch9_q26",
+      "question_text": "Câu 26. [Một đáp án đúng] (G2) Theo đề mẫu, phát biểu đúng về RandomizedSearchCV là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Có chi phí tính toán cố định thông qua siêu tham số n_iter",
+        "B": "Luôn kiểm tra tất cả tổ hợp của tập siêu tham số",
+        "C": "Không thể dùng với cross-validation",
+        "D": "Luôn cho cùng kết quả dù không cố định random_state"
+      },
+      "correct_answer": ["A"],
+      "topic": "Random Search"
+    },
+    {
+      "question_id": "ch9_q27",
+      "question_text": "Câu 27. [Một đáp án đúng] (G2) Phát biểu nào sau đây mô tả đúng nhất về Random Search?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Hiệu quả hơn Grid Search trong không gian tham số lớn",
+        "B": "Tìm kiếm toàn diện hơn Grid Search",
+        "C": "Luôn chính xác hơn Bayesian Optimization",
+        "D": "Chỉ dùng được với 2 siêu tham số"
+      },
+      "correct_answer": ["A"],
+      "topic": "Random Search"
+    },
+    {
+      "question_id": "ch9_q28",
+      "question_text": "Câu 28. [Một đáp án đúng] (G2) Nếu muốn giới hạn số lần thử nghiệm khi tìm kiếm ngẫu nhiên bộ siêu tham số trong scikit-learn, siêu tham số quan trọng là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "cv",
+        "B": "n_iter",
+        "C": "max_depth",
+        "D": "random_state của dữ liệu"
+      },
+      "correct_answer": ["B"],
+      "topic": "Random Search"
+    },
+    {
+      "question_id": "ch9_q29",
+      "question_text": "Câu 29. [Một đáp án đúng] (G2) Theo slide, Bayesian Optimization là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Chiến lược tuần tự để tìm điểm tối ưu toàn cục của mô hình dạng black-box",
+        "B": "Phương pháp vét cạn toàn bộ không gian tham số",
+        "C": "Cách chọn ngẫu nhiên các điểm độc lập hoàn toàn",
+        "D": "Một kỹ thuật regularization"
+      },
+      "correct_answer": ["A"],
+      "topic": "Bayesian Optimization"
+    },
+    {
+      "question_id": "ch9_q30",
+      "question_text": "Câu 30. [Một đáp án đúng] (G2) Theo quiz tuần 11, Bayesian Optimization hoạt động dựa trên nguyên tắc:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Tối ưu hóa dựa trên xác suất",
+        "B": "Tối ưu hóa dựa trên đạo hàm",
+        "C": "Tối ưu hóa dựa trên khoảng cách",
+        "D": "Tối ưu hóa dựa trên chuẩn hóa dữ liệu"
+      },
+      "correct_answer": ["A"],
+      "topic": "Bayesian Optimization"
+    },
+    {
+      "question_id": "ch9_q31",
+      "question_text": "Câu 31. [Nhiều đáp án đúng] (G2) Ưu điểm của Bayesian Optimization theo slide gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Có kế thừa thông tin các lần thử trước đó",
+        "B": "Giảm bớt số lần thử nghiệm",
+        "C": "Phù hợp với không gian tham số lớn",
+        "D": "Đơn giản hơn hẳn so với Grid Search và Random Search"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Bayesian Optimization"
+    },
+    {
+      "question_id": "ch9_q32",
+      "question_text": "Câu 32. [Nhiều đáp án đúng] (G2) Khuyết điểm của Bayesian Optimization theo slide gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Phương pháp phức tạp hơn so với RS và GS",
+        "B": "Việc chọn hàm acquisition ảnh hưởng lớn đến hiệu quả",
+        "C": "Không phù hợp với không gian tham số lớn",
+        "D": "Các lần thử hoàn toàn độc lập nhau"
+      },
+      "correct_answer": ["A", "B"],
+      "topic": "Bayesian Optimization"
+    },
+    {
+      "question_id": "ch9_q33",
+      "question_text": "Câu 33. [Một đáp án đúng] (G2) Điểm khác biệt nổi bật của Bayesian Optimization so với Random Search và Grid Search theo quiz là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Các lần thử có liên hệ với nhau",
+        "B": "Các lần thử tốn ít thời gian hơn",
+        "C": "Các lần thử độc lập nhau",
+        "D": "Luôn tìm kiếm toàn diện"
+      },
+      "correct_answer": ["A"],
+      "topic": "Bayesian Optimization"
+    },
+    {
+      "question_id": "ch9_q34",
+      "question_text": "Câu 34. [Một đáp án đúng] (G2) Theo slide, trong Bayesian Optimization, việc chọn hàm acquisition:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Không ảnh hưởng đến hiệu quả phương pháp",
+        "B": "Ảnh hưởng lớn đến hiệu quả phương pháp",
+        "C": "Chỉ ảnh hưởng đến Grid Search",
+        "D": "Chỉ quan trọng với dữ liệu nhỏ"
+      },
+      "correct_answer": ["B"],
+      "topic": "Bayesian Optimization"
+    },
+    {
+      "question_id": "ch9_q35",
+      "question_text": "Câu 35. [Một đáp án đúng] (G2) Phát biểu nào sau đây mô tả đúng nhất về Bayesian Optimization?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Các lần thử đều độc lập hoàn toàn",
+        "B": "Không dùng thông tin từ các lần thử trước",
+        "C": "Tận dụng kết quả trước để tìm hiệu quả hơn",
+        "D": "Luôn thử ít hơn đúng bằng một nửa Random Search"
+      },
+      "correct_answer": ["C"],
+      "topic": "Bayesian Optimization"
+    },
+    {
+      "question_id": "ch9_q36",
+      "question_text": "Câu 36. [Một đáp án đúng] (G2) Theo slide, Bayesian Optimization phù hợp với:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Không gian tham số lớn",
+        "B": "Chỉ không gian tham số nhỏ",
+        "C": "Chỉ mô hình tuyến tính",
+        "D": "Chỉ dữ liệu đã gán nhãn"
+      },
+      "correct_answer": ["A"],
+      "topic": "Bayesian Optimization"
+    },
+    {
+      "question_id": "ch9_q37",
+      "question_text": "Câu 37. [Một đáp án đúng] (G2) Trong hình minh họa Bayesian Optimization trên slide, acquisition function dùng để:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Chọn vị trí thử nghiệm tiếp theo",
+        "B": "Chuẩn hóa dữ liệu đầu vào",
+        "C": "Tính BCE của mô hình",
+        "D": "Loại bỏ overfitting"
+      },
+      "correct_answer": ["A"],
+      "topic": "Bayesian Optimization"
+    },
+    {
+      "question_id": "ch9_q38",
+      "question_text": "Câu 38. [Một đáp án đúng] (G2) Theo phần so sánh trong slide, Bayesian Optimization khác Grid Search và Random Search chủ yếu ở chỗ:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Tìm kiếm toàn diện hơn cả hai",
+        "B": "Dùng lý thuyết xác suất và kế thừa thông tin các lần thử trước",
+        "C": "Không cần đánh giá mô hình",
+        "D": "Không có tham số nào cần chọn"
+      },
+      "correct_answer": ["B"],
+      "topic": "Bayesian Optimization"
+    },
+    {
+      "question_id": "ch9_q39",
+      "question_text": "Câu 39. [Một đáp án đúng] (G2) Theo quiz tuần 11, learning rate ảnh hưởng đến:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Tốc độ học của mô hình",
+        "B": "Số lượng epoch bắt buộc",
+        "C": "Kích thước batch",
+        "D": "Số lượng lớp của mạng"
+      },
+      "correct_answer": ["A"],
+      "topic": "Related Hyperparameters"
+    },
+    {
+      "question_id": "ch9_q40",
+      "question_text": "Câu 40. [Một đáp án đúng] (G2) Theo quiz tuần 11, regularization trong tinh chỉnh tham số có tác dụng chính là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Tăng tốc độ học của mô hình",
+        "B": "Ngăn chặn hiện tượng overfitting",
+        "C": "Giảm số lượng mẫu dữ liệu",
+        "D": "Tăng số lớp của mạng"
+      },
+      "correct_answer": ["B"],
+      "topic": "Related Hyperparameters"
+    },
+    {
+      "question_id": "ch9_q41",
+      "question_text": "Câu 41. [Một đáp án đúng] (G2) Theo quiz tuần 11, early stopping là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Dừng quá trình học khi hết dữ liệu",
+        "B": "Dừng quá trình học khi đạt độ chính xác 100%",
+        "C": "Dừng quá trình học khi mô hình không còn cải thiện",
+        "D": "Dừng quá trình học sau đúng một epoch"
+      },
+      "correct_answer": ["C"],
+      "topic": "Related Hyperparameters"
+    },
+    {
+      "question_id": "ch9_q42",
+      "question_text": "Câu 42. [Một đáp án đúng] (G2) Theo quiz tuần 11, cross-validation trong tinh chỉnh tham số có mục đích:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Tăng tốc độ học của mô hình",
+        "B": "Tìm ra bộ tham số tối ưu",
+        "C": "Giảm kích thước mô hình",
+        "D": "Thay thế hoàn toàn bước huấn luyện"
+      },
+      "correct_answer": ["B"],
+      "topic": "Related Hyperparameters"
+    },
+    {
+      "question_id": "ch9_q43",
+      "question_text": "Câu 43. [Một đáp án đúng] (G2) Theo quiz tuần 11, mục nào sau đây KHÔNG phải là một phần của hyperparameter tuning?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Số lượng neuron trong một layer",
+        "B": "Số lượng features được sử dụng",
+        "C": "Trọng số của mỗi connection",
+        "D": "Loại hàm kích hoạt được sử dụng"
+      },
+      "correct_answer": ["C"],
+      "topic": "Related Hyperparameters"
+    },
+    {
+      "question_id": "ch9_q44",
+      "question_text": "Câu 44. [Nhiều đáp án đúng] (G2) Các mục nào sau đây là ví dụ hợp lý của hyper-parameter theo slide và quiz?",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Số lớp",
+        "B": "Số neuron trong một lớp",
+        "C": "Learning rate",
+        "D": "Trọng số của từng connection"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Related Hyperparameters"
+    },
+    {
+      "question_id": "ch9_q45",
+      "question_text": "Câu 45. [Nhiều đáp án đúng] (G2) So sánh ba phương pháp trong slide, phát biểu nào đúng?",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Grid Search tìm kiếm toàn diện nhưng chi phí lớn khi không gian quá lớn",
+        "B": "Random Search đơn giản, hiệu quả với không gian lớn nhưng không tìm kiếm toàn diện",
+        "C": "Bayesian Optimization kế thừa thông tin các lần thử trước",
+        "D": "Cả ba phương pháp đều kế thừa thông tin các lần thử trước"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Method Comparison"
+    },
+    {
+      "question_id": "ch9_q46",
+      "question_text": "Câu 46. [Một đáp án đúng] (G2) Nếu mục tiêu là phương pháp đơn giản, dễ cài đặt và tìm kiếm toàn diện, lựa chọn phù hợp nhất là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Grid Search",
+        "B": "Random Search",
+        "C": "Bayesian Optimization",
+        "D": "Early Stopping"
+      },
+      "correct_answer": ["A"],
+      "topic": "Method Comparison"
+    },
+    {
+      "question_id": "ch9_q47",
+      "question_text": "Câu 47. [Một đáp án đúng] (G2) Nếu không gian tham số rất lớn và muốn một phương pháp đơn giản, dễ cài đặt, phù hợp nhất theo slide là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Grid Search",
+        "B": "Random Search",
+        "C": "Bayesian Optimization",
+        "D": "StandardScaler"
+      },
+      "correct_answer": ["B"],
+      "topic": "Method Comparison"
+    },
+    {
+      "question_id": "ch9_q48",
+      "question_text": "Câu 48. [Một đáp án đúng] (G2) Nếu muốn giảm số lần thử nghiệm và tận dụng thông tin từ các lần thử trước, lựa chọn phù hợp nhất là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Grid Search",
+        "B": "Random Search",
+        "C": "Bayesian Optimization",
+        "D": "Cross-validation"
+      },
+      "correct_answer": ["C"],
+      "topic": "Method Comparison"
+    },
+    {
+      "question_id": "ch9_q49",
+      "question_text": "Câu 49. [Một đáp án đúng] (G2) Theo phần so sánh trong slide, phương pháp nào bị ghi nhận là 'không hiệu quả do không kế thừa lần thử trước để cải thiện tìm kiếm'?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Chỉ Grid Search",
+        "B": "Chỉ Random Search",
+        "C": "Cả Grid Search và Random Search",
+        "D": "Chỉ Bayesian Optimization"
+      },
+      "correct_answer": ["C"],
+      "topic": "Method Comparison"
+    },
+    {
+      "question_id": "ch9_q50",
+      "question_text": "Câu 50. [Nhiều đáp án đúng] (G2) Chọn các phát biểu đúng về GridSearchCV và RandomizedSearchCV theo đề mẫu và nội dung bài:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "GridSearchCV thử toàn bộ tổ hợp trong lưới tham số",
+        "B": "RandomizedSearchCV có thể giới hạn chi phí qua n_iter",
+        "C": "GridSearchCV thường tốn chi phí lớn hơn khi không gian siêu tham số tăng",
+        "D": "RandomizedSearchCV luôn kiểm tra toàn bộ tổ hợp tham số"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Method Comparison"
+    }
+  ]
+}

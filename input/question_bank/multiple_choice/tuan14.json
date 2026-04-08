@@ -1,0 +1,654 @@
+{
+  "GENERATED_QUESTIONS": [
+    {
+      "question_id": "ch11_q1",
+      "question_text": "Câu 1. [Một đáp án đúng] (G2) Theo slide, triển khai mô hình máy học nhằm mục đích chính là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Giảm số lượng đặc trưng đầu vào",
+        "B": "Để mô hình dự đoán có thể tiếp cận được với người dùng cuối và các hệ thống khác",
+        "C": "Đảm bảo mô hình luôn đạt độ chính xác 100%",
+        "D": "Thay thế hoàn toàn bước huấn luyện mô hình"
+      },
+      "correct_answer": ["B"],
+      "topic": "Intro Deployment"
+    },
+    {
+      "question_id": "ch11_q2",
+      "question_text": "Câu 2. [Nhiều đáp án đúng] (G2) Theo slide, phản hồi về mô hình (model feedback) có thể đến từ:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Phản hồi trực tiếp",
+        "B": "Phản hồi gián tiếp",
+        "C": "Chỉ từ tập validation",
+        "D": "Chỉ từ tập train"
+      },
+      "correct_answer": ["A", "B"],
+      "topic": "Intro Deployment"
+    },
+    {
+      "question_id": "ch11_q3",
+      "question_text": "Câu 3. [Một đáp án đúng] (G2) Theo slide, sự tồn tại của mô hình máy học trong mắt người dùng có thể là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Chỉ luôn nhận thức được",
+        "B": "Chỉ luôn không nhận thức được",
+        "C": "Có thể nhận thức được hoặc không nhận thức được",
+        "D": "Luôn bị ẩn hoàn toàn sau backend"
+      },
+      "correct_answer": ["C"],
+      "topic": "Intro Deployment"
+    },
+    {
+      "question_id": "ch11_q4",
+      "question_text": "Câu 4. [Một đáp án đúng] (G2) Theo slide về “technical debt”, trong một hệ thống có máy học, các đoạn code mô hình thường:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Chiếm phần lớn hệ thống",
+        "B": "Chiếm tỉ trọng rất nhỏ",
+        "C": "Luôn lớn hơn phần serving infrastructure",
+        "D": "Không liên quan đến hệ thống triển khai"
+      },
+      "correct_answer": ["B"],
+      "topic": "Technical Debt"
+    },
+    {
+      "question_id": "ch11_q5",
+      "question_text": "Câu 5. [Nhiều đáp án đúng] (G2) Theo slide, các công nghệ triển khai chính được nhóm thành:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Nền tảng dữ liệu lớn",
+        "B": "Thư viện máy học",
+        "C": "Hạ tầng đóng gói",
+        "D": "Nền tảng kết hợp"
+      },
+      "correct_answer": ["A", "B", "C", "D"],
+      "topic": "Deployment Technologies"
+    },
+    {
+      "question_id": "ch11_q6",
+      "question_text": "Câu 6. [Một đáp án đúng] (G2) Trong hình “Mô hình nên triển khai ở đâu?”, thành phần nào nằm ở phía local?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Client",
+        "B": "Server",
+        "C": "Database",
+        "D": "REST API"
+      },
+      "correct_answer": ["A"],
+      "topic": "Deployment Placement"
+    },
+    {
+      "question_id": "ch11_q7",
+      "question_text": "Câu 7. [Một đáp án đúng] (G2) Batch prediction là gì?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Dự đoán theo thời gian thực cho từng request",
+        "B": "Dự đoán trên một tập hợp dữ liệu lớn cùng một lúc",
+        "C": "Dự đoán trực tiếp trên thiết bị biên",
+        "D": "Dự đoán thông qua REST API"
+      },
+      "correct_answer": ["B"],
+      "topic": "Batch Prediction"
+    },
+    {
+      "question_id": "ch11_q8",
+      "question_text": "Câu 8. [Một đáp án đúng] (G2) Theo slide, batch prediction hoạt động bằng cách:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Gửi trọng số mô hình lên client",
+        "B": "Định kỳ chạy mô hình trên dữ liệu mới và lưu cache kết quả dự đoán trong database",
+        "C": "Huấn luyện mô hình lại sau mỗi request",
+        "D": "Tải mô hình vào trình duyệt web"
+      },
+      "correct_answer": ["B"],
+      "topic": "Batch Prediction"
+    },
+    {
+      "question_id": "ch11_q9",
+      "question_text": "Câu 9. [Một đáp án đúng] (G2) Theo slide, batch prediction khả thi khi:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Dữ liệu đến liên tục và cần phản hồi ngay",
+        "B": "Toàn bộ dữ liệu cần chạy đủ nhỏ",
+        "C": "Mô hình chỉ chạy trên GPU",
+        "D": "Người dùng luôn offline"
+      },
+      "correct_answer": ["B"],
+      "topic": "Batch Prediction"
+    },
+    {
+      "question_id": "ch11_q10",
+      "question_text": "Câu 10. [Nhiều đáp án đúng] (G2) Theo slide, ưu điểm của batch prediction gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Dễ thực hiện",
+        "B": "Độ trễ thấp đối với người dùng",
+        "C": "Dữ liệu dự đoán luôn cập nhật tức thời",
+        "D": "Mô hình không bao giờ lỗi thời"
+      },
+      "correct_answer": ["A", "B"],
+      "topic": "Batch Prediction"
+    },
+    {
+      "question_id": "ch11_q11",
+      "question_text": "Câu 11. [Nhiều đáp án đúng] (G2) Theo slide, khuyết điểm của batch prediction gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Dữ liệu phức tạp khiến mô hình khó tăng quy mô tính toán",
+        "B": "Dữ liệu dự đoán không cập nhật",
+        "C": "Mô hình thường trở nên lỗi thời",
+        "D": "Bắt buộc cần internet phía client"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Batch Prediction"
+    },
+    {
+      "question_id": "ch11_q12",
+      "question_text": "Câu 12. [Một đáp án đúng] (G2) Khi nào nên ưu tiên dùng batch prediction thay vì real-time prediction?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Khi có một lượng lớn dữ liệu cần dự đoán cùng một lúc",
+        "B": "Khi cần phản hồi cho từng yêu cầu ngay lập tức",
+        "C": "Khi muốn client tự chạy mô hình",
+        "D": "Khi muốn tránh dùng database"
+      },
+      "correct_answer": ["A"],
+      "topic": "Batch Prediction"
+    },
+    {
+      "question_id": "ch11_q13",
+      "question_text": "Câu 13. [Một đáp án đúng] (G2) Theo quiz tuần 14, lợi ích chính của batch prediction là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Giảm độ trễ trong dự đoán",
+        "B": "Tăng độ chính xác của mô hình",
+        "C": "Tự động chọn siêu tham số",
+        "D": "Loại bỏ hoàn toàn database"
+      },
+      "correct_answer": ["A"],
+      "topic": "Batch Prediction"
+    },
+    {
+      "question_id": "ch11_q14",
+      "question_text": "Câu 14. [Một đáp án đúng] (G2) Trong ví dụ trên slide, batch prediction phù hợp với tình huống gần nhất là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Một dự đoán cho mỗi người dùng và có thể chạy định kỳ",
+        "B": "Phân loại ảnh trực tiếp trên trình duyệt",
+        "C": "Chatbot cần trả lời ngay từng tin nhắn",
+        "D": "Mô hình phải dự đoán khi client mất kết nối mạng"
+      },
+      "correct_answer": ["A"],
+      "topic": "Batch Prediction"
+    },
+    {
+      "question_id": "ch11_q15",
+      "question_text": "Câu 15. [Một đáp án đúng] (G2) Model-in-service là cách triển khai mà:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Mô hình chạy trên client",
+        "B": "Mô hình được đóng gói và đặt chung với web server",
+        "C": "Mô hình chỉ chạy định kỳ theo lô",
+        "D": "Mô hình chỉ được dùng thông qua bên thứ 3"
+      },
+      "correct_answer": ["B"],
+      "topic": "Model-in-service"
+    },
+    {
+      "question_id": "ch11_q16",
+      "question_text": "Câu 16. [Một đáp án đúng] (G2) Theo slide, trong model-in-service, web server sẽ:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Tải và gọi mô hình dự đoán khi có request từ người dùng",
+        "B": "Gửi trọng số mô hình lên edge device",
+        "C": "Chỉ cache kết quả cũ từ database",
+        "D": "Không tương tác với mô hình"
+      },
+      "correct_answer": ["A"],
+      "topic": "Model-in-service"
+    },
+    {
+      "question_id": "ch11_q17",
+      "question_text": "Câu 17. [Một đáp án đúng] (G2) Theo slide, một ưu điểm rõ nhất của model-in-service là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Không cần internet",
+        "B": "Tận dụng hạ tầng server hiện có",
+        "C": "Không có độ trễ",
+        "D": "Không cần web server"
+      },
+      "correct_answer": ["B"],
+      "topic": "Model-in-service"
+    },
+    {
+      "question_id": "ch11_q18",
+      "question_text": "Câu 18. [Nhiều đáp án đúng] (G2) Theo slide, các nhược điểm hợp lý của model-in-service gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Mô hình lớn có thể tốn rất nhiều tài nguyên của web server",
+        "B": "Phần cứng của web server có thể không được tối ưu cho mô hình",
+        "C": "Mô hình và web server có thể scale khác nhau",
+        "D": "Không thể cập nhật mô hình"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Model-in-service"
+    },
+    {
+      "question_id": "ch11_q19",
+      "question_text": "Câu 19. [Một đáp án đúng] (G2) Theo slide, model-in-service có thể gặp vấn đề vì:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Web server và mô hình luôn scale giống nhau",
+        "B": "Web server không bao giờ đủ tài nguyên cho phần web",
+        "C": "Mô hình lớn có thể làm tiêu tốn tài nguyên của web server",
+        "D": "Không thể đóng gói mô hình"
+      },
+      "correct_answer": ["C"],
+      "topic": "Model-in-service"
+    },
+    {
+      "question_id": "ch11_q20",
+      "question_text": "Câu 20. [Một đáp án đúng] (G2) Theo quiz tuần 14, lợi ích chính của model-in-service prediction được nêu là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Giảm công việc thủ công",
+        "B": "Tăng độ trễ",
+        "C": "Tăng chi phí",
+        "D": "Giảm độ chính xác"
+      },
+      "correct_answer": ["A"],
+      "topic": "Model-in-service"
+    },
+    {
+      "question_id": "ch11_q21",
+      "question_text": "Câu 21. [Một đáp án đúng] (G2) So với model-as-service, model-in-service khác ở chỗ:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Model-in-service đặt mô hình chung với web server",
+        "B": "Model-in-service luôn chạy trên client",
+        "C": "Model-in-service không cần server",
+        "D": "Model-in-service chỉ dùng cho batch prediction"
+      },
+      "correct_answer": ["A"],
+      "topic": "Model-in-service vs Model-as-service"
+    },
+    {
+      "question_id": "ch11_q22",
+      "question_text": "Câu 22. [Một đáp án đúng] (G2) Model-as-service là cách triển khai mà:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Mô hình được thực thi trên server riêng",
+        "B": "Mô hình được đặt trong database",
+        "C": "Mô hình luôn chạy trên browser",
+        "D": "Mô hình chỉ được cache dưới dạng file"
+      },
+      "correct_answer": ["A"],
+      "topic": "Model-as-service"
+    },
+    {
+      "question_id": "ch11_q23",
+      "question_text": "Câu 23. [Một đáp án đúng] (G2) Theo slide, trong model-as-service, web backend tương tác với mô hình bằng cách:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Gọi dịch vụ web và nhận phản hồi ngược lại",
+        "B": "Huấn luyện lại mô hình mỗi lần có request",
+        "C": "Đưa toàn bộ logic vào DNS server",
+        "D": "Tải model về client"
+      },
+      "correct_answer": ["A"],
+      "topic": "Model-as-service"
+    },
+    {
+      "question_id": "ch11_q24",
+      "question_text": "Câu 24. [Nhiều đáp án đúng] (G2) Theo slide, ưu điểm của model-as-service gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Mô hình có lỗi không ảnh hưởng nhiều đến ứng dụng web",
+        "B": "Có thể chọn phần cứng và mở rộng server của mô hình phù hợp",
+        "C": "Có thể tái sử dụng cho các ứng dụng khác",
+        "D": "Không có độ trễ"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Model-as-service"
+    },
+    {
+      "question_id": "ch11_q25",
+      "question_text": "Câu 25. [Nhiều đáp án đúng] (G2) Theo slide, nhược điểm của model-as-service gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Có thể có độ trễ",
+        "B": "Phức tạp hơn về hạ tầng",
+        "C": "Không thể tái sử dụng cho ứng dụng khác",
+        "D": "Chỉ chạy được trên một máy"
+      },
+      "correct_answer": ["A", "B"],
+      "topic": "Model-as-service"
+    },
+    {
+      "question_id": "ch11_q26",
+      "question_text": "Câu 26. [Một đáp án đúng] (G2) Theo slide, model-as-service phù hợp hơn khi cần:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Tái sử dụng nhiều ứng dụng khác nhau",
+        "B": "Chạy offline hoàn toàn trên client",
+        "C": "Không dùng web backend",
+        "D": "Chỉ demo nội bộ trên một máy cá nhân"
+      },
+      "correct_answer": ["A"],
+      "topic": "Model-as-service"
+    },
+    {
+      "question_id": "ch11_q27",
+      "question_text": "Câu 27. [Một đáp án đúng] (G2) Theo slide, nội dung nào thuộc triển khai mô hình dạng dịch vụ?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "REST API",
+        "B": "PCA",
+        "C": "KMeans",
+        "D": "Cross-validation"
+      },
+      "correct_answer": ["A"],
+      "topic": "Deployment Service"
+    },
+    {
+      "question_id": "ch11_q28",
+      "question_text": "Câu 28. [Nhiều đáp án đúng] (G2) Theo slide, triển khai mô hình dạng dịch vụ quan tâm tới các nội dung:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Quản lý tính phụ thuộc",
+        "B": "Tối ưu hiệu năng",
+        "C": "Mở rộng theo chiều ngang",
+        "D": "Triển khai"
+      },
+      "correct_answer": ["A", "B", "C", "D"],
+      "topic": "Deployment Service"
+    },
+    {
+      "question_id": "ch11_q29",
+      "question_text": "Câu 29. [Một đáp án đúng] (G2) Theo quiz tuần 14, model-as-service prediction là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Dự đoán theo lô",
+        "B": "Dự đoán theo thời gian thực thông qua dịch vụ web",
+        "C": "Dự đoán chỉ từ dữ liệu lịch sử",
+        "D": "Dự đoán trực tiếp trên edge device"
+      },
+      "correct_answer": ["B"],
+      "topic": "Model-as-service"
+    },
+    {
+      "question_id": "ch11_q30",
+      "question_text": "Câu 30. [Một đáp án đúng] (G2) Edge prediction là cách triển khai mà:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Mô hình chạy ở server riêng",
+        "B": "Mô hình chạy trực tiếp từ máy trạm / thiết bị biên",
+        "C": "Mô hình chỉ chạy định kỳ trên database",
+        "D": "Mô hình được tích hợp trong DNS server"
+      },
+      "correct_answer": ["B"],
+      "topic": "Edge Prediction"
+    },
+    {
+      "question_id": "ch11_q31",
+      "question_text": "Câu 31. [Một đáp án đúng] (G2) Theo slide, edge prediction thực hiện bằng cách:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Đặt mô hình chung với web server",
+        "B": "Gửi trọng số của mô hình lên thiết bị biên và tải mô hình để dự đoán trực tiếp từ client",
+        "C": "Chạy batch prediction trong database",
+        "D": "Tạo REST API trên client"
+      },
+      "correct_answer": ["B"],
+      "topic": "Edge Prediction"
+    },
+    {
+      "question_id": "ch11_q32",
+      "question_text": "Câu 32. [Nhiều đáp án đúng] (G2) Theo slide, ưu điểm của edge prediction gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Độ trễ thấp",
+        "B": "Không cần internet",
+        "C": "Bảo mật dữ liệu tốt hơn vì không cần chuyển dữ liệu ra khỏi máy trạm",
+        "D": "Dễ cập nhật mô hình hơn model-as-service"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Edge Prediction"
+    },
+    {
+      "question_id": "ch11_q33",
+      "question_text": "Câu 33. [Nhiều đáp án đúng] (G2) Theo slide, khuyết điểm của edge prediction gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Tài nguyên máy trạm có hạn",
+        "B": "Các thư viện/framework của máy trạm thường không đủ tính năng",
+        "C": "Khó cập nhật mô hình",
+        "D": "Khó theo dõi và debug"
+      },
+      "correct_answer": ["A", "B", "C", "D"],
+      "topic": "Edge Prediction"
+    },
+    {
+      "question_id": "ch11_q34",
+      "question_text": "Câu 34. [Một đáp án đúng] (G2) Theo quiz tuần 14, khi triển khai mô hình máy học tại biên, yếu tố được nêu là quan trọng nhất để đảm bảo hiệu suất là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Độ chính xác của mô hình",
+        "B": "Tốc độ xử lý",
+        "C": "Khả năng mở rộng",
+        "D": "Chi phí triển khai"
+      },
+      "correct_answer": ["C"],
+      "topic": "Edge Prediction"
+    },
+    {
+      "question_id": "ch11_q35",
+      "question_text": "Câu 35. [Một đáp án đúng] (G2) Theo slide, tình huống phù hợp để triển khai dạng ứng dụng web là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Cung cấp dịch vụ cho bên thứ 3 khai thác",
+        "B": "Demo tính năng chính của mô hình máy học với khách hàng",
+        "C": "Chạy mô hình không cần internet trên edge device",
+        "D": "Giám sát drift bằng window"
+      },
+      "correct_answer": ["B"],
+      "topic": "Web App Deployment"
+    },
+    {
+      "question_id": "ch11_q36",
+      "question_text": "Câu 36. [Nhiều đáp án đúng] (G2) Theo slide, triển khai dạng ứng dụng web phù hợp khi:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Muốn demo tính năng chính với khách hàng",
+        "B": "Muốn tiếp cận mô hình đến số đông dễ dàng",
+        "C": "Người dùng chỉ cần có internet, không cần cài đặt",
+        "D": "Cần client tự chạy mô hình offline"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Web App Deployment"
+    },
+    {
+      "question_id": "ch11_q37",
+      "question_text": "Câu 37. [Nhiều đáp án đúng] (G2) Theo slide, một số công cụ để triển khai dạng ứng dụng web gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Streamlit",
+        "B": "Gradio",
+        "C": "Flask",
+        "D": "FastAPI"
+      },
+      "correct_answer": ["A", "B"],
+      "topic": "Web App Deployment"
+    },
+    {
+      "question_id": "ch11_q38",
+      "question_text": "Câu 38. [Nhiều đáp án đúng] (G2) Theo slide “Cách học nhanh Streamlit”, các control chính khi làm ứng dụng web gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Label",
+        "B": "Textbox",
+        "C": "Button",
+        "D": "DecisionTree"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Streamlit"
+    },
+    {
+      "question_id": "ch11_q39",
+      "question_text": "Câu 39. [Một đáp án đúng] (G2) Theo slide, trong ví dụ triển khai ứng dụng web thật, cổng minh họa để host dịch vụ web là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "5000",
+        "B": "8000",
+        "C": "8501",
+        "D": "3306"
+      },
+      "correct_answer": ["C"],
+      "topic": "Streamlit"
+    },
+    {
+      "question_id": "ch11_q40",
+      "question_text": "Câu 40. [Một đáp án đúng] (G2) Theo slide, bước đầu tiên trong ví dụ triển khai ứng dụng web thật là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Cài streamlit",
+        "B": "Tạo database",
+        "C": "Huấn luyện lại mô hình",
+        "D": "Tạo REST API"
+      },
+      "correct_answer": ["A"],
+      "topic": "Streamlit"
+    },
+    {
+      "question_id": "ch11_q41",
+      "question_text": "Câu 41. [Nhiều đáp án đúng] (G2) Theo slide, các công cụ để triển khai dạng dịch vụ API gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Flask",
+        "B": "FastAPI",
+        "C": "Streamlit",
+        "D": "Gradio"
+      },
+      "correct_answer": ["A", "B"],
+      "topic": "API Deployment"
+    },
+    {
+      "question_id": "ch11_q42",
+      "question_text": "Câu 42. [Nhiều đáp án đúng] (G2) Theo slide, tình huống phù hợp để triển khai dạng dịch vụ API là:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Cung cấp dịch vụ cho bên thứ 3 khai thác",
+        "B": "Tái sử dụng nhiều ứng dụng khác nhau",
+        "C": "Chỉ demo giao diện cho khách hàng cuối",
+        "D": "Chỉ dùng offline trên client"
+      },
+      "correct_answer": ["A", "B"],
+      "topic": "API Deployment"
+    },
+    {
+      "question_id": "ch11_q43",
+      "question_text": "Câu 43. [Một đáp án đúng] (G2) Sau khi triển khai mô hình, slide đặt ra câu hỏi chính là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Mô hình có train nhanh hơn không?",
+        "B": "Mô hình có chính xác cao trên validation thì liệu có tốt trong quá trình triển khai hay không?",
+        "C": "Có nên bỏ bước feedback hay không?",
+        "D": "Có nên giảm số lượng đặc trưng không?"
+      },
+      "correct_answer": ["B"],
+      "topic": "Monitoring"
+    },
+    {
+      "question_id": "ch11_q44",
+      "question_text": "Câu 44. [Nhiều đáp án đúng] (G2) Theo slide, sau khi triển khai mô hình có thể xảy ra các khả năng:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Phân bố dữ liệu thay đổi",
+        "B": "Mô hình bị thay đổi",
+        "C": "Tập validation tự mở rộng",
+        "D": "Tự động loại bỏ data drift"
+      },
+      "correct_answer": ["A", "B"],
+      "topic": "Monitoring"
+    },
+    {
+      "question_id": "ch11_q45",
+      "question_text": "Câu 45. [Một đáp án đúng] (G2) Dạng dịch chuyển dữ liệu do áp dụng trên môi trường khác hoặc do biến động đột ngột như đại dịch COVID là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Gradual drift",
+        "B": "Seasonal drift",
+        "C": "Instantaneous drift",
+        "D": "Temporary drift"
+      },
+      "correct_answer": ["C"],
+      "topic": "Data Drift"
+    },
+    {
+      "question_id": "ch11_q46",
+      "question_text": "Câu 46. [Một đáp án đúng] (G2) Dạng dịch chuyển dữ liệu gắn với việc sở thích người dùng thay đổi theo thời gian là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Gradual drift",
+        "B": "Instantaneous drift",
+        "C": "Seasonal drift",
+        "D": "Temporary drift"
+      },
+      "correct_answer": ["A"],
+      "topic": "Data Drift"
+    },
+    {
+      "question_id": "ch11_q47",
+      "question_text": "Câu 47. [Một đáp án đúng] (G2) Dạng dịch chuyển dữ liệu gắn với thay đổi theo chu kỳ hoặc do người dùng ở các múi giờ khác nhau là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Temporary drift",
+        "B": "Seasonal drift",
+        "C": "Gradual drift",
+        "D": "Instantaneous drift"
+      },
+      "correct_answer": ["B"],
+      "topic": "Data Drift"
+    },
+    {
+      "question_id": "ch11_q48",
+      "question_text": "Câu 48. [Một đáp án đúng] (G2) Dạng dịch chuyển dữ liệu có thể xuất hiện khi người dùng độc hại tấn công mô hình hoặc xuất hiện nhóm người dùng mới hoàn toàn là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Temporary drift",
+        "B": "Seasonal drift",
+        "C": "Gradual drift",
+        "D": "Instantaneous drift"
+      },
+      "correct_answer": ["A"],
+      "topic": "Data Drift"
+    },
+    {
+      "question_id": "ch11_q49",
+      "question_text": "Câu 49. [Một đáp án đúng] (G2) Theo slide, có bao nhiêu loại thông tin để giám sát mô hình?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Hai",
+        "B": "Ba",
+        "C": "Bốn",
+        "D": "Năm"
+      },
+      "correct_answer": ["C"],
+      "topic": "Monitoring"
+    },
+    {
+      "question_id": "ch11_q50",
+      "question_text": "Câu 50. [Nhiều đáp án đúng] (G2) Theo slide, để giám sát mô hình, các bước chính gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Chọn phạm vi (window) dữ liệu được cho là tốt để tham chiếu",
+        "B": "Chọn phạm vi mới của dữ liệu để so sánh, đối chiếu",
+        "C": "So sánh bằng các metric",
+        "D": "Luôn huấn luyện lại mô hình trước khi so sánh"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Monitoring"
+    }
+  ]
+}

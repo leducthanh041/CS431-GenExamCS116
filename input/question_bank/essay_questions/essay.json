@@ -1,0 +1,107 @@
+[
+  {
+    "id": "essay_001",
+    "type": "essay",
+    "topic": "recommendation_system",
+    "difficulty": "hard",
+    "question": "Bạn được yêu cầu thiết kế một giải pháp để xây dựng hệ thống gợi ý sản phẩm (Recommendation System) cho một nền tảng thương mại điện tử nhằm đề xuất các sản phẩm phù hợp với từng người dùng.\n\nThông tin đầu vào sẽ bao gồm:\n- Mã người dùng (int)\n- Lịch sử mua hàng gần đây của người dùng (mảng các mã sản phẩm – int)\n- Thời gian trung bình mỗi phiên truy cập trang web (đơn vị giây – float)\n- Danh mục sản phẩm đã duyệt trong các phiên truy cập trước (mảng các string)\n- Đánh giá sản phẩm của người dùng (thang điểm 1–5 – float)\n- Tần suất mua hàng (số lần mua trong một khoảng thời gian nhất định – int)\n- Thông tin nhân khẩu học của người dùng (tuổi – int, giới tính – string, vị trí địa lý – string).\n\nTrình bày quy trình xây dựng mô hình để thuyết phục khách hàng chấp thuận thực hiện dự án. Cần chú trọng chứng minh tính hợp lý và hiệu quả của mô hình, từ khâu thu thập và xử lý dữ liệu, lựa chọn mô hình học máy phù hợp, đến quá trình đánh giá hiệu quả của hệ thống gợi ý và khả năng ứng dụng thực tiễn.",
+    "answer": {
+      "steps": [
+        {
+          "title": "Thu thập và đánh giá dữ liệu",
+          "content": "Thu thập dữ liệu: Cơ sở dữ liệu hiện có Transaction, User, Item và logs hệ thống. Đánh giá dữ liệu: Kiểm tra tính toàn vẹn và phân bố của dữ liệu. Kiểm tra Missing values bằng phương thức isnull(). Kiểm tra Outliers: Vẽ boxplot cho các đặc trưng số (Thời gian trung bình, Tần suất mua hàng) để loại bỏ truy cập bất thường. Kiểm tra phân bố dữ liệu bằng histogram."
+        },
+        {
+          "title": "Tiền xử lý dữ liệu",
+          "content": "Xử lý giá trị thiếu bằng SimpleImputer (strategy = ['mean', 'median', 'mode']). Mã hóa dữ liệu: Dùng OneHotEncoder cho biến categorical (Giới tính, Vị trí địa lý); Dùng Count Vectorizer cho dữ liệu mảng (Lịch sử mua hàng, Danh mục duyệt qua). Chuẩn hóa dữ liệu bằng StandardScaler cho các đặc trưng số để mô hình hội tụ nhanh hơn."
+        },
+        {
+          "title": "Feature Engineering và Feature selection",
+          "content": "Vẽ heatmap correlation để xem tương quan, loại bỏ đặc trưng có tương quan cao. Tạo đặc trưng mới: Tính tỷ lệ mua hàng trên số lần xem, danh mục yêu thích nhất để làm giàu dữ liệu."
+        },
+        {
+          "title": "Lựa chọn mô hình",
+          "content": "Input: Đặc trưng đã select và lịch sử hành vi. Output: Điểm phù hợp (ranking score) hoặc xác suất mua. Đề xuất: Gradient Boosting Regressor hoặc Random Forest Regressor vì xử lý tốt quan hệ phi tuyến, ít bị ảnh hưởng bởi outliers và cung cấp Feature Importance để giải thích mô hình."
+        },
+        {
+          "title": "Huấn luyện và Tối ưu hóa mô hình",
+          "content": "Chia dữ liệu theo mốc thời gian thành train/dev/test để tránh data leakage. Tối ưu tham số bằng GridSearchCV (n_estimators, max_depth) nhằm đạt hiệu suất cao nhất."
+        },
+        {
+          "title": "Đánh giá mô hình",
+          "content": "Metrics: Sử dụng Precision@K và Recall@K để đo lường độ chính xác trong Top K sản phẩm gợi ý. Có thể dùng Cross-Validation để đánh giá tổng quát hiệu suất."
+        }
+      ]
+    }
+  },
+  {
+    "id": "essay_002",
+    "type": "essay",
+    "topic": "classification",
+    "difficulty": "hard",
+    "question": "Bạn được yêu cầu thiết kế một giải pháp để dự đoán mức độ nghiện Internet của người dùng dựa trên dữ liệu hành vi sử dụng và dữ liệu thu thập từ thiết bị cảm biến.\n\nThông tin đầu vào sẽ bao gồm:\n- Mã người dùng (int)\n- Thời gian sử dụng Internet trung bình mỗi ngày (float)\n- Tần suất truy cập Internet (số lần truy cập trong một khoảng thời gian – int)\n- Số lần sử dụng thiết bị trong ngày (int)\n- Các chỉ số cảm biến từ thiết bị đeo như mức độ hoạt động (ENMO), góc nghiêng thiết bị (góc Z), độ sáng môi trường (float)\n- Thông tin nhân khẩu học của người dùng (tuổi – int, giới tính – string, vị trí địa lý – string).\n\nBiến đầu ra là mức độ nghiện Internet của người dùng, được phân thành các mức độ khác nhau (ví dụ: 0, 1, 2, 3).\n\nTrình bày quy trình xây dựng mô hình để thuyết phục khách hàng chấp thuận thực hiện dự án. Cần chú trọng chứng minh tính hợp lý và hiệu quả của mô hình, từ khâu thu thập và xử lý dữ liệu (bao gồm xử lý dữ liệu thiếu và dữ liệu nhiễu), xây dựng và lựa chọn đặc trưng, lựa chọn mô hình học máy phù hợp, đến quá trình đánh giá độ chính xác của mô hình và khả năng ứng dụng thực tiễn.",
+    "answer": {
+      "steps": [
+        {
+          "title": "Thu thập và đánh giá dữ liệu",
+          "content": "Thu thập dữ liệu: Merge hai bảng dữ liệu dựa trên Mã người tham gia (User ID). Đánh giá dữ liệu bằng cách kiểm tra Missing values (isnull()), kiểm tra Outliers bằng boxplot và phân bố dữ liệu bằng histogram."
+        },
+        {
+          "title": "Tiền xử lý dữ liệu (Preprocessing)",
+          "content": "Xử lý giá trị thiếu bằng SimpleImputer hoặc dropna. Lọc nhiễu: Loại bỏ các dòng dữ liệu cảm biến có Cờ báo không đeo thiết bị = 1. Mã hóa dữ liệu bằng OneHotEncoder cho biến categorical. Chuẩn hóa dữ liệu bằng StandardScaler."
+        },
+        {
+          "title": "Feature Engineering và Feature selection",
+          "content": "Vẽ heatmap correlation để loại bỏ đặc trưng tương quan cao. Tạo đặc trưng mới: Tính Mean, Max, Min, Std của ENMO, Góc Z, Độ sáng; Tính tổng thời gian hoạt động mạnh; Tỷ lệ hoạt động cuối tuần so với trong tuần."
+        },
+        {
+          "title": "Lựa chọn mô hình",
+          "content": "Input: Các đặc trưng đã xử lý. Output: Mức độ nghiện Internet (Biến phân loại: 0, 1, 2, 3). Đề xuất: Random Forest Classifier vì xử lý tốt phi tuyến, kháng nhiễu và cung cấp Feature Importance (vd: lười vận động ảnh hưởng mức độ nghiện)."
+        },
+        {
+          "title": "Huấn luyện và Tối ưu hóa mô hình",
+          "content": "Chia dữ liệu theo mốc thời gian thành train/dev/test để tránh data leakage. Sử dụng GridSearchCV để tìm bộ tham số tối ưu (n_estimators, max_depth)."
+        },
+        {
+          "title": "Đánh giá mô hình",
+          "content": "Metrics: Accuracy, F1-score, QWK. Dùng Stratified K-Fold Cross-Validation để đánh giá tổng quát mà vẫn đảm bảo tỉ lệ nhãn các lớp cân bằng."
+        }
+      ]
+    }
+  },
+  {
+    "id": "essay_003",
+    "type": "essay",
+    "topic": "regression",
+    "difficulty": "medium",
+    "question": "Bạn được yêu cầu thiết kế một giải pháp để dự đoán khả năng học viên sẽ hoàn thành một khóa học online trên nền tảng giáo dục trực tuyến.\n\nThông tin đầu vào sẽ bao gồm:\n- Mã học viên (int)\n- Số bài học đã hoàn thành trong 7 ngày đầu tham gia khóa học (int)\n- Thời gian trung bình mỗi lần đăng nhập vào hệ thống học (tính bằng phút – float)\n- Loại thiết bị thường sử dụng để học (string – ví dụ: “mobile”, “desktop”, “tablet”)\n- Số lần tương tác với giảng viên (gửi câu hỏi, bình luận, etc. – int)\n- Điểm đánh giá độ hài lòng ban đầu sau 1 tuần (thang điểm 1–10 – float)\n- Chỉ số tự học (tổng số giờ tự học đã ghi nhận từ hệ thống, float)\n- Nhóm ngành học (string – ví dụ: “Kinh tế”, “CNTT”, “Thiết kế”, …).\n\nTrình bày quy trình xây dựng mô hình để thuyết phục khách hàng chấp thuận thực hiện dự án. Cần chú trọng chứng minh tính hợp lý và hiệu quả của mô hình, từ khâu thu thập và xử lý dữ liệu, chọn mô hình học máy phù hợp, đến đánh giá độ chính xác và ứng dụng thực tiễn.",
+    "answer": {
+      "steps": [
+        {
+          "title": "Phương pháp thu thập và đánh giá dữ liệu",
+          "content": "Thu thập từ cơ sở dữ liệu nền tảng trực tuyến, API công khai, dữ liệu mở và khảo sát học viên. Đánh giá chất lượng (độ tin cậy, chính xác, tính nhất quán, độ đầy đủ). Kiểm tra thiếu dữ liệu (isnull().sum()), kiểm tra ngoại lai (boxplot) và phân bố (histogram)."
+        },
+        {
+          "title": "Phương pháp tiền xử lý dữ liệu",
+          "content": "Xử lý giá trị bị thiếu bằng SimpleImputer (mean, mode). Mã hóa dữ liệu bằng OneHotEncoder cho các feature categorical (thiết bị, nhóm ngành). Chuẩn hóa dữ liệu bằng StandardScaler đưa các cột số học về cùng thang đo."
+        },
+        {
+          "title": "Feature engineering và feature selection",
+          "content": "Vẽ heatmap xem correlation, loại bỏ đặc trưng tương quan cao. Tạo đặc trưng mới như tổng thời gian đăng nhập vào hệ thống (thời gian trung bình * 7 ngày)."
+        },
+        {
+          "title": "Xây dựng mô hình",
+          "content": "Input: Đặc trưng đã chọn lọc. Output: Khả năng hoàn thành khóa học (float). Đây là bài toán hồi quy. Đề xuất sử dụng RandomForestRegressor vì mô hình hiểu được mối quan hệ phi tuyến, ít ảnh hưởng bởi ngoại lai và không cần chuẩn hóa quá kỹ."
+        },
+        {
+          "title": "Huấn luyện mô hình",
+          "content": "Chia dữ liệu huấn luyện/kiểm thử theo tỉ lệ 80/20 bằng train_test_split (random_state=42) để đảm bảo tính tái lập. Dùng GridSearchCV tìm tham số tối ưu (n_estimators, max_depth)."
+        },
+        {
+          "title": "Đánh giá và tối ưu mô hình",
+          "content": "Sử dụng metrics: R2 score, RMSE, MAE, MSE. Dùng RMSE làm độ đo chính vì nhạy cảm với sai lệch lớn. Dùng cross_validation() để đánh giá tổng quát và ensemble learning để tối ưu hóa nếu cần."
+        }
+      ]
+    }
+  }
+]

@@ -1,0 +1,654 @@
+{
+  "GENERATED_QUESTIONS": [
+    {
+      "question_id": "ch7_q1",
+      "question_text": "Câu 1. [Một đáp án đúng] (G2) Học có giám sát (supervised learning) là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Một nhánh của máy học nhằm dự đoán giá trị đầu ra từ đặc trưng đầu vào dựa trên dữ liệu huấn luyện trước đó",
+        "B": "Một nhánh của máy học không cần nhãn đầu ra",
+        "C": "Một kỹ thuật chỉ dùng để gom nhóm dữ liệu",
+        "D": "Một phương pháp chỉ áp dụng cho dữ liệu ảnh"
+      },
+      "correct_answer": ["A"],
+      "topic": "Intro Supervised Learning"
+    },
+    {
+      "question_id": "ch7_q2",
+      "question_text": "Câu 2. [Một đáp án đúng] (G2) Dữ liệu huấn luyện trong học có giám sát thường bao gồm:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Chỉ đặc trưng đầu vào x",
+        "B": "Chỉ giá trị đầu ra y",
+        "C": "Cặp (x, y) gồm đặc trưng đầu vào và giá trị đầu ra mong muốn",
+        "D": "Chỉ các tham số của mô hình"
+      },
+      "correct_answer": ["C"],
+      "topic": "Intro Supervised Learning"
+    },
+    {
+      "question_id": "ch7_q3",
+      "question_text": "Câu 3. [Một đáp án đúng] (G2) Theo slide, hai loại bài toán chính của học có giám sát là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Gom nhóm và giảm chiều",
+        "B": "Hồi quy và phân lớp",
+        "C": "Phân cụm và hồi quy",
+        "D": "Tìm kiếm và tối ưu"
+      },
+      "correct_answer": ["B"],
+      "topic": "Intro Supervised Learning"
+    },
+    {
+      "question_id": "ch7_q4",
+      "question_text": "Câu 4. [Một đáp án đúng] (G2) Bài toán dự đoán tuổi của một người thuộc loại:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Phân lớp",
+        "B": "Hồi quy",
+        "C": "Gom nhóm",
+        "D": "Giảm chiều"
+      },
+      "correct_answer": ["B"],
+      "topic": "Regression Basics"
+    },
+    {
+      "question_id": "ch7_q5",
+      "question_text": "Câu 5. [Một đáp án đúng] (G2) Cách phân biệt đơn giản giữa hồi quy và phân lớp là dựa trên:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Số lượng đặc trưng đầu vào",
+        "B": "Kích thước tập huấn luyện",
+        "C": "Tính chất của biến đầu ra",
+        "D": "Loại thư viện sử dụng"
+      },
+      "correct_answer": ["C"],
+      "topic": "Regression Basics"
+    },
+    {
+      "question_id": "ch7_q6",
+      "question_text": "Câu 6. [Một đáp án đúng] (G2) Theo slide về mô hình hồi quy tuyến tính, hàm dự đoán có dạng:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "ŷ = β̂x",
+        "B": "ŷ = β + x",
+        "C": "ŷ = x^β",
+        "D": "ŷ = ε + β̂"
+      },
+      "correct_answer": ["A"],
+      "topic": "Linear Regression"
+    },
+    {
+      "question_id": "ch7_q7",
+      "question_text": "Câu 7. [Một đáp án đúng] (G2) Hàm độ lỗi được nêu cho mô hình hồi quy tuyến tính trong slide là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "MAE",
+        "B": "MSE",
+        "C": "Log loss",
+        "D": "Jaccard index"
+      },
+      "correct_answer": ["B"],
+      "topic": "Linear Regression"
+    },
+    {
+      "question_id": "ch7_q8",
+      "question_text": "Câu 8. [Nhiều đáp án đúng] (G2) Theo slide, có thể huấn luyện Linear Regression bằng:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Normal equation",
+        "B": "Gradient descent",
+        "C": "K-Means",
+        "D": "DBSCAN"
+      },
+      "correct_answer": ["A", "B"],
+      "topic": "Linear Regression"
+    },
+    {
+      "question_id": "ch7_q9",
+      "question_text": "Câu 9. [Một đáp án đúng] (G2) Trong sklearn, module dùng cho hồi quy tuyến tính là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "KMeans",
+        "B": "LinearRegression",
+        "C": "DBSCAN",
+        "D": "PCA"
+      },
+      "correct_answer": ["B"],
+      "topic": "Linear Regression"
+    },
+    {
+      "question_id": "ch7_q10",
+      "question_text": "Câu 10. [Nhiều đáp án đúng] (G2) Ưu điểm của mô hình hồi quy tuyến tính theo slide gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Đơn giản, dễ hiểu",
+        "B": "Phù hợp với dữ liệu có mối quan hệ tuyến tính",
+        "C": "Luôn hiệu quả với mọi dữ liệu phi tuyến",
+        "D": "Không bị ảnh hưởng bởi dữ liệu nhiễu"
+      },
+      "correct_answer": ["A", "B"],
+      "topic": "Linear Regression"
+    },
+    {
+      "question_id": "ch7_q11",
+      "question_text": "Câu 11. [Nhiều đáp án đúng] (G2) Khuyết điểm của mô hình hồi quy tuyến tính theo slide gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Không hiệu quả khi dữ liệu có mối quan hệ phức tạp",
+        "B": "Dễ bị ảnh hưởng khi có dữ liệu nhiễu",
+        "C": "Không thể dùng cho dữ liệu số",
+        "D": "Luôn cần mạng neural để hoạt động"
+      },
+      "correct_answer": ["A", "B"],
+      "topic": "Linear Regression"
+    },
+    {
+      "question_id": "ch7_q12",
+      "question_text": "Câu 12. [Một đáp án đúng] (G2) Nếu huấn luyện LinearRegression của scikit-learn với X là vector cột đơn và y là vector, thuộc tính coef_ và intercept_ lần lượt là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Một mảng shape (1,) và một số thực",
+        "B": "Một mảng shape (1,1) và một mảng shape (1,)",
+        "C": "Một số thực và một mảng shape (1,)",
+        "D": "Một mảng shape (1,1) và một số thực"
+      },
+      "correct_answer": ["A"],
+      "topic": "Linear Regression"
+    },
+    {
+      "question_id": "ch7_q13",
+      "question_text": "Câu 13. [Một đáp án đúng] (G2) Trong mô hình hồi quy tuyến tính đơn giản Yi = β0 + β1Xi + εi, công thức đúng của ước lượng β̂1 là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Σ(Xi−X̄)(Yi−Ȳ) / Σ(Xi−X̄)^2",
+        "B": "Σ(Xi−X̄)^2 / Σ(Xi−X̄)(Yi−Ȳ)",
+        "C": "Ȳ − β̂1X̄",
+        "D": "ΣYi / ΣXi"
+      },
+      "correct_answer": ["A"],
+      "topic": "Linear Regression"
+    },
+    {
+      "question_id": "ch7_q14",
+      "question_text": "Câu 14. [Một đáp án đúng] (G2) Trong mô hình hồi quy tuyến tính đơn giản Yi = β0 + β1Xi + εi, công thức đúng của ước lượng β̂0 là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "β̂0 = X̄ − β̂1Ȳ",
+        "B": "β̂0 = Ȳ − β̂1X̄",
+        "C": "β̂0 = X̄Ȳ − β̂1Ȳ",
+        "D": "β̂0 = X̄ − Ȳ"
+      },
+      "correct_answer": ["B"],
+      "topic": "Linear Regression"
+    },
+    {
+      "question_id": "ch7_q15",
+      "question_text": "Câu 15. [Một đáp án đúng] (G2) Với mô hình hồi quy tuyến tính đơn giản, dấu của ước lượng độ dốc β̂1:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Luôn trái dấu với correlation giữa X và Y",
+        "B": "Giống dấu của correlation giữa X và Y",
+        "C": "Luôn bằng 0",
+        "D": "Không liên quan đến correlation"
+      },
+      "correct_answer": ["B"],
+      "topic": "Linear Regression"
+    },
+    {
+      "question_id": "ch7_q16",
+      "question_text": "Câu 16. [Một đáp án đúng] (G2) Bias là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Sai số giữa trung bình mô hình dự đoán và mô hình thực tế",
+        "B": "Sai số giữa hai tập huấn luyện khác nhau",
+        "C": "Độ lệch chuẩn của dữ liệu đầu vào",
+        "D": "Tỉ lệ dự đoán đúng trên tập train"
+      },
+      "correct_answer": ["A"],
+      "topic": "Bias-Variance"
+    },
+    {
+      "question_id": "ch7_q17",
+      "question_text": "Câu 17. [Nhiều đáp án đúng] (G2) Theo slide, Bias cao thể hiện rằng:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Mô hình không học được quan hệ của dữ liệu huấn luyện",
+        "B": "Mô hình gây ra những lỗi mang tính hệ thống",
+        "C": "Mô hình thường underfit",
+        "D": "Mô hình luôn overfit"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Bias-Variance"
+    },
+    {
+      "question_id": "ch7_q18",
+      "question_text": "Câu 18. [Một đáp án đúng] (G2) Variance thấp thể hiện:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Tính tổng quát cao của mô hình",
+        "B": "Mô hình không đoán tốt trên dữ liệu chưa gặp",
+        "C": "Mô hình luôn có bias cao",
+        "D": "Mô hình bắt buộc phi tuyến"
+      },
+      "correct_answer": ["A"],
+      "topic": "Bias-Variance"
+    },
+    {
+      "question_id": "ch7_q19",
+      "question_text": "Câu 19. [Một đáp án đúng] (G2) Theo slide cân bằng bias-variance, mô hình tốt nên có:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Bias thấp, variance thấp",
+        "B": "Bias cao, variance thấp",
+        "C": "Bias thấp, variance cao",
+        "D": "Bias cao, variance cao"
+      },
+      "correct_answer": ["A"],
+      "topic": "Bias-Variance"
+    },
+    {
+      "question_id": "ch7_q20",
+      "question_text": "Câu 20. [Nhiều đáp án đúng] (G2) Với một tập huấn luyện cố định, khi tuần tự thêm các tham số để tăng tính linh hoạt cho mô hình, ta có khả năng quan sát thấy:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Sự chênh lệch lớn hơn giữa lỗi huấn luyện và lỗi kiểm thử",
+        "B": "Sự chênh lệch nhỏ hơn giữa lỗi huấn luyện và lỗi kiểm thử",
+        "C": "Lỗi huấn luyện tăng lên hoặc ổn định",
+        "D": "Lỗi huấn luyện giảm xuống"
+      },
+      "correct_answer": ["A", "D"],
+      "topic": "Bias-Variance"
+    },
+    {
+      "question_id": "ch7_q21",
+      "question_text": "Câu 21. [Nhiều đáp án đúng] (G2) Các mô hình đa thức với tham số bậc cao:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Có lỗi huấn luyện thấp hơn so với các mô hình đa thức bậc thấp",
+        "B": "Có khả năng quá khớp hơn so với các mô hình đa thức bậc thấp",
+        "C": "Luôn có lỗi kiểm thử tốt nhất",
+        "D": "Không khớp hơn so với mô hình đa thức bậc thấp"
+      },
+      "correct_answer": ["A", "B"],
+      "topic": "Bias-Variance"
+    },
+    {
+      "question_id": "ch7_q22",
+      "question_text": "Câu 22. [Nhiều đáp án đúng] (G2) Khi cố định các tham số của mô hình, nếu tăng số lượng mẫu huấn luyện, ta có khả năng quan sát thấy:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Sự chênh lệch lớn hơn giữa lỗi huấn luyện và lỗi kiểm thử",
+        "B": "Sự chênh lệch nhỏ hơn giữa lỗi huấn luyện và lỗi kiểm thử",
+        "C": "Lỗi huấn luyện tăng lên hoặc ổn định",
+        "D": "Lỗi huấn luyện giảm xuống"
+      },
+      "correct_answer": ["B", "C"],
+      "topic": "Bias-Variance"
+    },
+    {
+      "question_id": "ch7_q23",
+      "question_text": "Câu 23. [Một đáp án đúng] (G2) Hiện tượng overfitting xảy ra khi:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Mô hình quá phức tạp hoặc dữ liệu không đủ khái quát",
+        "B": "Mô hình quá đơn giản nhưng dữ liệu rất lớn",
+        "C": "Dữ liệu luôn được chuẩn hóa",
+        "D": "Mô hình chỉ có một tham số"
+      },
+      "correct_answer": ["A"],
+      "topic": "Overfitting"
+    },
+    {
+      "question_id": "ch7_q24",
+      "question_text": "Câu 24. [Nhiều đáp án đúng] (G2) Theo slide, để tránh overfitting có thể:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Giảm bớt sự phức tạp của mô hình",
+        "B": "Lấy mẫu thêm dữ liệu để bao gồm các tình huống thực tế",
+        "C": "Tăng số tham số của mô hình không giới hạn",
+        "D": "Bỏ qua dữ liệu nhiễu nhưng không cần đánh giá"
+      },
+      "correct_answer": ["A", "B"],
+      "topic": "Overfitting"
+    },
+    {
+      "question_id": "ch7_q25",
+      "question_text": "Câu 25. [Một đáp án đúng] (G2) Hiện tượng underfitting xảy ra khi:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Mô hình quá đơn giản so với tính chất phức tạp của dữ liệu",
+        "B": "Mô hình quá phức tạp và học cả nhiễu",
+        "C": "Dữ liệu được chuẩn hóa sai",
+        "D": "Mô hình có quá nhiều tầng ẩn"
+      },
+      "correct_answer": ["A"],
+      "topic": "Underfitting"
+    },
+    {
+      "question_id": "ch7_q26",
+      "question_text": "Câu 26. [Nhiều đáp án đúng] (G2) Theo slide, để tránh underfitting có thể:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Chuyển sang mô hình có khả năng biểu diễn phức tạp hơn",
+        "B": "Lấy mẫu thêm dữ liệu để bao gồm các tình huống thực tế",
+        "C": "Giảm số tham số của mô hình",
+        "D": "Luôn dùng hồi quy tuyến tính đơn giản hơn"
+      },
+      "correct_answer": ["A", "B"],
+      "topic": "Underfitting"
+    },
+    {
+      "question_id": "ch7_q27",
+      "question_text": "Câu 27. [Một đáp án đúng] (G2) Việc sử dụng một mô hình với độ lệch (bias) cao thường:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Gây ra một mô hình quá khớp",
+        "B": "Gây ra những lỗi mang tính hệ thống trong mô hình dự đoán",
+        "C": "Luôn cho lỗi kiểm thử thấp nhất",
+        "D": "Không ảnh hưởng đến khả năng biểu diễn"
+      },
+      "correct_answer": ["B"],
+      "topic": "Bias-Variance"
+    },
+    {
+      "question_id": "ch7_q28",
+      "question_text": "Câu 28. [Một đáp án đúng] (G2) Variance cao thể hiện rằng:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Mô hình có tính tổng quát cao",
+        "B": "Mô hình không đoán tốt trên dữ liệu chưa gặp",
+        "C": "Mô hình chắc chắn underfit",
+        "D": "Mô hình luôn chỉ có bias thấp"
+      },
+      "correct_answer": ["B"],
+      "topic": "Bias-Variance"
+    },
+    {
+      "question_id": "ch7_q29",
+      "question_text": "Câu 29. [Một đáp án đúng] (G2) Chính quy hóa (regularization) cho phép:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Giảm thiểu quá khớp bằng cách ràng buộc trọng số gần với không",
+        "B": "Giảm thiểu underfitting bằng cách tuyến tính hóa bài toán",
+        "C": "Loại bỏ hoàn toàn nhu cầu tăng dữ liệu",
+        "D": "Biến mọi mô hình thành phi tuyến"
+      },
+      "correct_answer": ["A"],
+      "topic": "Regularization"
+    },
+    {
+      "question_id": "ch7_q30",
+      "question_text": "Câu 30. [Nhiều đáp án đúng] (G2) Trong các hàm sau, hàm nào có thể được dùng để làm regularization theo quiz?",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "||θ||1",
+        "B": "||θ||2^2",
+        "C": "||θ||3",
+        "D": "θ"
+      },
+      "correct_answer": ["A", "B"],
+      "topic": "Regularization"
+    },
+    {
+      "question_id": "ch7_q31",
+      "question_text": "Câu 31. [Một đáp án đúng] (G2) LASSO Regression là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Hồi quy tuyến tính + chính quy hóa L1",
+        "B": "Hồi quy tuyến tính + chính quy hóa L2",
+        "C": "Hồi quy tuyến tính + chính quy hóa L1 và L2",
+        "D": "KNNRegressor + L1"
+      },
+      "correct_answer": ["A"],
+      "topic": "Regularization"
+    },
+    {
+      "question_id": "ch7_q32",
+      "question_text": "Câu 32. [Một đáp án đúng] (G2) Theo slide, LASSO có thể dùng cho feature selection vì:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Mô hình cố gắng đưa các hệ số về 0 đối với đặc trưng không quan trọng",
+        "B": "Mô hình luôn giữ nguyên mọi hệ số",
+        "C": "Mô hình chỉ dùng một đặc trưng duy nhất",
+        "D": "Mô hình luôn làm tăng số chiều dữ liệu"
+      },
+      "correct_answer": ["A"],
+      "topic": "Regularization"
+    },
+    {
+      "question_id": "ch7_q33",
+      "question_text": "Câu 33. [Một đáp án đúng] (G2) Ridge Regression là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Hồi quy tuyến tính + chính quy hóa L1",
+        "B": "Hồi quy tuyến tính + chính quy hóa L2",
+        "C": "Hồi quy tuyến tính + chính quy hóa L1 và L2",
+        "D": "Mô hình không dùng regularization"
+      },
+      "correct_answer": ["B"],
+      "topic": "Regularization"
+    },
+    {
+      "question_id": "ch7_q34",
+      "question_text": "Câu 34. [Một đáp án đúng] (G2) Theo slide, Ridge Regression hướng đến:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Chọn ra rất ít đặc trưng quan trọng và loại bỏ hoàn toàn phần còn lại",
+        "B": "Khai thác hết các đặc trưng",
+        "C": "Luôn tạo mô hình phi tuyến",
+        "D": "Giảm chiều dữ liệu bằng PCA"
+      },
+      "correct_answer": ["B"],
+      "topic": "Regularization"
+    },
+    {
+      "question_id": "ch7_q35",
+      "question_text": "Câu 35. [Một đáp án đúng] (G2) Elastic Net là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Hồi quy tuyến tính + chính quy hóa L1",
+        "B": "Hồi quy tuyến tính + chính quy hóa L2",
+        "C": "Hồi quy tuyến tính + chính quy hóa L1 và L2",
+        "D": "Chỉ là một tên khác của KNNRegressor"
+      },
+      "correct_answer": ["C"],
+      "topic": "Regularization"
+    },
+    {
+      "question_id": "ch7_q36",
+      "question_text": "Câu 36. [Một đáp án đúng] (G2) Vai trò chính của Elastic Net theo slide là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Cân bằng các tiêu chí của LASSO và Ridge Regression",
+        "B": "Thay thế hoàn toàn mọi regularization khác",
+        "C": "Luôn đưa tất cả hệ số về 0",
+        "D": "Chỉ dùng cho dữ liệu phân loại"
+      },
+      "correct_answer": ["A"],
+      "topic": "Regularization"
+    },
+    {
+      "question_id": "ch7_q37",
+      "question_text": "Câu 37. [Một đáp án đúng] (G2) Khi tăng giá trị λ trong Ridge Regression, hiệu ứng mong muốn là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Làm co các trọng số của đặc trưng về gần bằng 0",
+        "B": "Làm cho tất cả trọng số bằng 0 ngay lập tức",
+        "C": "Làm cho tất cả trọng số bằng nhau",
+        "D": "Tăng số chiều dữ liệu"
+      },
+      "correct_answer": ["A"],
+      "topic": "Regularization"
+    },
+    {
+      "question_id": "ch7_q38",
+      "question_text": "Câu 38. [Một đáp án đúng] (G2) Theo slide “Một số mô hình Regression khác”, vẫn có thể dùng LinearRegression nhưng với feature engineer bằng cách:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Chỉ giữ lại cột x gốc",
+        "B": "Tạo thêm các đặc trưng như x, x^2, x^3",
+        "C": "Thay x bằng nhãn phân loại",
+        "D": "Bỏ toàn bộ dữ liệu nhiễu mà không cần huấn luyện"
+      },
+      "correct_answer": ["B"],
+      "topic": "Nonlinear Regression"
+    },
+    {
+      "question_id": "ch7_q39",
+      "question_text": "Câu 39. [Một đáp án đúng] (G2) Với feature engineering cho mô hình hàm bậc 3, ma trận đặc trưng mới có thể chứa:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "[1, x]",
+        "B": "[1, x, x^2, x^3]",
+        "C": "[x, y, z]",
+        "D": "[x^4, x^5]"
+      },
+      "correct_answer": ["B"],
+      "topic": "Nonlinear Regression"
+    },
+    {
+      "question_id": "ch7_q40",
+      "question_text": "Câu 40. [Nhiều đáp án đúng] (G2) Các mô hình đa thức với tham số bậc cao hơn thường:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Linh hoạt hơn mô hình bậc thấp",
+        "B": "Có thể làm giảm lỗi huấn luyện",
+        "C": "Có nguy cơ overfit cao hơn",
+        "D": "Luôn cho lỗi kiểm thử tốt nhất"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Nonlinear Regression"
+    },
+    {
+      "question_id": "ch7_q41",
+      "question_text": "Câu 41. [Một đáp án đúng] (G2) Trong ví dụ KNNRegressor trên slide, cách dự đoán đơn giản là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Lấy trung bình của các hàng xóm gần nhất",
+        "B": "Lấy giá trị lớn nhất của các hàng xóm",
+        "C": "Lấy giá trị nhỏ nhất của các hàng xóm",
+        "D": "Lấy nhãn xuất hiện nhiều nhất"
+      },
+      "correct_answer": ["A"],
+      "topic": "KNNRegressor"
+    },
+    {
+      "question_id": "ch7_q42",
+      "question_text": "Câu 42. [Một đáp án đúng] (G2) Theo ví dụ KNNRegressor trên slide, trung bình của ba giá trị 35, 45, 50 là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "40.0",
+        "B": "42.5",
+        "C": "43.3",
+        "D": "45.0"
+      },
+      "correct_answer": ["C"],
+      "topic": "KNNRegressor"
+    },
+    {
+      "question_id": "ch7_q43",
+      "question_text": "Câu 43. [Một đáp án đúng] (G2) Ngoài cách lấy trung bình thông thường, slide còn nêu KNNRegressor có thể dự đoán bằng:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Trung bình trọng số theo khoảng cách",
+        "B": "Tổng các khoảng cách",
+        "C": "Hiệu của các hàng xóm gần nhất",
+        "D": "Median tuyệt đối của toàn bộ tập train"
+      },
+      "correct_answer": ["A"],
+      "topic": "KNNRegressor"
+    },
+    {
+      "question_id": "ch7_q44",
+      "question_text": "Câu 44. [Một đáp án đúng] (G2) Với mạng Neural Network dùng cho regression theo slide, đầu ra thường:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Có softmax ở lớp cuối",
+        "B": "Không có hàm kích hoạt cuối",
+        "C": "Luôn có sigmoid ở lớp cuối",
+        "D": "Luôn có hàm step ở lớp cuối"
+      },
+      "correct_answer": ["B"],
+      "topic": "Other Regression Models"
+    },
+    {
+      "question_id": "ch7_q45",
+      "question_text": "Câu 45. [Một đáp án đúng] (G2) Tên khác của mạng Neural Network được nêu trong slide là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Random Forest",
+        "B": "Multi-Layer Perceptron",
+        "C": "Gaussian Mixture Model",
+        "D": "Support Vector Classifier"
+      },
+      "correct_answer": ["B"],
+      "topic": "Other Regression Models"
+    },
+    {
+      "question_id": "ch7_q46",
+      "question_text": "Câu 46. [Nhiều đáp án đúng] (G2) Theo slide, các mô hình regression có nguồn gốc từ mô hình phân lớp gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Support Vector Regressor",
+        "B": "Decision Tree Regressor",
+        "C": "Random Forest Regressor",
+        "D": "Gradient Boost / XGBoost / LightGBM / CatBoost Regressor"
+      },
+      "correct_answer": ["A", "B", "C", "D"],
+      "topic": "Other Regression Models"
+    },
+    {
+      "question_id": "ch7_q47",
+      "question_text": "Câu 47. [Một đáp án đúng] (G2) Mô hình nào sau đây KHÔNG được slide liệt kê ở phần “Các mô hình có nguồn gốc từ mô hình phân lớp”?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Support Vector Regressor",
+        "B": "Decision Tree Regressor",
+        "C": "LinearRegression",
+        "D": "Random Forest Regressor"
+      },
+      "correct_answer": ["C"],
+      "topic": "Other Regression Models"
+    },
+    {
+      "question_id": "ch7_q48",
+      "question_text": "Câu 48. [Một đáp án đúng] (G2) Một tính chất đại số của OLS được nêu trong đề mẫu là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Điểm (X̄, Ȳ) luôn nằm trên đường hồi quy",
+        "B": "Tổng phần dư luôn dương",
+        "C": "Hiệp phương sai giữa X và phần dư luôn dương",
+        "D": "Đường hồi quy không bao giờ đi qua trung bình mẫu"
+      },
+      "correct_answer": ["A"],
+      "topic": "Linear Regression"
+    },
+    {
+      "question_id": "ch7_q49",
+      "question_text": "Câu 49. [Một đáp án đúng] (G2) Theo slide, huấn luyện Linear Regression bằng gradient descent sử dụng công thức cập nhật tham số dạng:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "β̂ = β̂ + α∇L",
+        "B": "β̂ = β̂ − α∇L",
+        "C": "β̂ = αβ̂ + L",
+        "D": "β̂ = β̂ / α"
+      },
+      "correct_answer": ["B"],
+      "topic": "Linear Regression"
+    },
+    {
+      "question_id": "ch7_q50",
+      "question_text": "Câu 50. [Nhiều đáp án đúng] (G2) Chọn các phát biểu đúng về LASSO, Ridge và Elastic Net:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "LASSO dùng chính quy hóa L1 và có xu hướng chọn đặc trưng quan trọng",
+        "B": "Ridge dùng chính quy hóa L2 và hướng đến khai thác hết các đặc trưng",
+        "C": "Elastic Net kết hợp L1 và L2",
+        "D": "Cả ba đều là các biến thể của hồi quy tuyến tính có regularization"
+      },
+      "correct_answer": ["A", "B", "C", "D"],
+      "topic": "Regularization"
+    }
+  ]
+}

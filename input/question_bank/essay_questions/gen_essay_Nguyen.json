@@ -1,0 +1,354 @@
+[
+  {
+    "id": "essay_003",
+    "type": "essay",
+    "topic": "regression",
+    "difficulty": "hard",
+    "question": "Bạn được yêu cầu thiết kế một giải pháp Học máy cho một ứng dụng giao đồ ăn trực tuyến (Food Delivery App) nhằm dự đoán Thời gian giao hàng dự kiến (Estimated Time of Arrival - ETA) từ lúc người dùng chốt đơn đến khi nhận được thức ăn.\n\nThông tin đầu vào sẽ bao gồm:\n- Mã đơn hàng (int)\n- Tọa độ địa lý của nhà hàng và người dùng (mảng 4 giá trị: [vĩ độ nhà hàng, kinh độ nhà hàng, vĩ độ người dùng, kinh độ người dùng] - float)\n- Khoảng cách di chuyển ước tính theo bản đồ (đơn vị km - float)\n- Số lượng món ăn trong đơn hàng (int)\n- Danh sách các danh mục món ăn (mảng các string - ví dụ: ['đồ nướng', 'trà sữa', 'thức ăn nhanh'])\n- Điều kiện thời tiết tại khu vực (string - ví dụ: 'nắng', 'mưa lớn', 'ngập lụt')\n- Thời điểm đặt hàng (string - định dạng datetime)\n- Số lượng tài xế đang hoạt động trong bán kính 2km xung quanh nhà hàng (int).\n\nBiến đầu ra là thời gian giao hàng thực tế (đơn vị phút - float).\n\nTrình bày quy trình xây dựng mô hình để thuyết phục Giám đốc sản phẩm (Product Manager) chấp thuận triển khai dự án. Cần chú trọng chứng minh tính hợp lý và hiệu quả của mô hình, từ khâu làm sạch dữ liệu, kỹ thuật trích xuất đặc trưng (đặc biệt với dữ liệu thời gian, tọa độ), lựa chọn thuật toán hồi quy (Regression) phù hợp, đến các độ đo đánh giá sai số và phương án đưa vào ứng dụng thực tiễn.",
+    "answer": {
+      "steps": [
+        {
+          "title": "Thu thập và đánh giá dữ liệu",
+          "content": "Thu thập dữ liệu: Trích xuất dữ liệu lịch sử từ cơ sở dữ liệu hệ thống (Bảng Orders, Restaurants, GPS logs) và tích hợp thêm dữ liệu thời tiết qua API. Đánh giá dữ liệu: Kiểm tra tính toàn vẹn (Missing values). Nhận diện các Outliers bằng boxplot hoặc biểu đồ phân tán (scatter plot), ví dụ: thời gian giao hàng > 5 tiếng do lỗi hệ thống chưa đóng đơn, hoặc tọa độ GPS bị nhiễu rơi xuống biển."
+        },
+        {
+          "title": "Tiền xử lý dữ liệu",
+          "content": "Xử lý giá trị thiếu: Sử dụng SimpleImputer để điền các thông tin thời tiết bị thiếu (chiến lược 'most_frequent'). Mã hóa đặc trưng: Dùng OneHotEncoder cho biến thời tiết; Dùng MultiLabelBinarizer hoặc TF-IDF/CountVectorizer để chuyển mảng 'Danh sách danh mục món ăn' thành dạng vector nhị phân. Chuẩn hóa đặc trưng số (Khoảng cách, Số lượng tài xế) bằng StandardScaler hoặc RobustScaler để giảm tác động của các giá trị ngoại lệ."
+        },
+        {
+          "title": "Feature Engineering và Feature selection",
+          "content": "Trích xuất đặc trưng không gian và thời gian: Chuyển 'Thời điểm đặt hàng' thành các biến Giờ trong ngày, Ngày trong tuần, và cờ Is_Rush_Hour (có phải giờ cao điểm không). Tính toán khoảng cách đường chim bay (Haversine distance) từ tọa độ để đối chiếu với khoảng cách bản đồ. Phân tích tương quan bằng Heatmap để loại bỏ bớt các đặc trưng gây nhiễu đa cộng tuyến (multicollinearity)."
+        },
+        {
+          "title": "Lựa chọn mô hình",
+          "content": "Input: Các đặc trưng dạng số và vector đã qua xử lý. Output: Thời gian giao hàng (Bài toán Regression). Đề xuất: Sử dụng thuật toán Gradient Boosting như LightGBM Regressor hoặc XGBoost Regressor. Lý do: Các thuật toán này xử lý cực kỳ tốt dữ liệu dạng bảng có kích thước lớn, nắm bắt hiệu quả các mối quan hệ phi tuyến tính phức tạp (ví dụ: sự kết hợp giữa trời mưa lớn và giờ cao điểm) và cho tốc độ suy luận (inference) rất nhanh trên hệ thống thực tế."
+        },
+        {
+          "title": "Huấn luyện và Tối ưu hóa mô hình",
+          "content": "Chia tập dữ liệu (Train/Validation/Test): Cần chia dữ liệu theo tuần tự thời gian (Time-based split) thay vì chia ngẫu nhiên để đảm bảo tính thực tế (dùng dữ liệu quá khứ để dự đoán tương lai), tránh rò rỉ dữ liệu (data leakage). Tối ưu hóa siêu tham số (Hyperparameter tuning) bằng RandomizedSearchCV hoặc Optuna cho các tham số như learning_rate, max_depth, n_estimators."
+        },
+        {
+          "title": "Đánh giá mô hình",
+          "content": "Metrics: Sử dụng MAE (Mean Absolute Error) để giải thích cho khách hàng một cách trực quan (mô hình dự đoán lệch trung bình bao nhiêu phút). Kết hợp với RMSE (Root Mean Squared Error) để phạt nặng các trường hợp dự đoán sai số quá lớn gây trải nghiệm tồi tệ. So sánh kết quả của mô hình Học máy với thuật toán dự đoán luật lệ (Rule-based) hiện tại để chứng minh mức độ cải thiện hiệu suất."
+        }
+      ]
+    }
+  },
+  {
+    "id": "essay_004",
+    "type": "essay",
+    "topic": "classification",
+    "difficulty": "hard",
+    "question": "Bạn được yêu cầu thiết kế một giải pháp Học máy cho một công ty viễn thông (Telecommunications Company) nhằm dự đoán khả năng rời bỏ dịch vụ của khách hàng (Customer Churn) trong tháng tiếp theo.\n\nThông tin đầu vào sẽ bao gồm:\n- Mã khách hàng (int)\n- Cước phí trung bình hàng tháng (float)\n- Thời gian đã gắn bó với dịch vụ - Tenure (đơn vị tháng - int)\n- Loại dịch vụ Internet đang dùng (string - ví dụ: 'Cáp quang', 'ADSL', 'Không dùng')\n- Lịch sử thời lượng các cuộc gọi trong 3 tháng gần nhất (mảng các float)\n- Phương thức thanh toán (string - ví dụ: 'Trích nợ tự động', 'Chuyển khoản', 'Tiền mặt')\n- Số lần gọi lên tổng đài hỗ trợ kỹ thuật trong tháng (int).\n\nBiến đầu ra là trạng thái rời bỏ dịch vụ của khách hàng (0: Tiếp tục sử dụng, 1: Rời bỏ).\n\nTrình bày quy trình xây dựng mô hình để thuyết phục Giám đốc Kinh doanh chấp thuận thực hiện dự án. Cần chú trọng chứng minh tính hợp lý và hiệu quả của mô hình, từ khâu làm sạch và xử lý mất cân bằng dữ liệu, trích xuất đặc trưng, lựa chọn thuật toán phân loại (Classification) phù hợp, đến quá trình đánh giá hiệu suất mô hình và đề xuất hành động giữ chân khách hàng.",
+    "answer": {
+      "steps": [
+        {
+          "title": "Thu thập và đánh giá dữ liệu",
+          "content": "Thu thập dữ liệu từ hệ thống CRM, Billing và Call Center. Đánh giá dữ liệu: Kiểm tra Missing values, đặc biệt ở các khách hàng mới chưa có đủ lịch sử cuộc gọi. Phân tích phân phối nhãn (Target variable) bằng bar chart để nhận diện vấn đề mất cân bằng dữ liệu (Imbalanced data), vì số lượng khách hàng rời bỏ thường chiếm tỷ lệ nhỏ (ví dụ 10-15%)."
+        },
+        {
+          "title": "Tiền xử lý dữ liệu",
+          "content": "Xử lý missing values: Điền 0 cho thời lượng cuộc gọi nếu khách hàng chưa phát sinh cuộc gọi, dùng SimpleImputer (median) cho cước phí bị thiếu. Mã hóa dữ liệu: Dùng OneHotEncoder cho các biến phân loại danh nghĩa (Phương thức thanh toán, Loại dịch vụ). Chuẩn hóa dữ liệu bằng StandardScaler cho các biến số liên tục (Cước phí, Tenure) để đồng bộ thang đo."
+        },
+        {
+          "title": "Feature Engineering và Feature selection",
+          "content": "Trích xuất đặc trưng mới: Tính tổng, trung bình và độ lệch chuẩn của mảng 'Lịch sử thời lượng cuộc gọi'. Tạo biến Tỷ lệ gọi hỗ trợ (Số lần gọi hỗ trợ / Tenure). Phân tích tương quan bằng Heatmap để loại bỏ các đặc trưng đa cộng tuyến. Dùng kỹ thuật SMOTE (Synthetic Minority Over-sampling Technique) trên tập train để xử lý mất cân bằng dữ liệu, giúp mô hình học tốt hơn nhóm khách hàng rời bỏ."
+        },
+        {
+          "title": "Lựa chọn mô hình",
+          "content": "Input: Đặc trưng khách hàng đã xử lý. Output: Xác suất rời bỏ (0 đến 1). Đề xuất: Logistic Regression làm baseline model để dễ giải thích; sau đó sử dụng Random Forest Classifier hoặc XGBoost Classifier làm mô hình chính. Các mô hình tree-based này xử lý tốt dữ liệu phi tuyến, tự động bắt được tương tác giữa các biến (ví dụ: cước cao + gọi hỗ trợ nhiều = dễ churn) và xuất ra Feature Importance."
+        },
+        {
+          "title": "Huấn luyện và Tối ưu hóa mô hình",
+          "content": "Chia tập dữ liệu Train/Validation/Test theo tỷ lệ 70/15/15, dùng Stratified sampling để giữ nguyên tỷ lệ nhãn Churn. Tối ưu hóa siêu tham số bằng GridSearchCV hoặc RandomizedSearchCV (n_estimators, learning_rate, max_depth đối với XGBoost)."
+        },
+        {
+          "title": "Đánh giá mô hình",
+          "content": "Metrics: Không dùng Accuracy vì dữ liệu mất cân bằng. Sử dụng Recall (để không bỏ sót khách hàng có nguy cơ rời bỏ), Precision và F1-score. Sử dụng ROC-AUC để đánh giá khả năng phân tách giữa hai lớp. Kết quả dự đoán (xác suất churn) sẽ được dùng để phân luồng khách hàng cho các chiến dịch tặng voucher hoặc chăm sóc đặc biệt."
+        }
+      ]
+    }
+  },
+  {
+    "id": "essay_005",
+    "type": "essay",
+    "topic": "regression",
+    "difficulty": "hard",
+    "question": "Bạn được yêu cầu thiết kế giải pháp Học máy cho một nền tảng công nghệ bất động sản (PropTech) nhằm dự đoán giá thuê nhà hàng tháng cho các căn hộ mới được đăng tải lên hệ thống.\n\nThông tin đầu vào sẽ bao gồm:\n- Mã bất động sản (int)\n- Diện tích sử dụng (đơn vị m2 - float)\n- Số lượng phòng ngủ và phòng tắm (mảng 2 giá trị int: [số phòng ngủ, số phòng tắm])\n- Loại hình căn hộ (string - ví dụ: 'Chung cư cao cấp', 'Nhà tập thể', 'Studio')\n- Khoảng cách đến trung tâm thành phố (đơn vị km - float)\n- Danh sách các tiện ích đi kèm (mảng các string - ví dụ: ['Hồ bơi', 'Gym', 'Bảo vệ 24/7', 'Ban công'])\n- Năm xây dựng của tòa nhà (int)\n- Tọa độ địa lý (vĩ độ, kinh độ - float).\n\nBiến đầu ra là giá thuê hàng tháng ước tính (đơn vị VNĐ - float).\n\nTrình bày quy trình xây dựng mô hình để thuyết phục Ban Giám đốc phê duyệt triển khai. Cần chú trọng giải thích cách xử lý dữ liệu địa lý và dữ liệu mảng, cách chống hiện tượng quá khớp (overfitting) và các độ đo để đánh giá mức độ sai lệch của giá dự đoán so với thực tế.",
+    "answer": {
+      "steps": [
+        {
+          "title": "Thu thập và đánh giá dữ liệu",
+          "content": "Thu thập dữ liệu lịch sử các bài đăng cho thuê đã giao dịch thành công trên nền tảng. Đánh giá dữ liệu: Vẽ histogram cho 'Giá thuê' để kiểm tra phân phối, thường giá thuê sẽ bị lệch phải (right-skewed). Dùng boxplot và z-score để phát hiện Outliers (ví dụ: căn hộ diện tích 10m2 nhưng giá 100 triệu) và loại bỏ những dữ liệu lỗi nhập liệu này."
+        },
+        {
+          "title": "Tiền xử lý dữ liệu",
+          "content": "Xử lý Missing values: Dùng median cho Năm xây dựng bị thiếu. Biến đổi Target: Áp dụng Log Transformation (log1p) cho Giá thuê để đưa về phân phối chuẩn, giúp mô hình hồi quy tuyến tính hoạt động tốt hơn. Mã hóa đặc trưng: Dùng MultiLabelBinarizer để tách mảng 'Danh sách tiện ích' thành các cột nhị phân riêng biệt (Có hồ bơi: 1/0, Có Gym: 1/0). Mã hóa 'Loại hình căn hộ' bằng OneHotEncoder."
+        },
+        {
+          "title": "Feature Engineering và Feature selection",
+          "content": "Tạo đặc trưng mới: Tính Tuổi của tòa nhà (Năm hiện tại - Năm xây dựng). Kết hợp số phòng ngủ và diện tích để tạo biến 'Diện tích trung bình mỗi phòng'. Xử lý tọa độ: Phân cụm (Clustering) tọa độ bằng KMeans để tạo ra các 'Khu vực địa lý' mới, hoặc tính khoảng cách từ tọa độ đến các điểm tiện ích công cộng lớn (Ga metro, Bệnh viện) dùng công thức Haversine."
+        },
+        {
+          "title": "Lựa chọn mô hình",
+          "content": "Input: Các đặc trưng diện tích, tiện ích và vị trí. Output: Giá thuê dự đoán. Đề xuất: Bắt đầu với Ridge Regression làm baseline. Sau đó, sử dụng LightGBM Regressor hoặc CatBoost Regressor vì chúng xử lý cực tốt dữ liệu bảng có chứa nhiều biến categorical (loại hình) và sparse matrix (từ tiện ích), đồng thời rất mạnh trong việc tránh Overfitting."
+        },
+        {
+          "title": "Huấn luyện và Tối ưu hóa mô hình",
+          "content": "Chia dữ liệu Train/Test (80/20). Sử dụng K-Fold Cross Validation (K=5) trong quá trình huấn luyện để đảm bảo mô hình không bị quá khớp. Dùng Bayesian Optimization (như thư viện Optuna) để tìm siêu tham số tối ưu (độ sâu của cây, tỷ lệ lấy mẫu con)."
+        },
+        {
+          "title": "Đánh giá mô hình",
+          "content": "Metrics: Sử dụng MAPE (Mean Absolute Percentage Error) để Ban Giám đốc dễ hiểu (sai số trung bình bao nhiêu phần trăm so với giá trị thực). Kết hợp với RMSE (Root Mean Squared Error). Lưu ý: Cần Inverse Log Transform giá trị dự đoán trước khi tính toán các metric này để đưa về đơn vị VNĐ thực tế."
+        }
+      ]
+    }
+  },
+  {
+    "id": "essay_006",
+    "type": "essay",
+    "topic": "classification",
+    "difficulty": "hard",
+    "question": "Bạn được phân công thiết kế một hệ thống phát hiện gian lận thẻ tín dụng (Credit Card Fraud Detection) theo thời gian thực cho một ngân hàng thương mại.\n\nThông tin đầu vào của một giao dịch sẽ bao gồm:\n- Mã giao dịch (int)\n- Số tiền giao dịch (float)\n- Danh mục đơn vị chấp nhận thẻ (string - ví dụ: 'Giải trí', 'Hàng không', 'Siêu thị')\n- Thời gian diễn ra giao dịch (string - định dạng ISO datetime)\n- Lịch sử số tiền giao dịch của người dùng trong 24 giờ qua (mảng các float)\n- Địa chỉ IP thiết bị thực hiện giao dịch (string)\n- Khoảng cách từ địa điểm giao dịch hiện tại đến địa chỉ đăng ký của chủ thẻ (đơn vị km - float).\n\nBiến đầu ra là xác nhận giao dịch này có phải là gian lận hay không (1: Gian lận, 0: Hợp lệ).\n\nTrình bày quy trình thiết kế và xây dựng mô hình để thuyết phục Giám đốc Quản trị Rủi ro (CRO) của ngân hàng. Đặc biệt nhấn mạnh vào phương pháp xử lý sự mất cân bằng dữ liệu cực đoan (extreme class imbalance), cách tạo các đặc trưng hành vi và lựa chọn độ đo đánh giá phù hợp khi chi phí bỏ lọt gian lận (False Negative) là rất lớn.",
+    "answer": {
+      "steps": [
+        {
+          "title": "Thu thập và đánh giá dữ liệu",
+          "content": "Thu thập logs giao dịch thẻ tín dụng và nhãn đối soát từ bộ phận phòng chống gian lận. Đánh giá dữ liệu: Phân tích tỷ lệ gian lận, thường ở mức độ mất cân bằng cực đoan (ví dụ 0.1% là gian lận). Kiểm tra tính hợp lệ của IP và tọa độ. Vẽ biểu đồ phân bố số tiền giao dịch theo nhãn để tìm ra quy luật sơ bộ."
+        },
+        {
+          "title": "Tiền xử lý dữ liệu",
+          "content": "Xử lý IP: Trích xuất Quốc gia hoặc Thành phố từ địa chỉ IP thông qua cơ sở dữ liệu GeoIP. Thời gian giao dịch: Chuyển đổi thành các biến Giờ trong ngày, Ngày trong tuần. Xử lý giá trị thiếu (nếu có) đối với biến Khoảng cách bằng giá trị trung vị. Chuẩn hóa 'Số tiền giao dịch' và 'Khoảng cách' bằng RobustScaler để hạn chế ảnh hưởng của các giao dịch hợp lệ nhưng có số tiền quá lớn (outliers)."
+        },
+        {
+          "title": "Feature Engineering và Feature selection",
+          "content": "Đây là bước quan trọng nhất. Tạo đặc trưng hành vi dựa trên thời gian thực: Tính tổng số tiền và số lượng giao dịch trong mảng 'Lịch sử 24h qua'. Tạo biến cờ 'Is_Foreign_IP' nếu IP giao dịch khác quốc gia đăng ký. Tạo biến 'Vận tốc giao dịch' (Khoảng cách di chuyển / Thời gian giữa 2 giao dịch liên tiếp) để phát hiện giao dịch bất khả thi về mặt vật lý."
+        },
+        {
+          "title": "Lựa chọn mô hình",
+          "content": "Vì cần dự đoán theo thời gian thực (real-time) với độ trễ thấp (latency < 100ms): Đề xuất sử dụng XGBoost hoặc Random Forest vì khả năng suy luận nhanh và hiệu năng cao. Có thể kết hợp thêm thuật toán Anomaly Detection (như Isolation Forest) hoạt động song song để bắt các kiểu gian lận chưa từng xuất hiện (Zero-day fraud)."
+        },
+        {
+          "title": "Huấn luyện và Tối ưu hóa mô hình",
+          "content": "Xử lý mất cân bằng cực đoan: Không dùng Random Oversampling vì dễ gây Overfitting. Khuyến nghị dùng SMOTE kết hợp Tomek Links, hoặc cấu hình tham số 'scale_pos_weight' trong XGBoost để phạt nặng các lỗi dự đoán sai lớp Gian lận. Train/Test split phải dựa trên mốc thời gian (Time-series split) để phản ánh đúng thực tế rủi ro."
+        },
+        {
+          "title": "Đánh giá mô hình",
+          "content": "Tuyệt đối không dùng Accuracy. Metrics chính: Precision-Recall AUC (PR-AUC) vì nó tập trung vào lớp thiểu số (Gian lận). Đánh giá Recall (Độ nhạy) để đảm bảo không bỏ lọt giao dịch rủi ro cao, và Precision để tránh việc khóa thẻ nhầm gây phàn nàn cho khách hàng (False Positive). Lựa chọn ngưỡng phân ngưỡng (Threshold) cân bằng giữa chi phí rủi ro và trải nghiệm khách hàng."
+        }
+      ]
+    }
+  },
+  {
+    "id": "essay_007",
+    "type": "essay",
+    "topic": "recommendation_system",
+    "difficulty": "hard",
+    "question": "Bạn được yêu cầu xây dựng một Hệ thống Gợi ý Việc làm (Job Recommendation System) cho một nền tảng tuyển dụng trực tuyến, nhằm cá nhân hóa danh sách các công việc hiển thị cho ứng viên dựa trên hồ sơ của họ.\n\nThông tin đầu vào sẽ bao gồm:\n- Mã ứng viên (int)\n- Kỹ năng của ứng viên (mảng các string - ví dụ: ['Python', 'SQL', 'GCP'])\n- Số năm kinh nghiệm (float)\n- Mức lương mong muốn (float)\n- Cấp bậc công việc hiện tại (string - ví dụ: 'Junior', 'Senior', 'Manager')\n- Lịch sử các công việc đã nhấp vào xem hoặc ứng tuyển (mảng các mã công việc - int)\n- Thông tin công việc cần gợi ý (Mô tả công việc, Yêu cầu kỹ năng, Mức lương đề xuất - dạng text và số).\n\nBiến đầu ra là Điểm mức độ phù hợp (Matching Score) hoặc Xác suất ứng tuyển của ứng viên đối với một công việc cụ thể.\n\nTrình bày quy trình phát triển mô hình để trình bày với Giám đốc Sản phẩm. Hãy làm rõ cách biểu diễn văn bản (kỹ năng, mô tả công việc), phương pháp kết hợp giữa dựa trên nội dung (Content-based) và hành vi người dùng (Collaborative Filtering), cũng như cách đánh giá chất lượng danh sách gợi ý.",
+    "answer": {
+      "steps": [
+        {
+          "title": "Thu thập và đánh giá dữ liệu",
+          "content": "Thu thập dữ liệu tĩnh từ Hồ sơ ứng viên (Profiles), Chi tiết công việc (Job Descriptions) và dữ liệu động từ Logs tương tác (Click, View, Apply). Đánh giá tính thưa thớt (Sparsity) của ma trận tương tác User-Job, thông thường ứng viên chỉ tương tác với một lượng rất nhỏ công việc trên hệ thống."
+        },
+        {
+          "title": "Tiền xử lý dữ liệu",
+          "content": "Làm sạch văn bản: Loại bỏ stopwords, chuẩn hóa các từ viết tắt kỹ năng (vd: 'JS' -> 'JavaScript') cho cả hồ sơ ứng viên và mô tả công việc. Xử lý Missing values: Nếu mức lương mong muốn bị trống, có thể dùng trung bình lương theo cấp bậc để điền vào. Chuẩn hóa dữ liệu số (Số năm kinh nghiệm, Mức lương) bằng MinMaxScaler."
+        },
+        {
+          "title": "Feature Engineering và Feature selection",
+          "content": "Biểu diễn văn bản: Sử dụng TF-IDF hoặc Word Embeddings (như Word2Vec, BERT) để chuyển mảng 'Kỹ năng ứng viên' và 'Yêu cầu kỹ năng công việc' thành các vector toán học. Tính toán Đặc trưng tương đồng (Similarity features) như Cosine Similarity giữa vector kỹ năng ứng viên và vector yêu cầu công việc, khoảng cách chênh lệch giữa lương mong muốn và lương đề xuất."
+        },
+        {
+          "title": "Lựa chọn mô hình",
+          "content": "Áp dụng kiến trúc hệ thống gợi ý 2 giai đoạn (Two-stage Recommender). Giai đoạn 1 (Candidate Generation): Dùng Content-based filtering (truy xuất nhanh qua Vector Database) để lọc ra top 100 công việc có kỹ năng tương đồng nhất. Giai đoạn 2 (Ranking): Dùng mô hình học máy như LightGBM Ranker hoặc Neural Collaborative Filtering nhận input là các đặc trưng ứng viên, công việc và hành vi để chấm điểm (Matching Score) và xếp hạng lại danh sách."
+        },
+        {
+          "title": "Huấn luyện và Tối ưu hóa mô hình",
+          "content": "Xây dựng tập huấn luyện bằng cách gán nhãn Implicit Feedback: Tương tác 'Apply' (nhãn 1), 'Click/View' (nhãn 0.5), không tương tác (nhãn 0). Áp dụng kỹ thuật Negative Sampling để lấy ngẫu nhiên các công việc người dùng chưa xem làm mẫu âm tính (negative samples). Tối ưu hóa mô hình Ranking bằng hàm mất mát Pairwise loss (ví dụ: BPR)."
+        },
+        {
+          "title": "Đánh giá mô hình",
+          "content": "Metrics: Đánh giá danh sách xếp hạng bằng NDCG@K (Normalized Discounted Cumulative Gain) để đảm bảo công việc phù hợp nhất nằm ở trên cùng, và Hit Rate@K để đo lường tỷ lệ ứng viên click/apply vào top K công việc gợi ý. Thực hiện A/B Testing trên môi trường thực tế để đo lường sự tăng trưởng của tỷ lệ ứng tuyển (Apply Rate)."
+        }
+      ]
+    }
+  },
+  {
+    "id": "essay_008",
+    "type": "essay",
+    "topic": "regression",
+    "difficulty": "hard",
+    "question": "Bạn được giao nhiệm vụ xây dựng một mô hình dự đoán Giá trị vòng đời khách hàng (Customer Lifetime Value - CLV) cho một sàn thương mại điện tử. CLV là tổng lợi nhuận ròng mà công ty kỳ vọng thu được từ một khách hàng trong tương lai (ở đây giới hạn trong 12 tháng tới).\n\nThông tin đầu vào sẽ bao gồm:\n- Mã khách hàng (int)\n- Tổng số tiền đã chi tiêu trong quá khứ (float)\n- Giá trị trung bình của mỗi đơn hàng (float)\n- Số ngày kể từ lần mua hàng cuối cùng - Recency (int)\n- Tần suất mua hàng trung bình mỗi tháng - Frequency (float)\n- Danh mục sản phẩm yêu thích (mảng các string)\n- Kênh thu hút khách hàng (string - ví dụ: 'Facebook Ads', 'Organic Search', 'Referral')\n- Tuổi của khách hàng (int).\n\nBiến đầu ra là dự đoán tổng chi tiêu của khách hàng trong 12 tháng tiếp theo (đơn vị VNĐ - float).\n\nTrình bày quy trình thiết kế mô hình để báo cáo cho Giám đốc Marketing (CMO). Làm rõ cách tiền xử lý nhóm khách hàng có giá trị chi tiêu bất thường (cực cao hoặc cực thấp), cách áp dụng mô hình RFM (Recency, Frequency, Monetary) vào trích xuất đặc trưng và cách đánh giá hiệu quả của bài toán dự đoán hồi quy với dữ liệu tiền tệ bị lệch (skewed).",
+    "answer": {
+      "steps": [
+        {
+          "title": "Thu thập và đánh giá dữ liệu",
+          "content": "Trích xuất dữ liệu lịch sử giao dịch (Transaction Logs) và thông tin nhân khẩu học. Cần tạo 'Snapshot date': dùng dữ liệu giao dịch 12 tháng trước mốc snapshot để làm Input, và tổng chi tiêu 12 tháng sau mốc snapshot làm Target (Label). Đánh giá phân phối Target: Dữ liệu chi tiêu thường tuân theo phân phối Pareto (lệch phải cực mạnh), phần lớn khách chi tiêu ít, một số ít khách chi tiêu khổng lồ."
+        },
+        {
+          "title": "Tiền xử lý dữ liệu",
+          "content": "Xử lý Outliers: Giới hạn (Clipping) phần trăm phân vị thứ 99 của tổng chi tiêu quá khứ để tránh nhiễu từ các 'Whale customers' bất thường. Đối với biến Target, áp dụng phép biến đổi Logarithmic (Log Transform) để giảm độ lệch phải, giúp thuật toán hồi quy ổn định hơn. Mã hóa One-Hot cho 'Kênh thu hút khách hàng', và CountVectorizer cho 'Danh mục yêu thích'."
+        },
+        {
+          "title": "Feature Engineering và Feature selection",
+          "content": "Áp dụng khung phân tích RFM: Trực tiếp sử dụng các biến Recency (Số ngày từ lần mua cuối), Frequency (Tần suất mua), Monetary (Giá trị đơn hàng trung bình, Tổng chi tiêu). Tạo thêm đặc trưng 'Xu hướng chi tiêu': Tỷ lệ chi tiêu trong 3 tháng gần nhất so với toàn bộ lịch sử. Phân tích SHAP hoặc Correlation để chọn lọc biến quan trọng nhất."
+        },
+        {
+          "title": "Lựa chọn mô hình",
+          "content": "Input: Đặc trưng khách hàng và hành vi RFM. Output: Dự đoán chi tiêu 12 tháng tới. Đề xuất: Random Forest Regressor hoặc Gradient Boosting (XGBoost/CatBoost). CatBoost cực kỳ hiệu quả với tập dữ liệu có các biến phân loại hỗn hợp mà không cần mã hóa thủ công phức tạp, đồng thời ít bị ảnh hưởng bởi giá trị ngoại lệ trong hồi quy."
+        },
+        {
+          "title": "Huấn luyện và Tối ưu hóa mô hình",
+          "content": "Chia dữ liệu Train/Validation/Test. Nếu tập dữ liệu lớn, sử dụng GridSearchCV để tinh chỉnh các tham số giới hạn độ sâu (max_depth) và tốc độ học (learning rate) nhằm tránh hiện tượng Overfitting đối với các khách hàng có lịch sử chi tiêu ít."
+        },
+        {
+          "title": "Đánh giá mô hình",
+          "content": "Metrics: Dùng MAE (Mean Absolute Error) để tính sai số tuyệt đối trung bình theo VNĐ. Sử dụng RMSLE (Root Mean Squared Logarithmic Error) đặc biệt phù hợp cho bài toán có biến mục tiêu lệch phải, vì nó quan tâm đến sai số phần trăm tương đối thay vì sai số tuyệt đối lớn của các khách hàng VIP. Kết quả mô hình giúp CMO phân bổ ngân sách quảng cáo giữ chân (Retention budget) hợp lý."
+        }
+      ]
+    }
+  },
+  {
+    "id": "essay_009",
+    "type": "essay",
+    "topic": "classification",
+    "difficulty": "hard",
+    "question": "Bạn được yêu cầu xây dựng một giải pháp Học máy cho một hệ thống Bệnh viện nhằm dự đoán khả năng bệnh nhân phải nhập viện lại (Readmission) trong vòng 30 ngày kể từ ngày xuất viện.\n\nThông tin đầu vào được trích xuất từ Hồ sơ Bệnh án Điện tử (EMR) bao gồm:\n- Mã bệnh nhân đã được ẩn danh (int)\n- Tuổi và Giới tính (int, string)\n- Mã chẩn đoán bệnh chính (string - mã ICD-10)\n- Số lượng các xét nghiệm/thủ thuật đã thực hiện trong đợt điều trị (int)\n- Danh sách các loại thuốc được kê đơn khi xuất viện (mảng các string)\n- Số ngày nằm viện trong đợt điều trị vừa qua (int)\n- Số lần nhập viện cấp cứu trong 12 tháng qua (int)\n- Chỉ số khối cơ thể - BMI (float).\n\nBiến đầu ra là dự đoán việc bệnh nhân có nhập viện lại trong vòng 30 ngày hay không (1: Có nhập viện lại, 0: Không).\n\nTrình bày quy trình thiết kế mô hình để Ban Quản trị Bệnh viện phê duyệt. Cần chú trọng giải thích vấn đề xử lý dữ liệu chuẩn đoán y tế phức tạp, cách mã hóa các loại thuốc, cũng như lý do tại sao độ đo Recall lại cực kỳ quan trọng đối với bài toán y tế này.",
+    "answer": {
+      "steps": [
+        {
+          "title": "Thu thập và đánh giá dữ liệu",
+          "content": "Thu thập dữ liệu từ hệ thống EMR của bệnh viện. Đặc biệt lưu ý việc ẩn danh và tuân thủ các tiêu chuẩn bảo mật y tế (như HIPAA) khi xử lý dữ liệu cá nhân. Đánh giá tính cân bằng của dữ liệu: Tỷ lệ bệnh nhân nhập viện lại trong 30 ngày thường khá thấp (khoảng 10-20%), dẫn đến hiện tượng mất cân bằng lớp."
+        },
+        {
+          "title": "Tiền xử lý dữ liệu",
+          "content": "Xử lý giá trị thiếu: Áp dụng KNN-Imputer hoặc điền trung vị cho chỉ số BMI bị thiếu. Mã hóa danh sách thuốc: Sử dụng MultiLabelBinarizer để chuyển đổi mảng thuốc thành các cột nhị phân cho các nhóm thuốc chính. Xử lý Mã chẩn đoán ICD-10: Nhóm các mã ICD-10 chi tiết (hàng ngàn mã) thành các nhóm bệnh lý lớn (ví dụ: Bệnh tim mạch, Bệnh hô hấp, Tiểu đường) để giảm chiều dữ liệu."
+        },
+        {
+          "title": "Feature Engineering và Feature selection",
+          "content": "Tạo đặc trưng mức độ nghiêm trọng: Phân loại bệnh nhân có 'Số ngày nằm viện > 7' hoặc 'Số lần cấp cứu > 2' làm cờ đánh dấu rủi ro cao (High-risk flags). Kết hợp biến BMI và Tuổi. Sử dụng phương pháp chọn lọc đặc trưng như Chi-Square cho các biến phân loại và ANOVA F-value cho biến liên tục để giữ lại các yếu tố ảnh hưởng lớn nhất đến nguy cơ tái nhập viện."
+        },
+        {
+          "title": "Lựa chọn mô hình",
+          "content": "Input: Đặc trưng bệnh sử, sinh hiệu và đơn thuốc. Output: Xác suất nhập viện lại. Đề xuất: Logistic Regression làm mô hình cơ sở do yêu cầu minh bạch cao trong y tế (White-box model). Tuy nhiên, sử dụng Gradient Boosting Classifier (như LightGBM) làm mô hình chính vì nó đạt hiệu suất dự đoán cao nhất, có thể kết hợp với thư viện SHAP để giải thích cho bác sĩ nguyên nhân dự đoán."
+        },
+        {
+          "title": "Huấn luyện và Tối ưu hóa mô hình",
+          "content": "Chia dữ liệu Train/Test. Áp dụng kỹ thuật Under-sampling cho lớp Đa số (Không nhập viện lại) hoặc cấu hình Class Weights để bù đắp sự mất cân bằng. Sử dụng Cross-validation để tinh chỉnh các tham số tránh overfitting, đảm bảo mô hình có khả năng tổng quát hóa tốt trên các bệnh nhân mới."
+        },
+        {
+          "title": "Đánh giá mô hình",
+          "content": "Metrics: Trong y tế, bỏ sót một bệnh nhân có nguy cơ cao (False Negative) mang lại hậu quả nghiêm trọng về sinh mạng và chi phí điều trị bùng phát. Do đó, Độ nhạy (Recall) là độ đo quan trọng nhất cần tối ưu hóa, kết hợp với F2-score (ưu tiên Recall hơn Precision) và ROC-AUC để đánh giá khả năng phân loại. Bệnh viện sẽ dùng kết quả này để có chương trình gọi điện theo dõi riêng cho bệnh nhân nguy cơ cao."
+        }
+      ]
+    }
+  },
+  {
+    "id": "essay_010",
+    "type": "essay",
+    "topic": "regression",
+    "difficulty": "hard",
+    "question": "Bạn đang tư vấn cho một công ty cung cấp năng lượng (Utility Company) để thiết kế một mô hình Học máy dự đoán Lượng điện tiêu thụ hàng ngày (Daily Electricity Consumption) của các hộ gia đình thông minh (Smart Homes) nhằm tối ưu hóa việc phân phối lưới điện lưới.\n\nThông tin đầu vào được ghi nhận mỗi ngày bao gồm:\n- Mã hộ gia đình (int)\n- Số lượng người sinh sống trong nhà (int)\n- Diện tích sàn của ngôi nhà (đơn vị m2 - float)\n- Danh sách các thiết bị điện công suất cao đã kết nối (mảng các string - ví dụ: ['Điều hòa', 'Xe điện', 'Bếp từ'])\n- Nhiệt độ trung bình trong ngày tại khu vực (đơn vị độ C - float)\n- Tình trạng thời tiết (string - ví dụ: 'Nắng nóng', 'Mưa rào', 'Lạnh giá')\n- Ngày dự đoán có phải là ngày cuối tuần hoặc ngày lễ hay không (cờ nhị phân - int: 1 hoặc 0).\n\nBiến đầu ra là dự đoán lượng điện tiêu thụ trong ngày hôm đó (đơn vị kWh - float).\n\nTrình bày quy trình xây dựng mô hình để thuyết phục Giám đốc Vận hành mạng lưới điện. Nêu bật các phương pháp khai phá dữ liệu có yếu tố thời gian và thời tiết, cách biểu diễn danh sách thiết bị điện, lựa chọn mô hình hồi quy và cách đánh giá để đảm bảo lưới điện không bị quá tải do dự đoán sai.",
+    "answer": {
+      "steps": [
+        {
+          "title": "Thu thập và đánh giá dữ liệu",
+          "content": "Thu thập dữ liệu tiêu thụ điện từ đồng hồ thông minh (Smart Meters) kết hợp với API cung cấp dữ liệu thời tiết. Đánh giá dữ liệu: Kiểm tra dữ liệu bất thường (ví dụ lượng điện tiêu thụ bằng 0 do mất điện, hoặc tăng vọt bất thường do rò rỉ). Dùng biểu đồ Line chart theo thời gian để quan sát tính chu kỳ (Seasonality) của lượng điện tiêu thụ theo ngày trong tuần và theo mùa."
+        },
+        {
+          "title": "Tiền xử lý dữ liệu",
+          "content": "Xử lý Missing values: Dùng phép nội suy tuyến tính (Linear Interpolation) cho dữ liệu nhiệt độ bị thiếu dựa trên các ngày lân cận. Mã hóa dữ liệu: Chuyển đổi mảng 'Danh sách thiết bị' thành các cột One-hot bằng MultiLabelBinarizer (để biết nhà có xe điện hay điều hòa không). Mã hóa Tình trạng thời tiết bằng phương pháp Target Encoding hoặc OneHotEncoder. Chuẩn hóa Nhiệt độ và Diện tích."
+        },
+        {
+          "title": "Feature Engineering và Feature selection",
+          "content": "Trích xuất đặc trưng chuỗi thời gian (Time-series features): Tạo các biến độ trễ (Lag features) như Lượng điện tiêu thụ của ngày hôm qua (Lag 1) và của tuần trước (Lag 7). Tính trung bình trượt (Rolling Mean) của tiêu thụ điện trong 3 ngày qua. Tạo đặc trưng tương tác: Kết hợp 'Nhiệt độ' và 'Có Điều hòa' (nhiệt độ cao + có điều hòa sẽ tiêu thụ điện đột biến). Dùng Heatmap lọc bỏ các biến thời tiết có tương quan quá cao với nhau."
+        },
+        {
+          "title": "Lựa chọn mô hình",
+          "content": "Mặc dù đây là bài toán có tính thời gian, nhưng với việc dự đoán mức tiêu thụ dựa trên nhiều đặc trưng hộ gia đình (Tabular form), các mô hình như Random Forest Regressor hoặc LightGBM Regressor là lựa chọn xuất sắc. LightGBM đặc biệt mạnh mẽ trong việc tìm ra các quy luật phi tuyến tính (như ngưỡng nhiệt độ gây tốn điện) và tốc độ huấn luyện nhanh với hàng triệu điểm dữ liệu từ smart meters."
+        },
+        {
+          "title": "Huấn luyện và Tối ưu hóa mô hình",
+          "content": "Chia dữ liệu Train/Validation/Test: Bắt buộc dùng TimeSeriesSplit (không chia ngẫu nhiên) để mô phỏng thực tế dự đoán tương lai từ quá khứ. Tối ưu hóa siêu tham số bằng kỹ thuật Optuna để tìm độ sâu cây (num_leaves) và learning_rate hợp lý nhất giúp mô hình hội tụ tốt."
+        },
+        {
+          "title": "Đánh giá mô hình",
+          "content": "Metrics: Sử dụng MAPE (Mean Absolute Percentage Error) để dễ dàng đánh giá phần trăm sai số. Tuy nhiên, trong lưới điện, dự đoán thấp hơn thực tế (Under-forecasting) nguy hiểm hơn dự đoán cao hơn (gây quá tải lưới). Do đó, sử dụng thêm hàm mất mát bất đối xứng (Asymmetric Loss / Quantile Regression) để ưu tiên phạt nặng các trường hợp mô hình dự đoán lượng điện thấp hơn nhiều so với thực tế tiêu thụ."
+        }
+      ]
+    }
+  },
+  [
+  {
+    "id": "essay_011",
+    "type": "essay",
+    "topic": "classification",
+    "difficulty": "hard",
+    "question": "Bạn được yêu cầu thiết kế một giải pháp Học máy cho một nhà máy sản xuất công nghiệp thông minh nhằm dự đoán nguy cơ hỏng hóc của máy móc (Predictive Maintenance) trong vòng 7 ngày tới để lên lịch bảo trì chủ động.\n\nThông tin đầu vào được thu thập từ các cảm biến IoT và hệ thống quản lý bao gồm:\n- Mã thiết bị (int)\n- Thời gian đã hoạt động liên tục kể từ lần khởi động cuối (đơn vị giờ - float)\n- Biến động nhiệt độ cốt lõi trong 24 giờ qua (mảng các float)\n- Danh sách các mã cảnh báo nhẹ đã ghi nhận trong 30 ngày qua (mảng các string - ví dụ: ['WARN_01', 'VIB_HIGH', 'TEMP_WARN'])\n- Độ rung lắc cơ học trung bình (float)\n- Số ngày kể từ lần bảo trì định kỳ gần nhất (int)\n- Chế độ vận hành hiện tại của máy (string - ví dụ: 'Công suất tối đa', 'Tiết kiệm', 'Bình thường').\n\nBiến đầu ra là dự đoán trạng thái hỏng hóc trong 7 ngày tới (1: Có nguy cơ hỏng hóc, 0: Hoạt động bình thường).\n\nTrình bày quy trình xây dựng mô hình để thuyết phục Giám đốc Nhà máy (Plant Manager) phê duyệt dự án. Cần chú trọng vào cách xử lý dữ liệu cảm biến (mảng nhiệt độ), phương pháp trích xuất đặc trưng từ danh sách mã lỗi, cách giải quyết bài toán mất cân bằng dữ liệu (tỷ lệ máy hỏng thực tế rất thấp) và lựa chọn độ đo đánh giá phù hợp nhằm giảm thiểu rủi ro dừng chuyền sản xuất đột ngột (Downtime).",
+    "answer": {
+      "steps": [
+        {
+          "title": "Thu thập và đánh giá dữ liệu",
+          "content": "Thu thập dữ liệu từ hệ thống SCADA/IoT (dữ liệu cảm biến theo thời gian thực) và hệ thống ERP (lịch sử bảo trì). Đánh giá dữ liệu: Kiểm tra nhiễu (noise) từ cảm biến bị lỗi dẫn đến ghi nhận các chỉ số nhiệt độ/rung lắc vô lý (Outliers). Phân tích sự mất cân bằng lớp (Class Imbalance) vì số ca hỏng hóc thường chỉ chiếm 1-5% tổng dữ liệu."
+        },
+        {
+          "title": "Tiền xử lý dữ liệu",
+          "content": "Làm sạch nhiễu cảm biến bằng các bộ lọc (như Moving Average). Xử lý Missing values: Dùng kỹ thuật nội suy (Interpolation) cho các khoảng thời gian cảm biến mất kết nối ngắn. Mã hóa 'Chế độ vận hành' bằng OneHotEncoder. Chuẩn hóa các biến liên tục (Thời gian hoạt động, Độ rung lắc) bằng StandardScaler để thuật toán không bị chệch hướng bởi các giá trị quá lớn."
+        },
+        {
+          "title": "Feature Engineering và Feature selection",
+          "content": "Xử lý mảng nhiệt độ: Trích xuất các đặc trưng thống kê như Min, Max, Mean, và đặc biệt là Độ lệch chuẩn (Standard Deviation) để biểu diễn mức độ bất ổn của nhiệt độ. Xử lý mảng mã cảnh báo: Sử dụng CountVectorizer hoặc TF-IDF để đếm tần suất xuất hiện của các mã lỗi cụ thể (máy có nhiều mã 'VIB_HIGH' sẽ có nguy cơ hỏng cao). Tạo biến mới: Tỷ lệ thời gian hoạt động / Số ngày từ lần bảo trì cuối."
+        },
+        {
+          "title": "Lựa chọn mô hình",
+          "content": "Input: Các đặc trưng thống kê cảm biến và lịch sử lỗi. Output: Xác suất hỏng hóc (0-1). Đề xuất: Random Forest Classifier hoặc XGBoost. Các mô hình dựa trên cây quyết định này xử lý cực tốt dữ liệu bảng nhiều chiều, miễn nhiễm tương đối với các giá trị ngoại lệ từ cảm biến và có khả năng chống overfitting tốt khi làm việc với dữ liệu mất cân bằng nếu được tinh chỉnh đúng cách."
+        },
+        {
+          "title": "Huấn luyện và Tối ưu hóa mô hình",
+          "content": "Chia tập Train/Validation/Test theo trình tự thời gian (Time-series split), tuyệt đối không chia ngẫu nhiên để tránh việc dùng dữ liệu rò rỉ từ tương lai. Xử lý mất cân bằng: Áp dụng kỹ thuật SMOTE trên tập Train hoặc gán trọng số lớp (class_weight='balanced') để phạt nặng khi mô hình đoán sai các ca hỏng hóc. Sử dụng GridSearchCV để tinh chỉnh n_estimators và max_depth."
+        },
+        {
+          "title": "Đánh giá mô hình",
+          "content": "Metrics: Không sử dụng Accuracy. Độ nhạy (Recall) là quan trọng nhất vì bỏ sót một máy sắp hỏng (False Negative) sẽ gây thiệt hại hàng tỷ đồng do dừng dây chuyền. Kết hợp với F2-Score (ưu tiên Recall) và Precision-Recall AUC (PR-AUC) để đánh giá toàn diện. Kết quả mô hình sẽ được tích hợp vào Dashboard để phát cảnh báo đỏ cho đội bảo trì."
+        }
+      ]
+    }
+  },
+  {
+    "id": "essay_012",
+    "type": "essay",
+    "topic": "regression",
+    "difficulty": "hard",
+    "question": "Bạn được giao nhiệm vụ thiết kế một giải pháp Học máy cho một tập đoàn nông nghiệp công nghệ cao (AgriTech) nhằm dự đoán Năng suất thu hoạch (Crop Yield Prediction) của các thửa ruộng vào cuối mùa vụ.\n\nThông tin đầu vào được ghi nhận xuyên suốt mùa vụ (khoảng 3 tháng) bao gồm:\n- Mã thửa ruộng (int)\n- Diện tích canh tác (đơn vị hecta - float)\n- Loại giống cây trồng (string - ví dụ: 'Lúa thơm', 'Ngô lai', 'Đậu tương')\n- Lịch sử độ ẩm đất trung bình hàng tuần (mảng các float, tương ứng 12 tuần)\n- Tổng lượng phân bón sinh học đã sử dụng (đơn vị kg - float)\n- Đánh giá mức độ sâu bệnh qua các giai đoạn (mảng các string - ví dụ: ['Không có', 'Nhẹ', 'Nghiêm trọng'])\n- Tổng lượng mưa tích lũy trong mùa vụ (đơn vị mm - float)\n- Độ pH hiện tại của đất (float).\n\nBiến đầu ra là sản lượng nông sản dự kiến thu hoạch được (đơn vị tấn - float).\n\nTrình bày quy trình thiết kế giải pháp Học máy để báo cáo cho Kỹ sư trưởng Nông nghiệp. Tập trung giải thích cách làm sạch và đồng bộ dữ liệu đa nguồn (thời tiết, cảm biến đất, báo cáo thủ công), kỹ thuật xử lý các mảng dữ liệu chuỗi thời gian (độ ẩm) và biến thứ bậc (sâu bệnh), cũng như cách đánh giá sai số mô hình hồi quy để hỗ trợ ban giám đốc ra quyết định chuẩn bị kho bãi và chuỗi cung ứng logistics.",
+    "answer": {
+      "steps": [
+        {
+          "title": "Thu thập và đánh giá dữ liệu",
+          "content": "Thu thập dữ liệu từ cảm biến IoT (độ ẩm, pH), trạm khí tượng (lượng mưa) và nhật ký canh tác của nông dân (sâu bệnh, phân bón). Đánh giá dữ liệu: Kiểm tra tính đồng nhất của dữ liệu do nông dân nhập thủ công (có thể bị trống hoặc sai định dạng). Vẽ biểu đồ Scatter plot giữa 'Diện tích' và 'Sản lượng' để xác định các Outliers (ví dụ: diện tích nhỏ nhưng sản lượng nhập nhầm mức quá cao)."
+        },
+        {
+          "title": "Tiền xử lý dữ liệu",
+          "content": "Xử lý Missing values: Dùng giá trị trung bình của các thửa ruộng lân cận để điền lượng mưa bị thiếu. Mã hóa dữ liệu: Dùng OrdinalEncoder cho mảng 'Mức độ sâu bệnh' vì nó có tính thứ bậc (Không có = 0, Nhẹ = 1, Nghiêm trọng = 2). Dùng OneHotEncoder cho 'Loại giống cây trồng'. Áp dụng MinMaxScaler cho Diện tích và Lượng mưa để đưa về cùng thang đo [0, 1]."
+        },
+        {
+          "title": "Feature Engineering và Feature selection",
+          "content": "Trích xuất mảng độ ẩm: Tính các giá trị Trung bình, Min, Max và Độ chênh lệch độ ẩm giữa nửa đầu và nửa sau mùa vụ (giai đoạn ra hoa thường cần nước). Đối với mảng sâu bệnh: Tính tổng điểm số sâu bệnh của cả mùa, hoặc tạo cờ 'Từng bị sâu bệnh nghiêm trọng' (1/0). Tạo đặc trưng 'Mật độ phân bón' = Tổng lượng phân / Diện tích canh tác. Phân tích tương quan Pearson để loại bỏ các biến không ảnh hưởng đến sản lượng."
+        },
+        {
+          "title": "Lựa chọn mô hình",
+          "content": "Input: Đặc trưng môi trường, canh tác và diện tích. Output: Sản lượng thu hoạch dự kiến (Bài toán Regression). Đề xuất: Sử dụng Gradient Boosting Regressor hoặc Support Vector Regression (SVR). Gradient Boosting bắt được sự tương tác phức tạp (ví dụ: mưa nhiều + pH thấp làm giảm sản lượng lúa nhưng không ảnh hưởng ngô), trong khi SVR hoạt động tốt với các tập dữ liệu nông nghiệp có quy mô mẫu (số thửa ruộng) không quá khổng lồ."
+        },
+        {
+          "title": "Huấn luyện và Tối ưu hóa mô hình",
+          "content": "Chia dữ liệu Train/Test theo tỷ lệ 80/20. Cần lưu ý chia theo chiến lược Stratified dựa trên 'Loại giống cây trồng' để đảm bảo tập Test có đủ các loại cây. Tối ưu hóa siêu tham số bằng RandomizedSearchCV để tìm ra tổ hợp tốt nhất (learning_rate, max_depth, n_estimators) nhằm giúp thuật toán hội tụ mà không bị quá khớp với dữ liệu nhiễu của một mùa vụ."
+        },
+        {
+          "title": "Đánh giá mô hình",
+          "content": "Metrics: Sử dụng RMSE (Root Mean Squared Error) để phạt nặng các dự đoán sai số lớn (ví dụ đoán sai hàng trăm tấn sẽ gây khủng hoảng kho bãi). Kết hợp với MAPE (Mean Absolute Percentage Error) để Kỹ sư trưởng dễ hiểu (tỷ lệ sai số trung bình là bao nhiêu %). Ngoài ra, có thể tính toán 'Năng suất trên 1 hecta' từ dự đoán để đánh giá xem con số sinh ra có phù hợp với giới hạn sinh học thực tế hay không."
+        }
+      ]
+    }
+  }
+]
+]

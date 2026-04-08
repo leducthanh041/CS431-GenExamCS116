@@ -1,0 +1,654 @@
+{
+  "GENERATED_QUESTIONS": [
+    {
+      "question_id": "ch4_q1",
+      "question_text": "Câu 1. [Một đáp án đúng] (G2) Trong pandas, hàm nào sau đây được dùng để kiểm tra bảng hoặc cột có bị thiếu dữ liệu hay không?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "dropna()",
+        "B": "isnull() / isna()",
+        "C": "fillna()",
+        "D": "replace()"
+      },
+      "correct_answer": ["B"],
+      "topic": "Missing Data"
+    },
+    {
+      "question_id": "ch4_q2",
+      "question_text": "Câu 2. [Nhiều đáp án đúng] (G2) Theo slide, các cách tiếp cận chính để xử lý dữ liệu bị thiếu gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Loại bỏ hàng hoặc cột có tỉ lệ dữ liệu bị thiếu lớn",
+        "B": "Thay thế đơn biến, đa biến hoặc chuỗi thời gian",
+        "C": "Sử dụng mô hình máy học để dự đoán giá trị thiếu",
+        "D": "Luôn mã hóa one-hot trước rồi mới xử lý dữ liệu thiếu"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Missing Data"
+    },
+    {
+      "question_id": "ch4_q3",
+      "question_text": "Câu 3. [Một đáp án đúng] (G2) Với phương pháp K-Nearest Neighbors để thay thế dữ liệu thiếu, phát biểu nào sau đây đúng?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Thay thế giá trị thiếu bằng một hằng số cố định",
+        "B": "Thay thế giá trị thiếu bằng giá trị trung bình hoặc trung bình có trọng số của K láng giềng trong không gian đặc trưng",
+        "C": "Chỉ áp dụng cho dữ liệu phân loại",
+        "D": "Luôn có chi phí tính toán thấp hơn thay thế đơn biến"
+      },
+      "correct_answer": ["B"],
+      "topic": "Missing Data"
+    },
+    {
+      "question_id": "ch4_q4",
+      "question_text": "Câu 4. [Nhiều đáp án đúng] (G2) Trong các lựa chọn sau, đâu là các phương pháp tự động phát hiện ngoại lệ được nêu trong slide?",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Local Outlier Factor",
+        "B": "Isolation Forest",
+        "C": "One-class SVM",
+        "D": "Standardization (Z-score scaling)"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Outlier Detection"
+    },
+    {
+      "question_id": "ch4_q5",
+      "question_text": "Câu 5. [Một đáp án đúng] (G2) Phương pháp Interquartile Range (IQR) thường được dùng để xác định giá trị ngoại lệ khi:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Dữ liệu có phân phối Gaussian hoặc gần Gaussian",
+        "B": "Dữ liệu có phân phối không phải Gaussian",
+        "C": "Dữ liệu chỉ có hai cột",
+        "D": "Dữ liệu đã được one-hot encoding"
+      },
+      "correct_answer": ["B"],
+      "topic": "Outlier Detection"
+    },
+    {
+      "question_id": "ch4_q6",
+      "question_text": "Câu 6. [Một đáp án đúng] (G2) Trong phần tạo đặc trưng mới, nếu có hai đặc trưng Vận tốc và Thời gian thì đặc trưng Quãng đường có thể được tạo bằng:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Vận tốc + Thời gian",
+        "B": "Vận tốc - Thời gian",
+        "C": "Vận tốc x Thời gian",
+        "D": "Vận tốc / Thời gian + 1"
+      },
+      "correct_answer": ["C"],
+      "topic": "Feature Extraction"
+    },
+    {
+      "question_id": "ch4_q7",
+      "question_text": "Câu 7. [Nhiều đáp án đúng] (G2) Theo slide, các phép biến đổi dữ liệu dạng số gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Min-Max scaling",
+        "B": "Standardization (Z-score scaling)",
+        "C": "Robust Scaler",
+        "D": "One-hot encoding"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Feature Transformation"
+    },
+    {
+      "question_id": "ch4_q8",
+      "question_text": "Câu 8. [Một đáp án đúng] (G2) Trong kỹ thuật chuẩn hóa Min-Max, giá trị của mỗi biến thường được biến đổi về khoảng:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "[-1, 1]",
+        "B": "[0, 1]",
+        "C": "(-∞, ∞)",
+        "D": "[1, 10]"
+      },
+      "correct_answer": ["B"],
+      "topic": "Feature Transformation"
+    },
+    {
+      "question_id": "ch4_q9",
+      "question_text": "Câu 9. [Nhiều đáp án đúng] (G2) Theo slide, các phép biến đổi dữ liệu dạng danh mục (phân loại) gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "One-hot encoding",
+        "B": "Ordinal encoding",
+        "C": "Robust Scaler",
+        "D": "Label encoding"
+      },
+      "correct_answer": ["A", "B", "D"],
+      "topic": "Categorical Transformation"
+    },
+    {
+      "question_id": "ch4_q10",
+      "question_text": "Câu 10. [Nhiều đáp án đúng] (G2) Theo slide, các ví dụ của phương pháp chọn lựa đặc trưng kiểu Embedded model gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "LASSO Regression",
+        "B": "Ridge Regression",
+        "C": "Elastic Net",
+        "D": "PCA"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Feature Selection"
+    },
+    {
+      "question_id": "ch4_q11",
+      "question_text": "Câu 11. [Một đáp án đúng] (G2) Theo slide, một cách tiếp cận khác khi xử lý dữ liệu bị thiếu là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Tạo cột mới chứa thông tin có giá trị bị thiếu",
+        "B": "Luôn xóa toàn bộ tập dữ liệu",
+        "C": "Chỉ giữ lại các cột kiểu số",
+        "D": "Chuẩn hóa Min-Max trước khi kiểm tra dữ liệu thiếu"
+      },
+      "correct_answer": ["A"],
+      "topic": "Missing Data"
+    },
+    {
+      "question_id": "ch4_q12",
+      "question_text": "Câu 12. [Một đáp án đúng] (G2) Phương pháp thay thế đặc trưng đơn biến trong slide thường sử dụng:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "mean / median / mode",
+        "B": "PCA / ICA / UMAP",
+        "C": "One-hot / target encoding",
+        "D": "Forward selection / RFE"
+      },
+      "correct_answer": ["A"],
+      "topic": "Missing Data"
+    },
+    {
+      "question_id": "ch4_q13",
+      "question_text": "Câu 13. [Một đáp án đúng] (G2) Với phương pháp thay thế giá trị hằng số cho dữ liệu thiếu, nhận xét nào sau đây đúng theo slide?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Phức tạp nhưng luôn phản ánh rất đúng dữ liệu",
+        "B": "Đơn giản nhưng giá trị thay thế khó phản ánh đúng",
+        "C": "Chỉ áp dụng cho dữ liệu ảnh",
+        "D": "Không thể dùng cho biến phân loại"
+      },
+      "correct_answer": ["B"],
+      "topic": "Missing Data"
+    },
+    {
+      "question_id": "ch4_q14",
+      "question_text": "Câu 14. [Một đáp án đúng] (G2) Phép nội suy tuyến tính khi thay thế dữ liệu thiếu dựa trên giả định nào?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Mối quan hệ tuyến tính giữa các điểm dữ liệu lân cận",
+        "B": "Mọi biến đều độc lập hoàn toàn",
+        "C": "Dữ liệu luôn có phân phối chuẩn",
+        "D": "Mọi đặc trưng đều là biến phân loại"
+      },
+      "correct_answer": ["A"],
+      "topic": "Missing Data"
+    },
+    {
+      "question_id": "ch4_q15",
+      "question_text": "Câu 15. [Một đáp án đúng] (G2) Theo slide, nhược điểm của phương pháp thay thế dữ liệu thiếu bằng hồi quy là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Không thể dùng các biến khác làm yếu tố dự đoán",
+        "B": "Có thể gây đa cộng tuyến và quá khớp nếu các đặc trưng tương quan cao",
+        "C": "Luôn cho độ chính xác thấp nhất",
+        "D": "Chỉ áp dụng cho chuỗi thời gian"
+      },
+      "correct_answer": ["B"],
+      "topic": "Missing Data"
+    },
+    {
+      "question_id": "ch4_q16",
+      "question_text": "Câu 16. [Một đáp án đúng] (G2) Với phương pháp thay thế dữ liệu thiếu dựa trên mô hình, phát biểu nào đúng theo slide?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Độ chính xác cao nhưng có thể phức tạp và tốn kém hơn về tính toán",
+        "B": "Đơn giản nhất và luôn rẻ nhất",
+        "C": "Không dùng mô hình máy học",
+        "D": "Chỉ dùng cho dữ liệu văn bản"
+      },
+      "correct_answer": ["A"],
+      "topic": "Missing Data"
+    },
+    {
+      "question_id": "ch4_q17",
+      "question_text": "Câu 17. [Nhiều đáp án đúng] (G2) Theo slide, phát hiện ngoại lệ có các cách tiếp cận nào?",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Phương pháp thống kê",
+        "B": "Tự động phát hiện ngoại lệ",
+        "C": "K-Nearest Neighbors imputation",
+        "D": "One-hot encoding"
+      },
+      "correct_answer": ["A", "B"],
+      "topic": "Outlier Detection"
+    },
+    {
+      "question_id": "ch4_q18",
+      "question_text": "Câu 18. [Một đáp án đúng] (G2) EllipticEnvelope trong slide được xếp vào nhóm:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Tự động phát hiện ngoại lệ",
+        "B": "Biến đổi đặc trưng dạng số",
+        "C": "Biến đổi đặc trưng dạng danh mục",
+        "D": "Chọn lựa đặc trưng kiểu Filter"
+      },
+      "correct_answer": ["A"],
+      "topic": "Outlier Detection"
+    },
+    {
+      "question_id": "ch4_q19",
+      "question_text": "Câu 19. [Một đáp án đúng] (G2) Phương pháp tính trung bình và độ lệch chuẩn để xác định ngoại lệ phù hợp nhất với:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Dữ liệu dạng Gaussian hoặc tương tự Gaussian",
+        "B": "Dữ liệu phân phối không phải Gaussian",
+        "C": "Dữ liệu chỉ gồm biến phân loại",
+        "D": "Dữ liệu đã được target encoding"
+      },
+      "correct_answer": ["A"],
+      "topic": "Outlier Detection"
+    },
+    {
+      "question_id": "ch4_q20",
+      "question_text": "Câu 20. [Nhiều đáp án đúng] (G2) Theo slide, xử lý dữ liệu ngoại lệ có thể thực hiện bằng:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Loại bỏ",
+        "B": "Thay thế đơn giản",
+        "C": "Sử dụng mô hình dự đoán",
+        "D": "Chỉ dùng Min-Max scaling"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Outlier Handling"
+    },
+    {
+      "question_id": "ch4_q21",
+      "question_text": "Câu 21. [Một đáp án đúng] (G2) Theo slide, CleanLab là công cụ tự động dùng để:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Tìm OOD và phát hiện vấn đề dữ liệu",
+        "B": "Vẽ biểu đồ histogram",
+        "C": "Mã hóa one-hot cho biến phân loại",
+        "D": "Thay thế dữ liệu thiếu bằng mean"
+      },
+      "correct_answer": ["A"],
+      "topic": "Outlier Detection"
+    },
+    {
+      "question_id": "ch4_q22",
+      "question_text": "Câu 22. [Một đáp án đúng] (G2) Trong phần làm sạch dữ liệu khác, lệnh data.set_index('column', inplace=True) dùng để:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Đặt một cột làm chỉ mục của bảng",
+        "B": "Xóa toàn bộ chỉ mục của bảng",
+        "C": "Chuyển kiểu dữ liệu sang int",
+        "D": "Loại bỏ các dòng trùng lặp"
+      },
+      "correct_answer": ["A"],
+      "topic": "Data Cleaning"
+    },
+    {
+      "question_id": "ch4_q23",
+      "question_text": "Câu 23. [Một đáp án đúng] (G2) Lệnh data.reset_index(drop=True) có ý nghĩa gần nhất là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Khôi phục chỉ mục mặc định và bỏ chỉ mục cũ",
+        "B": "Đổi tên các cột trong bảng",
+        "C": "Thay thế giá trị thiếu bằng 0",
+        "D": "Tạo thêm một cột mới từ chỉ mục cũ"
+      },
+      "correct_answer": ["A"],
+      "topic": "Data Cleaning"
+    },
+    {
+      "question_id": "ch4_q24",
+      "question_text": "Câu 24. [Một đáp án đúng] (G2) Lệnh data['column'] = data['column'].astype(int) được dùng để:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Ép kiểu dữ liệu của cột sang int",
+        "B": "Đổi tên cột thành int",
+        "C": "Tạo cột mới tên int",
+        "D": "Xóa các dòng không phải số"
+      },
+      "correct_answer": ["A"],
+      "topic": "Data Cleaning"
+    },
+    {
+      "question_id": "ch4_q25",
+      "question_text": "Câu 25. [Một đáp án đúng] (G2) Lệnh data['column'].replace(old_value, new_value, inplace=True) trong slide chủ yếu dùng để:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Sửa dữ liệu không nhất quán",
+        "B": "Chuẩn hóa Z-score",
+        "C": "Tạo chỉ mục mới",
+        "D": "Chọn đặc trưng bằng Filter"
+      },
+      "correct_answer": ["A"],
+      "topic": "Data Cleaning"
+    },
+    {
+      "question_id": "ch4_q26",
+      "question_text": "Câu 26. [Một đáp án đúng] (G2) Trong pandas, data.drop_duplicates() dùng để:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Loại bỏ các dòng trùng lặp",
+        "B": "Loại bỏ các cột thiếu dữ liệu",
+        "C": "Tạo các cột one-hot",
+        "D": "Sắp xếp lại chỉ mục"
+      },
+      "correct_answer": ["A"],
+      "topic": "Data Cleaning"
+    },
+    {
+      "question_id": "ch4_q27",
+      "question_text": "Câu 27. [Một đáp án đúng] (G2) Lệnh data.drop(columns=[list cols], axis=1) dùng để:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Loại bỏ các cột không cần thiết",
+        "B": "Loại bỏ các dòng không cần thiết",
+        "C": "Đếm số lần xuất hiện của giá trị",
+        "D": "Biến đổi log cho dữ liệu"
+      },
+      "correct_answer": ["A"],
+      "topic": "Data Cleaning"
+    },
+    {
+      "question_id": "ch4_q28",
+      "question_text": "Câu 28. [Một đáp án đúng] (G2) Biểu thức data[data['column_filter'] == 'abc'] thường dùng để:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Lọc các dòng thỏa điều kiện",
+        "B": "Đổi kiểu dữ liệu của cột",
+        "C": "Tạo biến phân cụm",
+        "D": "Thực hiện PCA"
+      },
+      "correct_answer": ["A"],
+      "topic": "Data Cleaning"
+    },
+    {
+      "question_id": "ch4_q29",
+      "question_text": "Câu 29. [Một đáp án đúng] (G2) Trong ví dụ đếm tần số xuất hiện, màu Red có Color_count bằng:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "1",
+        "B": "2",
+        "C": "3",
+        "D": "4"
+      },
+      "correct_answer": ["C"],
+      "topic": "Feature Extraction"
+    },
+    {
+      "question_id": "ch4_q30",
+      "question_text": "Câu 30. [Một đáp án đúng] (G2) Trong ví dụ tạo use_vehicle từ các cột Bus, Car, Motorbike, khi nào use_vehicle nhận giá trị 1?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Chỉ khi cả 3 cột đều bằng 1",
+        "B": "Khi ít nhất một trong các cột bằng 1",
+        "C": "Chỉ khi Bus bằng 1",
+        "D": "Chỉ khi Car và Motorbike cùng bằng 1"
+      },
+      "correct_answer": ["B"],
+      "topic": "Feature Extraction"
+    },
+    {
+      "question_id": "ch4_q31",
+      "question_text": "Câu 31. [Một đáp án đúng] (G2) Theo slide, các đặc trưng dạng chuỗi phức tạp nhưng có cấu trúc có thể được:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Phân rã thành nhiều đặc trưng nhỏ hơn",
+        "B": "Xóa bỏ hoàn toàn vì không dùng được",
+        "C": "Chỉ đổi sang số thực",
+        "D": "Chỉ dùng cho one-hot encoding"
+      },
+      "correct_answer": ["A"],
+      "topic": "Feature Extraction"
+    },
+    {
+      "question_id": "ch4_q32",
+      "question_text": "Câu 32. [Một đáp án đúng] (G2) Theo ví dụ trong slide, chuỗi “0612450” có thể được phân rã thành:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Năm 2006, hệ chính quy, khoa KHMT, STT 450",
+        "B": "Năm 2012, hệ chất lượng cao, khoa HTTT, STT 450",
+        "C": "Năm 2006, hệ vừa học vừa làm, khoa KHMT, STT 2450",
+        "D": "Năm 2000, hệ chính quy, khoa KHMT, STT 612450"
+      },
+      "correct_answer": ["A"],
+      "topic": "Feature Extraction"
+    },
+    {
+      "question_id": "ch4_q33",
+      "question_text": "Câu 33. [Một đáp án đúng] (G2) Trong ví dụ tổng hợp đặc trưng, cột Make_Type được tạo từ:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Một cột duy nhất là Make",
+        "B": "Một cột duy nhất là Type",
+        "C": "Nhiều đặc trưng thành phần như Make và Type",
+        "D": "Kết quả phân cụm K-Means"
+      },
+      "correct_answer": ["C"],
+      "topic": "Feature Extraction"
+    },
+    {
+      "question_id": "ch4_q34",
+      "question_text": "Câu 34. [Một đáp án đúng] (G2) Theo slide, để tổng hợp thông tin trên nhiều dòng dữ liệu theo nhóm, ta thường dùng:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "groupby kết hợp với mean/max/min",
+        "B": "replace kết hợp với astype",
+        "C": "isnull kết hợp với fillna",
+        "D": "drop_duplicates kết hợp với reset_index"
+      },
+      "correct_answer": ["A"],
+      "topic": "Feature Extraction"
+    },
+    {
+      "question_id": "ch4_q35",
+      "question_text": "Câu 35. [Một đáp án đúng] (G2) Trong ví dụ tổng hợp theo nhóm trong slide, AvgSalary của thành phố HCM là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "12.000000",
+        "B": "13.333333",
+        "C": "14.000000",
+        "D": "15.000000"
+      },
+      "correct_answer": ["B"],
+      "topic": "Feature Extraction"
+    },
+    {
+      "question_id": "ch4_q36",
+      "question_text": "Câu 36. [Một đáp án đúng] (G2) Đặc trưng cụm (cluster feature) trong slide được tạo dựa trên:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Phân cụm của một hoặc một số đặc trưng trong dữ liệu",
+        "B": "Chuẩn hóa Min-Max cho toàn bộ dữ liệu",
+        "C": "Mã hóa one-hot cho biến phân loại",
+        "D": "Loại bỏ dữ liệu bị thiếu"
+      },
+      "correct_answer": ["A"],
+      "topic": "Feature Extraction"
+    },
+    {
+      "question_id": "ch4_q37",
+      "question_text": "Câu 37. [Một đáp án đúng] (G2) Trong ví dụ PCA của slide, dữ liệu từ 4 đặc trưng ban đầu được biểu diễn thành:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "1 thành phần chính",
+        "B": "2 thành phần chính",
+        "C": "3 thành phần chính",
+        "D": "4 thành phần chính"
+      },
+      "correct_answer": ["B"],
+      "topic": "Feature Extraction"
+    },
+    {
+      "question_id": "ch4_q38",
+      "question_text": "Câu 38. [Nhiều đáp án đúng] (G2) Theo slide, vì sao cần biến đổi đặc trưng?",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Nhiều mô hình yêu cầu dữ liệu đầu vào dạng số",
+        "B": "Nhiều mô hình đặt giả định về phân bố và tỉ lệ của dữ liệu đầu vào",
+        "C": "Biến đổi phù hợp có thể giúp mô hình chính xác hơn và học nhanh hơn",
+        "D": "Biến đổi đặc trưng luôn làm giảm số lượng dòng dữ liệu"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Feature Transformation"
+    },
+    {
+      "question_id": "ch4_q39",
+      "question_text": "Câu 39. [Một đáp án đúng] (G2) Theo slide, cặp biến đổi nào giúp giảm sự ảnh hưởng của dữ liệu nhiễu?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Log Transform và Robust Scaler",
+        "B": "One-hot encoding và Label encoding",
+        "C": "Forward selection và RFE",
+        "D": "PCA và ICA"
+      },
+      "correct_answer": ["A"],
+      "topic": "Feature Transformation"
+    },
+    {
+      "question_id": "ch4_q40",
+      "question_text": "Câu 40. [Một đáp án đúng] (G2) Binning transformation trong slide chủ yếu nhằm:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Chia khoảng giá trị liên tục thành các nhóm có ý nghĩa",
+        "B": "Tăng số lượng dòng dữ liệu",
+        "C": "Tìm ngoại lệ bằng IQR",
+        "D": "Thay thế dữ liệu thiếu bằng hằng số"
+      },
+      "correct_answer": ["A"],
+      "topic": "Feature Transformation"
+    },
+    {
+      "question_id": "ch4_q41",
+      "question_text": "Câu 41. [Một đáp án đúng] (G2) Theo ví dụ trong slide, với quan hệ Y = b * exp(a*X), sau log transform ta được:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "log(Y) = log(b) + a*X",
+        "B": "Y = log(b) + log(aX)",
+        "C": "log(Y) = b + exp(a*X)",
+        "D": "Y = log(X) + log(a)"
+      },
+      "correct_answer": ["A"],
+      "topic": "Feature Transformation"
+    },
+    {
+      "question_id": "ch4_q42",
+      "question_text": "Câu 42. [Nhiều đáp án đúng] (G2) Theo slide, các ví dụ của phép biến đổi dữ liệu dạng số gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Min-Max scaling",
+        "B": "Log Transform",
+        "C": "Robust Scaler",
+        "D": "One-hot encoding"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Feature Transformation"
+    },
+    {
+      "question_id": "ch4_q43",
+      "question_text": "Câu 43. [Một đáp án đúng] (G2) Công thức của Standardization (Z-score scaling) có dạng gần nhất là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "x' = (x - min(x)) / (max(x) - min(x))",
+        "B": "z = (x - μ) / σ",
+        "C": "x' = x - median(x) / (Q3 - Q1)",
+        "D": "x' = log(x + 1)"
+      },
+      "correct_answer": ["B"],
+      "topic": "Feature Transformation"
+    },
+    {
+      "question_id": "ch4_q44",
+      "question_text": "Câu 44. [Một đáp án đúng] (G2) Kỹ thuật nào sau đây KHÔNG thuộc nhóm biến đổi dữ liệu dạng danh mục trong slide?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "One-hot encoding",
+        "B": "Ordinal encoding",
+        "C": "Robust Scaler",
+        "D": "Target Encoding"
+      },
+      "correct_answer": ["C"],
+      "topic": "Categorical Transformation"
+    },
+    {
+      "question_id": "ch4_q45",
+      "question_text": "Câu 45. [Nhiều đáp án đúng] (G2) Theo slide, chọn lựa đặc trưng giúp:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Giảm nhiễu và tăng độ chính xác mô hình",
+        "B": "Giảm nguy cơ overfitting bằng cách làm mô hình đơn giản hơn",
+        "C": "Giảm thời gian và chi phí huấn luyện",
+        "D": "Luôn làm dữ liệu có số chiều lớn hơn"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Feature Selection"
+    },
+    {
+      "question_id": "ch4_q46",
+      "question_text": "Câu 46. [Nhiều đáp án đúng] (G2) Theo slide, các ví dụ của phương pháp chọn đặc trưng kiểu Filter gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Hệ số tương quan Pearson",
+        "B": "Variance Threshold",
+        "C": "Missing value ratio / Mutual Information",
+        "D": "Forward Selection"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Feature Selection"
+    },
+    {
+      "question_id": "ch4_q47",
+      "question_text": "Câu 47. [Nhiều đáp án đúng] (G2) Theo slide, các ví dụ của phương pháp Wrapper gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Forward Selection",
+        "B": "Backward Elimination",
+        "C": "RFE / RFECV",
+        "D": "Standardization (Z-score scaling)"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Feature Selection"
+    },
+    {
+      "question_id": "ch4_q48",
+      "question_text": "Câu 48. [Một đáp án đúng] (G2) Kỹ thuật nào sau đây KHÔNG thuộc Embedded model trong slide?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "LASSO Regression",
+        "B": "Ridge Regression",
+        "C": "Random Forest / GBM",
+        "D": "PCA"
+      },
+      "correct_answer": ["D"],
+      "topic": "Feature Selection"
+    },
+    {
+      "question_id": "ch4_q49",
+      "question_text": "Câu 49. [Nhiều đáp án đúng] (G2) Theo slide, các ví dụ của phương pháp giảm chiều dữ liệu gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "PCA",
+        "B": "ICA",
+        "C": "t-SNE / UMAP",
+        "D": "Label encoding"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Feature Selection"
+    },
+    {
+      "question_id": "ch4_q50",
+      "question_text": "Câu 50. [Nhiều đáp án đúng] (G2) Theo slide, các công cụ hỗ trợ chọn lựa đặc trưng gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "LOFO",
+        "B": "SHAP",
+        "C": "ELI5",
+        "D": "Matplotlib"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Feature Selection"
+    }
+  ]
+}

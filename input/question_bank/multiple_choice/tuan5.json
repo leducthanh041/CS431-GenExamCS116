@@ -1,0 +1,654 @@
+{
+  "GENERATED_QUESTIONS": [
+    {
+      "question_id": "ch5_q1",
+      "question_text": "Câu 1. [Nhiều đáp án đúng] (G2) Tại sao cần phải đánh giá mô hình?",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Để xác thực mô hình thực sự dự đoán tốt hay chỉ nhớ dữ liệu train",
+        "B": "Để so sánh các mô hình và chọn mô hình tốt hơn",
+        "C": "Để xác định mô hình có ổn định và đáng tin cậy khi triển khai thực tế hay không",
+        "D": "Để biết hướng cải thiện mô hình"
+      },
+      "correct_answer": ["A", "B", "C", "D"],
+      "topic": "Why Evaluate"
+    },
+    {
+      "question_id": "ch5_q2",
+      "question_text": "Câu 2. [Một đáp án đúng] (G2) Một mô hình đang bị quá khớp (overfitting) khi:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Cả lỗi huấn luyện và lỗi kiểm thử đều thấp",
+        "B": "Lỗi huấn luyện thấp nhưng lỗi kiểm thử cao",
+        "C": "Lỗi huấn luyện cao nhưng lỗi kiểm thử thấp",
+        "D": "Cả lỗi huấn luyện và lỗi kiểm thử đều cao"
+      },
+      "correct_answer": ["B"],
+      "topic": "Why Evaluate"
+    },
+    {
+      "question_id": "ch5_q3",
+      "question_text": "Câu 3. [Một đáp án đúng] (G2) Cách phân biệt đơn giản giữa bài toán hồi quy và bài toán phân lớp dựa trên:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Số lượng mẫu dữ liệu",
+        "B": "Tính chất của biến kết quả (output)",
+        "C": "Số lượng đặc trưng đầu vào",
+        "D": "Kích thước tập huấn luyện"
+      },
+      "correct_answer": ["B"],
+      "topic": "Regression vs Classification"
+    },
+    {
+      "question_id": "ch5_q4",
+      "question_text": "Câu 4. [Một đáp án đúng] (G2) Theo slide, bài toán “dự đoán tuổi” được xem là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Phân lớp",
+        "B": "Hồi quy",
+        "C": "Phân cụm",
+        "D": "Giảm chiều dữ liệu"
+      },
+      "correct_answer": ["B"],
+      "topic": "Regression vs Classification"
+    },
+    {
+      "question_id": "ch5_q5",
+      "question_text": "Câu 5. [Nhiều đáp án đúng] (G2) Tại sao cần phân biệt đúng bài toán học máy?",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Để chọn hàm mục tiêu huấn luyện phù hợp",
+        "B": "Để chọn độ đo đánh giá phù hợp",
+        "C": "Để việc đánh giá khách quan hơn",
+        "D": "Để luôn tăng kích thước tập train"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Regression vs Classification"
+    },
+    {
+      "question_id": "ch5_q6",
+      "question_text": "Câu 6. [Một đáp án đúng] (G2) Theo cách phân biệt rõ ràng hơn trong slide, với bài toán phân lớp, hai giá trị output bất kỳ chỉ có thể thực hiện được so sánh:",
+      "question_type": "single_correct",
+      "options": {
+        "A": ">, <, =, !=",
+        "B": ">, <",
+        "C": "= hoặc !=",
+        "D": ">= hoặc <="
+      },
+      "correct_answer": ["C"],
+      "topic": "Regression vs Classification"
+    },
+    {
+      "question_id": "ch5_q7",
+      "question_text": "Câu 7. [Một đáp án đúng] (G2) Công thức của Mean Squared Error (MSE) là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "(1/n) * Σ |y_i - yhat_i|",
+        "B": "(1/n) * Σ (y_i - yhat_i)^2",
+        "C": "sqrt((1/n) * Σ (y_i - yhat_i)^2)",
+        "D": "Σ (y_i - ybar)^2 / Σ (y_i - yhat_i)^2"
+      },
+      "correct_answer": ["B"],
+      "topic": "Regression Metrics"
+    },
+    {
+      "question_id": "ch5_q8",
+      "question_text": "Câu 8. [Một đáp án đúng] (G2) Mean Absolute Error (MAE) đo:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Trung bình sai số tuyệt đối giữa giá trị thực và giá trị dự đoán",
+        "B": "Trung bình bình phương sai số",
+        "C": "Căn bậc hai của trung bình bình phương sai số",
+        "D": "Tỉ lệ dự đoán đúng"
+      },
+      "correct_answer": ["A"],
+      "topic": "Regression Metrics"
+    },
+    {
+      "question_id": "ch5_q9",
+      "question_text": "Câu 9. [Một đáp án đúng] (G2) Root Mean Squared Error (RMSE) là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Giá trị tuyệt đối của MSE",
+        "B": "Căn bậc hai của MSE",
+        "C": "Bình phương của MAE",
+        "D": "MAE chia cho MSE"
+      },
+      "correct_answer": ["B"],
+      "topic": "Regression Metrics"
+    },
+    {
+      "question_id": "ch5_q10",
+      "question_text": "Câu 10. [Nhiều đáp án đúng] (G2) Các độ đo đánh giá cho bài toán hồi quy được nêu trong slide gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "MAE",
+        "B": "MSE",
+        "C": "RMSE",
+        "D": "Accuracy"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Regression Metrics"
+    },
+    {
+      "question_id": "ch5_q11",
+      "question_text": "Câu 11. [Một đáp án đúng] (G2) Với các độ đo MAE, MSE, RMSE, giá trị nào thường cho thấy mô hình hồi quy tốt hơn?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Càng lớn càng tốt",
+        "B": "Càng nhỏ càng tốt",
+        "C": "Phải bằng 1",
+        "D": "Phải lớn hơn 100"
+      },
+      "correct_answer": ["B"],
+      "topic": "Regression Metrics"
+    },
+    {
+      "question_id": "ch5_q12",
+      "question_text": "Câu 12. [Một đáp án đúng] (G2) Relative Absolute Error (RAE) có mẫu số là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Σ |y_i - yhat_i|",
+        "B": "Σ |y_i - ybar|",
+        "C": "Σ (y_i - yhat_i)^2",
+        "D": "Σ (y_i - ybar)^2"
+      },
+      "correct_answer": ["B"],
+      "topic": "Regression Metrics"
+    },
+    {
+      "question_id": "ch5_q13",
+      "question_text": "Câu 13. [Một đáp án đúng] (G2) Relative Squared Error (RSE) có mẫu số là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Σ |y_i - ybar|",
+        "B": "Σ (y_i - yhat_i)^2",
+        "C": "Σ (y_i - ybar)^2",
+        "D": "Σ |y_i - yhat_i|"
+      },
+      "correct_answer": ["C"],
+      "topic": "Regression Metrics"
+    },
+    {
+      "question_id": "ch5_q14",
+      "question_text": "Câu 14. [Một đáp án đúng] (G2) Trong số các độ đo sau, độ đo nào phạt mạnh hơn các lỗi lớn vì dùng bình phương sai số?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "MAE",
+        "B": "MSE",
+        "C": "Jaccard index",
+        "D": "Recall"
+      },
+      "correct_answer": ["B"],
+      "topic": "Regression Metrics"
+    },
+    {
+      "question_id": "ch5_q15",
+      "question_text": "Câu 15. [Một đáp án đúng] (G2) Độ đo nào sau đây có cùng đơn vị với biến đầu ra của bài toán hồi quy?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "MSE",
+        "B": "RMSE",
+        "C": "RSE",
+        "D": "RAE luôn không có đơn vị"
+      },
+      "correct_answer": ["B"],
+      "topic": "Regression Metrics"
+    },
+    {
+      "question_id": "ch5_q16",
+      "question_text": "Câu 16. [Nhiều đáp án đúng] (G2) Theo phần nhận xét trong slide, các độ đo đánh giá và hàm độ lỗi thực tế có thể:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Chỉ là cách tính trung bình nên có thể có tính thiên lệch",
+        "B": "Bắt nguồn từ các yếu tố thực tiễn như doanh thu, lợi nhuận, thiệt hại kinh tế",
+        "C": "Một số hàm độ lỗi được lấy trực tiếp từ độ đo đánh giá",
+        "D": "Luôn hoàn toàn khách quan trong mọi tình huống"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Evaluation Remarks"
+    },
+    {
+      "question_id": "ch5_q17",
+      "question_text": "Câu 17. [Một đáp án đúng] (G2) Trong bài toán hồi quy, độ đo đánh giá được sử dụng trên:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Mô hình chưa huấn luyện",
+        "B": "Dữ liệu huấn luyện thay cho dự đoán",
+        "C": "Giá trị thực tế và giá trị dự đoán từ mô hình đã huấn luyện",
+        "D": "Chỉ trên tập train, không dùng tập test"
+      },
+      "correct_answer": ["C"],
+      "topic": "Regression Metrics"
+    },
+    {
+      "question_id": "ch5_q18",
+      "question_text": "Câu 18. [Một đáp án đúng] (G2) Trong bài toán phân lớp, hàm độ lỗi được giới thiệu trong slide là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "MSE",
+        "B": "MAE",
+        "C": "Log loss",
+        "D": "RMSE"
+      },
+      "correct_answer": ["C"],
+      "topic": "Classification Metrics"
+    },
+    {
+      "question_id": "ch5_q19",
+      "question_text": "Câu 19. [Một đáp án đúng] (G2) Log loss trong bài toán phân lớp sử dụng đầu vào dự đoán là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Nhãn dự đoán rời rạc 0/1",
+        "B": "Xác suất dự đoán",
+        "C": "Giá trị trung bình của nhãn",
+        "D": "Khoảng cách Euclid"
+      },
+      "correct_answer": ["B"],
+      "topic": "Classification Metrics"
+    },
+    {
+      "question_id": "ch5_q20",
+      "question_text": "Câu 20. [Một đáp án đúng] (G2) Với log loss, giá trị nào cho thấy mô hình phân lớp tốt hơn?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Càng gần 0 càng tốt",
+        "B": "Càng lớn càng tốt",
+        "C": "Phải luôn bằng 1",
+        "D": "Không phụ thuộc vào xác suất dự đoán"
+      },
+      "correct_answer": ["A"],
+      "topic": "Classification Metrics"
+    },
+    {
+      "question_id": "ch5_q21",
+      "question_text": "Câu 21. [Một đáp án đúng] (G2) Sau khi giới thiệu log loss, slide sử dụng độ đo nào để đánh giá cho bài toán phân lớp?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Jaccard index",
+        "B": "MSE",
+        "C": "RMSE",
+        "D": "RSE"
+      },
+      "correct_answer": ["A"],
+      "topic": "Classification Metrics"
+    },
+    {
+      "question_id": "ch5_q22",
+      "question_text": "Câu 22. [Một đáp án đúng] (G2) Jaccard index được tính bằng:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "|Y ∩ Yhat| / |Y ∪ Yhat|",
+        "B": "TP / (TP + FP)",
+        "C": "TP / (TP + FN)",
+        "D": "(TP + TN) / (TP + FP + TN + FN)"
+      },
+      "correct_answer": ["A"],
+      "topic": "Classification Metrics"
+    },
+    {
+      "question_id": "ch5_q23",
+      "question_text": "Câu 23. [Nhiều đáp án đúng] (G2) Trong công thức Jaccard index trên slide:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Y là tập giá trị thực tế",
+        "B": "Yhat là tập giá trị dự đoán",
+        "C": "Mẫu số có thể viết là |Y| + |Yhat| - |Y ∩ Yhat|",
+        "D": "Jaccard index luôn nhỏ hơn 0"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Classification Metrics"
+    },
+    {
+      "question_id": "ch5_q24",
+      "question_text": "Câu 24. [Một đáp án đúng] (G2) Công thức tính Precision là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "TP / (TP + FP)",
+        "B": "TP / (TP + FN)",
+        "C": "(TP + TN) / (TP + FP + TN + FN)",
+        "D": "2PR / (P + R)"
+      },
+      "correct_answer": ["A"],
+      "topic": "Classification Metrics"
+    },
+    {
+      "question_id": "ch5_q25",
+      "question_text": "Câu 25. [Một đáp án đúng] (G2) Công thức tính Recall là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "TP / (TP + FP)",
+        "B": "TP / (TP + FN)",
+        "C": "TN / (TN + FP)",
+        "D": "(TP + TN) / (TP + FP + TN + FN)"
+      },
+      "correct_answer": ["B"],
+      "topic": "Classification Metrics"
+    },
+    {
+      "question_id": "ch5_q26",
+      "question_text": "Câu 26. [Một đáp án đúng] (G2) F1-score được tính theo Precision và Recall bởi công thức:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Precision + Recall",
+        "B": "2 * (Precision * Recall) / (Precision + Recall)",
+        "C": "(Precision + Recall) / 2",
+        "D": "Precision / Recall"
+      },
+      "correct_answer": ["B"],
+      "topic": "Classification Metrics"
+    },
+    {
+      "question_id": "ch5_q27",
+      "question_text": "Câu 27. [Nhiều đáp án đúng] (G2) Theo slide và quiz, các thang đo phù hợp để đánh giá bài toán phân loại nhị phân gồm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Accuracy",
+        "B": "F1-score",
+        "C": "Mean Squared Error",
+        "D": "Precision"
+      },
+      "correct_answer": ["A", "B", "D"],
+      "topic": "Classification Metrics"
+    },
+    {
+      "question_id": "ch5_q28",
+      "question_text": "Câu 28. [Một đáp án đúng] (G2) Confusion matrix chỉ dùng được cho bài toán phân loại nhị phân?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Đúng",
+        "B": "Sai",
+        "C": "Chỉ đúng khi dữ liệu cân bằng",
+        "D": "Chỉ đúng với logistic regression"
+      },
+      "correct_answer": ["B"],
+      "topic": "Classification Metrics"
+    },
+    {
+      "question_id": "ch5_q29",
+      "question_text": "Câu 29. [Một đáp án đúng] (G2) Dựa trên confusion matrix trong slide với TP=6, FP=1, FN=9, TN=24, Precision của lớp Churn=1 là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "0.40",
+        "B": "0.60",
+        "C": "0.8571",
+        "D": "0.75"
+      },
+      "correct_answer": ["C"],
+      "topic": "Classification Metrics"
+    },
+    {
+      "question_id": "ch5_q30",
+      "question_text": "Câu 30. [Một đáp án đúng] (G2) Dựa trên confusion matrix trong slide với TP=6, FP=1, FN=9, TN=24, Recall của lớp Churn=1 là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "0.40",
+        "B": "0.8571",
+        "C": "0.75",
+        "D": "0.25"
+      },
+      "correct_answer": ["A"],
+      "topic": "Classification Metrics"
+    },
+    {
+      "question_id": "ch5_q31",
+      "question_text": "Câu 31. [Một đáp án đúng] (G2) Dựa trên confusion matrix trong slide với TP=6, FP=1, FN=9, TN=24, Accuracy là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "0.84",
+        "B": "0.75",
+        "C": "0.60",
+        "D": "0.90"
+      },
+      "correct_answer": ["B"],
+      "topic": "Classification Metrics"
+    },
+    {
+      "question_id": "ch5_q32",
+      "question_text": "Câu 32. [Một đáp án đúng] (G2) Dựa trên confusion matrix trong slide với TP=6, FP=1, FN=9, TN=24, F1-score xấp xỉ là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "0.5455",
+        "B": "0.8571",
+        "C": "0.7500",
+        "D": "0.4000"
+      },
+      "correct_answer": ["A"],
+      "topic": "Classification Metrics"
+    },
+    {
+      "question_id": "ch5_q33",
+      "question_text": "Câu 33. [Một đáp án đúng] (G2) Khi số lượng False Positive tăng, độ đo nào bị ảnh hưởng trực tiếp trong công thức?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Precision",
+        "B": "Recall",
+        "C": "MAE",
+        "D": "RMSE"
+      },
+      "correct_answer": ["A"],
+      "topic": "Classification Metrics"
+    },
+    {
+      "question_id": "ch5_q34",
+      "question_text": "Câu 34. [Một đáp án đúng] (G2) Khi số lượng False Negative tăng, độ đo nào bị ảnh hưởng trực tiếp trong công thức?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Precision",
+        "B": "Recall",
+        "C": "Jaccard index",
+        "D": "MSE"
+      },
+      "correct_answer": ["B"],
+      "topic": "Classification Metrics"
+    },
+    {
+      "question_id": "ch5_q35",
+      "question_text": "Câu 35. [Một đáp án đúng] (G2) Trong bối cảnh phát hiện gian lận khi chấm thi cuối kỳ trên máy tính, đề mẫu gợi ý nên ưu tiên đánh giá bằng:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Precision",
+        "B": "Accuracy",
+        "C": "MSE",
+        "D": "RMSE"
+      },
+      "correct_answer": ["A"],
+      "topic": "Classification Metrics"
+    },
+    {
+      "question_id": "ch5_q36",
+      "question_text": "Câu 36. [Một đáp án đúng] (G2) Quy trình đánh giá mà tập test là một phần của tập train có nhược điểm chính là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Đánh giá không khách quan",
+        "B": "Không thể tính accuracy",
+        "C": "Không thể huấn luyện mô hình",
+        "D": "Chỉ dùng cho hồi quy"
+      },
+      "correct_answer": ["A"],
+      "topic": "Evaluation Procedures"
+    },
+    {
+      "question_id": "ch5_q37",
+      "question_text": "Câu 37. [Nhiều đáp án đúng] (G2) Theo slide, độ chính xác cao trên tập train:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Không phản ánh đúng hiệu quả của mô hình",
+        "B": "Có thể là kết quả của hiện tượng overfitting",
+        "C": "Luôn đảm bảo tính tổng quát tốt",
+        "D": "Có thể khiến mô hình học cả nhiễu"
+      },
+      "correct_answer": ["A", "B", "D"],
+      "topic": "Evaluation Procedures"
+    },
+    {
+      "question_id": "ch5_q38",
+      "question_text": "Câu 38. [Một đáp án đúng] (G2) Theo slide, độ chính xác trên tập ngoài mẫu (out-of-sample) phản ánh:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Hiệu quả khi áp dụng thực tế",
+        "B": "Chỉ mức độ khớp trên train",
+        "C": "Khả năng ghi nhớ dữ liệu train",
+        "D": "Số lượng tham số mô hình"
+      },
+      "correct_answer": ["A"],
+      "topic": "Evaluation Procedures"
+    },
+    {
+      "question_id": "ch5_q39",
+      "question_text": "Câu 39. [Nhiều đáp án đúng] (G2) Train-Test split có các ưu điểm nào theo slide?",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Đơn giản, dễ thực hiện",
+        "B": "Ít tốn kém chi phí tính toán hơn cross validation",
+        "C": "Phù hợp khi tập dữ liệu lớn",
+        "D": "Đánh giá toàn diện hơn K-Fold"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Evaluation Procedures"
+    },
+    {
+      "question_id": "ch5_q40",
+      "question_text": "Câu 40. [Nhiều đáp án đúng] (G2) Train-Test split có các khuyết điểm nào theo slide?",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Tốn thêm thời gian",
+        "B": "Không khách quan so với cross validation",
+        "C": "Không thể áp dụng cho tập dữ liệu lớn",
+        "D": "Luôn phải huấn luyện mô hình nhiều hơn K-Fold"
+      },
+      "correct_answer": ["A", "B"],
+      "topic": "Evaluation Procedures"
+    },
+    {
+      "question_id": "ch5_q41",
+      "question_text": "Câu 41. [Nhiều đáp án đúng] (G2) K-Fold cross validation có các ưu điểm nào theo slide?",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Đánh giá toàn diện về tính tổng quát của mô hình",
+        "B": "Phù hợp khi tập dữ liệu ít",
+        "C": "Phù hợp khi mô hình huấn luyện nhanh",
+        "D": "Chi phí tính toán luôn thấp"
+      },
+      "correct_answer": ["A", "B", "C"],
+      "topic": "Evaluation Procedures"
+    },
+    {
+      "question_id": "ch5_q42",
+      "question_text": "Câu 42. [Một đáp án đúng] (G2) Khuyết điểm chính của K-Fold cross validation là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Đánh giá không khách quan",
+        "B": "Chi phí tính toán cao do huấn luyện nhiều lần",
+        "C": "Không phù hợp với dữ liệu ít",
+        "D": "Không thể dùng cho phân lớp"
+      },
+      "correct_answer": ["B"],
+      "topic": "Evaluation Procedures"
+    },
+    {
+      "question_id": "ch5_q43",
+      "question_text": "Câu 43. [Một đáp án đúng] (G2) Trong ví dụ K=4 trên slide, độ chính xác trung bình qua các fold là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "80%",
+        "B": "82%",
+        "C": "83%",
+        "D": "86%"
+      },
+      "correct_answer": ["C"],
+      "topic": "Evaluation Procedures"
+    },
+    {
+      "question_id": "ch5_q44",
+      "question_text": "Câu 44. [Một đáp án đúng] (G2) Theo quiz tuần 5, mục đích của việc thực hiện cross-validation là:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Huấn luyện mô hình nhanh hơn",
+        "B": "Để đánh giá cách mô hình hoạt động bên ngoài mẫu trên tập test",
+        "C": "Để giảm số lượng đặc trưng",
+        "D": "Để thay thế hoàn toàn bước train-test split"
+      },
+      "correct_answer": ["B"],
+      "topic": "Evaluation Procedures"
+    },
+    {
+      "question_id": "ch5_q45",
+      "question_text": "Câu 45. [Nhiều đáp án đúng] (G2) Kiểm định chéo (cross-validation) cho phép:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Ước lượng sự biến thiên hay tính ổn định của mô hình",
+        "B": "Đo lường hiệu suất của mô hình một cách tổng quát hơn",
+        "C": "Huấn luyện mô hình nhanh hơn",
+        "D": "Giảm bớt sự phức tạp của mô hình"
+      },
+      "correct_answer": ["A", "B"],
+      "topic": "Evaluation Procedures"
+    },
+    {
+      "question_id": "ch5_q46",
+      "question_text": "Câu 46. [Nhiều đáp án đúng] (G2) Khi gọi cross_validate(estimator, X, y, cv=5), các điều nào sau đây đúng?",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "X và y được chia thành 5 phần với các tập kiểm thử không chồng lấn nhau",
+        "B": "estimator.fit được gọi 5 lần trên các tập huấn luyện khác nhau",
+        "C": "estimator.fit chỉ được gọi 1 lần trên toàn bộ dữ liệu",
+        "D": "Có thể dùng để đánh giá tổng quát hơn mô hình"
+      },
+      "correct_answer": ["A", "B", "D"],
+      "topic": "Evaluation Procedures"
+    },
+    {
+      "question_id": "ch5_q47",
+      "question_text": "Câu 47. [Nhiều đáp án đúng] (G2) Theo slide so sánh các quy trình đánh giá, phương pháp “Test là một phần của Train” có ưu điểm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Đơn giản, không cần thêm quy trình đánh giá phức tạp",
+        "B": "Nhanh do tận dụng chính tập train làm tập test",
+        "C": "Đánh giá toàn diện hơn K-Fold",
+        "D": "Phù hợp nhất cho dữ liệu ít hơn train-test split"
+      },
+      "correct_answer": ["A", "B"],
+      "topic": "Evaluation Procedures"
+    },
+    {
+      "question_id": "ch5_q48",
+      "question_text": "Câu 48. [Nhiều đáp án đúng] (G2) Theo slide so sánh các quy trình đánh giá, phương pháp “Test là một phần của Train” có khuyết điểm:",
+      "question_type": "multiple_correct",
+      "options": {
+        "A": "Đánh giá không khách quan",
+        "B": "Tính tổng quát của mô hình không được đảm bảo",
+        "C": "Chi phí tính toán cao do huấn luyện nhiều lần",
+        "D": "Bắt buộc phải dùng với tập dữ liệu lớn"
+      },
+      "correct_answer": ["A", "B"],
+      "topic": "Evaluation Procedures"
+    },
+    {
+      "question_id": "ch5_q49",
+      "question_text": "Câu 49. [Một đáp án đúng] (G2) Nếu tập dữ liệu lớn, theo slide nên ưu tiên quy trình đánh giá nào hơn?",
+      "question_type": "single_correct",
+      "options": {
+        "A": "Test là một phần của Train",
+        "B": "Train-Test split",
+        "C": "K-Fold Cross Validation",
+        "D": "Không cần tách dữ liệu"
+      },
+      "correct_answer": ["B"],
+      "topic": "Evaluation Procedures"
+    },
+    {
+      "question_id": "ch5_q50",
+      "question_text": "Câu 50. [Một đáp án đúng] (G2) Nếu tập dữ liệu ít hoặc mô hình huấn luyện nhanh, theo slide nên ưu tiên:",
+      "question_type": "single_correct",
+      "options": {
+        "A": "K-Fold Cross Validation",
+        "B": "Test là một phần của Train",
+        "C": "Chỉ dùng Accuracy trên tập train",
+        "D": "Không cần dùng độ đo đánh giá"
+      },
+      "correct_answer": ["A"],
+      "topic": "Evaluation Procedures"
+    }
+  ]
+}

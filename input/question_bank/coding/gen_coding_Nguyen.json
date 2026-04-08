@@ -1,0 +1,132 @@
+[
+  {
+    "id": "coding_practice_001",
+    "type": "fill_in_the_blank",
+    "topic": "pca_dimensionality_reduction",
+    "difficulty": "medium",
+    "description": "Câu 3. Sử dụng PCA để giảm chiều dữ liệu từ tập Breast Cancer xuống còn 2 thành phần chính nhằm mục đích trực quan hóa dữ liệu.",
+    "code_template": "from sklearn.datasets import load_breast_cancer\nfrom sklearn.decomposition import PCA\nfrom sklearn.preprocessing import StandardScaler\n\n# Tải dữ liệu\ndata = load_breast_cancer()\nX, y = data.data, data.target\n\n# BƯỚC 1: Chuẩn hóa dữ liệu về phân phối chuẩn (StandardScaler) trước khi dùng PCA\n{{BLANK_1}}\n\n# BƯỚC 2: Khởi tạo PCA với số thành phần chính là 2\n{{BLANK_2}}\n\n# BƯỚC 3: Thực hiện khớp và biến đổi dữ liệu X_scaled thành X_pca\n{{BLANK_3}}\n\n# In ra tỷ lệ phương sai giải thích được của 2 thành phần chính\nprint(pca.explained_variance_ratio_)",
+    "answers": {
+      "{{BLANK_1}}": "X_scaled = StandardScaler().fit_transform(X)",
+      "{{BLANK_2}}": "pca = PCA(n_components=2)",
+      "{{BLANK_3}}": "X_pca = pca.fit_transform(X_scaled)"
+    }
+  },
+  {
+    "id": "coding_practice_002",
+    "type": "fill_in_the_blank",
+    "topic": "clustering_kmeans_silhouette",
+    "difficulty": "medium",
+    "description": "Câu 4. Thực hiện thuật toán K-Means để gom 150 mẫu dữ liệu Iris thành 3 cụm và tính toán Silhouette Score để đánh giá chất lượng gom cụm.",
+    "code_template": "from sklearn.cluster import KMeans\nfrom sklearn.datasets import load_iris\nfrom sklearn.metrics import silhouette_score\n\n# Tải dữ liệu Iris\niris = load_iris()\nX = iris.data\n\n# BƯỚC 1: Khởi tạo KMeans với n_clusters=3, random_state=42\n{{BLANK_1}}\n\n# BƯỚC 2: Khớp mô hình và dự đoán nhãn cụm cho X\n{{BLANK_2}}\n\n# BƯỚC 3: Tính Silhouette Score cho kết quả vừa thu được\n{{BLANK_3}}\n\nprint(f'Silhouette Score: {score}')",
+    "answers": {
+      "{{BLANK_1}}": "kmeans = KMeans(n_clusters=3, random_state=42, n_init='auto')",
+      "{{BLANK_2}}": "labels = kmeans.fit_predict(X)",
+      "{{BLANK_3}}": "score = silhouette_score(X, labels)"
+    }
+  },
+  {
+    "id": "coding_practice_003",
+    "type": "fill_in_the_blank",
+    "topic": "regression_linear_eval",
+    "difficulty": "medium",
+    "description": "Câu 5. Xây dựng mô hình Hồi quy tuyến tính để dự báo giá trị liên tục và đánh giá bằng Mean Squared Error (MSE).",
+    "code_template": "from sklearn.model_selection import train_test_split\nfrom sklearn.linear_model import LinearRegression\nfrom sklearn.metrics import mean_squared_error\nfrom sklearn.datasets import make_regression\n\n# Tạo dữ liệu giả lập cho bài toán hồi quy\nX, y = make_regression(n_samples=500, n_features=5, noise=0.1, random_state=1)\n\n# BƯỚC 1: Chia tập dữ liệu (train 80%, test 20%)\n{{BLANK_1}}\n\n# BƯỚC 2: Khởi tạo và huấn luyện mô hình LinearRegression\n{{BLANK_2}}\n\n# BƯỚC 3: Dự đoán trên tập test và tính MSE\n{{BLANK_3}}\n\nprint(f'MSE: {mse}')",
+    "answers": {
+      "{{BLANK_1}}": "X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=1)",
+      "{{BLANK_2}}": "model = LinearRegression().fit(X_train, y_train)",
+      "{{BLANK_3}}": "y_pred = model.predict(X_test)\nmse = mean_squared_error(y_test, y_pred)"
+    }
+  },
+  {
+    "id": "coding_practice_004",
+    "type": "fill_in_the_blank",
+    "topic": "clustering_dbscan",
+    "difficulty": "medium",
+    "description": "Câu 6. Sử dụng thuật toán DBSCAN để tìm các cấu trúc dữ liệu mật độ cao. Xác định số lượng cụm (không tính nhiễu -1).",
+    "code_template": "from sklearn.cluster import DBSCAN\nfrom sklearn.datasets import make_moons\nimport numpy as np\n\n# Tạo dữ liệu hình bán nguyệt có nhiễu\nX, _ = make_moons(n_samples=200, noise=0.1, random_state=42)\n\n# BƯỚC 1: Khởi tạo DBSCAN với eps=0.2, min_samples=5\n{{BLANK_1}}\n\n# BƯỚC 2: Khớp mô hình vào dữ liệu X\n{{BLANK_2}}\n\n# BƯỚC 3: Tính số lượng cụm tìm được (loại bỏ nhãn -1)\nlabels = db.labels_\n{{BLANK_3}}\n\nprint(f'Number of clusters: {n_clusters}')",
+    "answers": {
+      "{{BLANK_1}}": "db = DBSCAN(eps=0.2, min_samples=5)",
+      "{{BLANK_2}}": "db.fit(X)",
+      "{{BLANK_3}}": "n_clusters = len(set(labels)) - (1 if -1 in labels else 0)"
+    }
+  },
+  {
+    "id": "coding_practice_005",
+    "type": "fill_in_the_blank",
+    "topic": "ensemble_xgboost_classification",
+    "difficulty": "medium",
+    "description": "Câu 7. Cài đặt mô hình XGBoost để phân loại dữ liệu. Lưu ý: Cần sử dụng thư viện xgboost tương thích với scikit-learn.",
+    "code_template": "from xgboost import XGBClassifier\nfrom sklearn.datasets import load_wine\nfrom sklearn.model_selection import train_test_split\n\n# Tải dữ liệu phân loại rượu (Wine)\ndata = load_wine()\nX, y = data.data, data.target\n\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)\n\n# BƯỚC 1: Khởi tạo XGBClassifier với 100 cây (n_estimators) và tốc độ học 0.1\n{{BLANK_1}}\n\n# BƯỚC 2: Huấn luyện mô hình\n{{BLANK_2}}\n\n# BƯỚC 3: In ra độ chính xác trên tập kiểm thử\n{{BLANK_3}}",
+    "answers": {
+      "{{BLANK_1}}": "model = XGBClassifier(n_estimators=100, learning_rate=0.1, random_state=42)",
+      "{{BLANK_2}}": "model.fit(X_train, y_train)",
+      "{{BLANK_3}}": "print(model.score(X_test, y_test))"
+    }
+  },
+  {
+    "id": "coding_practice_006",
+    "type": "fill_in_the_blank",
+    "topic": "feature_engineering_polynomial",
+    "difficulty": "medium",
+    "description": "Câu 8. Áp dụng biến đổi đa thức (PolynomialFeatures) bậc 2 để cải thiện khả năng biểu diễn của mô hình Linear Regression.",
+    "code_template": "from sklearn.preprocessing import PolynomialFeatures\nfrom sklearn.linear_model import LinearRegression\nfrom sklearn.pipeline import make_pipeline\nimport numpy as np\n\n# Dữ liệu phi tuyến tính\nX = np.array([1, 2, 3, 4]).reshape(-1, 1)\ny = np.array([1, 4, 9, 16])\n\n# BƯỚC 1: Tạo đối tượng biến đổi đa thức bậc 2\n{{BLANK_1}}\n\n# BƯỚC 2: Tạo Pipeline kết hợp Polynomial và LinearRegression\n{{BLANK_2}}\n\n# BƯỚC 3: Khớp mô hình với dữ liệu X, y\n{{BLANK_3}}",
+    "answers": {
+      "{{BLANK_1}}": "poly = PolynomialFeatures(degree=2)",
+      "{{BLANK_2}}": "model = make_pipeline(poly, LinearRegression())",
+      "{{BLANK_3}}": "model.fit(X, y)"
+    }
+  },
+  {
+    "id": "coding_practice_007",
+    "type": "fill_in_the_blank",
+    "topic": "model_selection_cross_val",
+    "difficulty": "medium",
+    "description": "Câu 9. Sử dụng Cross-validation để đánh giá hiệu năng trung bình của mô hình KNN với K=5.",
+    "code_template": "from sklearn.model_selection import cross_val_score\nfrom sklearn.neighbors import KNeighborsClassifier\nfrom sklearn.datasets import load_iris\n\nX, y = load_iris(return_X_y=True)\n\n# BƯỚC 1: Khởi tạo KNN Classifier với n_neighbors=5\n{{BLANK_1}}\n\n# BƯỚC 2: Thực hiện cross-validation với cv=10, scoring='accuracy'\n{{BLANK_2}}\n\n# BƯỚC 3: Tính trung bình cộng của các lần score\n{{BLANK_3}}\n\nprint(f'Average CV Accuracy: {mean_acc}')",
+    "answers": {
+      "{{BLANK_1}}": "knn = KNeighborsClassifier(n_neighbors=5)",
+      "{{BLANK_2}}": "scores = cross_val_score(knn, X, y, cv=10, scoring='accuracy')",
+      "{{BLANK_3}}": "mean_acc = scores.mean()"
+    }
+  },
+  {
+    "id": "coding_practice_008",
+    "type": "fill_in_the_blank",
+    "topic": "preprocessing_encoding_scaling",
+    "difficulty": "medium",
+    "description": "Câu 10. Thực hiện mã hóa nhãn mục tiêu và chuẩn hóa dữ liệu bằng RobustScaler để hạn chế ảnh hưởng của nhiễu (outliers).",
+    "code_template": "from sklearn.preprocessing import LabelEncoder, RobustScaler\nimport pandas as pd\n\n# Giả sử có DataFrame df với cột 'Category' là chữ và 'Value' là số\ndf = pd.DataFrame({'Category': ['A', 'B', 'A', 'C'], 'Value': [10, 20, 1000, 15]})\n\n# BƯỚC 1: Khởi tạo và chuyển đổi cột 'Category' thành dạng số\n{{BLANK_1}}\n\n# BƯỚC 2: Khởi tạo RobustScaler\n{{BLANK_2}}\n\n# BƯỚC 3: Chuẩn hóa cột 'Value' (cần reshape về 2D array)\n{{BLANK_3}}",
+    "answers": {
+      "{{BLANK_1}}": "df['Category'] = LabelEncoder().fit_transform(df['Category'])",
+      "{{BLANK_2}}": "scaler = RobustScaler()",
+      "{{BLANK_3}}": "df['Value'] = scaler.fit_transform(df[['Value']])"
+    }
+  },
+  {
+    "id": "coding_practice_009",
+    "type": "fill_in_the_blank",
+    "topic": "hyperparameter_tuning_randomizedsearch",
+    "difficulty": "medium",
+    "description": "Câu 11. Sử dụng RandomizedSearchCV để tìm kiếm siêu tham số cho RandomForest cho nhanh hơn GridSearchCV.",
+    "code_template": "from sklearn.model_selection import RandomizedSearchCV\nfrom sklearn.ensemble import RandomForestClassifier\nfrom sklearn.datasets import make_classification\n\nX, y = make_classification(n_samples=1000, random_state=42)\nrf = RandomForestClassifier()\n\n# Thiết lập không gian tham số\nparam_dist = {'n_estimators': [50, 100, 200], 'max_depth': [None, 10, 20]}\n\n# BƯỚC 1: Khởi tạo RandomizedSearchCV với n_iter=5, cv=3\n{{BLANK_1}}\n\n# BƯỚC 2: Huấn luyện tìm kiếm trên dữ liệu X, y\n{{BLANK_2}}\n\n# BƯỚC 3: Lấy ra mô hình tốt nhất thu được\n{{BLANK_3}}",
+    "answers": {
+      "{{BLANK_1}}": "random_search = RandomizedSearchCV(rf, param_distributions=param_dist, n_iter=5, cv=3)",
+      "{{BLANK_2}}": "random_search.fit(X, y)",
+      "{{BLANK_3}}": "best_model = random_search.best_estimator_"
+    }
+  },
+  {
+    "id": "coding_practice_010",
+    "type": "fill_in_the_blank",
+    "topic": "ensemble_voting_classifier",
+    "difficulty": "medium",
+    "description": "Câu 12. Kết hợp LogisticRegression và RandomForest bằng phương pháp VotingClassifier (Hard voting).",
+    "code_template": "from sklearn.ensemble import VotingClassifier\nfrom sklearn.linear_model import LogisticRegression\nfrom sklearn.ensemble import RandomForestClassifier\nfrom sklearn.datasets import make_classification\n\nX, y = make_classification(n_samples=500, random_state=42)\nclf1 = LogisticRegression()\nclf2 = RandomForestClassifier()\n\n# BƯỚC 1: Khởi tạo VotingClassifier với danh sách các estimator và voting='hard'\n{{BLANK_1}}\n\n# BƯỚC 2: Huấn luyện mô hình tập thể\n{{BLANK_2}}\n\n# BƯỚC 3: Dự đoán kết quả\n{{BLANK_3}}",
+    "answers": {
+      "{{BLANK_1}}": "v_clf = VotingClassifier(estimators=[('lr', clf1), ('rf', clf2)], voting='hard')",
+      "{{BLANK_2}}": "v_clf.fit(X, y)",
+      "{{BLANK_3}}": "y_pred = v_clf.predict(X)"
+    }
+  }
+]
