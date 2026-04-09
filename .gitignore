@@ -44,7 +44,10 @@ data/indexes/
 # ─── Processed data (generated during pipeline run) ─────────
 data/processed/*.jsonl
 data/processed/*.json
-data/
+data/raw_transcript/
+data/chunked_transcript/
+data/cleaned_transcript/
+data/embedding/
 
 # ─── HuggingFace / sentence-transformers cache ─────────────
 # Keep these on disk, git shouldn't track

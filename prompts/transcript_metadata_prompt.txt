@@ -1,0 +1,219 @@
+Bạn là hệ thống tạo metadata cho transcript bài giảng môn CS116 nhằm phục vụ retrieval và sinh câu hỏi thi.
+
+Thông tin chunk:
+
+- course_id: CS116
+- chapter_id: {chapter_id}
+- chapter_title: {chapter_title}
+- source_file: {source_file}
+
+Transcript gốc:
+"""
+{transcript_text}
+"""
+
+Ngữ cảnh slide liên quan:
+"""
+{slide_context}
+"""
+
+Nhiệm vụ:
+
+1. Xác định xem transcript và slide context có cùng chủ đề hay không.
+2. Nếu slide context không liên quan hoặc mâu thuẫn với transcript, bỏ qua hoàn toàn slide context.
+3. Tạo metadata bằng tiếng Việt, ưu tiên giúp hệ thống tìm lại đúng chunk khi người dùng hỏi theo:
+   - tên mô hình
+   - thuật ngữ kỹ thuật
+   - tham số cụ thể
+   - số liệu
+   - cấu hình
+   - quy trình
+   - nội dung dễ ra thi
+
+Trả về DUY NHẤT một JSON hợp lệ với đúng các field sau:
+
+{
+  "topic": string,
+  "subtopic": string,
+  "chunk_type": string,
+  "difficulty": string,
+  "exam_likelihood": float,
+  "keywords": [string],
+  "entities": [string],
+  "prerequisites": [string],
+  "learning_objectives": [string],
+  "misconceptions": [string],
+  "summary": string,
+  "retrieval_text": string
+}
+
+Quy tắc:
+
+- topic:
+  - Chủ đề chính, ngắn gọn, cụ thể.
+  - Ví dụ tốt:
+    - "Mạng nơ-ron tích chập"
+    - "Tinh chỉnh siêu tham số"
+
+- subtopic:
+  - Chủ đề con cụ thể hơn, nên bao gồm tên mô hình, kỹ thuật hoặc mục đích.
+  - Ví dụ:
+    - "Kiến trúc LeNet cho phân loại ảnh MNIST"
+    - "Vai trò của parameter tuning trong model training"
+
+- chunk_type:
+  Chọn đúng 1 loại phản ánh mục đích chính của chunk:
+
+  - "definition":
+    Chunk chủ yếu định nghĩa hoặc trả lời “X là gì?”.
+    Ví dụ: “Hyperparameter là tham số cấu hình trước khi huấn luyện.”
+
+  - "concept_explanation":
+    Chunk giải thích khái niệm, vai trò, ý nghĩa hoặc đưa ví dụ minh họa.
+    Nếu vừa có định nghĩa vừa giải thích nhiều hơn, chọn loại này.
+
+  - "formula":
+    Chunk tập trung vào công thức hoặc biểu thức toán học.
+
+  - "worked_example":
+    Chunk trình bày một ví dụ cụ thể hoặc từng bước tính toán.
+
+  - "comparison":
+    Chunk so sánh 2 hay nhiều khái niệm/thuật toán.
+
+  - "procedure":
+    Chunk mô tả quy trình hoặc các bước thực hiện.
+
+  - "important_note":
+    Chunk là lưu ý, cảnh báo hoặc lỗi thường gặp.
+
+  Quy tắc ưu tiên:
+  - Định nghĩa ngắn → "definition"
+  - Định nghĩa + giải thích → "concept_explanation"
+  - Công thức + tính toán cụ thể → "worked_example"
+
+- difficulty:
+  - Chỉ chọn một trong:
+    - "easy"
+    - "medium"
+    - "hard"
+
+- exam_likelihood:
+  - Giá trị từ 0 đến 1.
+  - Tăng điểm nếu chunk chứa:
+    - định nghĩa
+    - cấu trúc
+    - quy trình
+    - công thức
+    - tham số
+    - số liệu cụ thể
+    - nội dung thường xuất hiện trong đề thi
+
+- keywords:
+  - Tạo 5–10 từ khóa ngắn.
+  - Phải ưu tiên:
+    - tên mô hình
+    - thuật ngữ kỹ thuật
+    - dataset
+    - tham số cụ thể
+    - con số quan trọng
+  - Không dùng từ quá chung như:
+    - "Bài học"
+    - "Kiến trúc mạng"
+    - "Filter"
+  - Nếu transcript có số liệu hoặc cấu hình, phải đưa vào keyword.
+  - Ví dụ tốt:
+    - "keywords": [
+  "siêu tham số",
+  "hyperparameter",
+  "tinh chỉnh siêu tham số",
+  "Neural Network",
+  "K-Nearest Neighbors",
+  "Logistic Regression",
+  "Learning Rate",
+  "lớp ẩn"
+]
+
+- entities:
+  - Chỉ bao gồm các thực thể kỹ thuật quan trọng và cụ thể:
+    - tên mô hình
+    - thuật toán
+    - thư viện
+    - dataset
+    - kỹ thuật
+  - Không đưa các khái niệm quá chung.
+  - Ví dụ tốt:
+    - [
+  "Neural Network",
+  "K-Nearest Neighbors Classifier",
+  "Logistic Regression"
+]
+
+- prerequisites:
+  - Những kiến thức cần biết trước để hiểu chunk.
+  - Dùng 2–5 mục.
+
+- learning_objectives:
+  - Mỗi mục phải bắt đầu bằng động từ:
+    - "Giải thích"
+    - "Mô tả"
+    - "Xác định"
+    - "So sánh"
+    - "Áp dụng"
+  - Mỗi mục tiêu phải cụ thể và gắn với nội dung chunk.
+
+- misconceptions:
+  Liệt kê 1–3 nhầm lẫn hoặc hiểu sai phổ biến mà sinh viên rất dễ mắc nếu chỉ đọc lướt nội dung này.
+  Các misconception phải:
+  - liên quan trực tiếp đến chunk
+  - là phát biểu sai nhưng nghe có vẻ hợp lý
+  - có thể dùng làm distractor trong câu hỏi trắc nghiệm
+  - không được bịa kiến thức ngoài nội dung bài học
+  - viết dưới dạng một câu khẳng định ngắn
+
+  Ví dụ tốt:
+  - "Entropy càng lớn càng tốt"
+  - "Learning rate càng lớn thì mô hình học càng nhanh và luôn tốt hơn"
+  - "Bagging và Boosting là cùng một kỹ thuật"
+  - "Số hidden layer càng nhiều thì mô hình luôn chính xác hơn"
+  - "Tham số K trong KNN càng nhỏ thì luôn cho kết quả tốt hơn"
+
+  Ví dụ xấu:
+  - "Sinh viên có thể nhầm giữa entropy và information gain"
+    → quá chung chung, không dùng được làm distractor
+
+  - "Có thể hiểu sai về learning rate"
+    → không phải một phát biểu sai cụ thể
+
+  - "Hyperparameter là tham số của dữ liệu"
+    → chỉ chấp nhận nếu chunk thực sự nói về sự khác biệt giữa hyperparameter và parameter
+
+- summary:
+  - 1–2 câu ngắn bằng tiếng Việt.
+  - Bắt buộc chứa:
+    - tên chủ đề chính
+    - tên mô hình hoặc kỹ thuật
+    - các tham số/số liệu quan trọng nếu có
+  - Không viết chung chung.
+  - Ví dụ tốt:
+    - "Chunk trình bày kiến trúc LeNet cho bài toán phân loại ảnh MNIST, gồm hai lớp convolution 3x3 với 6 và 16 filter, theo sau bởi Max Pooling và các lớp fully connected 120-84-10."
+
+- retrieval_text:
+  - Tạo một đoạn văn ngắn dùng để embedding retrieval.
+  - retrieval_text phải ghép:
+    - topic
+    - subtopic
+    - keywords
+    - summary
+    - một phần text gốc nếu cần
+  - Mục tiêu là khi người dùng hỏi bằng thuật ngữ, tham số hoặc cấu hình cụ thể thì chunk vẫn được retrieve đúng.
+  - Ví dụ:
+    - "Chủ đề: Mạng nơ-ron tích chập. Chủ đề con: Kiến trúc LeNet cho MNIST. Từ khóa: CNN, LeNet, MNIST, Convolution 3x3, 6 filter, 16 filter, Max Pooling, Fully Connected 120-84-10. Nội dung: Mạng LeNet gồm hai lớp convolution..."
+
+Yêu cầu bắt buộc:
+
+- Chỉ trả về JSON thuần.
+- Không markdown.
+- Không giải thích.
+- Không thêm field ngoài danh sách trên.
+- Nếu slide context không cùng chủ đề, tuyệt đối không để slide ảnh hưởng đến metadata.
