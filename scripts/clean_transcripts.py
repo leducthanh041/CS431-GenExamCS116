@@ -40,17 +40,15 @@ with open(PROMPT_PATH, "r", encoding="utf-8") as f:
     CLEANUP_PROMPT = f.read().strip()
 
 
-# =========================
-# Find only first 3 transcript files
-# =========================
-transcript_files = sorted(RAW_DIR.glob("*.json"))[:3]
+# Find all transcript files
+transcript_files = sorted(RAW_DIR.glob("*.json"))
 
 if len(transcript_files) == 0:
     raise FileNotFoundError(
         f"No transcript files found in: {RAW_DIR}"
     )
 
-print(f"Found {len(transcript_files)} transcript files to test")
+print(f"Found {len(transcript_files)} transcript files")
 
 # =========================
 # Process each transcript
@@ -79,6 +77,10 @@ Transcript:
         response = client.models.generate_content(
             model=MODEL_NAME,
             contents=full_prompt,
+            config={
+                "temperature": 0,
+                "response_mime_type": "application/json",
+            },
         )
 
         response_text = response.text.strip()
@@ -109,7 +111,7 @@ Transcript:
 
         except json.JSONDecodeError:
             # Save raw response for debugging
-            debug_path = CLEAN_DIR / f"{transcript_files.stem}.raw_response.txt"
+            debug_path = CLEAN_DIR / f"{transcript_path.stem}.raw_response.txt"
             with open(debug_path, "w", encoding="utf-8") as f:
                 f.write(response_text)
 
