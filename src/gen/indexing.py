@@ -36,7 +36,7 @@ SLIDE_NAME_MAP: dict[str, tuple[str, str, str]] = {
     "ch06": ("CS116-Bai06-Unsupervised learning.pdf",    "ch06", "Unsupervised Learning"),
     "ch07a": ("CS116-Bai07a-Supervised learning-Regression.pdf", "ch07a", "Supervised Learning - Regression"),
     "ch07b": ("CS116-Bai07b-Supervised learning-Classification.pdf", "ch07b", "Supervised Learning - Classification"),
-    "ch08": ("CS116-Bai08-Deep learning v#U1edbi CNN.pdf", "ch08", "Deep Learning với CNN"),
+    "ch08": ("CS116-Bai08-Deep learning với CNN.pdf", "ch08", "Deep Learning với CNN"),
     "ch09": ("CS116-Bai09-Parameter tuning.pdf",         "ch09", "Parameter Tuning"),
     "ch10": ("CS116-Bai10-Ensemble model.pdf",            "ch10", "Ensemble Models"),
     "ch11": ("CS116-Bai11-Model Deployment.pdf",         "ch11", "Model Deployment"),
@@ -57,40 +57,78 @@ SLIDE_TOPICS: dict[str, list[str]] = {
     "ch11": ["Model Serving", "API", "Monitoring"],
 }
 
+# ─── Data Cleaning cho Slide ───────────────────────────────────────────────
+
+def clean_slide_text(text: str) -> str:
+    """Dọn dẹp các dữ liệu nhiễu, header, footer và tag hình ảnh rỗng từ slide."""
+    if not text:
+        return ""
+        
+    # 1. Xóa Footer cố định và tên giảng viên
+    text = re.sub(r'(?i)Thực hiện bởi Trường Đại học Công nghệ Thông tin, ĐHQG-HCM\s*', '', text)
+    text = re.sub(r'(?i)ĐẠI HỌC QUỐC GIA TP\. HỒ CHÍ MINH\s*', '', text)
+    text = re.sub(r'(?i)TRƯỜNG ĐẠI HỌC CÔNG NGHỆ THÔNG TIN\s*', '', text)
+    text = re.sub(r'(?i)TS\. Nguyễn Vinh Tiệp\s*', '', text)
+    
+    # 2. Xóa các tag hình ảnh rác do thư viện pymupdf4llm sinh ra
+    text = re.sub(r'\**==> picture.*?<==\**', '', text, flags=re.IGNORECASE)
+    text = re.sub(r'\**----- Start of picture text -----\**.*?\**----- End of picture text -----\**', '', text, flags=re.DOTALL | re.IGNORECASE)
+    text = re.sub(r'<br>', '\n', text, flags=re.IGNORECASE)
+    
+    # 3. Xóa các tag hình ảnh kiểu cũ
+    text = re.sub(r'\[Image\s*\d+\]', '', text, flags=re.IGNORECASE)
+    text = re.sub(r'!\[.*?\]\(.*?\)', '', text)
+    
+    # 4. Xóa các con số chơ vơ trên 1 dòng (thường là số trang bị tách ra)
+    text = re.sub(r'(?m)^\s*\d+\s*$\n?', '', text)
+    
+    return text.strip()
+
+
+# ─── Hàm trích xuất Slide (Dùng Markdown) ─────────────────────────
 
 def extract_slide_pdf(pdf_path: str, chapter_id: str) -> list[dict]:
-    """Trích xuất text từ slide PDF, mỗi trang → 1 chunk."""
+    """Trích xuất text từ slide PDF bằng pymupdf4llm, giữ cấu trúc Markdown."""
     chunks = []
     try:
-        import fitz
+        import pymupdf4llm
     except ImportError:
-        print("⚠️  PyMuPDF not installed. Skipping PDF extraction.")
-        return chunks
-
-    try:
-        doc = fitz.open(pdf_path)
-    except Exception as e:
-        print(f"  ⚠️  Cannot open PDF {pdf_path}: {e}")
+        print("⚠️  pymupdf4llm not installed. Run: pip install pymupdf4llm")
         return chunks
 
     filename = Path(pdf_path).name
     chapter_title = SLIDE_NAME_MAP.get(chapter_id, (None, chapter_id, "Unknown"))[2]
     topics = SLIDE_TOPICS.get(chapter_id, [])
 
-    for page_num in range(len(doc)):
-        page = doc[page_num]
-        text = page.get_text("text").strip()
-        if not text:
+    try:
+        # Trích xuất toàn bộ PDF thành danh sách các trang chứa Markdown
+        md_pages = pymupdf4llm.to_markdown(pdf_path, page_chunks=True)
+    except Exception as e:
+        print(f"  ⚠️  Cannot process PDF {pdf_path}: {e}")
+        return chunks
+
+    for page_data in md_pages:
+        page_num = page_data.get("metadata", {}).get("page", 0) + 1
+        raw_text = page_data.get("text", "")
+        
+        # 1. Làm sạch text
+        cleaned_text = clean_slide_text(raw_text)
+        text_lower = cleaned_text.lower()
+        
+        # 2. Lọc bỏ các slide vô nghĩa, mục lục, hỏi đáp, hoặc quá ngắn
+        if len(cleaned_text.split()) < 5 or text_lower.strip() == "nội dung" or "bài quiz và hỏi đáp" in text_lower:
             continue
 
-        lines = [l.strip() for l in text.split("\n") if l.strip()]
-        if len(lines) < 2:
-            continue
+        # 3. Lấy Section Title từ dòng đầu tiên có nội dung
+        lines = cleaned_text.split('\n')
+        section_title = ""
+        for line in lines:
+            line_clean = line.replace("#", "").replace("*", "").strip()
+            if line_clean:
+                section_title = line_clean
+                break
 
-        section_title = lines[0]
-        body_text = " ".join(lines[1:])
-
-        chunk_id = f"cs116_{chapter_id}_slide_p{page_num+1:03d}"
+        chunk_id = f"cs116_{chapter_id}_slide_p{page_num:03d}"
         chunk = {
             "chunk_id": chunk_id,
             "course_id": "CS116",
@@ -99,19 +137,20 @@ def extract_slide_pdf(pdf_path: str, chapter_id: str) -> list[dict]:
             "topics": topics,
             "source_type": "slide_pdf",
             "source_file": filename,
-            "page_number": page_num + 1,
+            "page_number": page_num,
             "section_title": section_title,
-            "text": body_text,
+            "text": cleaned_text,  
             "embedding_ready": True,
         }
         chunks.append(chunk)
 
-    doc.close()
     return chunks
 
 
+# ─── Cập nhật hàm trích xuất Transcript (Dọn rác & Chống lặp từ) ─────────
+
 def extract_transcript(txt_path: str, chapter_id: str) -> list[dict]:
-    """Trích xuất text từ transcript TXT file."""
+    """Trích xuất text từ transcript TXT file, dọn dẹp tag phụ đề và chống lặp từ."""
     chunks = []
     try:
         with open(txt_path, "r", encoding="utf-8") as f:
@@ -120,10 +159,24 @@ def extract_transcript(txt_path: str, chapter_id: str) -> list[dict]:
         print(f"  ⚠️  Cannot read transcript {txt_path}: {e}")
         return chunks
 
-    # Clean ASR artifacts
-    text = re.sub(r'\[.*?\]', '', text)  # Remove bracketed annotations
-    text = re.sub(r'\s+', ' ', text)       # Collapse whitespace
-    text = text.strip()
+    # 1. Xóa Header của file Subtitle/VTT
+    text = re.sub(r'(?i)Kind: captions Language: vi', '', text)
+    
+    # 2. Xóa toàn bộ tag thời gian và tag định dạng (VD: <00:08:57.320>, <c>, </c>)
+    text = re.sub(r'<[^>]+>', '', text)
+    
+    # 3. Xóa các ghi chú âm thanh trong ngoặc vuông (VD: [Nhạc nền])
+    text = re.sub(r'\[.*?\]', '', text)
+    
+    # 4. Gom khoảng trắng thừa
+    text = re.sub(r'\s+', ' ', text).strip()
+    
+    # 5. [QUAN TRỌNG] Chống lặp từ (Rolling Captions Deduplication)
+    # Tìm các cụm từ (từ 2 đến 100 ký tự) bị lặp lại liên tiếp do lỗi nối file và chỉ giữ lại 1 cụm.
+    # VD: "có có cái kích kích thước" -> "có cái kích thước"
+    # VD: "tham số của mình nó quá đơn giản tham số của mình nó quá đơn giản" -> "tham số của mình nó quá đơn giản"
+    text = re.sub(r'\b(.{2,100}?)(?:\s+\1\b)+', r'\1', text)
+    
     if not text:
         return chunks
 
@@ -131,7 +184,6 @@ def extract_transcript(txt_path: str, chapter_id: str) -> list[dict]:
     topics = SLIDE_TOPICS.get(chapter_id, [])
 
     # Simple semantic chunking: split by sentences, group ~300-500 tokens
-    # Rough estimate: ~1 token ≈ 0.75 words in Vietnamese
     words = text.split()
     chunk_size = 200  # words per chunk
     for i in range(0, len(words), chunk_size):
@@ -155,6 +207,8 @@ def extract_transcript(txt_path: str, chapter_id: str) -> list[dict]:
 
     return chunks
 
+
+# ─── Hàm Embedding và Lưu trữ ──────────────────────────────────────────────
 
 def embed_and_store(chunks: list[dict]) -> list[dict]:
     """
@@ -210,6 +264,8 @@ def embed_and_store(chunks: list[dict]) -> list[dict]:
     return chunks
 
 
+# ─── Hàm Main ──────────────────────────────────────────────────────────────
+
 def run_indexing():
     """
     Entry point cho Step 01 — indexing toàn bộ slide + transcript.
@@ -225,7 +281,6 @@ def run_indexing():
         for chapter_id, (filename, _, _) in SLIDE_NAME_MAP.items():
             pdf_path = slide_dir / filename
             if not pdf_path.exists():
-                # Thử tìm filename gần đúng
                 candidates = list(slide_dir.glob(f"*{filename.split('-')[1]}*"))
                 if candidates:
                     pdf_path = candidates[0]
@@ -237,7 +292,7 @@ def run_indexing():
             try:
                 chunks = extract_slide_pdf(str(pdf_path), chapter_id)
                 all_chunks.extend(chunks)
-                print(f"     → {len(chunks)} slide chunks")
+                print(f"     → {len(chunks)} slide chunks (Clean Markdown)")
             except Exception as e:
                 print(f"  ❌ Error extracting {filename}: {e}")
                 traceback.print_exc()
@@ -247,9 +302,8 @@ def run_indexing():
     if transcript_dir.exists():
         print(f"\n📂 Indexing transcripts from: {transcript_dir}")
         for chapter_id in SLIDE_NAME_MAP:
-            # Transcript files: 4.1.txt → 4.8.txt cho ch04, tương tự cho chương khác
             chapter_num = chapter_id.lstrip("ch0")
-            chapter_glob = chapter_id.lstrip("ch")  # e.g. "4", "7a"
+            chapter_glob = chapter_id.lstrip("ch")  
 
             for txt_file in sorted(transcript_dir.glob(f"{chapter_glob}.*.txt")):
                 print(f"  📝 {chapter_id}: {txt_file.name}")
