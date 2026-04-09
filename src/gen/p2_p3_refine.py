@@ -127,6 +127,14 @@ def run_p2_p3_refine():
     save_jsonl(all_refined, out_file)
     print(f"\n✅ P2+P3 done. Total: {len(all_refined)} refined → {out_file}")
 
+    # ── Release VRAM before next pipeline step ──
+    import gc, torch
+    del llm
+    del SamplingParams
+    gc.collect()
+    torch.cuda.empty_cache()
+    print("  [cleanup] VRAM released")
+
 
 if __name__ == "__main__":
     run_p2_p3_refine()

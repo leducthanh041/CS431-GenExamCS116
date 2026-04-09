@@ -118,6 +118,14 @@ def run_eval_overall():
     print(f"   → {passed_file}")
     print(f"   → {failed_file}")
 
+    # ── Release VRAM before next pipeline step ──
+    import gc, torch
+    del llm
+    del SamplingParams
+    gc.collect()
+    torch.cuda.empty_cache()
+    print("  [cleanup] VRAM released")
+
 
 if __name__ == "__main__":
     run_eval_overall()

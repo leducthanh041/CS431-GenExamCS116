@@ -173,6 +173,14 @@ def run_p1_gen_stem():
     save_jsonl(all_results, out_file)
     print(f"\n✅ P1 done. Total: {len(all_results)} stems → {out_file}")
 
+    # ── Release VRAM before next pipeline step ──
+    import gc, torch
+    del llm
+    del SamplingParams
+    gc.collect()
+    torch.cuda.empty_cache()
+    print("  [cleanup] VRAM released")
+
 
 if __name__ == "__main__":
     run_p1_gen_stem()

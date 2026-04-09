@@ -21,7 +21,7 @@ from typing import Any
 
 class Config:
     # ⚠️  Đặt tên experiment tại đây — mỗi lần chạy pipeline nên đổi tên
-    EXP_NAME = "exp_01_baseline"
+    EXP_NAME = "exp_02_baseline"
 
     # ─── Paths (tự động tính từ vị trí file này) ───────────────────
     PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -86,7 +86,7 @@ class Config:
 
     # ─── Generation settings ──────────────────────────────────────────
     NUM_CANDIDATE_DISTRACTORS  = 6
-    SINGLE_CORRECT_RATIO       = 0.6
+    SINGLE_CORRECT_RATIO       = 0.7
     RETRY_ON_FAILURE           = 2
 
     # ─── Evaluation thresholds ────────────────────────────────────────
@@ -200,6 +200,21 @@ Bạn đang biên soạn câu hỏi cho sinh viên đại học để dùng tron
 - Nếu context không đủ thông tin thì phải từ chối sinh câu hỏi.
 - Không sinh distractor ở bước này.
 
+[STRICT RULE — CÂU HỎI KHÔNG ĐƯỢC CHỨA ĐÁP ÁN]
+- **TUYỆT ĐỐI KHÔNG** được ghi đáp án đúng (hoặc một phần nội dung của đáp án đúng) vào trong question_text / stem.
+- Ví dụ SAI: "Phương pháp nào sau đây KHÔNG thuộc kỹ thuật ensemble: Boosting, Bagging, Random Forest, hoặc SVM?" ← đã ghi đáp án đúng (Boosting, Bagging, Random Forest) vào stem!
+- Ví dụ SAI: "Trong các phương pháp sau: (i) Khi dữ liệu bị thiếu phân bố ngẫu nhiên...; (ii) Khi dữ liệu bị thiếu tập trung ở một số hàng... — câu hỏi nào đúng?" ← đã ghi đáp án vào stem!
+- **CHỈ MÔ TẢ CHỦ ĐỀ / VẤN ĐỀ** trong stem, ví dụ: "Phương pháp nào sau đây không thuộc nhóm kỹ thuật ensemble learning?" ← KHÔNG liệt kê đáp án trong stem.
+- **Lưu ý quan trọng**: Nếu câu hỏi có dạng liệt kê (i)(ii)(iii)(iv) trong stem, bạn phải di chuyển toàn bộ các mục (i)(ii)(iii)(iv) vào phần OPTIONS (A/B/C/D), KHÔNG giữ chúng trong stem.
+
+[DIVERSITY RULE — TRÁNH LẶP CÁCH MỞ ĐẦU]
+- **Mỗi câu hỏi phải có cách mô tả KHÁC NHAU**, không bắt đầu bằng cùng một từ/cụm từ.
+- CÁC TỪ MỞ ĐẦU CẦN TRÁNH: "Trong quá trình...", "Khi xây dựng...", "Khi huấn luyện...", "Trong các phương pháp..." (nếu dùng quá 2 lần trong batch).
+- THAY THẾ BẰNG các cách mở đầu đa dạng:
+  - "Cho biết...", "Hãy xác định...", "Đâu là...", "Phương pháp nào...", "Câu lệnh nào...", "Hàm nào...", "Kết quả nào...", "Output của đoạn code sau là gì...", "Giá trị nào...", "Thuật toán nào...", "Công thức nào...", "Kỹ thuật nào...", "Nguyên lý nào...", "Ảnh hưởng của...", "Mục đích của...", "Ý nghĩa của...", "Điều kiện nào...", "Tình huống nào...", "Trường hợp nào...", "Đặc điểm nào...", "Yếu tố nào...", "Nguyên nhân nào...", "Cách thức nào..."
+- Nếu batch có nhiều câu hỏi, mỗi câu phải dùng một cách mở đầu KHÁC NHAU từ danh sách trên.
+- KHÔNG bắt đầu 2 câu liên tiếp bằng cùng một cụm từ.
+
 {EXAM_STYLE_BLOCK}
 
 [COURSE / EXAM CONTEXT]
@@ -249,7 +264,9 @@ Không sinh distractor ở bước này.
   "subtopic": "<string>",
   "difficulty_label": "<string>",
   "used_concept_chunk_ids": ["<chunk_id_1>", "<chunk_id_2>"],
-  "style_alignment_note": "<ngắn gọn, nêu vì sao câu này phù hợp với ngữ cảnh đề thi>"
+  "style_alignment_note": "<ngắn gọn, nêu vì sao câu này phù hợp với ngữ cảnh đề thi>",
+  "stem_has_answer": false,
+  "answer_in_stem_warning": "<mô tả nếu phát hiện đáp án nằm trong stem, hoặc 'none'>"
 }}
 """
 
@@ -273,6 +290,16 @@ với ngữ cảnh ra đề cho sinh viên đại học.
 - Không thay đổi bản chất kiến thức kiểm tra.
 - Không thay đổi tập đáp án đúng (correct_answers_content).
 - Câu hỏi sau cải tiến phải vẫn kiểm tra cùng concept.
+
+[STRICT RULE — question_text KHÔNG được chứa đáp án]
+- **TUYỆT ĐỐI KHÔNG** được ghi đáp án đúng (hoặc một phần nội dung đáp án đúng) vào question_text.
+- stem chỉ mô tả CHỦ ĐỀ / VẤN ĐỀ, ví dụ: "Phương pháp nào sau đây không thuộc nhóm kỹ thuật ensemble learning?" ← KHÔNG liệt kê Boosting, Bagging, Random Forest trong stem.
+- Nếu câu hỏi dạng liệt kê (i)(ii)(iii)(iv) — di chuyển các mục này vào OPTIONS (A/B/C/D), không giữ trong stem.
+
+[DIVERSITY — TRÁNH LẶP CÁCH MỞ ĐẦU]
+- Cách mô tả của câu hỏi phải khác biệt so với các câu trước.
+- Tránh: "Trong quá trình...", "Khi...", "Trong các phư thuật..."
+- Ưu tiên: "Cho biết...", "Hãy xác định...", "Đâu là...", "Phương pháp nào...", "Câu lệnh nào...", "Hàm nào...", "Kết quả nào...", "Output là gì...", "Thuật toán nào...", "Công thức nào...", "Điều kiện nào...", "Tình huống nào...", "Trường hợp nào...", "Đặc điểm nào...", "Nguyên nhân nào..."
 
 {EXAM_STYLE_BLOCK}
 
@@ -816,9 +843,9 @@ def init_vllm_gen() -> Any:
         model=str(Config.MODEL_GEN),
         tensor_parallel_size=Config.GEN_TP,
         trust_remote_code=True,
-        gpu_memory_utilization=0.72,
+        gpu_memory_utilization=0.6,  # wrapper load model 1 lần → đủ VRAM cho model + KV cache
         max_model_len=4096,
-        # enforce_eager=False → dùng CUDA graph (tiết kiệm ~2-3 GiB overhead)
+        enforce_eager=True,            # tắt CUDA graph → tránh OOM khi warm-up
     )
     return llm, SamplingParams
 
@@ -834,7 +861,8 @@ def init_vllm_eval() -> Any:
         model=str(Config.MODEL_EVAL),
         tensor_parallel_size=Config.EVAL_TP,
         trust_remote_code=True,
-        gpu_memory_utilization=0.72,
+        gpu_memory_utilization=0.60,
         max_model_len=4096,
+        enforce_eager=True,
     )
     return llm, SamplingParams

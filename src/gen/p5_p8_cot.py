@@ -219,6 +219,14 @@ def run_p5_p8_cot():
     save_jsonl(all_final, out_file)
     print(f"\n✅ CoT done. Total: {len(all_final)} final MCQs → {out_file}")
 
+    # ── Release VRAM before next pipeline step ──
+    import gc, torch
+    del llm
+    del SamplingParams
+    gc.collect()
+    torch.cuda.empty_cache()
+    print("  [cleanup] VRAM released")
+
 
 if __name__ == "__main__":
     run_p5_p8_cot()

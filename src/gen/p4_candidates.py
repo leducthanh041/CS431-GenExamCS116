@@ -95,6 +95,14 @@ def run_p4_candidates():
     save_jsonl(all_results, out_file)
     print(f"\n✅ P4 done. Total: {len(all_results)} → {out_file}")
 
+    # ── Release VRAM before next pipeline step ──
+    import gc, torch
+    del llm
+    del SamplingParams
+    gc.collect()
+    torch.cuda.empty_cache()
+    print("  [cleanup] VRAM released")
+
 
 if __name__ == "__main__":
     run_p4_candidates()

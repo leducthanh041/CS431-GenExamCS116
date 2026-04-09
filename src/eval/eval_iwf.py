@@ -131,6 +131,14 @@ def run_eval_iwf():
     print(f"   → {accepted_file}")
     print(f"   → {rejected_file}")
 
+    # ── Release VRAM before next pipeline step ──
+    import gc, torch
+    del llm
+    del SamplingParams
+    gc.collect()
+    torch.cuda.empty_cache()
+    print("  [cleanup] VRAM released")
+
 
 if __name__ == "__main__":
     run_eval_iwf()
