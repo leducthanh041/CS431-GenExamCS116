@@ -12,7 +12,7 @@
 # Step 07: Overall Evaluation (6 checklist)
 # Model: Gemma-3-12b-it (vLLM)
 
-REQUIRED_VRAM=24000
+REQUIRED_VRAM=40000
 
 set -e
 

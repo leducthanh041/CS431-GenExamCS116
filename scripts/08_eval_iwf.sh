@@ -12,7 +12,7 @@
 # Step 08: IWF Distractor Analysis + Final Output
 # Model: Gemma-3-12b-it (vLLM)
 
-REQUIRED_VRAM=24000
+REQUIRED_VRAM=40000
 
 set -e
 
