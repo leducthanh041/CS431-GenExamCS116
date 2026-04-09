@@ -36,6 +36,7 @@ slurm-*.out
 output/
 data/intermediate/
 data/raw/
+data/raw_transcript/
 
 # ─── ChromaDB indexes (large binary data) ───────────────────
 data/indexes/
@@ -63,6 +64,7 @@ Thumbs.db
 *.pem
 *.key
 secrets/
+credentials/
 
 # ─── Notebooks ──────────────────────────────────────────────
 *.ipynb
