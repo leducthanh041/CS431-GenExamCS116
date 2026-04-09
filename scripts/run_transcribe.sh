@@ -13,15 +13,19 @@
 
 REQUIRED_VRAM=14000
 
-set -e
+set -euo pipefail
 
 module clear -f
 module load slurm/slurm/24.11
 source /datastore/uittogether/tools/miniconda3/etc/profile.d/conda.sh
-conda activate cs431mcq
+set +u
+conda activate /datastore/uittogether/tools/miniconda3/envs/cs431mcq
+set -u
+
+PROJECT_ROOT="/datastore/uittogether/LuuTru/Thanhld/CS431MCQGen"
 
 unset CUDA_VISIBLE_DEVICES
-CHECK_OUT=$(/usr/local/bin/gpu_check.sh $REQUIRED_VRAM $SLURM_JOB_ID)
+CHECK_OUT=$("$PROJECT_ROOT/scripts/gpu_check.sh" $REQUIRED_VRAM $SLURM_JOB_ID 2>&1)
 EXIT_CODE=$?
 
 if [ $EXIT_CODE -eq 10 ]; then
@@ -41,7 +45,6 @@ rm -rf $CUDA_MPS_PIPE_DIRECTORY $CUDA_MPS_LOG_DIRECTORY
 mkdir -p $CUDA_MPS_PIPE_DIRECTORY $CUDA_MPS_LOG_DIRECTORY
 export CUDA_VISIBLE_DEVICES=$BEST_GPU
 
-PROJECT_ROOT="/datastore/uittogether/LuuTru/Thanhld/CS431MCQGen"
 cd "$PROJECT_ROOT"
 export PYTHONPATH="$PROJECT_ROOT"
 

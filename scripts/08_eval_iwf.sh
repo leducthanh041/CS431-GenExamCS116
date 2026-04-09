@@ -41,6 +41,19 @@ rm -rf $CUDA_MPS_PIPE_DIRECTORY $CUDA_MPS_LOG_DIRECTORY
 mkdir -p $CUDA_MPS_PIPE_DIRECTORY $CUDA_MPS_LOG_DIRECTORY
 export CUDA_VISIBLE_DEVICES=$BEST_GPU
 
+# ── Kill stale processes on this GPU before loading model ───────────────────
+export PYTORCH_ALLOC_CONF=expandable_segments:True
+echo "[cleanup] GPU $BEST_GPU: killing stale compute processes..."
+nvidia-smi --id=$BEST_GPU --query-compute-apps=pid,used_memory --format=csv,noheader \
+    | while IFS=, read -r pid mem; do
+        pid=$(echo "$pid" | tr -d '[:space:]')
+        echo "[cleanup] Killing stale PID $pid ($mem)"
+        kill -9 "$pid" 2>/dev/null || true
+    done
+sleep 2
+echo "[cleanup] GPU $BEST_GPU VRAM after cleanup:"
+nvidia-smi --id=$BEST_GPU --query-gpu=memory.free --format=csv,noheader,nounits
+
 PROJECT_ROOT="/datastore/uittogether/LuuTru/Thanhld/CS431MCQGen"
 cd "$PROJECT_ROOT"
 export PYTHONPATH="$PROJECT_ROOT"

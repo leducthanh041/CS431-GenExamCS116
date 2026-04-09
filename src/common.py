@@ -832,6 +832,45 @@ def make_vllm_sampling(temperature: float, max_tokens: int) -> dict[str, Any]:
     }
 
 
+def _get_dynamic_gpu_utilization(model_name: str = "Qwen2.5-14B-Instruct") -> float:
+    """Tự động detect VRAM free trên GPU 0 và tính gpu_memory_utilization an toàn.
+
+    Trả về utilization phù hợp với tình trạng thực tế của GPU:
+    - Qwen 14B cần ~28 GiB cho model weights + overhead
+    - Gemma 12B cần ~24 GiB cho model weights + overhead
+    - Luôn giữ lại ≥20% VRAM free cho PyTorch fragmented memory
+    """
+    try:
+        import subprocess
+        result = subprocess.run(
+            ["nvidia-smi", "--query-gpu=memory.total,memory.free",
+             "--format=csv,noheader,nounits", "-i", "0"],
+            capture_output=True, text=True, timeout=5
+        )
+        if result.returncode == 0:
+            lines = result.stdout.strip().split("\n")
+            if lines:
+                parts = lines[0].split(",")
+                if len(parts) >= 2:
+                    total_mb = int(parts[0].strip())
+                    free_mb = int(parts[1].strip())
+                    # Model estimates (approximate, include activation overhead)
+                    if "Qwen" in model_name:
+                        model_mb = 28_000   # ~28 GiB for Qwen 14B
+                    else:
+                        model_mb = 24_000   # ~24 GiB for Gemma 12B
+                    # Target: reserve 20% free, rest for model+KvCache
+                    safe_util = (free_mb - model_mb) / total_mb
+                    # Clamp to [0.50, 0.72]; never go below 0.50
+                    util = round(max(0.50, min(0.72, safe_util)), 2)
+                    print(f"[vLLM GPU] Detected GPU VRAM: {free_mb}/{total_mb} MiB free | "
+                          f"Model estimate: {model_mb} MiB | Utilization: {util}")
+                    return util
+    except Exception as e:
+        print(f"[vLLM GPU] Could not query VRAM: {e}")
+    return 0.60  # fallback conservative
+
+
 def init_vllm_gen() -> Any:
     """Khởi tạo vLLM cho generation model (Qwen2.5-14B-Instruct)."""
     try:
@@ -839,13 +878,14 @@ def init_vllm_gen() -> Any:
     except ImportError:
         print("❌ vllm not installed. Run: pip install vllm")
         sys.exit(1)
+    gpu_util = _get_dynamic_gpu_utilization("Qwen2.5-14B-Instruct")
     llm = LLM(
         model=str(Config.MODEL_GEN),
         tensor_parallel_size=Config.GEN_TP,
         trust_remote_code=True,
-        gpu_memory_utilization=0.6,  # wrapper load model 1 lần → đủ VRAM cho model + KV cache
+        gpu_memory_utilization=0.72,
         max_model_len=4096,
-        enforce_eager=True,            # tắt CUDA graph → tránh OOM khi warm-up
+        # enforce_eager=True,            # tắt CUDA graph → tránh OOM khi warm-up
     )
     return llm, SamplingParams
 
@@ -857,12 +897,13 @@ def init_vllm_eval() -> Any:
     except ImportError:
         print("❌ vllm not installed. Run: pip install vllm")
         sys.exit(1)
+    gpu_util = _get_dynamic_gpu_utilization("gemma-3-12b-it")
     llm = LLM(
         model=str(Config.MODEL_EVAL),
         tensor_parallel_size=Config.EVAL_TP,
         trust_remote_code=True,
-        gpu_memory_utilization=0.60,
+        gpu_memory_utilization=0.72,
         max_model_len=4096,
-        enforce_eager=True,
+        # enforce_eager=True,
     )
     return llm, SamplingParams

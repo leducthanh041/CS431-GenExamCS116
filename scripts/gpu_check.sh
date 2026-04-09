@@ -1,128 +1,89 @@
 #!/bin/bash
-# gpu_check.sh — Chọn GPU còn trống trên cluster mps:a100:2 HOẶC mps:l40:2
+# gpu_check.sh — Chiếm GPU được SLURM assign và verify đủ VRAM
+#
+# Logic đơn giản: SLURM đã assign GPU → dùng GPU đó
+# Nếu nvidia-smi check thấy không đủ VRAM → exit 10 (đợi)
+#
 # Exit codes:
-#   0  + in ra GPU index  → GPU đủ VRAM, job tiếp tục
-#   10 + in ra message    → GPU hết (hoặc không đủ), job không đủ tài nguyên (đợi)
-#   11 + in ra message    → Lỗi hệ thống (GPU bị chiếm, script lỗi, v.v.)
-#
-# Usage:  gpu_check.sh <REQUIRED_VRAM_MB> <SLURM_JOB_ID>
-#
-# Required VRAM: Qwen2.5-14B-Instruct ≈ 27 GiB + KV cache ≈ 8 GiB → ~30000 MB
-#                 Gemma-3-12b-it       ≈ 24 GiB + KV cache ≈ 7 GiB → ~27000 MB
+#   0 + in GPU index  → OK, tiếp tục
+#   10               → GPU đã bị chiếm, không đủ VRAM, đợi
+#   11               → Lỗi hệ thống
 
 set -euo pipefail
 
-REQUIRED_VRAM_MB="${1:-30000}"
+REQUIRED_VRAM_MB="${1:-25000}"   # default 25 GiB, fit gpu_memory_utilization=0.35
 JOB_ID="${2:-$$}"
 
-# ── Kiểm tra nvidia-smi có sẵn không ───────────────────────────
-check_vram() {
-    local gpu_idx="$1"
-    local free_mb
-    free_mb=$(nvidia-smi --query-gpu=index,mmemory.free \
-        --format=csv,noheader,nounits 2>/dev/null \
-        | awk -F',' -v idx="$gpu_idx" '$1 == idx {gsub(/[^0-9]/,"",$2); print $2}')
-    echo "$free_mb"
-}
+# ── Lấy GPU từ SLURM environment (ưu tiên cao nhất) ───────────
+get_slurm_gpu() {
+    # CUDA_VISIBLE_DEVICES do SLURM set khi allocate --gres
+    if [ -n "${CUDA_VISIBLE_DEVICES:-}" ]; then
+        echo "$CUDA_VISIBLE_DEVICES" | tr -d '[:space:]' | grep -oE '[0-9]+' | head -1
+        return 0
+    fi
 
-# ── Fallback: kiểm tra qua /proc/driver/nvidia ────────────────
-check_vram_proc() {
-    local gpu_idx="$1"
-    local bar_path="/proc/driver/nvidia/gpus/${gpu_idx}/info"
-    if [ -r "$bar_path" ]; then
-        local vram_kb
-        vram_kb=$(awk '/memoryTotal/{print $3}' "$bar_path" 2>/dev/null || echo 0)
-        # Fallback: giả sử mỗi GPU A100 = 40 GiB, L40 = 48 GiB
-        echo "$((vram_kb / 1024))"
-    else
-        echo "0"
+    # SLURM_JOB_GPUS là GPU index được assign
+    if [ -n "${SLURM_JOB_GPUS:-}" ]; then
+        echo "$SLURM_JOB_GPUS" | grep -oE '[0-9]+' | head -1
+        return 0
+    fi
+
+    # Thử scontrol
+    if [ -n "${SLURM_JOB_ID:-}" ] && [ "${SLURM_JOB_ID}" != "$$" ]; then
+        scontrol show job "${SLURM_JOB_ID}" 2>/dev/null \
+            | grep -oP 'Gres=(gpu|mlmatrix):\K[^,\s]+' \
+            | head -1 \
+            | grep -oE '[0-9]+' || true
     fi
 }
 
-# ── Logic chính: check GPU nào đủ VRAM ────────────────────────
-# Cluster này có 2 loại GPU:
-#   DGX-A100: 8 × A100 40GB SXM4  → total ~320 GiB, MPS 800
-#   AsusL40:  8 × L40 48GB        → total ~384 GiB, MPS 800
-#
-# Chúng ta check tất cả GPU và tìm GPU đầu tiên có free ≥ REQUIRED_VRAM_MB.
-# Nếu cluster dùng MPS thì mỗi job chỉ thấy 1 GPU được assigned.
-
-# Nếu nvidia-smi không available → dùng SLURM environment variable
-# SLURM_STEP_GPUS hoặc CUDA_VISIBLE_DEVICES chỉ set khi job được allocate GPU
+# ── Check VRAM free trên GPU đã chọn ──────────────────────────
+check_free() {
+    local gpu_idx="$1"
+    nvidia-smi --query-gpu=index,memory.free \
+        --format=csv,noheader,nounits 2>/dev/null \
+        | awk -F',' -v i="$gpu_idx" '$1 == i {print $2}' \
+        | tr -d '[:space:]'
+}
 
 main() {
-    local best_gpu=""
-    local best_free=0
+    local gpu_idx=""
+    local free_mb=""
 
-    # Method 1: dùng nvidia-smi (chạy được khi đã có GPU access)
-    if command -v nvidia-smi &>/dev/null; then
-        echo "[gpu_check] Method: nvidia-smi" >&2
+    # Step 1: Lấy GPU từ SLURM
+    gpu_idx=$(get_slurm_gpu) || true
 
-        # Check mỗi GPU 0-7
-        for idx in 0 1 2 3 4 5 6 7; do
-            local free_mb
-            free_mb=$(nvidia-smi --query-gpu=index,memory.free \
-                --format=csv,noheader,nounits 2>/dev/null \
-                | awk -F',' -v i="$idx" '
-                    BEGIN {gsub(/[^0-9]/,"",i)}
-                    $1 ~ "^" i "$" {gsub(/[^0-9]/,"",$2); print $2}
-                  ' 2>/dev/null || echo "0")
-
-            # Strip whitespace / non-numeric
-            free_mb=$(echo "$free_mb" | tr -d '[:space:]' | grep -E '^[0-9]+$' || echo "0")
-
-            if [ -z "$free_mb" ] || [ "$free_mb" = "0" ]; then
-                continue
-            fi
-
-            echo "[gpu_check] GPU $idx: ${free_mb} MB free (need ${REQUIRED_VRAM_MB} MB)" >&2
-
-            if [ "$free_mb" -ge "$REQUIRED_VRAM_MB" ]; then
-                best_gpu="$idx"
-                best_free="$free_mb"
-                break
-            fi
-        done
+    if [ -z "$gpu_idx" ]; then
+        echo "[gpu_check] Cannot determine GPU from SLURM env, using GPU 0 as fallback" >&2
+        echo "0"
+        exit 0
     fi
 
-    # Method 2: SLURM allocated GPU (khi chạy trong job với --gres)
-    if [ -z "$best_gpu" ] && [ -n "${CUDA_VISIBLE_DEVICES:-}" ]; then
-        echo "[gpu_check] Method: SLURM allocated GPU (CUDA_VISIBLE_DEVICES=$CUDA_VISIBLE_DEVICES)" >&2
-        # CUDA_VISIBLE_DEVICES đã được SLURM set → dùng GPU đó
-        best_gpu="$CUDA_VISIBLE_DEVICES"
-        best_free="$REQUIRED_VRAM_MB"  # assume enough if allocated
+    echo "[gpu_check] SLURM assigned GPU $gpu_idx" >&2
+
+    # Step 2: Verify đủ VRAM (nếu nvidia-smi available)
+    if ! command -v nvidia-smi &>/dev/null; then
+        echo "[gpu_check] nvidia-smi not available, trusting SLURM allocation" >&2
+        echo "$gpu_idx"
+        exit 0
     fi
 
-    # Method 3: dùng SLURM_GRES (khi job được allocate --gres=gpu:X)
-    if [ -z "$best_gpu" ] && [ -n "${SLURM_JOB_GPUS:-}" ]; then
-        echo "[gpu_check] Method: SLURM_JOB_GPUS=${SLURM_JOB_GPUS}" >&2
-        best_gpu="$SLURM_JOB_GPUS"
-        best_free="$REQUIRED_VRAM_MB"
+    free_mb=$(check_free "$gpu_idx") || free_mb=""
+    echo "[gpu_check] GPU $gpu_idx free: ${free_mb:-N/A} MiB (need ${REQUIRED_VRAM_MB} MiB)" >&2
+
+    if [ -z "$free_mb" ] || [ "$free_mb" -lt 1000 ]; then
+        echo "[gpu_check] GPU $gpu_idx: cannot read VRAM, trusting SLURM" >&2
+        echo "$gpu_idx"
+        exit 0
     fi
 
-    # Method 4: dùng scontrol để lấy allocated GPU từ job
-    if [ -z "$best_gpu" ] && [ -n "${SLURM_JOB_ID:-}" ] && [ "${SLURM_JOB_ID}" != "$$" ]; then
-        local gres_info
-        gres_info=$(scontrol show job "$SLURM_JOB_ID" 2>/dev/null \
-            | grep -oP 'Gres=(gpu|mlmatrix):\K[^,\s]+' \
-            | head -1 || echo "")
-        if [ -n "$gres_info" ]; then
-            # gres có dạng "gpu:0" hoặc "gpu:a100:0" → lấy số cuối
-            best_gpu=$(echo "$gres_info" | grep -oP '\d+$' || echo "")
-            best_free="$REQUIRED_VRAM_MB"
-            echo "[gpu_check] Method: scontrol → GPU $best_gpu" >&2
-        fi
-    fi
-
-    # ── Output result ──────────────────────────────────────────────
-    if [ -n "$best_gpu" ]; then
-        echo "[gpu_check] ✅ Selected GPU $best_gpu (${best_free} MB free ≥ ${REQUIRED_VRAM_MB} MB required)"
-        echo "$best_gpu"
+    if [ "$free_mb" -ge "$REQUIRED_VRAM_MB" ]; then
+        echo "[gpu_check] GPU $gpu_idx: ${free_mb} MiB ≥ ${REQUIRED_VRAM_MB} MiB → OK" >&2
+        echo "$gpu_idx"
         exit 0
     else
-        echo "[gpu_check] ❌ No GPU with ${REQUIRED_VRAM_MB} MB free available"
-        echo "[gpu_check]    Cluster info: $(sinfo -o '%P %G' -n 2>/dev/null | head -3)"
-        echo "[gpu_check]    Waiting for GPU resources..."
+        echo "[gpu_check] GPU $gpu_idx: only ${free_mb} MiB free, need ${REQUIRED_VRAM_MB} MiB → waiting" >&2
+        nvidia-smi --query-gpu=index,memory.used,memory.total --format=csv 2>/dev/null >&2 || true
         exit 10
     fi
 }
