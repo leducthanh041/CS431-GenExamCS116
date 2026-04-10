@@ -9,17 +9,26 @@ from tqdm import tqdm
 
 
 # =========================
+# Paths
+# =========================
+BASE_DIR = Path(__file__).resolve().parent.parent
+RAW_DIR = BASE_DIR / "data" / "raw_transcript"
+CLEAN_DIR = BASE_DIR / "data" / "cleaned_transcript"
+PROMPT_PATH = BASE_DIR / "prompts" / "transcript_cleanup.txt"
+
+# =========================
 # Load environment variables
 # =========================
-load_dotenv()
+load_dotenv(dotenv_path=BASE_DIR / ".env")
+
+# Fix credential path if relative
+cred_path = os.environ.get("GOOGLE_APPLICATION_CREDENTIALS")
+if cred_path and not Path(cred_path).is_absolute():
+    os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = str(BASE_DIR / cred_path)
 
 PROJECT_ID = os.getenv("GOOGLE_CLOUD_PROJECT")
 LOCATION = os.getenv("GOOGLE_CLOUD_LOCATION", "us-central1")
 MODEL_NAME = os.getenv("GEMINI_MODEL", "gemini-2.5-flash")
-
-RAW_DIR = Path("data/raw_transcript")
-CLEAN_DIR = Path("data/cleaned_transcript")
-PROMPT_PATH = Path("prompts/transcript_cleanup.txt")
 
 CLEAN_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -41,20 +50,37 @@ with open(PROMPT_PATH, "r", encoding="utf-8") as f:
 
 
 # Find all transcript files
-transcript_files = sorted(RAW_DIR.glob("*.json"))
+all_transcript_files = sorted(RAW_DIR.glob("*.json"))
 
-if len(transcript_files) == 0:
+# Filter to only unprocessed files
+transcript_files = [
+    f for f in all_transcript_files
+    if not (CLEAN_DIR / f"{f.stem}.cleaned.json").exists()
+]
+
+if len(all_transcript_files) == 0:
     raise FileNotFoundError(
         f"No transcript files found in: {RAW_DIR}"
     )
 
-print(f"Found {len(transcript_files)} transcript files")
+print(f"Found {len(all_transcript_files)} total transcript files. {len(transcript_files)} need processing.")
+
+if len(transcript_files) == 0:
+    print("All files are already cleaned. Exiting.")
+    import sys
+    sys.exit(0)
 
 # =========================
 # Process each transcript
 # =========================
-for transcript_path in tqdm(transcript_files):
+from concurrent.futures import ThreadPoolExecutor
+import time
+
+def process_transcript(transcript_path):
+    print(f"\n[START] Đang xử lý: {transcript_path.name}")
     try:
+        output_path = CLEAN_DIR / f"{transcript_path.stem}.cleaned.json"
+
         # Load transcript JSON
         with open(transcript_path, "r", encoding="utf-8") as f:
             transcript_data = json.load(f)
@@ -62,8 +88,7 @@ for transcript_path in tqdm(transcript_files):
         raw_text = transcript_data.get("text", "").strip()
 
         if not raw_text:
-            print(f"[SKIP] Empty text in {transcript_path.name}")
-            continue
+            return f"[SKIP] Empty text in {transcript_path.name}"
 
         # Build final prompt
         full_prompt = f"""
@@ -73,50 +98,49 @@ Transcript:
 {raw_text}
 """
 
-        # Call Gemini
-        response = client.models.generate_content(
-            model=MODEL_NAME,
-            contents=full_prompt,
-            config={
-                "temperature": 0,
-                "response_mime_type": "application/json",
-            },
-        )
+        # Call Gemini with auto-retry for 503 errors
+        for attempt in range(3):
+            try:
+                response = client.models.generate_content(
+                    model=MODEL_NAME,
+                    contents=full_prompt,
+                    config={
+                        "temperature": 0,
+                        "response_mime_type": "application/json",
+                    },
+                )
+                break  # Thành công thì thoát vòng lặp retry
+            except Exception as e:
+                if attempt < 2 and "503" in str(e):
+                    time.sleep(10)
+                    continue
+                else:
+                    raise e
 
-        response_text = response.text.strip()
+        # Chỉ lấy text một lần duy nhất
+        raw_output = response.text.strip()
 
-        # Remove markdown wrapper if Gemini returns ```json ... ```
-        if response_text.startswith("```json"):
-            response_text = response_text[len("```json"):].strip()
-            if response_text.endswith("```"):
-                response_text = response_text[:-3].strip()
-        elif response_text.startswith("```"):
-            response_text = response_text[3:].strip()
-            if response_text.endswith("```"):
-                response_text = response_text[:-3].strip()
+        # Dùng Regex xóa mọi loại Markdown Code Block nếu có
+        clean_json_str = re.sub(r"^```(?:json)?|```$", "", raw_output, flags=re.MULTILINE).strip()
 
-        # Parse JSON response
-        response_text = response.text.strip()
-
-        # Remove markdown fences if model adds them
-        response_text = (
-            response_text
-            .replace("```json", "")
-            .replace("```", "")
-            .strip()
-        )
+        # Fix potentially truncated JSON (Gemini API sometimes cuts off long responses)
+        if clean_json_str.startswith('{') and not clean_json_str.endswith('}'):
+            if clean_json_str.endswith('"'):
+                clean_json_str += '}'
+            else:
+                clean_json_str += '"}'
 
         try:
-            result = json.loads(response_text)
+            result = json.loads(clean_json_str)
 
         except json.JSONDecodeError:
             # Save raw response for debugging
             debug_path = CLEAN_DIR / f"{transcript_path.stem}.raw_response.txt"
             with open(debug_path, "w", encoding="utf-8") as f:
-                f.write(response_text)
+                f.write(clean_json_str)
 
             # Try extracting first JSON object
-            match = re.search(r"\{.*\}", response_text, re.DOTALL)
+            match = re.search(r"\{.*\}", clean_json_str, re.DOTALL)
 
             if not match:
                 raise ValueError("No JSON object found in response")
@@ -151,12 +175,23 @@ Transcript:
             "cleaned_text": cleaned_text,
         }
 
-        output_path = CLEAN_DIR / f"{transcript_path.stem}.cleaned.json"
-
         with open(output_path, "w", encoding="utf-8") as f:
             json.dump(output_data, f, ensure_ascii=False, indent=2)
 
-        print(f"[DONE] {transcript_path.name} -> {output_path.name}")
+        return f"[DONE] {transcript_path.name} -> {output_path.name}"
 
     except Exception as e:
-        print(f"[ERROR] Failed processing {transcript_path.name}: {e}")
+        return f"[ERROR] Failed processing {transcript_path.name}: {e}"
+
+
+MAX_WORKERS = 2
+print(f"Bắt đầu gọi API với {MAX_WORKERS} luồng...")
+
+with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
+    for res in tqdm(executor.map(process_transcript, transcript_files), total=len(transcript_files)):
+        if res and res.startswith("[ERROR]"):
+            tqdm.write(res)
+        elif res and res.startswith("[SKIP]"):
+            tqdm.write(res)
+
+print("Hoàn thành!")

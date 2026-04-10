@@ -7,10 +7,12 @@ from langchain_huggingface import HuggingFaceEmbeddings
 
 
 # ==========================================================
+# ==========================================================
 # CONFIG
 # ==========================================================
-INPUT_DIR = Path("../data/cleaned_transcript")
-OUTPUT_DIR = Path("../data/chunked_transcript")
+BASE_DIR = Path(__file__).resolve().parent.parent
+INPUT_DIR = BASE_DIR / "data" / "cleaned_transcript"
+OUTPUT_DIR = BASE_DIR / "data" / "chunked_transcript"
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 N_FILES = 3

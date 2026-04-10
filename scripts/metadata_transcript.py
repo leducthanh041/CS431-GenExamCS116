@@ -274,32 +274,53 @@ if RUN_LLM:
                 **metadata
             }
 
+        # Đọc dữ liệu cũ để tránh gọi lại LLM
+        existing_results = {}
+        if FINAL_OUTPUT.exists():
+            with open(FINAL_OUTPUT, "r", encoding="utf-8") as f:
+                for line in f:
+                    try:
+                        obj = json.loads(line.strip())
+                        key = (obj.get("source_file"), obj.get("chunk_id"))
+                        existing_results[key] = obj
+                    except Exception:
+                        continue
+        
+        unprocessed_results = []
+        for item in all_results:
+            key = (item["source_file"], item["chunk_id"])
+            if key not in existing_results:
+                unprocessed_results.append(item)
+
         # Chạy đa luồng
         MAX_WORKERS = 10 # Số lượng request gọi cùng lúc. Có thể tăng/giảm tùy quota Vertex AI của bạn.
-        
-        unprocessed_results = all_results
         total_unprocessed = len(unprocessed_results)
         
-        if not unprocessed_results:
-            print("Không tìm thấy file json nào để xử lý!")
-        else:
-            print(f"Bắt đầu xử lý TOÀN BỘ {total_unprocessed} chunks từ đầu với {MAX_WORKERS} luồng...")
-            
+        if total_unprocessed > 0:
+            print(f"Bắt đầu gọi API cho {total_unprocessed} chunks mới (bỏ qua {len(all_results)-total_unprocessed} cũ) với {MAX_WORKERS} luồng...")
             start_time = time.time()
             
-            # Ghi đè file từ đầu (mode 'w')
-            with open(FINAL_OUTPUT, "w", encoding="utf-8") as fout:
-                with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
-                    for i, final_obj in enumerate(executor.map(process_chunk, unprocessed_results), 1):
-                        fout.write(json.dumps(final_obj, ensure_ascii=False) + "\n")
-                        fout.flush() # Ghi ngay lập tức xuống đĩa
+            with ThreadPoolExecutor(max_workers=MAX_WORKERS) as executor:
+                for i, final_obj in enumerate(executor.map(process_chunk, unprocessed_results), 1):
+                    key = (final_obj["source_file"], final_obj["chunk_id"])
+                    existing_results[key] = final_obj
+                    
+                    elapsed = time.time() - start_time
+                    remaining = total_unprocessed - i
+                    eta_seconds = int((elapsed / i) * remaining) if i > 0 else 0
+                    eta_str = f"{eta_seconds // 60}m{eta_seconds % 60:02d}s"
+                    percent = (i / total_unprocessed) * 100
+                    
+                    print(f"[{percent:5.1f}% | Xong: {i} | Còn: {remaining} | Tổng: {total_unprocessed}] Xong: {final_obj['source_file']} chunk {final_obj['chunk_id']} | ETA: {eta_str}")
+        else:
+            print(f"Đã có đủ {len(all_results)} chunks, không cần gọi thêm API.")
+
+        print(f"Ghi gộp {len(all_results)} chunks vào file theo đúng thứ tự...")
+        with open(FINAL_OUTPUT, "w", encoding="utf-8") as fout:
+            for item in all_results:
+                key = (item["source_file"], item["chunk_id"])
+                final_item = existing_results.get(key)
+                if final_item:
+                    fout.write(json.dumps(final_item, ensure_ascii=False) + "\n")
                         
-                        elapsed = time.time() - start_time
-                        remaining = total_unprocessed - i
-                        eta_seconds = int((elapsed / i) * remaining)
-                        eta_str = f"{eta_seconds // 60}m{eta_seconds % 60:02d}s"
-                        percent = (i / total_unprocessed) * 100
-                        
-                        print(f"[{percent:5.1f}% | Xong: {i} | Còn lại: {remaining} | Tổng: {total_unprocessed}] Ghi: {final_obj['chunk_id']} | ETA: {eta_str}")
-                        
-            print(f"Hoàn thành! Đã lưu mới toàn bộ metadata vào {FINAL_OUTPUT}")
+        print(f"Hoàn thành! Đã giữ nguyên thứ tự và lưu vào {FINAL_OUTPUT}")
