@@ -200,6 +200,15 @@ Bạn đang biên soạn câu hỏi cho sinh viên đại học để dùng tron
 - Nếu context không đủ thông tin thì phải từ chối sinh câu hỏi.
 - Không sinh distractor ở bước này.
 
+[CITATION REQUIREMENT — QUAN TRỌNG]
+- Với mỗi câu hỏi được sinh, bạn PHẢI ghi rõ nguồn trích dẫn trong field `sources`.
+- Nếu context block có `Video | YouTube: https://... | Thời điểm: 1:30-2:45`, hãy ghi URL đầy đủ
+  trong `youtube_url` để sinh viên có thể BẤM VÀO xem video tại thời điểm đó.
+- Định dạng YouTube timestamp: `https://youtu.be/VIDEO_ID&t=SECONDS`
+  (ví dụ: https://youtu.be/abc123&t=90 → nhảy đến giây 90)
+- Nếu nguồn là slide, ghi `source_type: "slide_pdf"` và youtube_url để trống.
+- Số lượng sources phải khớp với số context block mà câu hỏi sử dụng.
+
 [STRICT RULE — CÂU HỎI KHÔNG ĐƯỢC CHỨA ĐÁP ÁN]
 - **TUYỆT ĐỐI KHÔNG** được ghi đáp án đúng (hoặc một phần nội dung của đáp án đúng) vào trong question_text / stem.
 - Ví dụ SAI: "Phương pháp nào sau đây KHÔNG thuộc kỹ thuật ensemble: Boosting, Bagging, Random Forest, hoặc SVM?" ← đã ghi đáp án đúng (Boosting, Bagging, Random Forest) vào stem!
@@ -264,6 +273,13 @@ Không sinh distractor ở bước này.
   "subtopic": "<string>",
   "difficulty_label": "<string>",
   "used_concept_chunk_ids": ["<chunk_id_1>", "<chunk_id_2>"],
+  "sources": [
+    {{
+      "chunk_id": "<chunk_id_from_context_block>",
+      "youtube_url": "<URL day du de bam xem video, vd: https://youtu.be/abc&t=90> (chi dien YouTube URL neu context block co source_type=video_transcript, neu la slide thi de chuoi rong va ghi 'slide: ten_file.pdf>')",
+      "source_type": "<video_transcript hoặc slide_pdf>"
+    }}
+  ],
   "style_alignment_note": "<ngắn gọn, nêu vì sao câu này phù hợp với ngữ cảnh đề thi>",
   "stem_has_answer": false,
   "answer_in_stem_warning": "<mô tả nếu phát hiện đáp án nằm trong stem, hoặc 'none'>"
@@ -683,7 +699,7 @@ def build_eval_overall_prompt(mcq_json: dict[str, Any]) -> str:
     mcq_str = json.dumps(mcq_json, ensure_ascii=False, indent=2)
     return f"""[ROLE]
 Bạn là chuyên gia đánh giá câu hỏi trắc nghiệm (MCQ Item Writing Expert).
-Đánh giá câu hỏi MCQ hoàn chỉnh theo 6 tiêu chí:
+Đánh giá câu hỏi MCQ hoàn chỉnh theo 8 tiêu chí:
 
 1. format_pass: Câu hỏi có đúng 4 options A/B/C/D, có nhãn loại, có nhãn độ khó không?
 2. language_pass: Câu hỏi bằng tiếng Việt, rõ ràng, không lỗi chính tả không?
@@ -691,12 +707,18 @@ Bạn là chuyên gia đánh giá câu hỏi trắc nghiệm (MCQ Item Writing E
 4. relevance_pass: Câu hỏi và tất cả options đều liên quan đến topic không?
 5. answerability_pass: Sinh viên có đủ thông tin trong stem để trả lời mà không cần đoán không?
 6. correct_set_pass: Tập đáp án đúng có hợp lý, không dư thừa, không mâu thuẫn không?
+7. NO_FOUR_CORRECT_PASS: Không có câu hỏi nào có tất cả 4 options đều là đáp án đúng.
+   Luôn kiểm tra: nếu correct_answer_count = 4 hoặc tất cả A/B/C/D đều được đánh dấu đúng → FAIL.
+   Câu hỏi trắc nghiệm phải có đáp án sai (distractors) → không thể có 4 đáp án đúng.
+8. ANSWER_NOT_IN_STEM_PASS: Đáp án đúng không được xuất hiện (dù là 1 phần hay toàn bộ) trong câu hỏi (stem).
+   Kiểm tra: nếu nội dung correct_answers xuất hiện trong question_text → FAIL.
 
 [INPUT — MCQ cần đánh giá]
 {mcq_str}
 
 [HARD CONSTRAINTS]
 - Nếu bất kỳ tiêu chí nào thất bại → overall_valid = false
+- **Đặc biệt chú ý**: tiêu chí 7 và 8 là HARD REJECT — câu hỏi vi phạm sẽ bị loại tuyệt đối.
 - Chỉ trả về JSON, không có text giải thích
 - Dùng tiếng Việt cho mô tả lỗi
 
@@ -708,6 +730,8 @@ Bạn là chuyên gia đánh giá câu hỏi trắc nghiệm (MCQ Item Writing E
   "relevance_pass": true|false,
   "answerability_pass": true|false,
   "correct_set_pass": true|false,
+  "no_four_correct_pass": true|false,
+  "answer_not_in_stem_pass": true|false,
   "overall_valid": true|false,
   "fail_reasons": ["<lý do thất bại nếu có>"],
   "quality_score": <0.0-1.0>
@@ -783,15 +807,120 @@ def parse_json_output(raw_text: str) -> dict[str, Any]:
         return {"raw": text[:500], "error": "parse_failed"}
 
 
+def _to_seconds(ts: str | float | None) -> str:
+    """Convert MM:SS / HH:MM:SS / plain seconds → integer string for YouTube URL."""
+    if ts is None or ts == "":
+        return ""
+    ts = str(ts).strip()
+    if not ts:
+        return ""
+    if ":" in ts:
+        parts = ts.split(":")
+        try:
+            if len(parts) == 2:
+                return str(int(parts[0]) * 60 + int(parts[1]))
+            elif len(parts) == 3:
+                return str(int(parts[0]) * 3600 + int(parts[1]) * 60 + int(parts[2]))
+            else:
+                return ""
+        except ValueError:
+            return ""
+    try:
+        return str(int(float(ts)))
+    except (ValueError, TypeError):
+        return ""
+
+
+def _format_timestamp(ts: str | float | None) -> str:
+    """Format timestamp as MM:SS or HH:MM:SS for human-readable display."""
+    if ts is None or ts == "":
+        return ""
+    ts_str = str(ts).strip()
+    if not ts_str:
+        return ""
+    if ":" in ts_str:
+        return ts_str
+    # Plain seconds → convert to MM:SS
+    try:
+        total = int(float(ts_str))
+        if total >= 3600:
+            hh = total // 3600
+            mm = (total % 3600) // 60
+            ss = total % 60
+            return f"{hh}:{mm:02d}:{ss:02d}"
+        else:
+            mm = total // 60
+            ss = total % 60
+            return f"{mm}:{ss:02d}"
+    except (ValueError, TypeError):
+        return ""
+
+
 def format_context_block(chunk: dict[str, Any]) -> str:
-    """Format một concept chunk thành context block cho prompt."""
+    """
+    Format một concept chunk thành context block cho prompt.
+
+    Citation format (theo tieplm):
+      - Slide:  <(Trích dẫn: CS116-Bai04-Data preprocessing.pdf | Trang 3)>
+      - Video:   <(Trích dẫn: https://youtu.be/abc&t=90 | 1:30 - 3:45)>
+                 Khi bấm link → YouTube nhảy đến đúng giây 90.
+    """
     parts = []
+
+    # Header với chapter
     if chunk.get("chapter_id"):
         parts.append(f"[{chunk['chapter_id']}]")
+
+    # ── Nguồn trích dẫn ───────────────────────────────────────────
+    source_type = chunk.get("source_type", "")
+    if source_type == "slide_pdf":
+        src_parts = []
+        if chunk.get("source_file"):
+            src_parts.append(chunk["source_file"])
+        if chunk.get("page_number"):
+            src_parts.append(f"Trang {chunk['page_number']}")
+        if src_parts:
+            parts.append(f"<(Trích dẫn: {', '.join(src_parts)}>)")
+
+    elif source_type == "video_transcript":
+        yt_url = chunk.get("youtube_url", "")
+        # Ưu tiên timestamp_start (float seconds) > youtube_ts_start (MM:SS string)
+        ts_start_raw = chunk.get("timestamp_start")
+        ts_end_raw = chunk.get("timestamp_end")
+        # Fallback sang string versions
+        if ts_start_raw is None:
+            ts_start_raw = chunk.get("youtube_ts_start", "")
+        if ts_end_raw is None:
+            ts_end_raw = chunk.get("youtube_ts_end", "")
+
+        ts_start_sec = _to_seconds(ts_start_raw)
+        ts_end_sec = _to_seconds(ts_end_raw)
+
+        if yt_url:
+            base_url = yt_url.split("&t=")[0].split("?t=")[0]
+            full_url = f"{base_url}&t={ts_start_sec}" if ts_start_sec else yt_url
+
+            ts_display = _format_timestamp(ts_start_raw)
+            ts_end_display = _format_timestamp(ts_end_raw)
+            if ts_end_display and ts_end_display != ts_display:
+                ts_display = f"{ts_display} - {ts_end_display}"
+            elif ts_end_sec and ts_end_sec != ts_start_sec:
+                ts_display = f"{ts_display} - {ts_end_display}"
+
+            if ts_display:
+                parts.append(f"<(Trích dẫn: {full_url} | {ts_display})>")
+            else:
+                parts.append(f"<(Trích dẫn: {full_url})>")
+        elif ts_start_sec:
+            parts.append(f"<(Trích dẫn: {_format_timestamp(ts_start_raw)} - {_format_timestamp(ts_end_raw)}>)")
+
+    # Section title và topic
     if chunk.get("section_title"):
         parts.append(f"Tiêu đề: {chunk['section_title']}")
     if chunk.get("topic"):
         parts.append(f"Chủ đề: {chunk['topic']}")
+
+    # Text content
     if chunk.get("text"):
         parts.append(chunk["text"])
     return "\n".join(parts)

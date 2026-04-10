@@ -31,7 +31,8 @@ from common import (
 
 def evaluate_mcq(mcq: dict, llm, SamplingParams) -> dict:
     """
-    Đánh giá 1 MCQ theo 6 checklist criteria.
+    Đánh giá 1 MCQ theo 8 checklist criteria.
+    Bao gồm: no_four_correct_pass + answer_not_in_stem_pass.
     """
     prompt = build_eval_overall_prompt(mcq)
     messages = [{"role": "user", "content": prompt}]
@@ -50,6 +51,8 @@ def evaluate_mcq(mcq: dict, llm, SamplingParams) -> dict:
             "relevance_pass": True,
             "answerability_pass": True,
             "correct_set_pass": True,
+            "no_four_correct_pass": True,
+            "answer_not_in_stem_pass": True,
             "overall_valid": True,
             "fail_reasons": [f"parse_error: {result['error']}"],
             "quality_score": 0.5,

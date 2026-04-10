@@ -6,13 +6,13 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=64G
-#SBATCH --gres=mps:1
+#SBATCH --gres=mps:l40:2
 #SBATCH --time=12:00:00
 
 # Step 03: P1 — Generate Stem + Key
 # Model: Qwen2.5-14B-Instruct (vLLM)
 
-REQUIRED_VRAM=30000
+REQUIRED_VRAM=20000
 
 set -e
 
@@ -21,7 +21,8 @@ module load slurm/slurm/24.11
 source /datastore/uittogether/tools/miniconda3/etc/profile.d/conda.sh
 
 unset CUDA_VISIBLE_DEVICES
-CHECK_OUT=$(/usr/local/bin/gpu_check.sh $REQUIRED_VRAM $SLURM_JOB_ID)
+PROJECT_ROOT="/datastore/uittogether/LuuTru/Thanhld/CS431MCQGen"
+CHECK_OUT=$("$PROJECT_ROOT/scripts/gpu_check.sh" $REQUIRED_VRAM $SLURM_JOB_ID)
 EXIT_CODE=$?
 
 if [ $EXIT_CODE -eq 10 ]; then
@@ -40,21 +41,8 @@ export CUDA_MPS_LOG_DIRECTORY=/tmp/nvidia-mps-log-job$SLURM_JOB_ID
 rm -rf $CUDA_MPS_PIPE_DIRECTORY $CUDA_MPS_LOG_DIRECTORY
 mkdir -p $CUDA_MPS_PIPE_DIRECTORY $CUDA_MPS_LOG_DIRECTORY
 export CUDA_VISIBLE_DEVICES=$BEST_GPU
-
-# ── Kill stale processes on this GPU before loading model ───────────────────
 export PYTORCH_ALLOC_CONF=expandable_segments:True
-echo "[cleanup] GPU $BEST_GPU: killing stale compute processes..."
-nvidia-smi --id=$BEST_GPU --query-compute-apps=pid,used_memory --format=csv,noheader \
-    | while IFS=, read -r pid mem; do
-        pid=$(echo "$pid" | tr -d '[:space:]')
-        echo "[cleanup] Killing stale PID $pid ($mem)"
-        kill -9 "$pid" 2>/dev/null || true
-    done
-sleep 2
-echo "[cleanup] GPU $BEST_GPU VRAM after cleanup:"
-nvidia-smi --id=$BEST_GPU --query-gpu=memory.free --format=csv,noheader,nounits
 
-PROJECT_ROOT="/datastore/uittogether/LuuTru/Thanhld/CS431MCQGen"
 cd "$PROJECT_ROOT"
 export PYTHONPATH="$PROJECT_ROOT"
 

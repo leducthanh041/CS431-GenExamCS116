@@ -36,7 +36,7 @@ SLIDE_NAME_MAP: dict[str, tuple[str, str, str]] = {
     "ch06": ("CS116-Bai06-Unsupervised learning.pdf",    "ch06", "Unsupervised Learning"),
     "ch07a": ("CS116-Bai07a-Supervised learning-Regression.pdf", "ch07a", "Supervised Learning - Regression"),
     "ch07b": ("CS116-Bai07b-Supervised learning-Classification.pdf", "ch07b", "Supervised Learning - Classification"),
-    "ch08": ("CS116-Bai08-Deep learning v#U1edbi CNN.pdf", "ch08", "Deep Learning với CNN"),
+    "ch08": ("CS116-Bai08-Deep learning với CNN.pdf", "ch08", "Deep Learning với CNN"),
     "ch09": ("CS116-Bai09-Parameter tuning.pdf",         "ch09", "Parameter Tuning"),
     "ch10": ("CS116-Bai10-Ensemble model.pdf",            "ch10", "Ensemble Models"),
     "ch11": ("CS116-Bai11-Model Deployment.pdf",         "ch11", "Model Deployment"),
@@ -57,15 +57,48 @@ SLIDE_TOPICS: dict[str, list[str]] = {
     "ch11": ["Model Serving", "API", "Monitoring"],
 }
 
+# ─── Data Cleaning cho Slide ───────────────────────────────────────────────
+
+def clean_slide_text(text: str) -> str:
+    """Dọn dẹp các dữ liệu nhiễu, header, footer và tag hình ảnh rỗng từ slide."""
+    if not text:
+        return ""
+        
+    # 1. Xóa Footer cố định và tên giảng viên
+    text = re.sub(r'(?i)Thực hiện bởi Trường Đại học Công nghệ Thông tin, ĐHQG-HCM\s*', '', text)
+    text = re.sub(r'(?i)ĐẠI HỌC QUỐC GIA TP\. HỒ CHÍ MINH\s*', '', text)
+    text = re.sub(r'(?i)TRƯỜNG ĐẠI HỌC CÔNG NGHỆ THÔNG TIN\s*', '', text)
+    text = re.sub(r'(?i)TS\. Nguyễn Vinh Tiệp\s*', '', text)
+    
+    # 2. Xóa các tag hình ảnh rác do thư viện pymupdf4llm sinh ra
+    text = re.sub(r'\**==> picture.*?<==\**', '', text, flags=re.IGNORECASE)
+    text = re.sub(r'\**----- Start of picture text -----\**.*?\**----- End of picture text -----\**', '', text, flags=re.DOTALL | re.IGNORECASE)
+    text = re.sub(r'<br>', '\n', text, flags=re.IGNORECASE)
+    
+    # 3. Xóa các tag hình ảnh kiểu cũ
+    text = re.sub(r'\[Image\s*\d+\]', '', text, flags=re.IGNORECASE)
+    text = re.sub(r'!\[.*?\]\(.*?\)', '', text)
+    
+    # 4. Xóa các con số chơ vơ trên 1 dòng (thường là số trang bị tách ra)
+    text = re.sub(r'(?m)^\s*\d+\s*$\n?', '', text)
+    
+    return text.strip()
+
+
+# ─── Hàm trích xuất Slide (Dùng Markdown) ─────────────────────────
 
 def extract_slide_pdf(pdf_path: str, chapter_id: str) -> list[dict]:
-    """Trích xuất text từ slide PDF, mỗi trang → 1 chunk."""
+    """Trích xuất text từ slide PDF bằng PyMuPDF (fitz), giữ cấu trúc."""
     chunks = []
     try:
         import fitz
     except ImportError:
-        print("⚠️  PyMuPDF not installed. Skipping PDF extraction.")
+        print("⚠️  PyMuPDF (fitz) not installed. Run: pip install pymupdf")
         return chunks
+
+    filename = Path(pdf_path).name
+    chapter_title = SLIDE_NAME_MAP.get(chapter_id, (None, chapter_id, "Unknown"))[2]
+    topics = SLIDE_TOPICS.get(chapter_id, [])
 
     try:
         doc = fitz.open(pdf_path)
@@ -73,22 +106,23 @@ def extract_slide_pdf(pdf_path: str, chapter_id: str) -> list[dict]:
         print(f"  ⚠️  Cannot open PDF {pdf_path}: {e}")
         return chunks
 
-    filename = Path(pdf_path).name
-    chapter_title = SLIDE_NAME_MAP.get(chapter_id, (None, chapter_id, "Unknown"))[2]
-    topics = SLIDE_TOPICS.get(chapter_id, [])
-
     for page_num in range(len(doc)):
         page = doc[page_num]
-        text = page.get_text("text").strip()
-        if not text:
+        raw_text = page.get_text("text").strip()
+        cleaned_text = clean_slide_text(raw_text)
+        text_lower = cleaned_text.lower()
+
+        if len(cleaned_text.split()) < 5 or text_lower.strip() == "nội dung" \
+                or "bài quiz và hỏi đáp" in text_lower:
             continue
 
-        lines = [l.strip() for l in text.split("\n") if l.strip()]
-        if len(lines) < 2:
-            continue
-
-        section_title = lines[0]
-        body_text = " ".join(lines[1:])
+        lines = cleaned_text.split('\n')
+        section_title = ""
+        for line in lines:
+            line_clean = line.replace("#", "").replace("*", "").strip()
+            if line_clean:
+                section_title = line_clean
+                break
 
         chunk_id = f"cs116_{chapter_id}_slide_p{page_num+1:03d}"
         chunk = {
@@ -101,7 +135,7 @@ def extract_slide_pdf(pdf_path: str, chapter_id: str) -> list[dict]:
             "source_file": filename,
             "page_number": page_num + 1,
             "section_title": section_title,
-            "text": body_text,
+            "text": cleaned_text,
             "embedding_ready": True,
         }
         chunks.append(chunk)
@@ -109,6 +143,8 @@ def extract_slide_pdf(pdf_path: str, chapter_id: str) -> list[dict]:
     doc.close()
     return chunks
 
+
+# ─── Hàm Load Transcript Chunks (Step 01b output) ───────────────────────────
 
 def load_transcript_chunks() -> list[dict]:
     """
@@ -135,10 +171,23 @@ def load_transcript_chunks() -> list[dict]:
     return chunks
 
 
+# ─── Cập nhật hàm trích xuất Transcript (Dùng JSONL đã chunk sẵn) ─────────────
+
+def extract_transcript(txt_path: str, chapter_id: str) -> list[dict]:
+    """
+    Legacy: trích xuất từ transcript TXT file (đang giữ lại cho tương thích ngược).
+    Ưu tiên dùng load_transcript_chunks() thay thế hoàn toàn.
+    """
+    # ← deprecate: xem load_transcript_chunks() thay thế hoàn toàn
+    pass
+
+
+# ─── Hàm Embedding và Lưu trữ ──────────────────────────────────────────────
+
 def embed_and_store(chunks: list[dict]) -> list[dict]:
     """
     Embed chunks bằng BGE-m3 và lưu vào ChromaDB.
-    Nếu ChromaDB đã có data thì xóa và embed lại để đảm bảo metadata mới.
+    Nếu ChromaDB đã có data thì skip embedding, chỉ verify.
     """
     try:
         from sentence_transformers import SentenceTransformer
@@ -152,44 +201,38 @@ def embed_and_store(chunks: list[dict]) -> list[dict]:
     client = chromadb.PersistentClient(path=str(Config.INDEX_DIR))
     collection = client.get_or_create_collection("concept_chunks")
 
-    # Nếu đã có data → xóa và embed lại (đảm bảo metadata mới: timestamp, youtube_url...)
+    # Check if already embedded
     if collection.count() > 0:
-        print(f"  ℹ️  ChromaDB has {collection.count()} old chunks — deleting to re-embed with new metadata...")
-        client.delete_collection("concept_chunks")
-        collection = client.get_or_create_collection("concept_chunks")
+        print(f"  ℹ️  ChromaDB already has {collection.count()} chunks — skipping embed")
+        return chunks
 
     # ─── Embedding model ──────────────────────────────────────────
     print("  🔄 Loading BGE-m3 embedding model...")
     model = SentenceTransformer("BAAI/bge-m3")
-    texts = [c["text"][:2000] for c in chunks]
+    texts = [c["text"][:2000] for c in chunks]  # Truncate long text
     print(f"  🔄 Embedding {len(texts)} chunks...")
     embeddings = model.encode(texts, batch_size=32, show_progress_bar=True)
 
-    # ─── Store in ChromaDB với metadata mở rộng ───────────────────────
+    # ─── Store in ChromaDB ─────────────────────────────────────────
     ids = [c["chunk_id"] for c in chunks]
-    metadatas = []
-    for c in chunks:
-        meta = {
-            "chunk_id":       c["chunk_id"],
-            "chapter_id":     c.get("chapter_id", ""),
-            "chapter_title":  c.get("chapter_title", ""),
-            "topic":          "|".join(c.get("topics", [])) if c.get("topics") else "",
-            "section_title":  c.get("section_title", ""),
-            "source_type":    c.get("source_type", ""),
-            "source_file":     c.get("source_file", ""),
-            # Transcript-specific (convert None → "" for ChromaDB compatibility)
-            "youtube_url":      str(c.get("youtube_url", "")) or "",
-            "youtube_ts_start": str(c.get("youtube_timestamp_start", "")) or "",
-            "youtube_ts_end":   str(c.get("youtube_timestamp_end", "")) or "",
+    metadatas = [
+        {
+            "chunk_id": c["chunk_id"],
+            "chapter_id": c["chapter_id"],
+            "chapter_title": c.get("chapter_title", ""),
+            "topic": "|".join(c.get("topics", [])) if c.get("topics") else "",
+            "section_title": c.get("section_title", ""),
+            "source_type": c.get("source_type", ""),
+            "source_file": c.get("source_file", ""),
+            # Transcript-specific fields (optional, only present for video_transcript)
+            "timestamp_start": c.get("timestamp_start"),
+            "timestamp_end": c.get("timestamp_end"),
+            "youtube_url": c.get("youtube_url", ""),
+            "youtube_ts_start": c.get("youtube_timestamp_start", ""),
+            "youtube_ts_end": c.get("youtube_timestamp_end", ""),
         }
-        # timestamp_start/end as float — only include if not None
-        ts_start = c.get("timestamp_start")
-        ts_end   = c.get("timestamp_end")
-        if ts_start is not None:
-            meta["timestamp_start"] = float(ts_start)
-        if ts_end is not None:
-            meta["timestamp_end"] = float(ts_end)
-        metadatas.append(meta)
+        for c in chunks
+    ]
 
     collection.add(
         ids=ids,
@@ -200,6 +243,8 @@ def embed_and_store(chunks: list[dict]) -> list[dict]:
     print(f"  ✅ Stored {len(chunks)} chunks in ChromaDB")
     return chunks
 
+
+# ─── Hàm Main ──────────────────────────────────────────────────────────────
 
 def run_indexing():
     """
@@ -216,7 +261,6 @@ def run_indexing():
         for chapter_id, (filename, _, _) in SLIDE_NAME_MAP.items():
             pdf_path = slide_dir / filename
             if not pdf_path.exists():
-                # Thử tìm filename gần đúng
                 candidates = list(slide_dir.glob(f"*{filename.split('-')[1]}*"))
                 if candidates:
                     pdf_path = candidates[0]
@@ -228,7 +272,7 @@ def run_indexing():
             try:
                 chunks = extract_slide_pdf(str(pdf_path), chapter_id)
                 all_chunks.extend(chunks)
-                print(f"     → {len(chunks)} slide chunks")
+                print(f"     → {len(chunks)} slide chunks (Clean Markdown)")
             except Exception as e:
                 print(f"  ❌ Error extracting {filename}: {e}")
                 traceback.print_exc()

@@ -28,20 +28,20 @@ from common import (
     load_jsonl, save_jsonl,
     load_topic_list,
     init_vllm_gen, make_vllm_sampling,
+    format_context_block, _to_seconds,
 )
 
 
 def format_context(blocks: list[dict]) -> str:
-    """Gộp nhiều context blocks thành 1 chuỗi cho prompt."""
+    """Gộp context blocks thành chuỗi cho prompt, có citation metadata."""
+    if not blocks:
+        return ""
     lines = []
     for i, blk in enumerate(blocks, 1):
-        lines.append(f"--- Context block {i} ---")
-        if blk.get("section_title"):
-            lines.append(f"Tiêu đề: {blk['section_title']}")
-        if blk.get("topic"):
-            lines.append(f"Chủ đề: {blk['topic']}")
-        if blk.get("text"):
-            lines.append(blk["text"][:1500])  # Giới hạn độ dài
+        lines.append(f"--- Context {i} ---")
+        # Dùng format_context_block để có citation: [ch04] | Video | YouTube URL | Thời điểm
+        ctx = format_context_block(blk)
+        lines.append(ctx[:2000])  # Giới hạn độ dài mỗi block
         lines.append("")
     return "\n".join(lines)
 
@@ -111,6 +111,45 @@ def run_p1_for_topic(
         if "error" in parsed:
             print(f"  ⚠️  Parse error for {topic_id} seq={seq}: {parsed['error']}")
             continue
+
+        # ── Attach context-block sources as ground-truth citation metadata ──
+        # Model có thể chưa ghi đúng → dùng metadata từ retrieval để đảm bảo
+        video_blocks = [b for b in retrieved_blocks if b.get("source_type") == "video_transcript"]
+        slide_blocks  = [b for b in retrieved_blocks if b.get("source_type") == "slide_pdf"]
+        sources = []
+        for b in video_blocks:
+            ts = _to_seconds(b.get("timestamp_start") or b.get("youtube_ts_start", ""))
+            end_ts = _to_seconds(b.get("timestamp_end") or b.get("youtube_ts_end", ""))
+            yt = b.get("youtube_url", "")
+            if yt and ts:
+                base = yt.split("&t=")[0].split("?t=")[0]
+                url = f"{base}&t={ts}"
+            elif yt:
+                url = yt
+            else:
+                url = ""
+            sources.append({
+                "chunk_id":    b.get("chunk_id", ""),
+                "youtube_url": url,
+                "source_type": "video_transcript",
+                "text_preview": b.get("text", "")[:80],
+            })
+        for b in slide_blocks:
+            parts = []
+            if b.get("source_file"):
+                parts.append(b["source_file"])
+            if b.get("page_number"):
+                parts.append(f"Trang {b['page_number']}")
+            label = ", ".join(parts) if parts else b.get("chunk_id", "slide")
+            sources.append({
+                "chunk_id":    b.get("chunk_id", ""),
+                "youtube_url": "",
+                "source_type": "slide_pdf",
+                "label":       label,
+                "text_preview": b.get("text", "")[:80],
+            })
+        if sources:
+            parsed["sources"] = sources
 
         # Gắn metadata
         parsed["_meta"] = {

@@ -9,7 +9,8 @@
 #SBATCH --time=04:00:00
 
 # Step 01: Indexing (CPU — BGE-m3 embedding + PyMuPDF)
-# Khong can GPU
+# Part A: Chunk Whisper JSON transcripts with YouTube timestamps
+# Part B: Merge slide + transcript chunks → ChromaDB (với citation metadata mới)
 
 REQUIRED_VRAM=0
 
@@ -27,7 +28,12 @@ echo "🚀 Job $SLURM_JOB_ID — Step 01: Indexing"
 cd "$PROJECT_ROOT"
 export PYTHONPATH="$PROJECT_ROOT"
 
-echo "▶️  Running indexing pipeline..."
+# ── Part A: Chunk Whisper JSON transcripts (Step 01b) ───────────────────────
+echo "▶️  Part A: Chunking Whisper JSON transcripts with YouTube timestamps..."
+python -u src/gen/chunk_transcript_with_timestamps.py
+
+# ── Part B: Slide + Transcript → ChromaDB ───────────────────────────────────
+echo "▶️  Part B: Slide + Transcript indexing → ChromaDB..."
 python -u src/gen/indexing.py
 
 echo "✅ Step 01 done"

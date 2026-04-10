@@ -203,6 +203,14 @@ def run_retrieval():
                 "section_title": meta.get("section_title", ""),
                 "text": doc,
                 "source": "concept_kb",
+                # ── Citation metadata (for explainable MCQ) ─────────────
+                "source_type": meta.get("source_type", ""),
+                "source_file": meta.get("source_file", ""),
+                "timestamp_start": meta.get("timestamp_start"),
+                "timestamp_end": meta.get("timestamp_end"),
+                "youtube_url": meta.get("youtube_url", ""),
+                "youtube_ts_start": meta.get("youtube_ts_start", ""),
+                "youtube_ts_end": meta.get("youtube_ts_end", ""),
             }
             blocks.append(block)
 
