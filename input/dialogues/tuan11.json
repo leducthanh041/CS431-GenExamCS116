@@ -1,0 +1,2912 @@
+[
+  {
+    "question_id": "ch9_q1",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng tham số mô hình là cài đặt ban đầu. Tại sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì đó là những con số mình phải quyết định trước khi huấn luyện mô hình. Nó là một 'tham số' đầu vào."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy trong quá trình train, những cài đặt này có thay đổi không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không. Mình đã cài đặt thì nó phải giữ nguyên suốt quá trình chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét mô hình hồi quy tuyến tính y = w*x + b. Cái gì thay đổi khi học?"
+      },
+      {
+        "role": "Student",
+        "text": "Mô hình sẽ điều chỉnh 'w' và 'b' để khớp với dữ liệu. Nhưng ban đầu mình vẫn phải khởi tạo chúng mà?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy giá trị của 'w' và 'b' lúc cuối có giống lúc đầu không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc chắn là không rồi. Nhưng nếu không có giá trị ban đầu thì làm sao chạy được? Nên nó vẫn là cài đặt ban đầu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy có một loại 'cài đặt' không đổi, và một loại thay đổi để học?"
+      },
+      {
+        "role": "Student",
+        "text": "Vâng, có vẻ là vậy... Loại thay đổi như 'w' và 'b' là kết quả của việc học."
+      },
+      {
+        "role": "Tutor",
+        "text": "Câu hỏi đang hỏi về 'tham số mô hình'. Vậy nó là loại nào trong hai loại đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Là loại thay đổi... tức là các biến số mô hình học từ dữ liệu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm lẫn giữa thứ mô hình học (tham số) và thứ bạn cấu hình (siêu tham số)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q2",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng số lớp là tham số mô hình. Vì sao nó lại quan trọng với cấu trúc?"
+      },
+      {
+        "role": "Student",
+        "text": "Tất nhiên. Vì nó định hình mạng. Mạng 3 lớp khác hẳn mạng 5 lớp về bản chất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy quá trình \"học\" của mô hình thực chất là thay đổi cái gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó học để tối ưu kết quả đầu ra, dựa trên dữ liệu được cung cấp."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trong lúc mô hình \"học\", số lớp có tự động thay đổi không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, số lớp là do mình chọn từ đầu. Nhưng nó vẫn là một phần cốt lõi của mô hình."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy cái gì được thuật toán tối ưu tìm ra, và cái gì do bạn quyết định trước?"
+      },
+      {
+        "role": "Student",
+        "text": "Thuật toán tìm ra trọng số. Mình quyết định số lớp. Nhưng cả hai đều là \"số\" của mô hình mà?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy có sự khác biệt nào giữa \"số\" do người cài đặt và \"số\" do máy học không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Có. Một cái là thiết kế ban đầu, một cái là kết quả của quá trình học."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo slide, đâu là \"tham số mô hình\" mà thuật toán có thể tối ưu?"
+      },
+      {
+        "role": "Student",
+        "text": "Là cái mà máy tự học... vậy phải là trọng số và bias."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Tham số mô hình là những gì thuật toán tự học (trọng số). Cái bạn chọn (số lớp) là siêu tham số."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q3",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói siêu tham số và tham số mô hình là một. Vì sao bạn nghĩ chúng hoán đổi được?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì cả hai đều là 'tham số'. Chúng đều là những con số quyết định cách mô hình hoạt động."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy trong lúc training, mô hình học được những gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó học các tham số, tức là các trọng số (weights) và độ chệch (biases) để giảm lỗi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Thế mô hình có tự học ra số lượng lớp ẩn (hidden layers) không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không. Người lập trình phải chọn cái đó. Nhưng nó vẫn là một tham số ảnh hưởng đến mô hình."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy cái gì quyết định trọng số, và cái gì quyết định số lớp ẩn?"
+      },
+      {
+        "role": "Student",
+        "text": "Mô hình quyết định trọng số. Người lập trình quyết định số lớp. Nhưng cuối cùng chúng đều là những con số của mô hình!"
+      },
+      {
+        "role": "Tutor",
+        "text": "Một cái do mô hình tự tìm ra, một cái do bạn áp đặt từ đầu. Chúng có thật sự là một không?"
+      },
+      {
+        "role": "Student",
+        "text": "…Chắc là không. Một cái được cài đặt, một cái được học."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy dựa vào đó, bạn trả lời lại câu hỏi ban đầu xem."
+      },
+      {
+        "role": "Student",
+        "text": "Siêu tham số là các cấu hình của mô hình trước khi train. Như là số lớp ẩn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm lẫn giữa thứ 'được cài đặt' (siêu tham số) và thứ 'được học' (tham số)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q4",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói trọng số là siêu tham số. Vậy bạn cài đặt giá trị cụ thể cho chúng trước khi huấn luyện như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Mình không cài đặt giá trị cụ thể, mà khởi tạo ngẫu nhiên. Sau đó thuật toán sẽ tìm giá trị tối ưu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, siêu tham số là thứ được khởi tạo ngẫu nhiên?"
+      },
+      {
+        "role": "Student",
+        "text": "Không hẳn, nhưng nó là một con số quan trọng. Số lớp cũng là siêu tham số, và mình cũng phải 'chọn' nó mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bạn chọn mạng có 3 lớp. Trong lúc huấn luyện, số lớp có tự động đổi thành 4 không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, tất nhiên là không. Nó phải giữ nguyên."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy giá trị của một trọng số bất kỳ có thay đổi trong lúc huấn luyện không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có chứ, đó là mục đích của việc học mà. Nhưng cả hai đều ảnh hưởng đến kết quả, và mình vẫn phải 'chọn' giá trị ban đầu cho trọng số, dù là ngẫu nhiên."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một thứ bạn cài đặt và không đổi. Một thứ thuật toán tự thay đổi. Chúng có cùng một loại không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là không... Vậy cái nào được giữ cố định trong quá trình huấn luyện mới là siêu tham số?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy dựa trên đó, yếu tố nào là siêu tham số: số lớp, hay trọng số?"
+      },
+      {
+        "role": "Student",
+        "text": "Số lớp ạ. Vì nó được mình đặt ra và không bị thuật toán thay đổi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng rồi. Tóm lại: Siêu tham số do người dùng thiết lập trước khi huấn luyện và không đổi. Trọng số và bias là tham số, được mô hình tự học và cập nhật."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q5",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói siêu tham số và tham số đều cần tối ưu, nên mô hình phải tự học cả hai. Logic này đúng chứ?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Mục tiêu của mô hình là tìm giá trị tốt nhất, nên nó phải tối ưu tất cả mọi thứ có thể."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy tốc độ học (learning rate) là tham số hay siêu tham số?"
+      },
+      {
+        "role": "Student",
+        "text": "Là siêu tham số. Nhưng nó cũng cần được tối ưu để mô hình hội tụ tốt nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Ok. Vậy mô hình dùng thuật toán nào để 'học' ra tốc độ học tối ưu?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là gradient descent hoặc một biến thể của nó, vì đó là cách mô hình học mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Thuật toán gradient descent đó có cần một tốc độ học để chạy không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Chắc là có. Nhưng nó có thể dùng một giá trị mặc định rồi tự điều chỉnh."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu nó tự điều chỉnh, nó lại cần một thuật toán khác. Thuật toán đó có cần tốc độ học không?"
+      },
+      {
+        "role": "Student",
+        "text": "Em thấy hơi rối. Nhưng về cơ bản, mô hình phải tìm cách tối ưu được chứ, bằng cách nào đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy có sự khác biệt nào giữa thứ 'được học trong lúc chạy' và thứ 'phải có trước khi chạy' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có lẽ... siêu tham số phải có trước để quá trình học bắt đầu. Vậy nó không được học, mà được thiết lập."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bạn đã nhầm lẫn vì cả hai đều cần tối ưu. Siêu tham số định cấu hình quá trình học, còn tham số là kết quả của quá trình đó."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q6",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng tinh chỉnh tham số diễn ra khi xử lý dữ liệu thô. Vì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì đó là lúc mình chuẩn bị mọi thứ. Giống như xây nhà phải có bản vẽ tốt trước."
+      },
+      {
+        "role": "Tutor",
+        "text": "Khái niệm 'tham số' bạn đang nói ở đây là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là các cài đặt của mô hình, ví dụ như learning rate hay số lượng lớp ẩn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mình có thể tinh chỉnh một mô hình chưa được xây dựng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nhưng mình xác định các tham số đó ngay từ đầu, trong lúc chuẩn bị dữ liệu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Làm sao bạn biết giá trị tham số đó là 'tốt' khi chưa có kết quả?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì mình dựa vào kinh nghiệm hoặc đặc tính của dữ liệu để đoán. Phải chuẩn bị từ đầu chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu mô hình huấn luyện xong cho kết quả tệ, bạn làm gì với tham số đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì... mình phải quay lại thay đổi nó. Nhưng về lý thuyết nó nên được làm từ đầu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy việc 'thay đổi' đó xảy ra sau khi có kết quả. Kết quả có từ đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Từ việc huấn luyện và đánh giá... À, vậy là nó diễn ra ở hai giai đoạn đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bạn đã nhầm lẫn việc thiết lập ban đầu với quá trình tối ưu lặp lại. Tinh chỉnh cần kết quả đánh giá để điều hướng."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q7",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng chỉ cần tinh chỉnh khi mô hình bị lỗi. 'Lỗi' ở đây nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là khi chương trình không chạy, báo đỏ, hoặc kết quả trả về là rác, không dùng được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một mô hình phân loại chó/mèo với độ chính xác 60% có phải là 'lỗi' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nó không báo lỗi. Nó vẫn chạy và cho ra kết quả 'chó' hoặc 'mèo' mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bạn có muốn dùng một mô hình mà cứ 10 lần thì đoán sai 4 lần không?"
+      },
+      {
+        "role": "Student",
+        "text": "Dĩ nhiên là không muốn. Nhưng vấn đề là nó không 'hỏng'. Nó chỉ là không giỏi thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Làm thế nào để mô hình từ 'không giỏi' thành 'giỏi hơn'?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là... thay đổi gì đó? Nhưng em nghĩ đó là khi mình muốn nâng cấp, chứ không phải sửa lỗi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Việc 'thay đổi gì đó' để mô hình giỏi hơn có phải là tinh chỉnh tham số không?"
+      },
+      {
+        "role": "Student",
+        "text": "À... có lẽ. Vậy là tinh chỉnh không chỉ để sửa lỗi mà còn để nâng cấp."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy bạn hãy thử trả lời lại câu hỏi ban đầu dựa trên điều này."
+      },
+      {
+        "role": "Student",
+        "text": "Cần tinh chỉnh tham số để... giúp mô hình đạt độ chính xác cao hơn, hiệu quả hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn giữa 'không có lỗi' và 'hoạt động tối ưu'. Tinh chỉnh là để tối ưu hiệu suất, không chỉ để sửa lỗi."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q8",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ siêu tham số là 'cài đặt nhỏ' không đáng kể. Vì sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì thuật toán chính mới quan trọng. Mấy con số đó chỉ là tinh chỉnh phụ thôi, không thay đổi bản chất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Siêu tham số 'learning rate' kiểm soát điều gì trong mô hình?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó kiểm soát tốc độ học của mô hình. Nhanh hay chậm một chút thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hai mô hình y hệt, learning rate là 0.001 và 10. Kết quả có khác nhau không?"
+      },
+      {
+        "role": "Student",
+        "text": "Cái 10 sẽ học nhanh hơn, nhưng kết quả cuối cùng chắc cũng xấp xỉ nhau thôi chứ?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu learning rate quá lớn, mô hình có luôn tìm được điểm tối ưu không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có thể nó sẽ 'nhảy' qua lại một chút nhưng cuối cùng vẫn sẽ hội tụ về gần đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một mô hình không bao giờ hội tụ thì có được xem là hiệu suất tốt không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Không. Nếu không hội tụ thì là mô hình hỏng. Nhưng đó là trường hợp cực đoan."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy việc chọn learning rate có quyết định sự 'hỏng' của mô hình không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có. Nếu vậy thì nó ảnh hưởng đến hiệu suất cuối cùng. Giờ thì mình hiểu rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, tóm lại, quan niệm ban đầu của bạn sai ở đâu và điều đúng là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Mình sai khi cho rằng siêu tham số là phụ. Thực tế chúng ảnh hưởng trực tiếp đến độ chính xác."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q9",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng Grid Search là ngẫu nhiên. Vì sao 'tìm kiếm' lại có nghĩa là 'ngẫu nhiên'?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì 'tìm kiếm' là phải thử nhiều khả năng khác nhau. Giống như mình tìm đồ, mình đâu có tìm theo thứ tự cố định."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trong 'Grid Search', từ 'Grid' (lưới) có ý nghĩa gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Em nghĩ nó chỉ là cái tên thôi. Chắc là không gian tìm kiếm rộng như một cái lưới."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử có 2 tham số: learning_rate = [0.1, 0.01] và C = [1, 10]. Một 'lưới' sẽ có những điểm nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Sẽ có 4 điểm: (0.1, 1), (0.1, 10), (0.01, 1), và (0.01, 10)."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu tìm ngẫu nhiên, nó có thể bỏ sót cặp (0.1, 10) không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có chứ. Ngẫu nhiên thì không đảm bảo thử hết được. Có khi nó chỉ thử 2-3 cặp thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mục tiêu của Grid Search là gì nếu nó có thể bỏ sót các tổ hợp?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì... để tìm ra kết quả tốt một cách may mắn? Ngẫu nhiên có khi lại trúng điểm tốt nhất ngay."
+      },
+      {
+        "role": "Tutor",
+        "text": "So sánh 'vét cạn' và 'ngẫu nhiên', cách nào đảm bảo không bỏ sót tổ hợp nào?"
+      },
+      {
+        "role": "Student",
+        "text": "... 'Vét cạn' ạ. Vậy tức là nó phải thử hết cả 4 điểm đó sao?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy bây giờ bạn nghĩ ý tưởng chính của Grid Search là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là vét cạn, thử tất cả các tổ hợp tham số đã được định sẵn trong lưới."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Lỗi sai của bạn là đồng nhất 'tìm kiếm' với 'ngẫu nhiên', trong khi Grid Search tìm kiếm một cách có hệ thống."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q10",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói Grid Search tìm kiếm 'tuần tự'. Tuần tự theo một chiều nghĩa là sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Là nó duyệt hết giá trị của tham số thứ nhất, tìm cái tốt nhất, rồi mới sang tham số thứ hai."
+      },
+      {
+        "role": "Tutor",
+        "text": "Các tham số của mô hình có tương tác với nhau không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có chứ, thay đổi một cái thường ảnh hưởng đến cái khác."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử có 2 tham số: A=[1, 2], B=[10, 20]. Logic 'tuần tự' của bạn chạy thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó thử (A=1, B=10) rồi (A=2, B=10). Giả sử A=2 tốt hơn. Nó sẽ giữ A=2, rồi thử B=20."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy cặp (A=1, B=20) có bao giờ được kiểm tra không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không. Vì nó đã quyết định A=2 là tốt hơn ở bước trước rồi. Phải cố định một cái để tìm cái kia chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu điểm tốt nhất toàn cục lại chính là cặp (A=1, B=20) thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "...Thì cách đó sẽ bỏ lỡ. Vậy... nó phải thử tất cả các cặp à?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Việc 'thử tất cả các cặp' có phải là duyệt toàn bộ không gian tham số không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng. Nó tạo một lưới từ tất cả giá trị và thử mọi điểm trên lưới. Vậy là tìm kiếm toàn bộ không gian."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Niềm tin sai là nó tối ưu từng chiều riêng lẻ. Thực tế, Grid Search duyệt toàn bộ lưới kết hợp."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q11",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ Grid Search học hỏi từ lần thử trước. Nó học chính xác như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó thấy điểm nào cho kết quả tốt thì sẽ tìm kiếm kỹ hơn ở khu vực đó. Nếu không học thì làm sao tối ưu được?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy các điểm thử được tạo ra như thế nào trước khi thuật toán chạy?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó tạo ra một lưới các điểm. Nhưng trong lúc chạy, nó phải điều chỉnh dựa trên kết quả chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử có 100 điểm trên lưới. Kết quả ở điểm số 10 có thay đổi vị trí của điểm số 50 không?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải có chứ. Nếu điểm 10 rất tệ, nó nên tránh xa khu vực đó. Nếu không thì quá lãng phí tài nguyên."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mô tả của thuật toán Grid Search có bước nào nói về việc 'bỏ qua' hay 'thay đổi' lưới không?"
+      },
+      {
+        "role": "Student",
+        "text": "Em không nhớ rõ... nhưng về logic thì nó phải làm vậy. Nếu không, nó chỉ là duyệt cạn thôi, không thông minh chút nào."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, toàn bộ 100 điểm đó có được xác định trước khi vòng lặp đầu tiên bắt đầu không?"
+      },
+      {
+        "role": "Student",
+        "text": "À... có lẽ là có. Toàn bộ lưới được định sẵn. Nó chỉ chạy qua tất cả thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu lưới không thay đổi, vậy quá trình đó có phải là 'học hỏi' không? Và ưu điểm thực sự của nó là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nó không học. Nó chỉ đơn giản là duyệt hết. Vậy ưu điểm của nó chỉ là... thuật toán đơn giản."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Grid Search không học hỏi, nó chỉ duyệt một cách có hệ thống. Ưu điểm cốt lõi của nó là sự đơn giản."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q12",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng Grid Search có yếu tố ngẫu nhiên. Yếu tố đó nằm ở đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì nó thử nhiều giá trị khác nhau. Để không bị lặp lại, nó phải chọn ngẫu nhiên chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Grid Search tạo ra các tổ hợp tham số để thử bằng cách nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó lấy các giá trị mình đưa cho. Nhưng chắc nó xáo trộn thứ tự hoặc chọn ngẫu nhiên từ đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử tham số A có giá trị [1, 2], tham số B có [X, Y]. Grid Search sẽ thử những cặp nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ thử (1, X), (1, Y), (2, X), (2, Y). Nó duyệt qua tất cả các khả năng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu mình chạy lại y hệt, danh sách các cặp đó có thay đổi không?"
+      },
+      {
+        "role": "Student",
+        "text": "Danh sách cặp thì không. Nhưng kết quả của mô hình có thể khác. Nên vẫn có sự ngẫu nhiên."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy sự ngẫu nhiên đến từ thuật toán Grid Search hay từ yếu tố khác?"
+      },
+      {
+        "role": "Student",
+        "text": "...Có lẽ là từ yếu tố khác, như việc chia dữ liệu. Bản thân Grid Search thì không."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy quá trình của Grid Search là xác định hay ngẫu nhiên?"
+      },
+      {
+        "role": "Student",
+        "text": "Là xác định. Vậy khuyết điểm của nó không phải là 'không nhất quán'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Grid Search duyệt mọi tổ hợp một cách có hệ thống, nó hoàn toàn xác định. Sự ngẫu nhiên bạn thấy đến từ các bước khác, không phải từ bản chất của Grid Search."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q13",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói các lần thử 'phụ thuộc ngẫu nhiên'. Điều đó có nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nghĩa là lần thử sau bị ảnh hưởng bởi lần trước, nhưng theo một cách không đoán trước được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, Grid Search có yếu tố 'ngẫu nhiên' ở đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Thứ tự thử các cặp tham số là ngẫu nhiên. Nó không đi theo một trật tự cố định."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử grid là: learning_rate=[0.1, 0.01] và C=[1, 10]. Lần thử đầu là (0.1, 1)."
+      },
+      {
+        "role": "Student",
+        "text": "Vâng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Lần thử thứ hai 'phụ thuộc ngẫu nhiên' vào lần đầu như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ không thử lại (0.1, 1). Có thể nó sẽ chọn ngẫu nhiên một trong ba điểm còn lại."
+      },
+      {
+        "role": "Tutor",
+        "text": "Grid Search có tự quyết định điểm thử tiếp theo không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không... Các điểm thử được xác định từ trước bởi grid mình đã tạo."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy các lần thử có phụ thuộc nhau, hay chúng độc lập và xác định trước?"
+      },
+      {
+        "role": "Student",
+        "text": "Chúng độc lập và được xác định trước. Vậy nên nó không học được gì từ các lần trước."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tóm lại, bạn đã nhầm vì cho rằng có sự phụ thuộc ngẫu nhiên. Thực tế, các lần thử là độc lập và được xác định trước, nên không có sự học hỏi giữa các lần thử."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q14",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ Grid Search trở nên 'thông minh hơn' bằng cách nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó phải tự biết cách thu hẹp phạm vi tìm kiếm lại. Chứ không ai lại đi kiểm tra tất cả các điểm trong một không gian lớn cả."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, Grid Search hoạt động chính xác như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó tạo một lưới các tham số và kiểm tra. Nhưng với không gian lớn, nó phải ưu tiên các khu vực tiềm năng hơn chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nó dựa vào đâu để biết một khu vực là 'tiềm năng' trước khi kiểm tra?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì... có thể dựa vào kết quả của vài điểm đầu tiên? Nếu một vùng có vẻ tốt, nó sẽ tìm kỹ hơn ở đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Thuật toán mà bạn mô tả, có còn là Grid Search không?"
+      },
+      {
+        "role": "Student",
+        "text": "Tại sao lại không? Nó vẫn là tìm kiếm trên lưới mà, chỉ là hiệu quả hơn thôi. Chẳng lẽ nó cứ máy móc thử hết?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử bạn có 2 tham số, mỗi tham số 100 giá trị. Có bao nhiêu cặp phải thử?"
+      },
+      {
+        "role": "Student",
+        "text": "100 nhân 100... là 10,000. Nhiều thật. Nhưng nếu nó 'thông minh' thì sẽ không cần thử hết 10,000 cặp đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy định nghĩa của Grid Search có cho phép nó bỏ qua bất kỳ điểm nào không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là không... Nếu nó phải thử hết thì... chi phí sẽ rất lớn. À..."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy khi không gian tham số lớn, điều gì xảy ra với Grid Search?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ phải kiểm tra tất cả các kết hợp, nên chi phí tính toán sẽ rất lớn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Sai lầm của bạn là cho rằng Grid Search có khả năng tự điều chỉnh. Thực tế, nó là một phương pháp tìm kiếm vét cạn, nên chi phí tăng theo cấp số nhân với số tham số."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q15",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói các lần thử của Grid Search có liên hệ với nhau. Liên hệ như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó dùng kết quả của lần thử trước để quyết định điểm tối ưu hơn cho lần thử sau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy Grid Search định nghĩa các điểm thử nghiệm vào lúc nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Trước mỗi lần lặp. Nó xem kết quả cũ rồi tính toán điểm tiếp theo cần thử."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mình có thể chạy 100 lần thử của Grid Search song song cùng lúc không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không được. Vì lần thử thứ hai phải chờ kết quả của lần thử thứ nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tại sao thư viện scikit-learn lại có tham số `n_jobs=-1` cho GridSearchCV?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là để chạy song song các bước khác, chứ không phải các lần thử nghiệm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tham số đó dùng để chạy các lần thử song song. Điều này có mâu thuẫn gì không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Nếu chạy song song được thì chúng không thể phụ thuộc vào kết quả của nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy đặc điểm chính của các lần thử trong Grid Search là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Chúng độc lập và được định sẵn từ đầu. Vậy so với Random Search, ưu điểm của việc thử hết các điểm đã định là tìm kiếm toàn diện."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm rằng Grid Search học hỏi giữa các lần thử. Thực tế, nó chỉ duyệt một lưới cố định một cách toàn diện, và các lần thử hoàn toàn độc lập."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q16",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn cho rằng Grid Search phức tạp hơn Bayesian Optimization. Sự phức tạp đó thể hiện ở đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó phải thử tất cả các kết hợp tham số. Quét toàn bộ không gian như vậy rõ ràng là phức tạp và tốn kém hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy Grid Search chọn điểm tiếp theo để thử như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó đi theo cái lưới đã được định sẵn. Ví dụ điểm (0.1, A) rồi đến (0.2, A). Nó cứ đi tuần tự thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Thế còn Bayesian Optimization chọn điểm tiếp theo dựa vào đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Dựa vào kết quả của những điểm đã thử trước đó. Nó dùng một mô hình xác suất để dự đoán điểm tốt nhất tiếp theo."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một bên đi theo lịch trình cố định, một bên tự 'suy luận' để chọn bước đi. Bạn thấy bên nào có logic 'phức tạp' hơn?"
+      },
+      {
+        "role": "Student",
+        "text": "Nhưng Grid Search phải tính toán nhiều hơn. Nhiều tổ hợp hơn tức là phức tạp hơn về tổng thể chứ?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Một người quét nhà theo từng ô gạch và một người tìm đường trong mê cung. Ai đang làm việc phức tạp hơn?"
+      },
+      {
+        "role": "Student",
+        "text": "... Người tìm đường trong mê cung. Vì họ phải ra quyết định. Vậy là Grid Search chỉ tốn công sức, còn logic thì đơn giản?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Vậy giữa 'đơn giản nhưng tốn kém' và 'phức tạp nhưng hiệu quả', nhận xét nào mô tả đúng Grid Search?"
+      },
+      {
+        "role": "Student",
+        "text": "Là 'đơn giản nhưng có thể tốn chi phí lớn'. Em đã nhầm lẫn giữa chi phí tính toán và sự phức tạp của thuật toán."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm lẫn giữa chi phí tính toán (nhiều việc) với độ phức tạp của thuật toán (cách làm việc)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q17",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ rằng 'ngẫu nhiên' là cách tốt nhất để thử 'mọi tổ hợp'. Tại sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì ngẫu nhiên sẽ không bị bó buộc, nó có thể nhảy đến bất kỳ đâu trong không gian tìm kiếm. Nên khả năng bao quát sẽ tốt hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Liệu 'bao quát tốt' có đồng nghĩa với 'thử hết mọi thứ' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không hẳn, nhưng trong thực tế không ai thử hết được. Ngẫu nhiên là cách hiệu quả nhất để tìm ra điểm tốt trong thời gian cho phép."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử bạn có 2 áo và 3 quần. 'Mọi tổ hợp' là bao nhiêu bộ đồ?"
+      },
+      {
+        "role": "Student",
+        "text": "Là 6 bộ. Nhưng ví dụ này quá đơn giản. Với siêu tham số thì khác."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu bạn chọn ngẫu nhiên 6 lần, bạn có chắc chắn thử được cả 6 bộ không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không chắc 100%, có thể bị lặp. Nhưng nếu không gian lớn thì ngẫu nhiên vẫn tốt hơn là đi tuần tự."
+      },
+      {
+        "role": "Tutor",
+        "text": "Câu hỏi yêu cầu phương pháp để 'thử mọi tổ hợp'. Ngẫu nhiên có *đảm bảo* điều đó không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Không. Nó không đảm bảo. Vậy là phải có một phương pháp nào đó duyệt một cách có hệ thống."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Vậy nhìn vào các lựa chọn, phương pháp nào được thiết kế để duyệt có hệ thống?"
+      },
+      {
+        "role": "Student",
+        "text": "Là GridSearchCV. Nó sẽ tạo ra một cái lưới và thử hết."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Lỗi sai của bạn là đánh đồng 'khám phá hiệu quả' với 'duyệt toàn bộ'. Khi yêu cầu là 'mọi tổ hợp', ta cần một phương pháp có hệ thống như GridSearchCV."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q18",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn viết GridSearchCV dùng phân phối xác suất. Vì sao bạn lại nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó là một phương pháp tìm kiếm. Để tìm kiếm hiệu quả thì phải có yếu tố ngẫu nhiên để khám phá chứ. RandomizedSearch cũng vậy mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Từ 'Grid' trong tên gọi gợi ý điều gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là 'lưới'. Chắc là nó tạo ra một cái lưới các giá trị, rồi chọn ngẫu nhiên các điểm trên đó để thử. Vẫn là ngẫu nhiên."
+      },
+      {
+        "role": "Tutor",
+        "text": "Ok, giả sử có 2 tham số, mỗi tham số 3 giá trị. Lưới đó có bao nhiêu điểm?"
+      },
+      {
+        "role": "Student",
+        "text": "3 nhân 3 là 9 điểm. Cái này thì rõ rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu nó chỉ thử 5 điểm ngẫu nhiên trên lưới, nó có đảm bảo tìm ra điểm tốt nhất không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không đảm bảo, có thể nó bỏ sót điểm tốt nhất. Nhưng đó là sự đánh đổi để nhanh hơn. Tôi vẫn nghĩ nó hoạt động như vậy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy cơ chế nào sẽ đảm bảo tìm ra điểm tốt nhất trên lưới 9 điểm đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì... phải thử hết cả 9 điểm. À... vậy nó không chọn ngẫu nhiên. Nó thử tất cả."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy giờ bạn hãy phát biểu lại quy tắc của GridSearchCV?"
+      },
+      {
+        "role": "Student",
+        "text": "GridSearchCV sẽ tạo ra một lưới từ tất cả các tổ hợp tham số và kiểm tra toàn bộ, không bỏ sót cái nào."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Lỗi sai của bạn là gán cơ chế chọn ngẫu nhiên của RandomizedSearchCV cho GridSearchCV, trong khi GridSearchCV có tính chất 'vét cạn'."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q19",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn viết Random Search vét cạn toàn bộ không gian. 'Vét cạn' ở đây nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nghĩa là nó sẽ thử tất cả các tổ hợp tham số có thể, chỉ là thứ tự lộn xộn thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, nó luôn đảm bảo thử hết 100% các điểm?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Nếu không vét cạn thì sao gọi là search được? Nó chỉ khác Grid Search ở thứ tự."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hãy xét một không gian tham số có vô số điểm. Random Search sẽ chạy trong bao lâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Làm gì có không gian nào vô số điểm. Tham số luôn có giới hạn chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Được, vậy một không gian có một tỷ tỷ điểm. Để 'vét cạn', nó cần bao nhiêu lần thử?"
+      },
+      {
+        "role": "Student",
+        "text": "Cần một tỷ tỷ lần thử... nhưng không ai chạy lâu vậy. Chắc nó sẽ dừng sớm hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu nó dừng sớm, nó có còn là 'vét cạn' nữa không?"
+      },
+      {
+        "role": "Student",
+        "text": "À... nếu dừng sớm thì nó không vét cạn. Vậy nó không phải là vét cạn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy bản chất của nó khác gì với việc 'vét cạn theo thứ tự ngẫu nhiên'?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó là chọn một vài điểm ngẫu nhiên để thử, chứ không phải thử hết. Nó lấy mẫu chứ không vét cạn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm lẫn giữa việc 'lấy mẫu ngẫu nhiên' và 'vét cạn theo thứ tự ngẫu nhiên'."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q20",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng Random Search dành cho mô hình đơn giản. Vì sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó chỉ chọn ngẫu nhiên, không cần tính toán phức tạp như Grid Search. Cách làm đơn giản thì hợp với mô hình đơn giản."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục tiêu chính của việc tìm siêu tham số là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để tìm ra bộ tham số tốt nhất cho mô hình."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử có 2 siêu tham số, mỗi cái 5 giá trị. Grid Search thử bao nhiêu lần?"
+      },
+      {
+        "role": "Student",
+        "text": "5 nhân 5 là 25 lần. Cái này khả thi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trong trường hợp đó, Grid Search có đảm bảo tìm ra điểm tốt nhất không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có, nó quét hết tất cả các kết hợp. Nhưng nếu dùng Random Search thì sẽ nhanh hơn. Nên nó vẫn hợp với mô hình đơn giản."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bây giờ có 10 siêu tham số, mỗi cái 10 giá trị. Grid Search thử bao nhiêu lần?"
+      },
+      {
+        "role": "Student",
+        "text": "Là 10 mũ 10... Rất lớn, không thể chạy nổi. Nhưng ai lại dùng mô hình phức tạp thế."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy trong trường hợp không chạy nổi đó, Grid Search có còn hữu ích không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nó vô dụng. Chắc lúc đó phải dùng Random Search, dù nó chỉ là ngẫu nhiên... Nó ít nhất còn chạy được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy Random Search trở thành giải pháp trong trường hợp nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Khi không gian tham số quá lớn đến mức Grid Search không thể thực hiện được. Nó là giải pháp cho bài toán lớn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm rằng Random Search dùng cho mô hình đơn giản. Thực tế, nó là công cụ mạnh khi không gian tham số quá lớn và phức tạp."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q21",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ vì sao Random Search đảm bảo không bỏ sót điểm nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó tìm ngẫu nhiên trên toàn không gian. Cứ chạy đủ lâu là sẽ lướt qua hết mọi điểm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bạn hiểu 'tìm kiếm toàn diện' nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là quét hết mọi khả năng, không bỏ sót vùng nào có thể chứa đáp án tốt nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử không gian chỉ có 10 điểm. Chạy 10 lần có chắc trúng hết 10 điểm?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc chắn rồi. Vì nó ngẫu nhiên nên sẽ rải đều ra. 10 lần cho 10 điểm là đủ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy lần thứ hai không thể lặp lại điểm của lần thứ nhất sao?"
+      },
+      {
+        "role": "Student",
+        "text": "À... cũng có thể lặp. Nhưng nếu chạy 100 lần thì chắc chắn sẽ trúng hết 10 điểm đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nó 'đảm bảo' hay chỉ là 'có khả năng cao'?"
+      },
+      {
+        "role": "Student",
+        "text": "...Là khả năng rất cao. Nó vẫn tốt hơn các phương pháp khác. Nên đó là ưu điểm toàn diện."
+      },
+      {
+        "role": "Tutor",
+        "text": "Sự đơn giản có phải một ưu điểm không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có. Nó không cần tính toán phức tạp. Chỉ sinh số ngẫu nhiên và thử... À, vậy nó không toàn diện, nó chỉ đơn giản thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm lẫn giữa tính ngẫu nhiên và việc đảm bảo quét hết. Ưu điểm thực sự của nó là sự đơn giản."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q22",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ Random Search là tìm kiếm toàn diện. 'Toàn diện' ở đây nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là nó sẽ quét hết tất cả các khả năng. Chỉ là thứ tự quét là ngẫu nhiên thôi, khác với Grid Search là theo thứ tự."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy Random Search có đảm bảo sẽ thử mọi điểm trong không gian không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có chứ. Nếu mình chạy đủ lâu, nó sẽ đi qua hết. Đó là bản chất của ngẫu nhiên mà, cuối cùng sẽ lấp đầy mọi chỗ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hãy tưởng tượng một lưới 10x10, có 100 điểm. Bạn thực hiện 100 lần thử ngẫu nhiên. Liệu bạn có chắc chắn đã thử hết 100 điểm khác nhau không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc chắn chứ. 100 lần thử cho 100 điểm thì phải trúng hết rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Lần thử thứ hai có 'nhớ' kết quả lần thứ nhất để tránh lặp lại không?"
+      },
+      {
+        "role": "Student",
+        "text": "À... không. Nó là ngẫu nhiên độc lập. Nhưng xác suất lặp lại thấp mà. Về cơ bản nó vẫn sẽ quét hết."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy có một khả năng, dù nhỏ, là nó thử vào cùng một điểm nhiều lần không?"
+      },
+      {
+        "role": "Student",
+        "text": "Vâng, về lý thuyết là có... Vậy nghĩa là nó không đảm bảo sẽ quét hết."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu không đảm bảo quét hết, khuyết điểm của nó khi tìm điểm tối ưu là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó có thể bỏ lót mất điểm tối ưu, đặc biệt là khi không gian tìm kiếm rất lớn. Nó khó tìm được điểm tối ưu toàn cục."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn giữa việc 'tìm kiếm ngẫu nhiên' và 'tìm kiếm có hệ thống'. Khuyết điểm của Random Search là không có gì đảm bảo nó sẽ rà soát hết không gian, do đó có thể bỏ lỡ điểm tối ưu."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q23",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói Random Search chỉ là xáo trộn thứ tự. Thứ tự của cái gì vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì là thứ tự của các điểm trên lưới. Thay vì đi từ trái qua phải, nó nhảy cóc."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy các giá trị tham số được thử có giống Grid Search không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Vẫn là các điểm đó thôi, nhưng thứ tự khác để tìm ra điểm tốt nhanh hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét tham số `alpha` từ 0.0 đến 1.0. Lưới của bạn là [0.1, 0.5, 0.9]. Grid Search có thử giá trị 0.3 không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không. Nó không có trong lưới."
+      },
+      {
+        "role": "Tutor",
+        "text": "Theo logic của bạn, Random Search có thử giá trị 0.3 không?"
+      },
+      {
+        "role": "Student",
+        "text": "Cũng không. Vì nó chỉ xáo trộn các điểm [0.1, 0.5, 0.9] thôi mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy cả hai phương pháp đều bỏ qua toàn bộ giá trị giữa các điểm lưới?"
+      },
+      {
+        "role": "Student",
+        "text": "...Đúng vậy. Nếu định nghĩa lưới như thế thì cả hai đều bỏ qua."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy sự 'ngẫu nhiên' có giúp tìm ra giá trị tối ưu ở 0.3 không?"
+      },
+      {
+        "role": "Student",
+        "text": "À không... Nếu vậy thì việc xáo trộn thứ tự không mang lại lợi thế về giá trị. Nó chỉ có thể chọn những gì có sẵn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, sự khác biệt cốt lõi giữa chúng là gì, nếu không phải thứ tự?"
+      },
+      {
+        "role": "Student",
+        "text": "Có lẽ là... Random Search không bị giới hạn bởi các điểm trên lưới. Nó có thể chọn bất kỳ điểm nào."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm lẫn việc 'xáo trộn thứ tự các điểm trên lưới' và 'chọn điểm ngẫu nhiên trong không gian'."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q24",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ padding và hàm loss gây ra sự không nhất quán. Cụ thể là thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Chúng là phần cốt lõi của mô hình. Thay đổi chúng là kết quả khác ngay, nên sự không nhất quán phải đến từ đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mục tiêu của 'Random Search' là tìm kiếm cái gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Tìm siêu tham số tốt nhất. Nhưng nó vô ích nếu bản thân mô hình đã không ổn định do padding hay hàm loss rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử mình giữ nguyên mô hình: cùng padding, cùng hàm loss. Mình chạy Random Search hai lần. Kết quả có chắc chắn giống nhau không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, vì quá trình train vẫn ngẫu nhiên mà. Nhưng gốc rễ của sự phức tạp đó vẫn là mô hình."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tên của phương pháp là 'Random Search'. Chữ 'Random' ở đây có ý nghĩa gì?"
+      },
+      {
+        "role": "Student",
+        "text": "... Là nó tìm kiếm một cách ngẫu nhiên. Không theo thứ tự."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu nó chọn các siêu tham số một cách ngẫu nhiên, hai lần chạy có chọn cùng một bộ không?"
+      },
+      {
+        "role": "Student",
+        "text": "... Chắc là không. À... vậy sự không nhất quán đến từ chính bước 'chọn ngẫu nhiên' này à?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Sự không nhất quán cốt lõi đến từ việc phương pháp này chọn ngẫu nhiên các bộ siêu tham số, không phải từ các thành phần cố định của mô hình."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q25",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói Random Search không dùng được với không gian lớn. Vì sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì không gian càng lớn, xác suất chọn trúng điểm tốt càng nhỏ. Nó gần như vô dụng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mục tiêu của Grid Search là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là để quét hết tất cả các khả năng, đảm bảo không bỏ sót điểm tốt nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử có 20 tham số, mỗi tham số chỉ 2 giá trị. Grid Search cần bao nhiêu lần thử?"
+      },
+      {
+        "role": "Student",
+        "text": "2 mũ 20, khoảng một triệu. Vẫn làm được. Và nó đảm bảo tìm ra cái tốt nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giờ tăng lên 10 giá trị mỗi tham số. Grid Search cần bao nhiêu lần?"
+      },
+      {
+        "role": "Student",
+        "text": "10 mũ 20. Rõ ràng là không thể. Nhưng đó là vấn đề của Grid Search, không có nghĩa Random Search tốt. Nó vẫn chỉ là đoán mò."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy trong trường hợp này, phương pháp nào thực hiện được?"
+      },
+      {
+        "role": "Student",
+        "text": "Random Search làm được, nhưng kết quả chỉ là may rủi. Em thà không làm còn hơn dựa vào may mắn. Một phương pháp có hệ thống vẫn hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Việc \"kết quả chỉ là may rủi\" diễn tả hạn chế nào của nó?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó không đảm bảo quét hết mọi nơi. Có thể nó bỏ sót hoàn toàn khu vực tốt nhất. À... nó không tìm kiếm toàn diện."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Hạn chế của nó không phải là \"không dùng được\", mà là \"không tìm kiếm toàn diện\", ngay cả khi nó là lựa chọn khả thi duy nhất."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q26",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng RandomizedSearchCV kiểm tra tất cả tổ hợp. Điều gì dẫn bạn đến kết luận đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì mục đích là tìm tham số tốt nhất mà. Không thử hết thì làm sao biết cái nào là tốt nhất?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, GridSearchCV và RandomizedSearchCV khác nhau ở đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là RandomizedSearchCV thử theo thứ tự ngẫu nhiên thôi. Nhưng cuối cùng vẫn phải thử hết chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử có 4 tham số, mỗi cái 10 giá trị. GridSearchCV cần bao nhiêu lần thử?"
+      },
+      {
+        "role": "Student",
+        "text": "10 mũ 4, là 10,000 lần. Rất nhiều."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu dùng RandomizedSearchCV với `n_iter=50` thì sao? Nó thử bao nhiêu lần?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó vẫn phải thử 10,000 lần chứ. `n_iter=50` có thể là số lần lặp cho một phần nhỏ nào đó thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "`n_iter` là số lượng ứng viên tham số được lấy mẫu. Vậy tại sao nó phải thử nhiều hơn con số đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nếu không thử hết, nó có thể bỏ lỡ tổ hợp tốt nhất. Như vậy thì công cụ này vô dụng sao?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy chi phí tính toán của nó có phụ thuộc vào tổng số 10,000 tổ hợp không?"
+      },
+      {
+        "role": "Student",
+        "text": "Hmm... nếu nó chỉ thử 50 lần, thì chi phí chỉ là của 50 lần thử. Nó không phụ thuộc vào 10,000 kia."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy quy tắc về chi phí của nó là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Chi phí được quyết định bởi `n_iter`. Nó là một con số cố định mình đặt ra. À... giờ mình đã thấy. Vậy đáp án đúng là... có chi phí tính toán cố định thông qua `n_iter`."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn vì cho rằng mọi phương pháp phải duyệt hết. RandomizedSearchCV đánh đổi sự toàn diện để lấy chi phí tính toán có thể kiểm soát và cố định."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q27",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng Random Search 'toàn diện hơn'. Toàn diện ở đây nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nghĩa là nó tìm hết mọi ngóc ngách. Grid Search chỉ đi theo lưới nên chắc chắn bỏ sót nhiều chỗ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Grid Search hoạt động cụ thể thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó chia không gian thành lưới và chỉ thử các điểm giao nhau. Rõ ràng là không toàn diện."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy Grid Search có bao giờ là lựa chọn tốt không?"
+      },
+      {
+        "role": "Student",
+        "text": "Em nghĩ là không, vì nó quá cứng nhắc. Random Search luôn có cơ hội tìm ra điểm tốt hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử có 100 tham số, mỗi tham số 2 giá trị. Grid Search khả thi không?"
+      },
+      {
+        "role": "Student",
+        "text": "Sẽ là 2^100 điểm thử... Rất lớn, không thể chạy được. Nhưng đó là vấn đề của Grid Search."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trong trường hợp đó, Random Search với 1000 lần thử thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó vẫn chỉ thử 1000 điểm. So với 2^100 thì quá nhỏ... À, vậy nó không hề toàn diện."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy ưu điểm thực sự của Random Search so với Grid Search là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Trong không gian lớn, Grid Search bất khả thi, còn Random Search vẫn có thể tìm ra kết quả tốt. Vấn đề là hiệu quả."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Lỗi sai là nhầm lẫn 'không bị ràng buộc bởi lưới' với 'toàn diện'. Thực tế, điểm mạnh của nó là hiệu quả trong không gian lớn."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q28",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn chọn 'cv'. Vì sao bạn nghĩ nó giới hạn số lần thử nghiệm?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì `cv=5` là chạy 5 lần, `cv=10` là 10 lần. Rõ ràng nó đang giới hạn số lần thử mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy vai trò của `cv` trong mỗi lần chạy đó là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để đánh giá mô hình. Nhưng nó cũng quyết định tổng số lần chạy. Hai việc đó là một."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử mình chỉ muốn thử một bộ tham số duy nhất. Mình đặt `cv=5`. Có bao nhiêu lần thử nghiệm?"
+      },
+      {
+        "role": "Student",
+        "text": "Là 5 lần thử nghiệm. Như mình đã nói."
+      },
+      {
+        "role": "Tutor",
+        "text": "'Thử nghiệm' ở đây là thử một *bộ tham số* mới. Vậy có bao nhiêu bộ tham số được thử?"
+      },
+      {
+        "role": "Student",
+        "text": "Vẫn là 5... Khoan đã. Chỉ có một bộ tham số. Nhưng nó chạy 5 lần. Vậy `cv` vẫn đang giới hạn mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy `cv=5` giới hạn cái gì? Số bộ tham số, hay số lần đánh giá cho một bộ?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó... đánh giá một bộ tham số 5 lần. Vậy nó không giới hạn số bộ tham số được thử."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy để giới hạn số bộ tham số khác nhau được thử, ta cần tham số nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải là một tham số khác... Chắc là `n_iter`. Vậy câu hỏi ban đầu đáp án là `n_iter`."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Bạn đã thấy `cv` là số fold để đánh giá *một* bộ tham số. Còn `n_iter` là số bộ tham số khác nhau được thử."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q29",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn cho rằng Bayesian Optimization (BO) là một phương pháp vét cạn. Vì sao lại là 'vét cạn'?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó cũng thử qua nhiều giá trị tham số khác nhau để tìm ra cái tốt nhất, giống như Grid Search. Mục tiêu là tìm ra điểm tối ưu, thì phải thử hết chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Theo bạn, 'vét cạn' nghĩa là thử mọi điểm trên một lưới định trước, đúng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Nó phải kiểm tra hết các kết hợp có thể có trong không gian đó mới gọi là tối ưu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Grid Search có cần biết kết quả của bước 1 để chọn điểm ở bước 2 không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, các điểm trong Grid Search là độc lập. Nhưng em nghĩ BO cũng vậy, nó chỉ là một cách thử thông minh hơn thôi, bản chất vẫn là thử."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy BO có dùng kết quả của bước 1 để quyết định xem bước 2 nên thử ở đâu không?"
+      },
+      {
+        "role": "Student",
+        "text": "…Chắc là có, nó dùng thông tin đó để dự đoán vùng tốt hơn. Nhưng cuối cùng nó vẫn phải thử mà. Không thử sao biết?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Việc 'dùng kết quả cũ để quyết định bước tiếp theo' có giống với 'thử mọi điểm trên lưới' không?"
+      },
+      {
+        "role": "Student",
+        "text": "…Không. Một cái có tính toán cho bước sau, một cái thì không. Nó không phải vét cạn theo kiểu của Grid Search."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy bạn có thể định nghĩa lại BO dựa trên sự khác biệt đó không?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó không phải là vét cạn. Nó là một chiến lược chọn điểm thử một cách tuần tự, dựa trên các kết quả đã có."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Sai lầm của bạn là đánh đồng 'thử nhiều điểm' với 'vét cạn'. BO là một chiến lược tuần tự, học hỏi để tìm điểm tối ưu, khác với việc duyệt hết một cách mù quáng."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q30",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ Bayesian Optimization dùng đạo hàm, giống Gradient Descent phải không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng ạ. Cả hai đều là thuật toán tối ưu hóa, mục tiêu là tìm điểm thấp nhất. Dùng đạo hàm là cách chuẩn rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Để tính đạo hàm, bạn cần biết điều gì về hàm số?"
+      },
+      {
+        "role": "Student",
+        "text": "Cần biết công thức tường minh của hàm số đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tưởng tượng một hàm 'hộp đen' bạn không biết công thức. Làm sao tính đạo hàm?"
+      },
+      {
+        "role": "Student",
+        "text": "Nếu không có công thức thì chịu. Nhưng chắc chắn phải có cách nào đó xấp xỉ đạo hàm chứ, không thì sao tối ưu?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy bạn khẳng định không thể tối ưu nếu không có đạo hàm?"
+      },
+      {
+        "role": "Student",
+        "text": "Em không chắc 100%... nhưng đó là cách duy nhất em biết. Các phương pháp tối ưu em học đều cần nó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bayesian Optimization được thiết kế cho các hàm 'hộp đen' đó. Vậy nó hoạt động thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "...Vậy chắc nó không dùng đạo hàm. Nó phải dự đoán điểm tiếp theo dựa trên những điểm đã thử?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Dự đoán dựa trên cơ sở gì? Một quy tắc cố định hay một mô hình nào đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là một mô hình xác suất về hàm mục tiêu. Vậy nguyên tắc là... tối ưu hóa dựa trên xác suất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Sai lầm của bạn là cho rằng mọi phương pháp tối ưu đều phải dùng đạo hàm. BO thì xây dựng mô hình xác suất."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q31",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "[A] Chào bạn. Trong lời giải, bạn cho rằng Bayesian Optimization (BO) đơn giản hơn Grid Search (GS). Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì GS phải định nghĩa cả một lưới tham số, rất nhiều điểm. BO có vẻ thông minh hơn, nên nó phải đi đường tắt, đơn giản hơn chứ ạ."
+      },
+      {
+        "role": "Tutor",
+        "text": "[B] 'Đơn giản hơn' ở đây nghĩa là ít bước tính toán hơn, hay dễ hiểu hơn?"
+      },
+      {
+        "role": "Student",
+        "text": "Là ít tính toán hơn. Một phương pháp tối ưu tốt thì phải hiệu quả, tức là không làm những việc thừa thãi. Phức tạp không thể là ưu điểm được."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Giữa hai lần thử, GS có cần tính toán gì để chọn điểm tiếp theo không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nó chỉ đi theo cái lưới đã vạch sẵn thôi. Rất máy móc."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Thế còn BO? Nó làm gì sau khi có kết quả của một điểm thử?"
+      },
+      {
+        "role": "Student",
+        "text": "Em không chắc, nhưng nó phải dùng kết quả đó để quyết định điểm tiếp theo. Nhưng đó chính là sự thông minh, nó giúp bỏ qua các bước không cần thiết."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Việc 'quyết định điểm tiếp theo' đó có cần tính toán không? Ví dụ như cập nhật một mô hình?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là có. Nhưng việc đó đáng giá mà. Nó giúp mình không phải thử mò mẫm như GS. Về tổng thể nó vẫn 'đơn giản' hơn về mặt công sức."
+      },
+      {
+        "role": "Tutor",
+        "text": "[D] Vậy cái 'tính toán' thêm giữa các bước đó giúp BO làm được gì mà GS không làm được?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó... dùng thông tin của các lần thử trước. Để lần thử sau tốt hơn. À... vậy nó không đơn giản hơn về mặt tính toán."
+      },
+      {
+        "role": "Tutor",
+        "text": "[D] Vậy quay lại câu hỏi. Ưu điểm chính của BO so với GS là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là nó có kế thừa thông tin từ các lần thử trước đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "[E] Chính xác. Bạn đã nhầm lẫn giữa sự đơn giản về mặt khái niệm và sự phức tạp trong tính toán. Ưu điểm của BO chính là sự phức tạp có chủ đích: kế thừa thông tin để tìm kiếm hiệu quả hơn."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q32",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói BO không hợp với không gian lớn. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì không gian càng lớn thì càng khó tìm. BO phải xây dựng mô hình phức tạp nên sẽ rất chậm."
+      },
+      {
+        "role": "Tutor",
+        "text": "So với Grid Search thì sao? Nó hoạt động thế nào trong không gian lớn?"
+      },
+      {
+        "role": "Student",
+        "text": "Grid Search chia lưới và thử hết. Chắc chắn nó sẽ rất tệ trong không gian lớn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử có 5 tham số, mỗi tham số 10 giá trị. Grid Search thử bao nhiêu điểm?"
+      },
+      {
+        "role": "Student",
+        "text": "Là 10 mũ 5, tức là 100,000 điểm. Quá nhiều."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy Bayesian Optimization có thử hết 100,000 điểm không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nhưng nó phải tính toán phức tạp sau mỗi lần thử. Em nghĩ tổng thời gian cũng vậy, thậm chí tệ hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục tiêu của BO sau mỗi lần thử là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để cập nhật mô hình và tìm điểm tốt hơn cho lần sau. Nó dùng thông tin cũ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy giữa việc thử hết và việc dùng thông tin cũ, phương pháp nào thông minh hơn?"
+      },
+      {
+        "role": "Student",
+        "text": "...Chắc là cái biết tận dụng thông tin cũ. Grid Search có vẻ quá lãng phí."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy khuyết điểm của BO có phải là không gian lớn không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không... Có lẽ ngược lại. Khuyết điểm của nó phải là thứ khác, như sự phức tạp của chính nó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Điểm mạnh của BO là hiệu quả trong không gian lớn. Khuyết điểm là sự phức tạp trong cài đặt và tính toán."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q33",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói Bayesian nhanh hơn. Ý bạn là nhanh hơn ở mỗi lần thử, đúng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Mỗi lần thử ít tốn thời gian hơn nên tổng thể nhanh hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy Random Search và Grid Search hoạt động thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Random Search thử ngẫu nhiên, Grid Search thử hết các điểm. Cả hai đều không suy nghĩ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu mỗi lần thử của Bayesian tốn thời gian GẤP ĐÔI Random Search thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Thế thì nó chậm hơn chứ sao. Vậy thì dùng Random Search cho rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Liệu có trường hợp nào nó vẫn tìm ra kết quả tốt nhanh hơn không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không thể nào. Gấp đôi thời gian mỗi lần thì tổng thời gian phải nhiều hơn chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu Bayesian chỉ cần 10 lần thử, còn Random Search cần 1000 lần thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Chờ đã... Tại sao nó lại chỉ cần ít lần thử hơn được?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Điều gì giúp nó cần ít lần thử hơn so với việc thử ngẫu nhiên?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là... nó biết được nên thử ở đâu tiếp theo? Dựa vào kết quả trước đó?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy quay lại câu hỏi. Điểm khác biệt nổi bật là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là các lần thử có liên hệ với nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Điểm khác biệt không phải 'thời gian mỗi lần thử' mà là 'thông tin giữa các lần thử'."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q34",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng việc chọn hàm acquisition không quan trọng. Vì sao bạn tin như vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì thuật toán Bayesian Optimization tự nó đã thông minh rồi. Chỉ cần chạy là nó sẽ tìm ra điểm tốt, hàm nào cũng vậy thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mục tiêu của hàm acquisition là gì trong thuật toán đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Để chọn điểm tiếp theo cần đánh giá. Nhưng cách chọn nào thì cuối cùng cũng sẽ tới đích."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử mình tạo một hàm acquisition chỉ chọn điểm ở góc trái dưới của không gian tìm kiếm thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Đó là một trường hợp vô lý, không ai làm thế. Các hàm chuẩn như EI hay UCB không hoạt động như vậy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu có những lựa chọn 'vô lý' dẫn đến kết quả tệ, điều đó nói gì về tầm quan trọng của việc lựa chọn?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó chỉ chứng tỏ có lựa chọn sai thôi. Nhưng giữa các lựa chọn 'đúng' thì chắc không khác biệt nhiều."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một hàm chỉ 'khai thác' và một hàm chỉ 'thăm dò' có phải là hai lựa chọn 'đúng' không?"
+      },
+      {
+        "role": "Student",
+        "text": "…Chắc là không. Chúng sẽ cho kết quả rất khác nhau. Một cái có thể bị kẹt, một cái thì quá chậm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nếu các lựa chọn khác nhau cho kết quả khác nhau, kết luận của bạn về câu hỏi ban đầu là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Rằng việc chọn hàm acquisition có ảnh hưởng. Nó ảnh hưởng tới hiệu quả của thuật toán."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Ban đầu bạn nghĩ nó không quan trọng, nhưng thực tế việc chọn hàm chính là chọn chiến lược tìm kiếm, ảnh hưởng trực tiếp đến hiệu quả."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q35",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng các lần thử là độc lập, giống hệt Random Search. Đúng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Nó chỉ là một cách tìm kiếm ngẫu nhiên thôi, có thể có quy tắc nào đó để dừng sớm hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu giống hệt, tại sao lại cần một cái tên riêng là 'Bayesian'?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc để nghe có vẻ học thuật hơn. Về bản chất, mỗi lần thử không liên quan đến lần trước."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử bạn tìm điểm trũng nhất trong một thung lũng. Bạn ném một quả bóng."
+      },
+      {
+        "role": "Student",
+        "text": "Được. Thì nó sẽ rơi vào một điểm ngẫu nhiên."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bóng dừng ở nơi khá dốc. Lần ném tiếp theo bạn có nhắm vào chỗ cũ không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, tôi sẽ ném theo hướng dốc xuống. Nhưng đó là con người, máy móc thì chỉ ngẫu nhiên thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy bạn đang nói máy móc không thể 'học' từ độ dốc đó?"
+      },
+      {
+        "role": "Student",
+        "text": "…Chờ đã. Nếu nó học được thì lần thử sau không còn độc lập nữa."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy quy tắc chung của một thuật toán tìm kiếm 'thông minh' là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó phải dùng thông tin của lần thử trước để quyết định lần thử tiếp theo. Vậy đáp án đúng là tận dụng kết quả trước."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Lỗi sai của bạn là coi các lần thử là độc lập, trong khi Bayesian Optimization xây dựng mô hình từ kết quả cũ để tìm hiệu quả hơn."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q36",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng Bayesian Optimization (BO) chỉ hợp với không gian nhỏ. Tại sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó là một phương pháp phức tạp. Phương pháp phức tạp nên dùng cho vấn đề nhỏ, tập trung để đảm bảo hiệu quả, không phải cho không gian lớn và loãng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy với không gian nhỏ, bạn có phương pháp nào khác ngoài BO không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có Grid Search. Cứ chia lưới và thử hết là được, đơn giản."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử không gian có 20 điểm. Mỗi điểm thử tốn 1 ngày. Bạn dùng gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Tất nhiên là BO. Grid Search tốn 20 ngày sao? Nhưng đây là trường hợp đặc biệt về chi phí, không phải về kích thước."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy giả sử không gian có 1 triệu điểm. Mỗi điểm thử mất 1 giây. Bạn dùng gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Mất 1 triệu giây... hơn 11 ngày. Vẫn lâu. Chắc là BO sẽ nhanh hơn... À, có vẻ em đã quá tập trung vào số lượng điểm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy yếu tố quyết định để chọn BO là gì, nếu không chỉ là số điểm?"
+      },
+      {
+        "role": "Student",
+        "text": "Là chi phí cho mỗi lần thử. Nếu mỗi lần thử rất tốn kém, thì dù không gian lớn hay nhỏ, ta vẫn muốn giảm số lần thử. BO làm được việc đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy quay lại câu hỏi ban đầu, BO phù hợp với không gian nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó đặc biệt phù hợp với không gian tham số lớn, nơi mà việc thử hết (Grid Search) là không thể vì chi phí quá cao cho mỗi lần thử."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Lỗi sai ban đầu của bạn là cho rằng 'phức tạp' đồng nghĩa với 'chỉ dùng cho bài toán nhỏ', mà bỏ qua yếu tố cốt lõi là 'chi phí đánh giá'."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q37",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ rằng acquisition function dùng để chuẩn hóa dữ liệu. Nó chuẩn hóa như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó đưa các giá trị về cùng một thang đo, ví dụ 0-1, để mô hình surrogate học tốt hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục đích cuối cùng của việc chuẩn hóa dữ liệu là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để các feature có tầm quan trọng như nhau, tránh các feature có giá trị lớn lấn át."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy output của một hàm chuẩn hóa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là một bộ dữ liệu mới, với các giá trị đã được biến đổi, ví dụ nằm trong khoảng [0, 1]."
+      },
+      {
+        "role": "Tutor",
+        "text": "Acquisition function có trả về một bộ dữ liệu mới không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không hẳn, nhưng nó tính toán dựa trên dữ liệu mà. Chắc chắn nó là một bước xử lý trung gian."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hãy nhìn vào output của nó. Nó trả về giá trị cho mỗi điểm, điểm cao nhất là tốt nhất."
+      },
+      {
+        "role": "Student",
+        "text": "Đúng, giá trị đó thể hiện độ tốt. Nhưng nó vẫn phải liên quan đến chuẩn hóa để có giá trị đó chứ?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu giá trị đó cho biết 'độ tốt' để thử, nó giúp ta làm gì tiếp theo?"
+      },
+      {
+        "role": "Student",
+        "text": "Chọn điểm tốt nhất để thử... À, vậy là để chọn điểm thử nghiệm tiếp theo."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Nó không chuẩn hóa dữ liệu. Nó giúp chọn điểm thử nghiệm kế tiếp dựa trên dự đoán của surrogate model."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q38",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn viết Bayesian Optimization (BO) tìm kiếm 'toàn diện hơn'. 'Toàn diện' ở đây nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là nó quét không gian tham số kỹ hơn, không bỏ sót những vùng có khả năng chứa đáp án tốt."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hãy so sánh với Grid Search. Nó có 'toàn diện' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Grid Search cũng quét, nhưng nó ngốc nghếch, có thể lãng phí thời gian vào vùng vô dụng. Nên nó không thực sự toàn diện về mặt hiệu quả."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nếu chỉ xét 'quét không gian', cái nào quét đều hơn?"
+      },
+      {
+        "role": "Student",
+        "text": "Grid Search quét đều hơn, nhưng đó là điểm yếu của nó. Toàn diện phải thông minh, không chỉ là rải đều."
+      },
+      {
+        "role": "Tutor",
+        "text": "Lần thử thứ 10 của BO dựa vào điều gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó dựa vào kết quả của 9 lần thử trước để quyết định điểm tiếp theo có tiềm năng nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy khác biệt cốt lõi là 'toàn diện' hay là 'dựa vào lần thử trước'?"
+      },
+      {
+        "role": "Student",
+        "text": "Là... dựa vào lần thử trước. Dùng từ 'toàn diện' có vẻ không chính xác."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy giờ bạn hãy chọn lại đáp án cho câu hỏi ban đầu."
+      },
+      {
+        "role": "Student",
+        "text": "D. Dùng lý thuyết xác suất và kế thừa thông tin các lần thử trước."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Khác biệt chính không phải là mức độ 'toàn diện', mà là việc BO học hỏi từ quá khứ, còn Grid/Random Search thì không."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q39",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn nói learning rate quyết định số epoch. Mối liên hệ này là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là một quy tắc. Nếu learning rate là X thì phải chạy Y epoch. Nó được định sẵn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'epoch' là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là một lần mô hình duyệt qua toàn bộ tập dữ liệu huấn luyện."
+      },
+      {
+        "role": "Tutor",
+        "text": "Ok. Giả sử hai mô hình cùng learning rate, một mô hình hội tụ sau 10 epoch. Mô hình kia sau 100 epoch. Điều này có thể xảy ra không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không thể. Nếu cùng learning rate thì số epoch phải giống nhau. Chắc là dữ liệu hoặc kiến trúc của chúng khác nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu mọi thứ khác, kể cả dữ liệu, đều giống hệt thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì... vô lý. Theo em biết thì learning rate là tham số cố định số epoch."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy learning rate ảnh hưởng đến độ lớn mỗi bước cập nhật trọng số đúng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng. Nó là kích thước bước đi. Vậy nên bước đi lớn sẽ đi được quãng đường nhanh hơn, cần ít epoch hơn. Nó vẫn quyết định số epoch mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nó quyết định 'số lượng' hay 'tốc độ'?"
+      },
+      {
+        "role": "Student",
+        "text": "À... nó quyết định tốc độ, và từ đó ảnh hưởng đến số epoch cần thiết để hội tụ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Giờ bạn hãy trả lời lại câu hỏi ban đầu."
+      },
+      {
+        "role": "Student",
+        "text": "Learning rate ảnh hưởng đến tốc độ học của mô hình."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Lỗi sai của bạn là nhầm lẫn việc 'ảnh hưởng đến tốc độ' với việc 'quyết định một số lượng epoch cố định'."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q40",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói regularization giúp tăng tốc độ học. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó 'regularize' - điều chuẩn lại quá trình học. Quá trình được điều chuẩn thì phải hiệu quả hơn, tức là nhanh hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Regularization thêm một thành phần vào hàm loss. Đúng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng. Nó thêm một hình phạt cho trọng số lớn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Thêm một phép tính vào mỗi bước cập nhật. Có làm quá trình nhanh hơn không?"
+      },
+      {
+        "role": "Student",
+        "text": "Mỗi bước có thể chậm hơn một chút. Nhưng nó giúp mô hình hội tụ nhanh hơn, nên tổng thời gian vẫn nhanh hơn chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu mục tiêu duy nhất là tốc độ, ta có thêm phép tính vào không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không... Nhưng ở đây là trường hợp khác. Việc 'phạt' trọng số chắc chắn phải có lợi cho việc tối ưu, nên nó nhanh hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một mô hình có trọng số rất lớn thường gặp vấn đề gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Phức tạp quá, dẫn đến overfitting trên tập train."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy việc phạt trọng số lớn giải quyết vấn đề cốt lõi nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Giải quyết overfitting. Vậy tác dụng chính của nó là ngăn overfitting, không phải tốc độ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Bạn đã nhầm lẫn tác dụng chính là ngăn overfitting với một giả định về tốc độ."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q41",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói early stopping là khi huấn luyện xong vì hết dữ liệu. Vậy nếu có 1 triệu epoch, ta phải chạy hết cả triệu sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Huấn luyện là phải để mô hình học hết dữ liệu, chạy đủ số epoch đã định."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục tiêu của việc huấn luyện là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để mô hình có độ chính xác cao nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử loss trên tập validation tốt nhất ở epoch 50. Từ epoch 51, loss đó cứ tăng dần. Bạn có chạy tiếp đến epoch 1000 không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có chứ. Quy trình là phải chạy hết. Biết đâu sau đó loss lại giảm thì sao?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mô hình ở epoch 1000, với validation loss cao hơn, tốt hơn mô hình ở epoch 50?"
+      },
+      {
+        "role": "Student",
+        "text": "... Validation loss cao hơn thì... mô hình đó tệ hơn trên dữ liệu lạ. Nhưng nó đã học được nhiều hơn mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy ta nên chọn mô hình nào, cái 'học nhiều hơn' hay cái 'tốt hơn'?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải chọn cái tốt hơn. Tức là... ta nên dừng lại ở epoch 50?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'dừng sớm' là dừng dựa trên điều gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Dừng khi hiệu suất không còn tốt hơn nữa, dựa vào validation loss."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tóm lại, early stopping là dừng dựa trên hiệu suất, không phải vì hết dữ liệu, để có được mô hình tốt nhất."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q42",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ cross-validation giúp tăng tốc độ học như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó chia dữ liệu thành các phần nhỏ hơn để huấn luyện. Mỗi lần huấn luyện trên phần nhỏ sẽ nhanh hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trong 5-fold cross-validation, mô hình được huấn luyện bao nhiêu lần?"
+      },
+      {
+        "role": "Student",
+        "text": "5 lần. Nhưng vì mỗi lần chỉ chạy trên 4/5 dữ liệu nên tổng thời gian vẫn phải nhanh hơn chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử huấn luyện trên toàn bộ dữ liệu mất 10 phút. Với 5-fold thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Mỗi fold dùng 4/5 dữ liệu, nên mất khoảng 8 phút. 5 lần là 40 phút... Khoan, nó chậm hơn nhiều."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy thời gian là 40 phút so với 10 phút. Liệu nó có nhanh hơn không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không. Nhưng chắc chắn phải có lợi ích gì đó về tốc độ chứ? Có thể nó giúp mô hình hội tụ nhanh hơn?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu không phải tốc độ, tại sao người ta lại chấp nhận quy trình 40 phút?"
+      },
+      {
+        "role": "Student",
+        "text": "Để có một đánh giá tốt hơn về hiệu năng? Vì nó chạy trên nhiều tập con dữ liệu khác nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đánh giá tốt hơn đó giúp ta quyết định điều gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Quyết định bộ tham số nào là tốt nhất, cho hiệu năng ổn định nhất trên các tập dữ liệu khác nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Mục đích của cross-validation không phải là tốc độ, mà là tìm tham số tối ưu thông qua một phép đo hiệu năng đáng tin cậy, dù tốn thời gian hơn."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q43",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn cho rằng số lượng features là một siêu tham số. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì mình có thể chọn dùng 10, 20, hay 50 features. Việc lựa chọn này ảnh hưởng trực tiếp đến kết quả, nên nó là một thứ cần được 'tune'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, siêu tham số là bất cứ thứ gì mình 'tune' để cải thiện kết quả?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Miễn là nó thay đổi được và ảnh hưởng đến độ chính xác thì đều là siêu tham số."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử bạn có 1 triệu điểm dữ liệu. Bạn thử huấn luyện với 100 nghìn điểm. Việc này có ảnh hưởng kết quả không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có chứ, dữ liệu ít hơn thì kết quả thường tệ hơn. Nhưng đó là thay đổi dữ liệu, không phải siêu tham số."
+      },
+      {
+        "role": "Tutor",
+        "text": "Việc bạn chọn 20 features thay vì 50, có phải là thay đổi dữ liệu đầu vào của mô hình không?"
+      },
+      {
+        "role": "Student",
+        "text": "Ừm... cũng có thể coi là vậy. Nhưng nó là một quyết định về cấu trúc, không phải chỉ là thêm bớt dòng dữ liệu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy ranh giới giữa 'thay đổi dữ liệu' và 'chỉnh siêu tham số' là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là... siêu tham số là một cài đặt của thuật toán, còn số features là thuộc tính của dữ liệu. Vậy trọng số không phải siêu tham số."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã phân biệt được. Số lượng features là kết quả của bước feature engineering, thuộc về dữ liệu. Còn trọng số là tham số được mô hình tự học."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q44",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng trọng số là siêu tham số. Logic của bạn là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó là giá trị số quan trọng nhất. Thiếu nó mạng neural không thể hoạt động được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy siêu tham số được thiết lập ở thời điểm nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Trước khi huấn luyện. Giống như số lớp, mình phải định nghĩa nó từ đầu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trong lúc huấn luyện, giá trị của trọng số có thay đổi không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có chứ, thuật toán tối ưu sẽ cập nhật nó liên tục để giảm sai số."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy ai quyết định giá trị cuối cùng của một trọng số?"
+      },
+      {
+        "role": "Student",
+        "text": "Là thuật toán. Nhưng ban đầu mình vẫn phải khởi tạo nó. Nó vẫn là một tham số quan trọng mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Số lớp có thay đổi trong lúc huấn luyện không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không. Một khi đã chạy thì số lớp phải cố định."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy giữa 'thứ bạn đặt' và 'thứ thuật toán học', có sự khác biệt nào?"
+      },
+      {
+        "role": "Student",
+        "text": "...Có. Một cái là mình quyết định, một cái là máy quyết định. Cái mình quyết định là siêu tham số."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy áp dụng lại, trọng số là loại nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó là thứ thuật toán học được. Vậy chỉ có số lớp là siêu tham số."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Siêu tham số do bạn cấu hình trước khi huấn luyện. Trọng số là tham số mô hình tự học được."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q45",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói cả ba phương pháp đều kế thừa thông tin. Grid Search kế thừa như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó thấy điểm này tệ thì lần sau nó sẽ thử một điểm khác hẳn chứ. Đó là kế thừa."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy điểm tiếp theo phụ thuộc vào kết quả của điểm trước đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc chắn rồi. Nếu không thì nó quá máy móc và lãng phí. Nó phải 'học' được vùng nào tốt để tìm tiếp."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử grid của mình có 4 điểm: A, B, C, D. Lần đầu thử điểm A cho kết quả rất tệ. Lần tiếp theo, thuật toán có bỏ qua điểm B không?"
+      },
+      {
+        "role": "Student",
+        "text": "Nếu B gần A thì nên bỏ qua. Nó phải nhảy đến C hoặc D chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Từ 'Grid Search' (tìm kiếm lưới) gợi ý điều gì về cách nó duyệt các điểm?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó... duyệt trên một cái lưới. Nhưng nó vẫn có thể bỏ qua các ô chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu nó bỏ qua ô, nó còn là 'tìm kiếm toàn diện' trên lưới không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là không... Vậy nó duyệt hết, không quan tâm kết quả trước đó sao?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Giờ hãy quay lại câu hỏi: sự khác biệt cốt lõi về 'học' giữa Grid Search và Bayesian là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Grid Search không học, nó chỉ duyệt một cách mù quáng. Bayesian thì có, nó dùng kết quả cũ để chọn điểm mới."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Ban đầu bạn cho rằng mọi phương pháp đều học hỏi. Giờ bạn đã thấy Grid Search tìm kiếm một cách có hệ thống nhưng không kế thừa thông tin."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q46",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng Random Search tìm kiếm toàn diện. 'Toàn diện' ở đây nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là nó có khả năng quét qua toàn bộ không gian tìm kiếm, không bỏ sót vùng nào."
+      },
+      {
+        "role": "Tutor",
+        "text": "Từ 'có khả năng' có giống với 'đảm bảo' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không giống hẳn. Nhưng nếu chạy đủ nhiều lần, xác suất quét hết là rất cao, gần như đảm bảo."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hãy xét một lưới 3x3. Có 9 điểm. Cần bao nhiêu lần thử ngẫu nhiên để 'đảm bảo' trúng hết 9 điểm?"
+      },
+      {
+        "role": "Student",
+        "text": "Không thể nói chính xác con số. Có thể là 9 lần nếu may mắn, có thể là 20, 30 lần. Nhưng càng nhiều càng chắc."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy sau 100 lần thử, xác suất bỏ sót một ô cụ thể có bằng không không?"
+      },
+      {
+        "role": "Student",
+        "text": "Ừm... Về lý thuyết thì xác suất đó rất nhỏ, nhưng không hoàn toàn bằng không. Vẫn có khả năng nó lặp lại các ô đã thử."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy phương pháp nào sẽ đảm bảo duyệt hết 9 điểm đó mà không cần đến may mắn?"
+      },
+      {
+        "role": "Student",
+        "text": "Grid Search. Nó sẽ đi qua từng điểm một cách có hệ thống."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, khi nói về 'tìm kiếm toàn diện', bạn đã thấy sự khác biệt giữa 'đảm bảo' và 'có khả năng cao'."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q47",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ Grid Search vẫn tốt cho không gian lớn. Vì sao nó lại tốt?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó tìm kiếm một cách có hệ thống. Nó sẽ không bỏ sót bất kỳ tổ hợp nào."
+      },
+      {
+        "role": "Tutor",
+        "text": "Grid Search tính toán số điểm cần thử như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó lấy số giá trị của mỗi tham số nhân với nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Ok. Giả sử có 5 tham số, mỗi tham số 10 giá trị. Có bao nhiêu điểm?"
+      },
+      {
+        "role": "Student",
+        "text": "10 mũ 5, là 100,000 điểm. Vẫn có thể chạy được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu không gian 'rất lớn' có 10 tham số, mỗi tham số 20 giá trị thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "20 mũ 10... con số đó rất lớn. Nhưng nó vẫn đảm bảo tìm ra kết quả tốt nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Liệu một phương pháp 'chạy không nổi' có được xem là một lựa chọn tốt không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là không. Vậy nó chỉ tốt về mặt lý thuyết, không phải thực tế."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, vấn đề cốt lõi của Grid Search khi không gian lớn là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Vấn đề là chi phí tính toán tăng theo cấp số nhân, không khả thi trong thực tế."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Grid Search bị giới hạn bởi 'lời nguyền chiều không gian'. Random Search lại không bị ràng buộc như vậy."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q48",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói Grid Search tận dụng thông tin từ lần thử trước. Thông tin đó là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là kết quả của các lần chạy. Nó chạy hết rồi so sánh để tìm ra cái tốt nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'so sánh ở cuối' có giống với 'tận dụng để thử nghiệm tiếp' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Gần giống mà. Mục đích cuối cùng vẫn là tìm ra cái tốt nhất từ thông tin đã có."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử lần thử 1 cho kết quả rất tệ. Grid Search có thay đổi lần thử 2 không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, vì Grid Search đã định sẵn các điểm cần thử từ đầu. Nhưng nó vẫn đúng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu kế hoạch không đổi, vậy nó 'tận dụng thông tin' ở bước nào trong quá trình thử?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó không tận dụng trong quá trình thử, chỉ ở cuối. Nhưng đó vẫn là tận dụng thông tin."
+      },
+      {
+        "role": "Tutor",
+        "text": "Câu hỏi gốc muốn giảm số lần thử. Cách của bạn có giúp giảm số lần thử không?"
+      },
+      {
+        "role": "Student",
+        "text": "À... không. Nó phải chạy hết tất cả các điểm đã định sẵn. Em thấy vấn đề rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy phương pháp nào sẽ điều chỉnh điểm thử tiếp theo dựa trên kết quả của điểm trước?"
+      },
+      {
+        "role": "Student",
+        "text": "Có lẽ là Bayesian Optimization. Nó sẽ xây dựng một mô hình từ các điểm đã thử."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm lẫn giữa việc 'chọn' kết quả tốt nhất cuối cùng (Grid Search) và việc 'học' từ mỗi kết quả để quyết định bước tiếp theo (Bayesian Optimization)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q49",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng chỉ Grid Search không kế thừa. Tại sao Random Search lại khác?"
+      },
+      {
+        "role": "Student",
+        "text": "Random Search chọn ngẫu nhiên, nó không bị bó buộc vào một cái lưới. Nó linh hoạt hơn, nên chắc là hiệu quả hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trong bối cảnh này, 'kế thừa thông tin' nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là lần thử sau phải dựa vào kết quả lần thử trước để quyết định điểm thử tiếp theo."
+      },
+      {
+        "role": "Tutor",
+        "text": "Grid Search thử điểm A rồi đến B. Điểm B có phụ thuộc kết quả ở A không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nó chỉ đi theo lưới đã vạch sẵn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Random Search thử điểm X rồi đến Y. Điểm Y có phụ thuộc kết quả ở X không?"
+      },
+      {
+        "role": "Student",
+        "text": "Cũng không... nhưng nó không lãng phí tài nguyên vào các điểm quá gần nhau như Grid Search."
+      },
+      {
+        "role": "Tutor",
+        "text": "Sự 'linh hoạt' đó có phải là 'kế thừa thông tin' không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Chắc là không. Nhưng rõ ràng nó là một cải tiến so với Grid Search. Nó không lặp lại sự ngu ngốc của Grid Search."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo định nghĩa của bạn, cả hai có dùng kết quả cũ để chọn điểm mới không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Không. Cả hai đều không dùng. Lần thử sau của chúng đều độc lập."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy dựa vào đó, hãy trả lời lại câu hỏi ban đầu."
+      },
+      {
+        "role": "Student",
+        "text": "Cả Grid Search và Random Search đều không kế thừa lần thử trước để cải thiện tìm kiếm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn giữa việc 'hiệu quả hơn' và 'có kế thừa thông tin'. Cả hai đều là các phép thử độc lập."
+      }
+    ]
+  },
+  {
+    "question_id": "ch9_q50",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng RandomizedSearchCV luôn kiểm tra toàn bộ tổ hợp. Vì sao lại có chữ 'Randomized' trong tên của nó?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì nó chọn ngẫu nhiên thứ tự để duyệt thôi, nhưng cuối cùng vẫn phải duyệt hết để tìm ra cái tốt nhất chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, vai trò của tham số `n_iter` trong RandomizedSearchCV là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "`n_iter` chắc là số lần lặp lại quá trình duyệt ngẫu nhiên đó để đảm bảo không bỏ sót. Nhưng kết quả cuối cùng vẫn là duyệt hết."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử lưới tham số có 100 tổ hợp. Bạn set `n_iter=10`. Máy tính sẽ làm gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ chọn ngẫu nhiên 10 tổ hợp để thử. Nhưng đó chỉ là một lần chạy, muốn đủ thì phải lặp lại."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy trong một lần chạy đó, nó đã thử bao nhiêu tổ hợp trên tổng số 100?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó thử 10/100. Nhưng logic của em là muốn tìm cái tốt nhất thì phải thử hết 100 chứ, sao lại dừng ở 10 được?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy phương pháp nào sẽ làm đúng cái việc bạn nói: thử hết tất cả 100 tổ hợp?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là... GridSearchCV? À, vậy `n_iter` của RandomizedSearchCV là để giới hạn số lần thử... chứ không phải để lặp lại."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Vậy tóm lại, RandomizedSearchCV chỉ chọn ngẫu nhiên `n_iter` tổ hợp. Còn GridSearchCV mới là phương pháp duyệt toàn bộ lưới."
+      }
+    ]
+  }
+]

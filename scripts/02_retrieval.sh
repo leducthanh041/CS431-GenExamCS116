@@ -8,7 +8,7 @@
 #SBATCH --mem=48G
 #SBATCH --time=02:00:00
 
-# Step 02: RAG Retrieval (CPU — ChromaDB query)
+# Step 02: 5-tier Hybrid RAG Retrieval (CPU — BM25 + ChromaDB + RRF + Rerank)
 # Khong can GPU
 
 REQUIRED_VRAM=0

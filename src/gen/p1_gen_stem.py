@@ -14,6 +14,7 @@ Output:
 from __future__ import annotations
 
 import json
+import os
 import sys
 import traceback
 from pathlib import Path
@@ -28,8 +29,22 @@ from common import (
     load_jsonl, save_jsonl,
     load_topic_list,
     init_vllm_gen, make_vllm_sampling,
-    format_context_block, _to_seconds,
+    format_context_block,
 )
+
+# ── Override EXP_NAME from environment (set by deploy_pipeline.sh) ────────────
+_exp_name = os.environ.get("EXP_NAME", "")
+if _exp_name:
+    Config.EXP_NAME = _exp_name
+    Config.OUTPUT_DIR = Config.PROJECT_ROOT / "output" / Config.EXP_NAME
+    Config.RETRIEVE_OUTPUT = Config.OUTPUT_DIR / "02_retrieval"
+    Config.GEN_STEM_OUTPUT = Config.OUTPUT_DIR / "03_gen_stem"
+    Config.GEN_REFINE_OUTPUT = Config.OUTPUT_DIR / "04_gen_refine"
+    Config.GEN_DISTR_OUTPUT = Config.OUTPUT_DIR / "05_gen_distractors"
+    Config.GEN_COT_OUTPUT = Config.OUTPUT_DIR / "06_gen_cot"
+    Config.EVAL_OUTPUT = Config.OUTPUT_DIR / "07_eval"
+    Config.EVAL_IWF_OUTPUT = Config.OUTPUT_DIR / "08_eval_iwf"
+    print(f"[p1_gen_stem] EXP_NAME overridden: {Config.EXP_NAME}")
 
 
 def format_context(blocks: list[dict]) -> str:
@@ -62,11 +77,20 @@ def run_p1_for_topic(
     num_q      = topic_entry.get("num_questions", 3)
 
     # Tính mix câu hỏi
-    num_single = int(num_q * Config.SINGLE_CORRECT_RATIO)
+    # Dùng round() thay vì int() để tránh floor bias gây lệch tỉ lệ
+    # VD: num_q=1, ratio=0.8 → round(0.8)=1 (đúng), int(0.8)=0 (sai → luôn multiple)
+    num_single = round(num_q * Config.SINGLE_CORRECT_RATIO)
     num_multi  = num_q - num_single
+    # Ensure at least 1 single if ratio >= 0.5, else at least 1 multi
+    if num_single == 0 and num_q >= 1 and Config.SINGLE_CORRECT_RATIO >= 0.5:
+        num_single = 1
+        num_multi  = num_q - num_single
+    if num_multi == 0 and num_q >= 1 and Config.SINGLE_CORRECT_RATIO < 0.5:
+        num_multi = 1
+        num_single = num_q - num_multi
 
     # Đếm single_correct: đúng 1 đáp án
-    num_two_correct   = int(num_multi * 0.5)
+    num_two_correct   = round(num_multi * 0.5) if num_multi > 0 else 0
     num_three_correct = num_multi - num_two_correct
 
     context_str = format_context(retrieved_blocks)
@@ -112,44 +136,28 @@ def run_p1_for_topic(
             print(f"  ⚠️  Parse error for {topic_id} seq={seq}: {parsed['error']}")
             continue
 
-        # ── Attach context-block sources as ground-truth citation metadata ──
-        # Model có thể chưa ghi đúng → dùng metadata từ retrieval để đảm bảo
-        video_blocks = [b for b in retrieved_blocks if b.get("source_type") == "video_transcript"]
-        slide_blocks  = [b for b in retrieved_blocks if b.get("source_type") == "slide_pdf"]
-        sources = []
-        for b in video_blocks:
-            ts = _to_seconds(b.get("timestamp_start") or b.get("youtube_ts_start", ""))
-            end_ts = _to_seconds(b.get("timestamp_end") or b.get("youtube_ts_end", ""))
-            yt = b.get("youtube_url", "")
-            if yt and ts:
-                base = yt.split("&t=")[0].split("?t=")[0]
-                url = f"{base}&t={ts}"
-            elif yt:
-                url = yt
-            else:
-                url = ""
-            sources.append({
-                "chunk_id":    b.get("chunk_id", ""),
-                "youtube_url": url,
-                "source_type": "video_transcript",
-                "text_preview": b.get("text", "")[:80],
-            })
-        for b in slide_blocks:
-            parts = []
-            if b.get("source_file"):
-                parts.append(b["source_file"])
-            if b.get("page_number"):
-                parts.append(f"Trang {b['page_number']}")
-            label = ", ".join(parts) if parts else b.get("chunk_id", "slide")
-            sources.append({
-                "chunk_id":    b.get("chunk_id", ""),
-                "youtube_url": "",
-                "source_type": "slide_pdf",
-                "label":       label,
-                "text_preview": b.get("text", "")[:80],
-            })
-        if sources:
-            parsed["sources"] = sources
+        # ── FORCE type to match what was requested ──────────────────────────────
+        # The LLM sometimes ignores the HARD CONSTRAINT in the prompt.
+        # Override to guarantee correct ratio.
+        parsed["question_type"] = q_type
+        parsed["correct_answer_count"] = correct_count
+        # Also fix the correct_answers_content list length if LLM miscounted
+        correct_content = parsed.get("correct_answers_content", [])
+        if isinstance(correct_content, list):
+            if len(correct_content) != correct_count:
+                print(f"  ⚠️  Fixing answer count: {len(correct_content)} → {correct_count} for {topic_id} seq={seq}")
+                if correct_count == 1 and len(correct_content) > 1:
+                    parsed["correct_answers_content"] = correct_content[:1]
+                elif correct_count >= 2 and len(correct_content) < correct_count:
+                    # Pad with existing content
+                    while len(parsed["correct_answers_content"]) < correct_count:
+                        parsed["correct_answers_content"].append(correct_content[-1])
+
+        # ── Sources: placeholder — filled at Step 09 (explanation) ──────────
+        # We no longer attach YouTube/slide sources at P1 step.
+        # The HybridRetriever in explain_mcq.py will attach proper citations
+        # with YouTube timestamps + slide page numbers + web search results.
+        parsed["sources"] = []
 
         # Gắn metadata
         parsed["_meta"] = {

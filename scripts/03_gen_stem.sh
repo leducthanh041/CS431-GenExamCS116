@@ -12,7 +12,7 @@
 # Step 03: P1 — Generate Stem + Key
 # Model: Qwen2.5-14B-Instruct (vLLM)
 
-REQUIRED_VRAM=20000
+REQUIRED_VRAM=36000
 
 set -e
 
@@ -27,7 +27,7 @@ EXIT_CODE=$?
 
 if [ $EXIT_CODE -eq 10 ]; then
     echo "$CHECK_OUT"
-    exit 0
+    exit 1
 elif [ $EXIT_CODE -eq 11 ]; then
     echo "$CHECK_OUT"
     exit 1

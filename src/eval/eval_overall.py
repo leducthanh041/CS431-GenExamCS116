@@ -15,6 +15,7 @@ Output:
 from __future__ import annotations
 
 import json
+import os
 import sys
 import traceback
 from pathlib import Path
@@ -27,6 +28,16 @@ from common import (
     load_jsonl, save_jsonl,
     init_vllm_eval, make_vllm_sampling,
 )
+
+# ── Override EXP_NAME from environment (set by deploy_pipeline.sh) ────────────
+_exp_name = os.environ.get("EXP_NAME", "")
+if _exp_name:
+    Config.EXP_NAME = _exp_name
+    Config.OUTPUT_DIR = Config.PROJECT_ROOT / "output" / Config.EXP_NAME
+    Config.GEN_COT_OUTPUT = Config.OUTPUT_DIR / "06_gen_cot"
+    Config.EVAL_OUTPUT = Config.OUTPUT_DIR / "07_eval"
+    Config.EVAL_IWF_OUTPUT = Config.OUTPUT_DIR / "08_eval_iwf"
+    print(f"[eval_overall] EXP_NAME overridden: {Config.EXP_NAME}")
 
 
 def evaluate_mcq(mcq: dict, llm, SamplingParams) -> dict:

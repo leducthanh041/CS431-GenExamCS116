@@ -1,0 +1,100 @@
+# ============================================================
+# MCQGen Generation Config — User-facing configuration
+# ============================================================
+# Điều chỉnh các thông số sinh câu hỏi tại đây.
+# Mỗi experiment nên copy và đổi tên config này.
+# ============================================================
+
+# --- Question Generation ---
+generation:
+
+  # Số câu hỏi mục tiêu — gen N câu để nhận ~target sau judge reject
+  # VD: target_range: [25, 35] → gen 35 → nhận 25-30 accepted
+  target_range: [25, 35]
+
+  # Tỉ lệ single vs multiple answer
+  # target: 5-7/30 ≈ 17-23% → dùng 0.8 → 80% single, 20% multiple ✓
+  single_correct_ratio: 0.80    # 80% single, 20% multiple
+  # → 35 × 0.8 = 28 single, 7 multiple (≈ 20%)
+
+  # Trong multiple_correct: phân bổ 2 vs 3 đáp án đúng
+  two_correct_ratio: 0.60        # 60% của multi → 2 đúng
+  three_correct_ratio: 0.40       # 40% của multi → 3 đúng
+
+  # Trọng số topic (None = uniform = 1.0)
+  # Topics có weight cao hơn → được sinh nhiều câu hỏi hơn
+  # VD: ch07b: 2.0 → gấp đôi số câu so với default
+  topic_weights:
+    # Chương trọng điểm (user prompt override)
+    ch07b: 2.0      # Supervised Classification — trọng tâm
+    ch08: 2.0       # Deep Learning với CNN
+    ch10: 1.5       # Ensemble Models
+    ch04: 1.3       # Tiền xử lý dữ liệu — quan trọng nền tảng
+    # others: 1.0 (default)
+
+  # Focus topics — bỏ qua các topic khác, chỉ gen câu hỏi cho list này
+  # [] = dùng tất cả topics với weights
+  # ["ch07b", "ch08"] = chỉ gen cho 2 chapters này
+  focus_topics: []
+
+  # Chapter-level overrides
+  # Nếu focus_topics set → chỉ dùng chapters trong list
+  focus_chapters: []
+
+# --- Diversity ---
+diversity:
+
+  # Các từ/cụm từ TUYỆT ĐỐI KHÔNG được dùng làm mở đầu câu hỏi
+  avoid_openings:
+    - "Hãy xác định"
+    - "khi"
+    - "đâu"
+    - "Trong quá trình"
+    - "Khi xây dựng"
+    - "Khi huấn luyện"
+    - "Trong các phương pháp"
+    - "Trong các kỹ thuật"
+    - "Cho biết"
+
+  # Các mở đầu ĐA DẠNG, tạo sự tò mò — ưu tiên dùng
+  prefer_openings:
+    - "Điều gì khiến"
+    - "Đâu là điểm khác biệt giữa"
+    - "Nếu phải chọn giữa... và..., bạn sẽ ưu tiên điều gì?"
+    - "Một mô hình có đặc điểm... sẽ hoạt động ra sao khi"
+    - "Trường hợp nào sau đây minh họa đúng nhất về"
+    - "Điều kiện tiên quyết để... hoạt động hiệu quả là gì?"
+    - "Sau khi áp dụng..., kết quả mong đợi là"
+    - "Quan sát đoạn code sau, output nào phù hợp nhất?"
+    - "Nếu thay đổi tham số... thì điều gì sẽ xảy ra với"
+    - "Vai trò chính của... trong kiến trúc này là"
+    - "Nhận định nào sau đây là chính xác nhất về"
+    - "Mục đích chính của... là gì?"
+    - "Tính chất nào giúp phân biệt... với"
+
+# --- Explanation ---
+explanation:
+  # Bật/tắt web search cho explanation — MẶC ĐỊNH TẮT
+  # Lý do: trích dẫn web không đáng tin cậy, không phải nguồn chính thức của khóa học
+  # Các trích dẫn YouTube được lấy từ input/video/videos1.txt (bài giảng của giảng viên)
+  include_web_sources: false
+  max_web_sources: 0
+
+  # Số context blocks dùng cho explanation
+  explanation_context_blocks: 5
+
+  # Model cho explanation (dùng GPT-4o vì cần reasoning tốt)
+  llm_model: "gpt-4o"
+
+# --- Retrieval ---
+retrieval:
+  # Hybrid retrieval: BM25 + Vector + RRF + Rerank
+  use_bm25: true
+  use_rerank: true
+  rerank_top_n: 30
+
+  # Số context blocks cho P1 prompt
+  context_blocks_for_prompt: 5
+
+  # Ngưỡng similarity tối thiểu
+  min_similarity: 0.30

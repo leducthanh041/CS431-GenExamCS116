@@ -21,11 +21,12 @@ module load slurm/slurm/24.11
 source /datastore/uittogether/tools/miniconda3/etc/profile.d/conda.sh
 
 unset CUDA_VISIBLE_DEVICES
-CHECK_OUT=$(/usr/local/bin/gpu_check.sh $REQUIRED_VRAM $SLURM_JOB_ID)
+PROJECT_ROOT="/datastore/uittogether/LuuTru/Thanhld/CS431MCQGen"
+CHECK_OUT=$("$PROJECT_ROOT/scripts/gpu_check.sh" $REQUIRED_VRAM $SLURM_JOB_ID) || true
 EXIT_CODE=$?
 
 if [ $EXIT_CODE -eq 10 ]; then
-    echo "$CHECK_OUT"; exit 0
+    echo "$CHECK_OUT"; exit 1
 elif [ $EXIT_CODE -eq 11 ]; then
     echo "$CHECK_OUT"; exit 1
 fi

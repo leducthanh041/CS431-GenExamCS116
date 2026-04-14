@@ -12,6 +12,7 @@ Output:
 from __future__ import annotations
 
 import json
+import os
 import sys
 import traceback
 from pathlib import Path
@@ -25,6 +26,20 @@ from common import (
     load_jsonl, save_jsonl,
     init_vllm_gen, make_vllm_sampling,
 )
+
+# ── Override EXP_NAME from environment ────────────────────────────────────────
+_exp_name = os.environ.get("EXP_NAME", "")
+if _exp_name:
+    Config.EXP_NAME = _exp_name
+    Config.OUTPUT_DIR = Config.PROJECT_ROOT / "output" / Config.EXP_NAME
+    Config.RETRIEVE_OUTPUT = Config.OUTPUT_DIR / "02_retrieval"
+    Config.GEN_STEM_OUTPUT = Config.OUTPUT_DIR / "03_gen_stem"
+    Config.GEN_REFINE_OUTPUT = Config.OUTPUT_DIR / "04_gen_refine"
+    Config.GEN_DISTR_OUTPUT = Config.OUTPUT_DIR / "05_gen_distractors"
+    Config.GEN_COT_OUTPUT = Config.OUTPUT_DIR / "06_gen_cot"
+    Config.EVAL_OUTPUT = Config.OUTPUT_DIR / "07_eval"
+    Config.EVAL_IWF_OUTPUT = Config.OUTPUT_DIR / "08_eval_iwf"
+    print(f"[p2_p3_refine] EXP_NAME overridden: {Config.EXP_NAME}")
 
 
 def run_refine_chain(
