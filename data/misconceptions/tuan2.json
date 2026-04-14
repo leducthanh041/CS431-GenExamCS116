@@ -1,0 +1,634 @@
+[
+  {
+    "question_id": "q1",
+    "concepts": [
+      "Chức năng các thư viện khoa học dữ liệu Python",
+      "Thao tác trên mảng và ma trận đa chiều"
+    ],
+    "misconceptions": [
+      "cho rằng Pandas dùng cho mọi loại phép toán dữ liệu, bao gồm cả ma trận đa chiều, vì nó cũng xử lý dữ liệu dạng bảng rất mạnh.",
+      "tin rằng Matplotlib có thể thực hiện phép toán ma trận vì nó thường được dùng cùng với dữ liệu số để vẽ đồ thị.",
+      "cho rằng scikit-learn là thư viện cốt lõi cho tính toán ma trận vì các mô hình học máy trong đó đều làm việc với dữ liệu số."
+    ],
+    "reasoning": "NumPy là thư viện nền tảng cho tính toán khoa học trong Python, chuyên về các phép toán hiệu quả trên mảng và ma trận đa chiều. Các thư viện khác như Pandas, Matplotlib và scikit-learn đều được xây dựng dựa trên NumPy nhưng có các mục đích chuyên biệt khác."
+  },
+  {
+    "question_id": "q2",
+    "concepts": [
+      "Trực quan hóa dữ liệu trong Python",
+      "Công dụng của các thư viện khoa học dữ liệu"
+    ],
+    "misconceptions": [
+      "cho rằng NumPy có thể trực quan hóa dữ liệu vì nó là thư viện xử lý dữ liệu số cơ bản.",
+      "tin rằng Pandas là thư viện chính để vẽ biểu đồ vì nó có các hàm `plot` tích hợp sẵn có thể gọi trực tiếp từ DataFrame.",
+      "cho rằng GridSearchCV dùng để trực quan hóa vì tên của nó có từ 'Grid' (lưới), gợi liên tưởng đến biểu đồ."
+    ],
+    "reasoning": "Matplotlib là thư viện nền tảng và phổ biến nhất cho việc trực quan hóa dữ liệu trong Python. Mặc dù Pandas cung cấp các hàm vẽ đồ thị tiện lợi, chúng thực chất là các hàm bao (wrapper) được xây dựng trên Matplotlib."
+  },
+  {
+    "question_id": "q3",
+    "concepts": [
+      "Cấu trúc dữ liệu trong Pandas",
+      "Sự khác biệt giữa DataFrame và Series"
+    ],
+    "misconceptions": [
+      "cho rằng 'Array' và 'Tensor' là các object của Pandas vì chúng cũng là các cấu trúc dữ liệu đa chiều dùng trong khoa học dữ liệu.",
+      "tin rằng 'Matrix' và 'Vector' là tên gọi chính thức của các object trong Pandas vì DataFrame trông giống một ma trận và Series trông giống một vector.",
+      "cho rằng 'Plot' và 'Subplot' là các object của Pandas vì có thể gọi các hàm vẽ đồ thị trực tiếp từ DataFrame."
+    ],
+    "reasoning": "Pandas giới thiệu hai cấu trúc dữ liệu chính là Series (mảng một chiều có nhãn, tương tự một cột) và DataFrame (cấu trúc hai chiều dạng bảng, gồm nhiều cột). Các lựa chọn khác là thuật ngữ từ các thư viện khác (NumPy, Matplotlib) hoặc khái niệm toán học."
+  },
+  {
+    "question_id": "q4",
+    "concepts": [
+      "Phép cộng theo từng phần tử trong NumPy",
+      "Biểu diễn của đối tượng NumPy array"
+    ],
+    "misconceptions": [
+      "cho rằng kết quả của phép toán trên NumPy array là một list thông thường của Python, vì cú pháp tính toán trông giống nhau.",
+      "tin rằng phép cộng hai NumPy array hoạt động giống như phép cộng hai list trong Python, tức là nối chúng lại với nhau.",
+      "cho rằng không thể dùng toán tử '+' trực tiếp cho hai array mà phải dùng một hàm cụ thể như `np.add()` nên sẽ báo lỗi."
+    ],
+    "reasoning": "Phép cộng hai NumPy array cùng kích thước là phép cộng theo từng phần tử (element-wise). Kết quả trả về là một đối tượng NumPy array, không phải list của Python, và được biểu diễn với tiền tố `array()`."
+  },
+  {
+    "question_id": "q5",
+    "concepts": [
+      "Cơ chế Broadcasting trong NumPy",
+      "Phép toán giữa array và số vô hướng (scalar)"
+    ],
+    "misconceptions": [
+      "cho rằng kết quả của phép toán broadcasting là một list của Python, không phải là một NumPy array.",
+      "tin rằng không thể cộng một mảng với một số vô hướng vì chúng có 'shape' khác nhau, nên sẽ báo lỗi.",
+      "cho rằng cộng một số vào array sẽ nối số đó vào cuối mảng, tương tự như `list.append()`."
+    ],
+    "reasoning": "NumPy sử dụng cơ chế broadcasting, cho phép thực hiện phép toán giữa mảng và số vô hướng. Khi đó, số vô hướng sẽ được \"mở rộng\" để cộng vào từng phần tử của mảng, và kết quả trả về là một NumPy array."
+  },
+  {
+    "question_id": "q6",
+    "concepts": [
+      "Tự động chuyển đổi kiểu dữ liệu trong NumPy",
+      "Phép toán giữa NumPy array và Python list"
+    ],
+    "misconceptions": [
+      "cho rằng kết quả của phép cộng giữa NumPy array và list là một list.",
+      "tin rằng phép cộng giữa một NumPy array và một Python list sẽ hoạt động như phép nối list.",
+      "cho rằng không thể cộng một NumPy array với một Python list vì chúng là hai kiểu dữ liệu khác nhau, nên sẽ gây ra `TypeError`."
+    ],
+    "reasoning": "NumPy có thể tự động chuyển đổi một Python list có cấu trúc tương thích thành một NumPy array khi thực hiện phép toán. Do đó, phép cộng này tương đương với việc cộng hai NumPy array và trả về một NumPy array."
+  },
+  {
+    "question_id": "q7",
+    "concepts": [
+      "Broadcasting với mảng nhiều chiều",
+      "Shape của NumPy array (1D vs 2D)"
+    ],
+    "misconceptions": [
+      "cho rằng kết quả của phép cộng một mảng 1D và 2D sẽ là một mảng 1D, vì mảng 1D là cấu trúc 'đơn giản' hơn.",
+      "tin rằng không thể cộng một mảng có shape `(3,)` với một mảng có shape `(1, 3)` vì chúng không hoàn toàn giống nhau, nên sẽ báo lỗi.",
+      "cho rằng khi cộng một mảng 1D và một mảng 2D, mảng 1D sẽ được coi như một vector cột, dẫn đến kết quả là một mảng có shape (3,1)."
+    ],
+    "reasoning": "Cơ chế broadcasting của NumPy sẽ \"mở rộng\" mảng 1D có shape (3,) thành shape (1, 3) để khớp với mảng 2D. Kết quả của phép cộng hai mảng shape (1, 3) sẽ là một mảng có shape (1, 3)."
+  },
+  {
+    "question_id": "q8",
+    "concepts": [
+      "Độ tương tự cosine (Cosine Similarity)",
+      "Các phép toán trên NumPy array"
+    ],
+    "misconceptions": [
+      "cho rằng `np.arange(1, 4)` tạo ra mảng `[1, 2, 3, 4]` vì tham số cuối là 4, dẫn đến tính toán sai.",
+      "tin rằng vì các giá trị của vector y gấp đôi vector x, nên kết quả phải là 0.5 hoặc một giá trị liên quan đến số 2.",
+      "cho rằng kết quả của độ tương tự cosine có thể là số âm ngay cả khi tất cả các phần tử của vector đều dương."
+    ],
+    "reasoning": "Đoạn mã tính toán độ tương tự cosine giữa hai vector. Vì vector y là bội số của vector x (y = 2*x), chúng cùng hướng trong không gian, nên góc giữa chúng là 0, và độ tương tự cosine bằng 1.0."
+  },
+  {
+    "question_id": "q9",
+    "concepts": [
+      "Nối DataFrame trong Pandas",
+      "Tham số `axis` trong hàm `pd.concat`"
+    ],
+    "misconceptions": [
+      "cho rằng `axis=0` là để nối theo cột vì '0' là trục đầu tiên.",
+      "tin rằng hàm `pd.merge` có thể được dùng để nối bảng theo trục (axis) giống như `pd.concat`.",
+      "cho rằng `pd.join` là hàm chính để nối các DataFrame và nó cũng dùng tham số `axis`."
+    ],
+    "reasoning": "Trong Pandas, hàm `pd.concat` dùng để nối các DataFrame. Tham số `axis=1` chỉ định việc nối theo chiều ngang (nối các cột), trong khi `axis=0` (mặc định) là nối theo chiều dọc (nối các hàng)."
+  },
+  {
+    "question_id": "q10",
+    "concepts": [
+      "Tham số mặc định của `pd.concat`",
+      "Trục (axis) trong Pandas"
+    ],
+    "misconceptions": [
+      "cho rằng nối theo chiều ngang (theo cột) là hành động mặc định vì nó trực quan hơn.",
+      "tin rằng `pd.concat` mặc định sẽ nối theo cột khóa, nhầm lẫn với chức năng của `pd.merge`.",
+      "cho rằng nếu không chỉ rõ `axis`, pandas sẽ không biết cách nối và báo lỗi."
+    ],
+    "reasoning": "Khi sử dụng `pd.concat` mà không chỉ định tham số `axis`, giá trị mặc định `axis=0` sẽ được áp dụng. `axis=0` tương ứng với việc nối các DataFrame theo chiều dọc (xếp chồng các hàng lên nhau)."
+  },
+  {
+    "question_id": "q11",
+    "concepts": [
+      "Xử lý dữ liệu khuyết trong Pandas",
+      "Chức năng của hàm `fillna`"
+    ],
+    "misconceptions": [
+      "cho rằng `fillna` được dùng để xóa các giá trị khuyết, nhầm lẫn với `dropna`.",
+      "tin rằng `fillna` là để đổi tên cột, nhầm lẫn với `rename`.",
+      "cho rằng `fillna` có thể tạo ra một cột mới hoàn toàn."
+    ],
+    "reasoning": "Hàm `fillna(value)` trong Pandas được sử dụng để lấp đầy, hay thay thế, các giá trị bị thiếu (thường là NaN - Not a Number) trong một Series hoặc DataFrame bằng một giá trị (value) được chỉ định."
+  },
+  {
+    "question_id": "q12",
+    "concepts": [
+      "Lọc dữ liệu theo điều kiện trong Pandas",
+      "Truy cập cột bằng thuộc tính (dot notation)"
+    ],
+    "misconceptions": [
+      "cho rằng toán tử `=` được dùng để so sánh bằng trong điều kiện lọc, nhầm lẫn với toán tử gán.",
+      "tin rằng có thể đặt điều kiện logic trực tiếp vào trong `loc` như một chuỗi.",
+      "cho rằng có thể đặt điều kiện logic trực tiếp vào trong ngoặc vuông `[]` như một chuỗi."
+    ],
+    "reasoning": "Để lọc các hàng của DataFrame theo điều kiện, ta truyền một chuỗi boolean (boolean Series) vào trong ngoặc vuông. `df1.Y > 10` tạo ra một Series chứa True/False, sau đó `df1[...]` sẽ chỉ giữ lại các hàng có giá trị True."
+  },
+  {
+    "question_id": "q13",
+    "concepts": [
+      "Lọc dữ liệu theo tập hợp giá trị",
+      "Phương thức `isin` trong Pandas"
+    ],
+    "misconceptions": [
+      "cho rằng có thể dùng toán tử `==` để so sánh một cột với một danh sách các giá trị.",
+      "tin rằng có thể dùng `loc` để lọc bằng cách truyền nhiều giá trị không phải là chỉ số (index).",
+      "tin rằng toán tử `in` của Python có thể được áp dụng trực tiếp cho một cột (Series) của Pandas để kiểm tra thành viên."
+    ],
+    "reasoning": "Phương thức `.isin()` được dùng để lọc các hàng mà giá trị trong một cột cụ thể có nằm trong một tập hợp các giá trị cho trước. Nó trả về một boolean Series, được sử dụng để lọc DataFrame."
+  },
+  {
+    "question_id": "q14",
+    "concepts": [
+      "Chọn nhiều cột trong DataFrame",
+      "Cú pháp truy cập dữ liệu trong Pandas"
+    ],
+    "misconceptions": [
+      "cho rằng có thể truyền nhiều tên cột trực tiếp vào trong ngoặc vuông `[]` mà không cần một danh sách.",
+      "tin rằng mỗi cột được chọn phải nằm trong một cặp ngoặc vuông riêng biệt.",
+      "cho rằng việc chọn cột được thực hiện bằng cách gọi DataFrame như một hàm."
+    ],
+    "reasoning": "Để chọn nhiều cột từ một DataFrame, ta cần truyền một danh sách (list) các tên cột vào trong toán tử truy cập `[]`. Cú pháp `df1[['X', 'Z']]` thực hiện đúng điều này."
+  },
+  {
+    "question_id": "q15",
+    "concepts": [
+      "Truy cập cột trong Pandas",
+      "Sự khác biệt giữa Series và DataFrame một cột"
+    ],
+    "misconceptions": [
+      "cho rằng việc dùng hai cặp ngoặc vuông `df1[['X']]` trả về một Series, trong khi thực tế nó trả về một DataFrame chỉ có một cột.",
+      "tin rằng có thể truy cập cột bằng cách gọi DataFrame như một hàm với tên cột làm đối số, ví dụ `df1('X')`."
+    ],
+    "reasoning": "Có hai cách phổ biến để lấy một cột dưới dạng Series từ DataFrame: dùng dấu chấm `df1.X` (chỉ khi tên cột không chứa ký tự đặc biệt) hoặc dùng ngoặc vuông với một chuỗi `df1['X']`. Dùng hai ngoặc vuông `df1[['X']]` sẽ trả về một DataFrame."
+  },
+  {
+    "question_id": "q16",
+    "concepts": [
+      "Tạo cột mới trong DataFrame",
+      "Thao tác trên các cột dữ liệu"
+    ],
+    "misconceptions": [
+      "cho rằng giá trị giao dịch được tính bằng tổng giá mở và đóng cửa.",
+      "tin rằng giá trị giao dịch được tính bằng chênh lệch giá cao nhất và thấp nhất trong ngày.",
+      "cho rằng có thể nhân một cột chuỗi (symbol) với một cột số (volume) để tính giá trị."
+    ],
+    "reasoning": "Trong bối cảnh phân tích chứng khoán, cột 'value' (giá trị giao dịch) thường được tính bằng cách nhân giá đóng cửa ('close') với khối lượng giao dịch ('volume'). Đây là một ví dụ về tạo đặc trưng mới từ các cột hiện có."
+  },
+  {
+    "question_id": "q17",
+    "concepts": [
+      "Đọc dữ liệu từ file CSV",
+      "Hàm I/O trong Pandas"
+    ],
+    "misconceptions": [
+      "cho rằng hàm để đọc file là `pd.load_csv` vì 'load' là một từ đồng nghĩa phổ biến với 'read'.",
+      "tin rằng hàm đọc file là một phương thức của lớp DataFrame, ví dụ `pd.DataFrame.read`.",
+      "cho rằng việc đọc file CSV thuộc về thư viện NumPy, ví dụ `np.read_csv`."
+    ],
+    "reasoning": "Pandas cung cấp hàm `pd.read_csv()` là phương thức chính và rất mạnh mẽ để đọc dữ liệu có cấu trúc từ các tệp tin văn bản được phân tách bằng dấu phẩy (CSV) vào một DataFrame."
+  },
+  {
+    "question_id": "q18",
+    "concepts": [
+      "Thuật ngữ trong dữ liệu dạng bảng (Tidy Data)",
+      "Hàng (Row) và Quan sát (Observation)"
+    ],
+    "misconceptions": [
+      "cho rằng mỗi hàng là một 'Variable' (biến), nhầm lẫn với khái niệm cột.",
+      "tin rằng hàng dữ liệu được gọi là 'Column' (cột).",
+      "cho rằng hàng dữ liệu được gọi là 'Index name' (tên chỉ mục)."
+    ],
+    "reasoning": "Theo quy ước dữ liệu tidy (gọn gàng), mỗi hàng (row) trong một DataFrame biểu diễn một quan sát (observation) riêng biệt, ví dụ như thông tin của một khách hàng, một giao dịch, hoặc một ngày giao dịch."
+  },
+  {
+    "question_id": "q19",
+    "concepts": [
+      "Thuật ngữ trong dữ liệu dạng bảng (Tidy Data)",
+      "Cột (Column) và Biến (Variable)"
+    ],
+    "misconceptions": [
+      "cho rằng cột dữ liệu được gọi là 'Observation' (quan sát), nhầm lẫn với khái niệm hàng.",
+      "tin rằng cột dữ liệu là một 'Tensor', một thuật ngữ từ các thư viện tính toán khác như TensorFlow.",
+      "cho rằng cột dữ liệu tương ứng với 'Axis=0', nhầm lẫn giữa khái niệm biến và chiều của mảng."
+    ],
+    "reasoning": "Theo quy ước dữ liệu tidy, mỗi cột (column) trong một DataFrame biểu diễn một biến (variable) hoặc một đặc trưng (feature) mô tả các quan sát. Ví dụ: tuổi, giá, giới tính."
+  },
+  {
+    "question_id": "q20",
+    "concepts": [
+      "Xoay bảng (Pivoting) trong Pandas",
+      "Tái cấu trúc DataFrame"
+    ],
+    "misconceptions": [
+      "cho rằng `pivot` là một cách khác để nối bảng, nhầm lẫn với `concat` hoặc `merge`.",
+      "tin rằng `pivot` dùng để điền giá trị khuyết, nhầm lẫn với `fillna`.",
+      "cho rằng `pivot` là một hàm để vẽ biểu đồ."
+    ],
+    "reasoning": "Hàm `pivot` được sử dụng để tái cấu trúc một DataFrame từ dạng 'dài' sang dạng 'rộng'. Nó gom nhóm dữ liệu bằng cách sử dụng các giá trị từ một cột để tạo các cột mới và điền giá trị từ một cột khác vào bảng kết quả."
+  },
+  {
+    "question_id": "q21",
+    "concepts": [
+      "Xoay bảng với nhiều giá trị (values)",
+      "Cột nhiều mức (Multi-level columns) trong Pandas"
+    ],
+    "misconceptions": [
+      "cho rằng kết quả chỉ có một cột tên là 'values'.",
+      "tin rằng không thể xoay bảng với nhiều hơn một cột giá trị.",
+      "cho rằng `pivot` sẽ tự động chọn một trong các giá trị để hiển thị, ví dụ chỉ 'close'."
+    ],
+    "reasoning": "Khi sử dụng `pivot` với một danh sách các cột trong tham số `values`, Pandas sẽ tạo ra một DataFrame có các cột nhiều mức (MultiIndex). Mức trên cùng sẽ là các tên cột trong `values` (ví dụ: 'close', 'volume'), và mức dưới là các giá trị từ cột `columns`."
+  },
+  {
+    "question_id": "q22",
+    "concepts": [
+      "Hàm tổng hợp trong `pivot_table`",
+      "Sự khác biệt giữa `pivot` và `pivot_table`"
+    ],
+    "misconceptions": [
+      "cho rằng hàm tổng hợp mặc định là `np.sum` để tính tổng các giá trị.",
+      "tin rằng hàm tổng hợp mặc định là `np.max` để tìm giá trị lớn nhất.",
+      "tin rằng hàm tổng hợp mặc định là `len` để đếm số lượng phần tử."
+    ],
+    "reasoning": "Hàm `pivot_table` trong Pandas, khác với `pivot`, có khả năng tổng hợp dữ liệu khi có các giá trị trùng lặp. Hàm tổng hợp mặc định được sử dụng là `np.mean` (tính trung bình)."
+  },
+  {
+    "question_id": "q23",
+    "concepts": [
+      "Các chức năng chính của Matplotlib",
+      "Trực quan hóa dữ liệu và hình ảnh"
+    ],
+    "misconceptions": [
+      "cho rằng Matplotlib chỉ tập trung vào một loại biểu đồ duy nhất như hàm `plot`.",
+      "tin rằng Matplotlib không hỗ trợ làm việc với hình ảnh, chỉ hỗ trợ biểu đồ."
+    ],
+    "reasoning": "Matplotlib là một thư viện trực quan hóa toàn diện, bao gồm các chức năng vẽ biểu đồ cơ bản (hàm Plot), tạo các lưới biểu đồ phức tạp (Subplot), hỗ trợ nhiều loại biểu đồ khác nhau, và cả khả năng tải và hiển thị hình ảnh."
+  },
+  {
+    "question_id": "q24",
+    "concepts": [
+      "Tích hợp vẽ biểu đồ trong Pandas",
+      "Các loại biểu đồ cơ bản"
+    ],
+    "misconceptions": [
+      "cho rằng các biểu đồ 'bar' và 'pie' là ví dụ chính được minh họa.",
+      "tin rằng các hàm xử lý ảnh như 'imshow' là một phần của ví dụ vẽ biểu đồ cơ bản trong pandas.",
+      "cho rằng các biểu đồ thống kê nâng cao như 'boxplot' là ví dụ minh họa đầu tiên."
+    ],
+    "reasoning": "Trong các ví dụ minh họa cơ bản, các phương thức `plot.hist()` (vẽ biểu đồ tần suất) và `plot.scatter()` (vẽ biểu đồ phân tán) thường được sử dụng trực tiếp trên các đối tượng DataFrame và Series của Pandas để khám phá dữ liệu nhanh chóng."
+  },
+  {
+    "question_id": "q25",
+    "concepts": [
+      "Phạm vi chức năng của Matplotlib",
+      "Phân biệt giữa trực quan hóa và xử lý dữ liệu"
+    ],
+    "misconceptions": [
+      "cho rằng hàm `plot` không phải là một chủ đề chính.",
+      "tin rằng vẽ với `subplot` không phải là một phần quan trọng của Matplotlib.",
+      "cho rằng việc tìm hiểu các loại biểu đồ khác nhau không phải là trọng tâm của thư viện."
+    ],
+    "reasoning": "Gom nhóm dữ liệu với `pivot` là một chức năng xử lý và tái cấu trúc dữ liệu của thư viện Pandas. Matplotlib là thư viện chuyên về trực quan hóa, bao gồm các chủ đề như hàm Plot, Subplot, và các loại biểu đồ."
+  },
+  {
+    "question_id": "q26",
+    "concepts": [
+      "Định nghĩa hiện tượng quá khớp (Overfitting)",
+      "Nguyên nhân gây ra quá khớp"
+    ],
+    "misconceptions": [
+      "cho rằng mô hình quá hạn chế (underfitting) là một dạng của quá khớp.",
+      "tin rằng một mô hình có tính tổng quát tốt trên dữ liệu mới là mô hình bị quá khớp."
+    ],
+    "reasoning": "Quá khớp xảy ra khi mô hình quá phức tạp, học thuộc cả những chi tiết và nhiễu không quan trọng của tập huấn luyện. Điều này làm mô hình hoạt động tốt trên dữ liệu đã thấy nhưng kém hiệu quả trên dữ liệu mới (tức là tính tổng quát kém)."
+  },
+  {
+    "question_id": "q27",
+    "concepts": [
+      "Dấu hiệu của hiện tượng quá khớp",
+      "So sánh lỗi huấn luyện và lỗi kiểm thử"
+    ],
+    "misconceptions": [
+      "cho rằng khi cả lỗi huấn luyện và lỗi kiểm thử đều cao là quá khớp, trong khi đây là dấu hiệu của chưa khớp (underfitting).",
+      "tin rằng mô hình có thể có lỗi huấn luyện cao nhưng lỗi kiểm thử thấp, một kịch bản gần như không thể xảy ra trong thực tế.",
+      "cho rằng khi cả hai lỗi đều thấp là dấu hiệu của quá khớp, trong khi đây là dấu hiệu của một mô hình tốt."
+    ],
+    "reasoning": "Dấu hiệu điển hình của quá khớp là khi mô hình đạt được hiệu suất rất cao trên tập huấn luyện (lỗi huấn luyện thấp) nhưng lại hoạt động kém trên tập kiểm thử (lỗi kiểm thử cao), cho thấy nó không có khả năng tổng quát hóa."
+  },
+  {
+    "question_id": "q28",
+    "concepts": [
+      "Kiểm định chéo (Cross-validation)",
+      "Mục đích của kiểm định chéo"
+    ],
+    "misconceptions": [
+      "cho rằng kiểm định chéo giúp huấn luyện mô hình nhanh hơn so với hold-out, trong khi thực tế nó tốn nhiều thời gian hơn vì phải huấn luyện nhiều lần."
+    ],
+    "reasoning": "Kiểm định chéo là một kỹ thuật để đánh giá hiệu suất tổng quát của mô hình một cách đáng tin cậy hơn, đặc biệt hữu ích với các bộ dữ liệu nhỏ. Nó cũng thường được dùng trong quá trình tìm kiếm siêu tham số tối ưu."
+  },
+  {
+    "question_id": "q29",
+    "concepts": [
+      "Quy trình kiểm định chéo K-fold",
+      "Cách hoạt động của `cross_validate`"
+    ],
+    "misconceptions": [
+      "cho rằng mô hình chỉ được huấn luyện một lần duy nhất trên toàn bộ dữ liệu, nhầm lẫn với quá trình huấn luyện cuối cùng sau khi đã chọn được mô hình."
+    ],
+    "reasoning": "Khi `cv=5`, dữ liệu được chia thành 5 phần (folds). Quá trình lặp lại 5 lần, mỗi lần một phần được dùng làm tập kiểm thử và 4 phần còn lại làm tập huấn luyện. Điều này giúp đánh giá tính ổn định và hiệu suất trung bình của mô hình."
+  },
+  {
+    "question_id": "q30",
+    "concepts": [
+      "Chuẩn hóa dữ liệu (Standardization)",
+      "StandardScaler trong scikit-learn"
+    ],
+    "misconceptions": [
+      "cho rằng StandardScaler biến đổi dữ liệu về khoảng [0, 1], nhầm lẫn với MinMaxScaler (Normalization)."
+    ],
+    "reasoning": "StandardScaler biến đổi từng đặc trưng để có giá trị trung bình bằng 0 và phương sai bằng 1. Điều này giúp các đặc trưng có phạm vi tương tự nhau, giúp một số thuật toán (như hồi quy có regularization) hội tụ nhanh hơn và hoạt động hiệu quả hơn."
+  },
+  {
+    "question_id": "q31",
+    "concepts": [
+      "Pipeline trong học máy",
+      "Tự động hóa quy trình làm việc"
+    ],
+    "misconceptions": [
+      "cho rằng Pipeline được dùng để thực hiện kiểm định chéo, nhầm lẫn với các công cụ như `cross_val_score`.",
+      "tin rằng Pipeline dùng để thử nghiệm nhiều mô hình khác nhau cùng lúc, nhầm lẫn với việc so sánh mô hình thủ công.",
+      "cho rằng Pipeline có chức năng vẽ biểu đồ."
+    ],
+    "reasoning": "Pipeline (và hàm tiện ích `make_pipeline`) được dùng để chuỗi hóa các bước xử lý dữ liệu (bộ biến đổi) và bước huấn luyện mô hình (bộ ước tính) thành một đối tượng duy nhất, giúp quy trình làm việc gọn gàng và tránh rò rỉ dữ liệu."
+  },
+  {
+    "question_id": "q32",
+    "concepts": [
+      "Mã hóa One-hot (One-Hot Encoding)",
+      "Xử lý biến phân loại"
+    ],
+    "misconceptions": [
+      "cho rằng mã hóa one-hot luôn làm giảm số chiều dữ liệu, trong khi thực tế nó thường làm tăng số chiều.",
+      "tin rằng mã hóa one-hot có thể áp dụng cho biến liên tục."
+    ],
+    "reasoning": "Mã hóa one-hot biến đổi các biến phân loại (categorical) thành dạng số học. Nó tạo ra một cột nhị phân (0/1) mới cho mỗi giá trị duy nhất của biến, làm tăng số chiều của dữ liệu."
+  },
+  {
+    "question_id": "q33",
+    "concepts": [
+      "Biểu diễn đặc trưng (Feature Representation)",
+      "Phân biệt biến liên tục và biến phân loại"
+    ],
+    "misconceptions": [
+      "cho rằng tuổi là một biến phân loại và cần được mã hóa one-hot, vì mỗi giá trị tuổi là một 'loại' khác nhau.",
+      "tin rằng tuổi nên được mã hóa theo thứ tự (Ordinal Encoding) vì tuổi có tính thứ tự.",
+      "cho rằng tuổi cần được mã hóa bằng Label Encoding, gán cho mỗi tuổi một số nguyên duy nhất."
+    ],
+    "reasoning": "Tuổi là một đặc trưng số học, liên tục và đã có ý nghĩa về mặt độ lớn (100 tuổi lớn hơn 8 tuổi). Do đó, không cần mã hóa mà có thể giữ nguyên để các mô hình học máy sử dụng trực tiếp."
+  },
+  {
+    "question_id": "q34",
+    "concepts": [
+      "Lựa chọn đặc trưng (Feature Selection)",
+      "Regularization L1 (Lasso)"
+    ],
+    "misconceptions": [
+      "cho rằng hồi quy tuyến tính thông thường có khả năng tự chọn lọc đặc trưng.",
+      "tin rằng L2 regularization (Ridge) cũng có thể đưa trọng số của các đặc trưng về chính xác bằng 0, trong khi nó chỉ làm co chúng về gần 0."
+    ],
+    "reasoning": "Regularization L1 (sử dụng trong Lasso và Elastic Net) có đặc tính là có thể làm cho trọng số của các đặc trưng không quan trọng trở về chính xác bằng 0. Điều này tương đương với việc tự động loại bỏ các đặc trưng đó khỏi mô hình."
+  },
+  {
+    "question_id": "q35",
+    "concepts": [
+      "Hạn chế quá khớp trong cây quyết định",
+      "Siêu tham số của cây quyết định"
+    ],
+    "misconceptions": [
+      "cho rằng việc tăng độ sâu của cây không giới hạn sẽ giúp hạn chế quá khớp, trong khi đây chính là nguyên nhân gây ra quá khớp."
+    ],
+    "reasoning": "Để hạn chế cây quyết định học thuộc dữ liệu huấn luyện (quá khớp), có thể áp dụng các biện pháp như cắt tỉa cây sau khi xây dựng, giới hạn trước độ sâu tối đa của cây, hoặc sử dụng nhiều cây trong các phương pháp học kết hợp như Random Forest."
+  },
+  {
+    "question_id": "q36",
+    "concepts": [
+      "Học kết hợp (Ensemble Learning)",
+      "Bagging và Boosting"
+    ],
+    "misconceptions": [
+      "cho rằng Bagging và Boosting chỉ có thể được áp dụng cho mô hình cây quyết định, trong khi chúng có thể kết hợp nhiều loại mô hình cơ sở khác nhau."
+    ],
+    "reasoning": "Cả Bagging và Boosting đều là các kỹ thuật học kết hợp, tạo ra một mô hình mạnh từ nhiều mô hình cơ sở yếu hơn. Bagging huấn luyện các mô hình song song và độc lập, trong khi Boosting huấn luyện chúng một cách tuần tự, mô hình sau sửa lỗi cho mô hình trước."
+  },
+  {
+    "question_id": "q37",
+    "concepts": [
+      "Lựa chọn chiến lược học máy",
+      "So sánh mô hình, phương pháp kiểm định và độ đo"
+    ],
+    "misconceptions": [
+      "tin rằng Logistic Regression có thể xử lý tốt mối quan hệ phi tuyến phức tạp.",
+      "cho rằng Cross-validation luôn là lựa chọn tốt nhất để đánh giá mô hình, ngay cả với dữ liệu rất lớn, vì nó cho kết quả đáng tin cậy hơn.",
+      "cho rằng RMSE là một độ đo phù hợp cho bài toán phân loại, nhầm lẫn với bài toán hồi quy."
+    ],
+    "reasoning": "Với dữ liệu lớn, Holdout validation hiệu quả hơn về mặt tính toán. Random Forest phù hợp với quan hệ phi tuyến. Accuracy là độ đo thích hợp cho bài toán phân loại. Do đó, kết hợp cả ba yếu tố này là lựa chọn phù hợp nhất."
+  },
+  {
+    "question_id": "q38",
+    "concepts": [
+      "Lựa chọn độ đo đánh giá (Evaluation Metric)",
+      "Bài toán mất cân bằng dữ liệu"
+    ],
+    "misconceptions": [
+      "cho rằng Accuracy là độ đo tốt nhất vì nó đo lường tỷ lệ dự đoán đúng tổng thể.",
+      "tin rằng MSE hoặc R2-score có thể dùng cho bài toán phân loại, nhầm lẫn với bài toán hồi quy."
+    ],
+    "reasoning": "Trong bài toán phát hiện gian lận, việc xác định sai một trường hợp không gian lận thành gian lận (False Positive) gây ra hậu quả nghiêm trọng. Do đó, Precision (độ chính xác), đo tỷ lệ các trường hợp được dự đoán là gian lận mà thực sự là gian lận, là độ đo quan trọng cần ưu tiên."
+  },
+  {
+    "question_id": "q39",
+    "concepts": [
+      "Chiến lược kiểm định chéo nâng cao",
+      "Xử lý dữ liệu phân nhóm và mất cân bằng"
+    ],
+    "misconceptions": [
+      "cho rằng chỉ cần GroupKFold là đủ, bỏ qua yếu tố mất cân bằng của các lớp.",
+      "tin rằng chỉ cần StratifiedKFold là đủ, bỏ qua cấu trúc nhóm (bệnh viện) của dữ liệu.",
+      "cho rằng KFold thông thường có thể xử lý được cả hai vấn đề về nhóm và mất cân bằng."
+    ],
+    "reasoning": "Để đánh giá mô hình trên một nhóm chưa thấy (bệnh viện mới) và đồng thời đảm bảo tỷ lệ các lớp được duy trì trong mỗi fold (do dữ liệu mất cân bằng), chiến lược StratifiedGroupKFold là phù hợp nhất vì nó kết hợp cả hai yếu tố này."
+  },
+  {
+    "question_id": "q40",
+    "concepts": [
+      "Hồi quy Ridge (Ridge Regression)",
+      "Tham số điều chuẩn L2"
+    ],
+    "misconceptions": [
+      "cho rằng tăng λ sẽ làm cho tất cả các trọng số bằng nhau.",
+      "tin rằng Ridge có thể làm cho trọng số của đặc trưng bằng chính xác 0, nhầm lẫn với Lasso (L1).",
+      "cho rằng Ridge ràng buộc các trọng số phải dương."
+    ],
+    "reasoning": "Trong hồi quy Ridge, việc tăng tham số điều chuẩn λ (alpha trong scikit-learn) sẽ tăng hình phạt cho các trọng số có giá trị lớn. Điều này buộc mô hình phải làm co các trọng số về gần giá trị 0 hơn để giảm độ phức tạp và tránh overfitting."
+  },
+  {
+    "question_id": "q41",
+    "concepts": [
+      "Phân tích thành phần chính (PCA)",
+      "Giảm chiều dữ liệu"
+    ],
+    "misconceptions": [
+      "cho rằng PCA dùng để tăng số chiều dữ liệu.",
+      "tin rằng PCA chỉ đổi tên cột mà không thay đổi số chiều.",
+      "cho rằng PCA là một kỹ thuật mã hóa dữ liệu như one-hot."
+    ],
+    "reasoning": "Mục đích chính của PCA (Phân tích thành phần chính) là giảm số chiều của bộ dữ liệu bằng cách biến đổi các đặc trưng ban đầu thành một tập hợp các đặc trưng mới, không tương quan tuyến tính gọi là các thành phần chính, trong khi vẫn giữ lại phần lớn thông tin (phương sai)."
+  },
+  {
+    "question_id": "q42",
+    "concepts": [
+      "Hệ số tương quan (Correlation Coefficient)",
+      "Đo lường mối quan hệ tuyến tính"
+    ],
+    "misconceptions": [
+      "cho rằng hệ số tương quan đo độ nghiêng (skewness) của dữ liệu.",
+      "tin rằng hệ số tương quan xác định độ lệch chuẩn của một biến.",
+      "cho rằng hệ số tương quan đo lường mức độ phân tán chung của dữ liệu."
+    ],
+    "reasoning": "Hệ số tương quan là một chỉ số thống kê đo lường mức độ và chiều hướng của mối quan hệ tuyến tính giữa hai biến số. Giá trị của nó dao động từ -1 (tương quan nghịch hoàn hảo) đến +1 (tương quan thuận hoàn hảo)."
+  },
+  {
+    "question_id": "q43",
+    "concepts": [
+      "Tinh chỉnh siêu tham số (Hyperparameter Tuning)",
+      "GridSearchCV và RandomizedSearchCV"
+    ],
+    "misconceptions": [
+      "cho rằng RandomizedSearchCV luôn kiểm tra tất cả các tổ hợp siêu tham số, nhầm lẫn với GridSearchCV.",
+      "tin rằng cả hai phương pháp đều chọn siêu tham số dựa trên phân phối xác suất, trong khi GridSearchCV duyệt qua một lưới cố định."
+    ],
+    "reasoning": "GridSearchCV kiểm tra tất cả các tổ hợp siêu tham số, nên chi phí tính toán tăng nhanh. Ngược lại, RandomizedSearchCV chỉ thử một số lượng tổ hợp ngẫu nhiên được quy định bởi `n_iter`, giúp kiểm soát chi phí tính toán."
+  },
+  {
+    "question_id": "q44",
+    "concepts": [
+      "So sánh các phương pháp chuẩn hóa dữ liệu",
+      "StandardScaler và Normalizer"
+    ],
+    "misconceptions": [
+      "cho rằng StandardScaler dùng khi dữ liệu cần nằm trong khoảng [0,1], nhầm lẫn với MinMaxScaler.",
+      "tin rằng Decision Tree rất nhạy với scaling, trong khi các mô hình dựa trên cây thường không bị ảnh hưởng bởi việc scaling đặc trưng.",
+      "cho rằng StandardScaler dùng để biến đổi dữ liệu sang không gian phi tuyến."
+    ],
+    "reasoning": "StandardScaler biến đổi dữ liệu để có phân phối với trung bình 0 và phương sai 1, giống như phân phối chuẩn. Do đó, nó phù hợp với các thuật toán (như hồi quy tuyến tính, SVM) có giả định hoặc hoạt động tốt hơn khi dữ liệu tuân theo phân phối chuẩn."
+  },
+  {
+    "question_id": "q45",
+    "concepts": [
+      "Độ nhạy của mô hình với outlier",
+      "Ảnh hưởng của giá trị ngoại lai"
+    ],
+    "misconceptions": [
+      "cho rằng cây quyết định nhạy cảm với outlier, trong khi các phép chia của nó ít bị ảnh hưởng bởi các giá trị cực đoan.",
+      "tin rằng Naive Bayes nhạy cảm với outlier, trong khi nó dựa trên xác suất và ít bị ảnh hưởng hơn.",
+      "cho rằng KNNImputer là một mô hình dự đoán và nhạy cảm với outlier."
+    ],
+    "reasoning": "Hồi quy tuyến tính tìm cách tối thiểu hóa tổng bình phương sai số, nên các giá trị ngoại lai (outlier) với sai số lớn có thể tác động mạnh và làm lệch đường hồi quy (tức là các trọng số đặc trưng) một cách đáng kể."
+  },
+  {
+    "question_id": "q46",
+    "concepts": [
+      "Xử lý giá trị thiếu khi có outlier",
+      "So sánh mean và median"
+    ],
+    "misconceptions": [
+      "cho rằng mean phản ánh trung tâm tốt hơn median khi có outlier, trong khi thực tế mean rất nhạy cảm với outlier.",
+      "tin rằng điền giá trị 0 là một giải pháp tổng quát tốt.",
+      "cho rằng one-hot encoding là một phương pháp để điền giá trị thiếu."
+    ],
+    "reasoning": "Median (trung vị) là giá trị ở giữa của một tập dữ liệu đã được sắp xếp, do đó nó ít bị ảnh hưởng bởi các giá trị ngoại lai (outlier) hơn so với mean (trung bình cộng). Vì vậy, khi dữ liệu có outlier, dùng median để thay thế giá trị thiếu thường là lựa chọn ổn định hơn."
+  },
+  {
+    "question_id": "q47",
+    "concepts": [
+      "Target Encoding",
+      "Rò rỉ dữ liệu (Data Leakage)"
+    ],
+    "misconceptions": [
+      "cho rằng one-hot encoding luôn làm giảm số chiều dữ liệu.",
+      "tin rằng target encoding tạo ra vector nhị phân, nhầm lẫn với one-hot encoding.",
+      "cho rằng target encoding chỉ dùng được cho biến liên tục, trong khi nó dùng cho biến phân loại."
+    ],
+    "reasoning": "Target encoding thay thế mỗi giá trị của biến phân loại bằng giá trị trung bình của biến mục tiêu (target) tương ứng với giá trị đó. Rủi ro chính là rò rỉ thông tin từ biến mục tiêu vào đặc trưng, có thể dẫn đến overfitting."
+  },
+  {
+    "question_id": "q48",
+    "concepts": [
+      "Cơ chế phân chia của cây quyết định",
+      "Đặc điểm của DecisionTreeClassifier"
+    ],
+    "misconceptions": [
+      "cho rằng một nút có thể phân chia dựa trên tất cả các đặc trưng cùng một lúc.",
+      "tin rằng cây quyết định có thể tạo ra nhiều hơn hai nhánh tại một nút (trong scikit-learn, cây là nhị phân).",
+      "cho rằng phép phân chia là một tổ hợp phi tuyến của các đặc trưng, nhầm lẫn với các mô hình khác như mạng nơ-ron."
+    ],
+    "reasoning": "Tại mỗi nút, một cây quyết định trong scikit-learn sẽ tìm ra đặc trưng tốt nhất và một ngưỡng giá trị trên đặc trưng đó để phân chia dữ liệu thành hai nhánh con. Quá trình này chỉ dựa trên một đặc trưng duy nhất tại một thời điểm."
+  },
+  {
+    "question_id": "q49",
+    "concepts": [
+      "Lợi ích của việc chuẩn hóa dữ liệu",
+      "Khi nào cần chuẩn hóa"
+    ],
+    "misconceptions": [
+      "cho rằng việc chuẩn hóa dữ liệu luôn cần thiết cho mọi loại mô hình, kể cả các mô hình dựa trên cây.",
+      "tin rằng việc chuẩn hóa không ảnh hưởng đến việc lựa chọn tham số điều chuẩn (regularization parameter) tối ưu."
+    ],
+    "reasoning": "Chuẩn hóa dữ liệu đưa các đặc trưng về cùng một thang đo, điều này đặc biệt hiệu quả cho các mô hình nhạy cảm với độ lớn của đặc trưng như mô hình tuyến tính có regularization. Nó cũng có thể giúp các thuật toán tối ưu dựa trên gradient hội tụ nhanh hơn."
+  },
+  {
+    "question_id": "q50",
+    "concepts": [
+      "Xử lý dữ liệu khuyết bằng KNNImputer",
+      "Nguyên lý của thuật toán KNN"
+    ],
+    "misconceptions": [
+      "cho rằng KNNImputer thay thế giá trị thiếu bằng một hằng số cố định.",
+      "tin rằng KNNImputer sử dụng các điểm dữ liệu xa nhất để dự đoán giá trị thiếu.",
+      "cho rằng một công cụ xử lý giá trị thiếu (Imputer) chỉ hoạt động trên dữ liệu không có giá trị thiếu, đây là một mâu thuẫn logic."
+    ],
+    "reasoning": "KNNImputer hoạt động bằng cách tìm K hàng xóm gần nhất (các điểm dữ liệu tương tự nhất) với hàng chứa giá trị bị thiếu. Sau đó, nó sử dụng giá trị trung bình của các hàng xóm đó trên đặc trưng tương ứng để điền vào chỗ trống."
+  }
+]

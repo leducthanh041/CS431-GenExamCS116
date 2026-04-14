@@ -1,0 +1,2896 @@
+[
+  {
+    "question_id": "ch4_q1",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ `dropna()` dùng để kiểm tra dữ liệu thiếu. Nó kiểm tra bằng cách nào vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó tìm các hàng có giá trị NA rồi xóa chúng. Nếu bảng thay đổi, tức là có dữ liệu thiếu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy kết quả của `dropna()` là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là một DataFrame mới, đã được loại bỏ các hàng hoặc cột có giá trị thiếu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử mình chỉ muốn biết có thiếu dữ liệu không, nhưng không được phép xóa?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì mình cứ chạy `dropna()` trên một bản copy, rồi so sánh kích thước bảng cũ và mới. Vẫn kiểm tra được mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Cách đó có vẻ phức tạp. Có hàm nào trả lời trực tiếp câu hỏi 'ở đâu có NA?' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Em không chắc, nhưng cách của em vẫn cho ra kết quả đúng. `dropna()` vẫn là để xử lý NA."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'kiểm tra' và 'xử lý bằng cách xóa' có phải là hai việc khác nhau không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Chắc là có. Một cái chỉ báo cáo, một cái thực hiện hành động."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Vậy bây giờ, với câu hỏi ban đầu, hàm nào chỉ 'kiểm tra'?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là `isnull()`. Vì nó chỉ trả về True/False cho biết vị trí thiếu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm lẫn giữa việc *phát hiện* và *xử lý*. `isnull()` dùng để phát hiện, `dropna()` dùng để xử lý bằng cách xóa."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q2",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng phải luôn mã hóa one-hot trước. Tại sao đó là bước đầu tiên?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì mã hóa là một phần của việc làm sạch dữ liệu. Dữ liệu phải được đưa về dạng số trước khi làm bất cứ điều gì khác."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mã hóa one-hot tạo ra gì từ một cột ban đầu?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó tạo ra các cột nhị phân mới cho mỗi giá trị duy nhất trong cột đó. Cái này cơ bản mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử cột 'Thành Phố' có ['Hà Nội', 'HCM', NaN]. Nếu mã hóa trước, chuyện gì xảy ra?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó tạo ra cột 'Thành Phố_Hà Nội' và 'Thành Phố_HCM'. Dòng NaN thì vẫn là NaN, sau đó mình xóa hoặc điền vào sau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trong hai cột mới, dòng NaN đó sẽ có giá trị gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là [0, 0]. Nhưng nó không quan trọng, vì mình sẽ xử lý nó ở bước tiếp theo dựa vào chỉ mục hàng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu có một giá trị 'Đà Nẵng' trong dữ liệu, nhưng không có trong tập huấn luyện. Dòng đó cũng có giá trị [0, 0] trong hai cột kia, đúng không?"
+      },
+      {
+        "role": "Student",
+        "text": "À... đúng vậy. Vậy là không phân biệt được một giá trị bị thiếu và một giá trị mới."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, thứ tự giữa mã hóa và xử lý giá trị thiếu có ảnh hưởng kết quả không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có. Nếu mã hóa trước, thông tin 'bị thiếu' có thể bị mất hoặc gây nhầm lẫn. Nên xử lý giá trị thiếu trước."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tóm lại, bạn đã nhầm khi cho rằng mã hóa phải luôn đi trước. Thực tế, mã hóa one-hot một cột có giá trị thiếu sẽ làm mất thông tin, khiến giá trị thiếu không thể phân biệt được với một loại dữ liệu khác. Do đó, phải xử lý giá trị thiếu trước."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q3",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói KNN điền dữ liệu thiếu bằng một hằng số. Hằng số đó từ đâu ra?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì lấy giá trị trung bình hoặc mode của cả cột dữ liệu đó. Cách nào cũng là hằng số mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy tên gọi 'K-Nearest Neighbors' có ý nghĩa gì ở đây?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là tên khoa học thôi. Quan trọng là nó điền một giá trị cố định vào chỗ thiếu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử hai điểm thiếu dữ liệu ở hai nhóm rất khác nhau. Chúng được điền cùng một hằng số không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Đã gọi là hằng số chung thì phải giống nhau cho mọi chỗ thiếu chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy tại sao thuật toán lại cần tìm 'K' 'láng giềng gần nhất'?"
+      },
+      {
+        "role": "Student",
+        "text": "Em không chắc. Có thể nó dùng láng giềng để quyết định việc khác, nhưng giá trị điền vào vẫn là hằng số."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một điểm A gần các điểm giá trị 100. Điểm B gần các điểm giá trị 1. Giá trị điền vào A và B có nên giống nhau?"
+      },
+      {
+        "role": "Student",
+        "text": "Hmm... nếu nói vậy thì không hợp lý. Giá trị điền vào phải phản ánh khu vực xung quanh nó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy giá trị điền vào không phải hằng số, mà phụ thuộc vào đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó phụ thuộc vào các láng giềng. KNN sẽ tìm K láng giềng gần nhất rồi lấy trung bình của chúng để điền vào."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Sai lầm của bạn là nhầm KNN với phương pháp điền hằng số đơn giản. KNN dùng thông tin cục bộ từ các láng giềng."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q4",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "[A] Bạn nói Z-score là một phương pháp tự động. Điều gì làm nó 'tự động'?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì máy tính có thể tự chạy và tính toán Z-score cho mọi điểm dữ liệu."
+      },
+      {
+        "role": "Tutor",
+        "text": "[B] Vậy một 'phương pháp' theo bạn được định nghĩa như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Là một quy trình có các bước rõ ràng để cho ra kết quả. Z-score có công thức, cứ áp vào là ra kết quả thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Tính giá trị trung bình của một tập dữ liệu cũng là quy trình. Nó có phải là phương pháp phát hiện ngoại lệ không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, vì giá trị trung bình chỉ là một con số. Z-score cho mình biết một điểm cách xa trung bình bao nhiêu, nên nó là một phương pháp."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Z-score cho bạn một con số. Làm sao con số đó biến thành quyết định 'ngoại lệ' hay 'bình thường'?"
+      },
+      {
+        "role": "Student",
+        "text": "Mình phải đặt một ngưỡng, ví dụ Z-score > 3 thì là ngoại lệ. Nhưng việc áp dụng ngưỡng đó là tự động, nên cả quá trình là tự động."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Vậy 'bộ não' của phương pháp này nằm ở công thức Z-score hay ở cái ngưỡng do bạn chọn?"
+      },
+      {
+        "role": "Student",
+        "text": "Cả hai đều quan trọng... Nhưng không có ngưỡng thì Z-score cũng vô dụng."
+      },
+      {
+        "role": "Tutor",
+        "text": "[D] Chính xác. Vậy Z-score là một công cụ tính toán. Quyết định ngưỡng là một quy tắc bên ngoài. Vậy bản thân Z-score có phải là một 'phương pháp' hoàn chỉnh không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là không. Nó chỉ là một phần của phương pháp thôi. Local Outlier Factor thì có lẽ tự nó quyết định được."
+      },
+      {
+        "role": "Tutor",
+        "text": "[E] Tóm lại: Z-score là một phép đo, không phải một phương pháp tự động. Nó cần một quy tắc (ngưỡng) do con người đặt ra để xác định ngoại lệ."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q5",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "[A] Bạn cho rằng IQR hợp với phân phối Gaussian. Giả định của bạn là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì... phân phối Gaussian là chuẩn nhất, dữ liệu 'sạch'. Mọi phương pháp thống kê tốt đều nên hoạt động trên đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "[B] IQR được tính toán từ những giá trị nào trong tập dữ liệu?"
+      },
+      {
+        "role": "Student",
+        "text": "Từ tứ phân vị Q1 và Q3. IQR = Q3 - Q1."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Xét dãy số: 10, 11, 12, 13, 14, 15, 100. Dãy này có phân phối Gaussian không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, vì có số 100 quá xa. Đây là dữ liệu xấu, bị lệch."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Q1 và Q3 của dãy số đó bị ảnh hưởng bởi số 100 không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không. Q1 là 11, Q3 là 15. Số 100 không ảnh hưởng. Nhưng phương pháp tốt phải xử lý được toàn bộ dữ liệu chứ?"
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Ngược lại, giá trị trung bình của dãy bị ảnh hưởng bởi số 100 chứ?"
+      },
+      {
+        "role": "Student",
+        "text": "Có, bị ảnh hưởng rất nhiều. Nhưng đó là lý do ta cần tìm ngoại lệ. Mục tiêu phải là làm cho dữ liệu trở nên 'chuẩn' hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "[D] Vậy một phương pháp không bị ảnh hưởng bởi ngoại lệ sẽ hữu ích hơn khi dữ liệu bị lệch, đúng không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Có lẽ. Vì nó không bị chính cái ngoại lệ đó làm nhiễu. Vậy nó dùng cho dữ liệu không phải Gaussian."
+      },
+      {
+        "role": "Tutor",
+        "text": "[E] Chính xác. Lập luận ban đầu của bạn sai vì bạn cho rằng mọi phương pháp đều yêu cầu dữ liệu 'sạch'. IQR mạnh chính vì nó không yêu cầu điều đó."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q6",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng chỉ cần cộng hoặc trừ hai đặc trưng. Tại sao cách đó lại hợp lý?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì đó là cách đơn giản nhất để kết hợp hai con số. Máy tính có thể cộng chúng lại, vậy là tạo được đặc trưng mới."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'đặc trưng' chỉ là một con số bất kỳ được tạo ra?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy, miễn là nó được tính toán từ các đặc trưng cũ. Kiến thức vật lý ở đây không quan trọng bằng toán học."
+      },
+      {
+        "role": "Tutor",
+        "text": "Thử một ví dụ: Vận tốc 50km/h, Thời gian 2 giờ. Nếu cộng, kết quả là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "50 + 2 = 52. Đặc trưng mới có giá trị là 52. Rất rõ ràng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Số 52 đó đại diện cho cái gì? Đơn vị của nó là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó là... một chỉ số kết hợp. Nó không cần phải có đơn vị cụ thể, nó chỉ là một đầu vào cho mô hình học máy thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một chiếc xe đứng yên. Vận tốc 0 km/h, thời gian trôi qua là 3 giờ. Phép cộng của bạn cho ra Quãng đường nào?"
+      },
+      {
+        "role": "Student",
+        "text": "0 + 3 = 3. Quãng đường là 3... À, xe đứng yên không thể đi được 3km. Logic này có vấn đề."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy phép toán nào sẽ cho kết quả đúng với cả hai trường hợp trên?"
+      },
+      {
+        "role": "Student",
+        "text": "Phép nhân. 50 x 2 = 100km. Và 0 x 3 = 0km. Vậy phải là Vận tốc x Thời gian."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã thấy rằng phép cộng tạo ra một giá trị không có ý nghĩa thực tế. Phép toán phải phản ánh mối quan hệ vật lý giữa các đại lượng, không phải là một phép tính ngẫu nhiên."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q7",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ One-hot encoding cho dữ liệu số, vì sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì kết quả của nó là các cột chứa số 0 và 1. Mà 0 và 1 là số."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục đích của việc biến đổi dữ liệu là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để máy tính có thể xử lý được. Máy tính chỉ làm việc với số."
+      },
+      {
+        "role": "Tutor",
+        "text": "Ok. Xét cột dữ liệu gốc là [10, 20, 30]. Đây là dữ liệu số phải không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng, đó là số."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bạn sẽ áp dụng One-hot encoding lên cột [10, 20, 30] như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì... sẽ có 3 cột mới. Cột '10', cột '20', cột '30'. Hàng đầu tiên là [1,0,0]. Có vấn đề gì đâu?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu hàng tiếp theo là giá trị 15 thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì... lại thêm một cột '15'? Vậy sẽ có vô số cột. Vô lý."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy One-hot encoding hiệu quả với loại dữ liệu đầu vào nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Loại có số lượng giá trị riêng biệt hữu hạn... như là dữ liệu danh mục."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tốt. Giờ quay lại câu hỏi gốc, phép biến đổi nào dùng cho dữ liệu dạng số?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải là Min-Max scaling. Vì nó tính toán dựa trên giá trị min, max của các con số."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn vì OHE tạo ra số, nhưng nó biến đổi dữ liệu danh mục. Loại biến đổi được xác định bởi đầu vào, không phải đầu ra."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q8",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn đã chọn [-1, 1]. Vì sao bạn chắc chắn Min-Max scaling đưa giá trị về khoảng này?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì đó là mục đích của chuẩn hóa mà. Đưa dữ liệu về một thang đo chung, đối xứng quanh 0."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tên phương pháp này là 'Min-Max'. 'Min' và 'Max' là gì trong công thức?"
+      },
+      {
+        "role": "Student",
+        "text": "Là giá trị nhỏ nhất và lớn nhất của tập dữ liệu. Công thức dùng chúng để co giãn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử có dãy số [10, 20, 50]. Giá trị 10 sau chuẩn hóa Min-Max sẽ là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Theo logic thì nó phải là -1, vì nó là giá trị nhỏ nhất. Giống như 50 sẽ là 1."
+      },
+      {
+        "role": "Tutor",
+        "text": "Công thức là (X - min) / (max - min). Hãy thay số của giá trị 10 vào."
+      },
+      {
+        "role": "Student",
+        "text": "(10 - 10) / (50 - 10) = 0. Sao lại là 0? Đáng lẽ phải là -1 chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Với công thức đó, điều kiện nào để kết quả ra một số âm?"
+      },
+      {
+        "role": "Student",
+        "text": "Tử số (X - min) phải âm. Nhưng X không thể nhỏ hơn min... À. Vậy nó không thể âm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy giá trị nhỏ nhất có thể là mấy? Lớn nhất là mấy? Trả lời lại câu hỏi ban đầu."
+      },
+      {
+        "role": "Student",
+        "text": "Nhỏ nhất là 0, lớn nhất là 1. Vậy đáp án là [0, 1]."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn vì cho rằng mọi phương pháp chuẩn hóa đều phải đối xứng quanh 0. Min-Max chỉ co giãn giá trị vào khoảng [0, 1]."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q9",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn cho rằng Robust Scaler dùng cho dữ liệu danh mục. Vì sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó là một kỹ thuật tiền xử lý. Em nghĩ nó có thể áp dụng cho nhiều loại dữ liệu, kể cả danh mục."
+      },
+      {
+        "role": "Tutor",
+        "text": "Robust Scaler tính toán dựa trên những đại lượng nào của dữ liệu?"
+      },
+      {
+        "role": "Student",
+        "text": "Em không nhớ chính xác công thức, nhưng hình như là median và khoảng tứ phân vị (IQR)."
+      },
+      {
+        "role": "Tutor",
+        "text": "Thử với cột dữ liệu danh mục: ['Mèo', 'Chó', 'Chim']. Median của cột này là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Cái này làm sao có median được, nó là chữ mà. Nhưng mình có thể gán số cho chúng, ví dụ Mèo=1, Chó=2, Chim=3."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu gán Chó=1, Mèo=2, Chim=3 thì kết quả scaler có thay đổi không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có chứ, vì số đầu vào thay đổi. Nhưng vẫn làm được mà, chỉ là mình phải quy ước cách gán số."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy kết quả biến đổi phụ thuộc vào quy ước tuỳ ý của người làm?"
+      },
+      {
+        "role": "Student",
+        "text": "...Cũng đúng. Như vậy thì kết quả không đáng tin cậy. Chắc nó không dùng cho chữ được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy Robust Scaler đòi hỏi dữ liệu đầu vào phải có tính chất gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Dữ liệu phải là số để có thể tính được median và IQR. Vậy nó dùng cho dữ liệu số. Còn One-hot encoding mới dùng cho danh mục."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng rồi. Bạn đã nhầm Scaler (cho dữ liệu số) với Encoder (cho dữ liệu danh mục)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q10",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lập luận của bạn, vì sao PCA được xem là phương pháp embedded?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó cũng làm giảm số lượng đặc trưng. Embedded hay không thì mục tiêu cuối cùng cũng là giảm chiều dữ liệu thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, 'embedded' có nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là phương pháp được tích hợp vào mô hình để chọn lọc đặc trưng, làm mô hình đơn giản hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Sau khi dùng PCA, các đặc trưng bạn dùng cho mô hình là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là các principal component. Vẫn là đặc trưng mà, chỉ là ít hơn thôi. Kết quả vẫn là giảm số lượng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Các component đó có phải là các đặc trưng gốc không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, chúng là tổ hợp tuyến tính của các đặc trưng gốc. Nhưng miễn là số lượng giảm thì vẫn là một cách chọn lựa."
+      },
+      {
+        "role": "Tutor",
+        "text": "Còn LASSO thì sao, các đặc trưng nó giữ lại là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là một vài đặc trưng gốc, những cái có hệ số khác 0."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một bên tạo ra đặc trưng mới, một bên giữ lại đặc trưng gốc. Sự khác biệt này có quan trọng không?"
+      },
+      {
+        "role": "Student",
+        "text": "À... Có lẽ là có. Vì PCA là bước tiền xử lý riêng, còn LASSO thì việc chọn lựa xảy ra ngay lúc huấn luyện."
+      },
+      {
+        "role": "Tutor",
+        "text": "Dựa vào đó, 'embedded' thực sự có nghĩa là gì trong bối cảnh này?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó nghĩa là việc lựa chọn được nhúng vào trong quá trình huấn luyện của chính mô hình đó. PCA không như vậy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm lẫn giữa việc 'giảm chiều dữ liệu' bằng cách tạo đặc trưng mới (PCA) và 'chọn lựa đặc trưng' bằng cách giữ lại một phần đặc trưng gốc ngay trong lúc huấn luyện (embedded-LASSO)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q11",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng khi dữ liệu thiếu, lựa chọn duy nhất là xóa?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Dữ liệu có lỗ hổng là dữ liệu 'bẩn', phải xóa đi để phân tích được chính xác."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục đích của việc 'làm sạch' dữ liệu là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để có kết quả đáng tin cậy. Dữ liệu không đầy đủ thì kết quả chắc chắn sẽ sai lệch."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử cột 'Thu nhập' thiếu 40% dữ liệu. Bạn xóa 40% số dòng?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc chắn rồi. Giữ lại những dòng đó thì phân tích về thu nhập đâu còn ý nghĩa."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu 40% đó đều là những người có thu nhập rất cao thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Làm sao mình biết được? Nhưng... nếu vậy việc xóa đi sẽ làm kết quả phân tích bị sai lệch."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy việc dữ liệu 'bị thiếu' có phải là một thông tin không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có lẽ... Việc họ không khai báo cũng là một kiểu thông tin. Nó cho thấy một nhóm đối tượng đặc biệt."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy làm thế nào để giữ lại thông tin 'đặc biệt' đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Có thể... tạo một cột mới để đánh dấu ai đã không khai báo thu nhập? Để xem họ có đặc điểm chung gì."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, tóm lại, cách tiếp cận của bạn là gì? Ban đầu bạn cho rằng phải xóa, giờ thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Cách tiếp cận cũ của mình quá cứng nhắc. Việc xóa đi có thể làm mất thông tin ngầm. Tạo cột mới để ghi nhận sự thiếu hụt là một cách hay hơn."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q12",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ PCA là phương pháp thay thế đơn biến. PCA thay thế chính xác cái gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó là kỹ thuật xử lý đặc trưng, nên nó dùng để xử lý dữ liệu, bao gồm cả việc thay thế dữ liệu thiếu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, 'đơn biến' có nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là xử lý trên một biến thôi. Nhưng PCA là một kỹ thuật tổng quát, nó áp dụng được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Để chạy thuật toán PCA, bạn cần bao nhiêu cột dữ liệu đầu vào?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải cần nhiều cột chứ, ít nhất là hai. Đó là kỹ thuật giảm chiều dữ liệu mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu cần nhiều cột, nó có còn là phương pháp 'đơn biến' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Về mặt kỹ thuật thì không, nhưng mục đích cuối cùng vẫn là xử lý đặc trưng. Nó mạnh hơn mean/median nhiều."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mạnh hơn, nhưng PCA có trực tiếp trả về một số để điền vào ô trống không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không. Nó tạo ra các thành phần chính mới... Các cột mới. Rồi từ đó mình phải xử lý tiếp."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy phương pháp nào chỉ làm việc trên một cột để điền giá trị thiếu?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là... mean/median. Vì nó chỉ cần tính toán trên chính cột đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bạn đã thấy sự khác biệt. PCA là kỹ thuật đa biến, không phải đơn biến. Mean/median/mode mới là thay thế đơn biến."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q13",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng thay thế bằng hằng số là phức tạp. Sự phức tạp nằm ở đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Ở việc chọn hằng số. Chọn sai thì hỏng hết. Phải phân tích rất kỹ mới chọn được, nên nó phức tạp."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy thao tác 'điền một số vào ô trống' có phức tạp không?"
+      },
+      {
+        "role": "Student",
+        "text": "Thao tác đó thì không, nhưng đó đâu phải là toàn bộ phương pháp? Quan trọng là chọn số nào."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử mình có 1 triệu dòng thiếu và thay tất cả bằng số 0. Thao tác này phức tạp ở đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Phức tạp ở chỗ chọn số 0 có thể là vô nghĩa. Việc đó làm cho cả phương pháp trở nên vô dụng, không phải là phức tạp sao? Vì phải suy nghĩ để không chọn số vô nghĩa."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một phương pháp đơn giản nhưng dễ gây lỗi, có phải là 'phương pháp phức tạp' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Hmm... Chắc là không. Về mặt thực hiện thì nó không phức tạp, nhưng nó không hiệu quả."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy đâu là phần đơn giản và đâu là phần khó?"
+      },
+      {
+        "role": "Student",
+        "text": "Thực hiện thì đơn giản, nhưng việc chọn giá trị thay thế để nó phản ánh đúng thì khó. À..."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy dựa vào đó, bạn hãy xem lại các lựa chọn và trả lời câu hỏi ban đầu."
+      },
+      {
+        "role": "Student",
+        "text": "Đáp án đúng phải là 'Đơn giản nhưng giá trị thay thế khó phản ánh đúng'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhận ra phương pháp này đơn giản khi thực hiện, nhưng việc chọn hằng số phù hợp để không làm sai lệch dữ liệu mới là phần khó."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q14",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lý do bạn đưa ra, vì sao nội suy tuyến tính lại cần các biến độc lập?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì đó là một phương pháp thống kê. Các phương pháp thống kê luôn cần biến độc lập để tránh sai lệch."
+      },
+      {
+        "role": "Tutor",
+        "text": "Biến độc lập trong trường hợp nội suy có nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nghĩa là giá trị tại điểm này không ảnh hưởng đến giá trị tại điểm kia. Mỗi điểm dữ liệu là một quan sát riêng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử nhiệt độ ngày 1 là 20°C, ngày 3 là 24°C. Dữ liệu ngày 2 bị thiếu. Bạn nội suy thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Em sẽ lấy trung bình, ra 22°C. Đó là nội suy tuyến tính."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu nhiệt độ ngày 1 và ngày 3 độc lập hoàn toàn, tại sao ta có thể dùng chúng để tìm ra nhiệt độ ngày 2?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì đó là cách làm. Quy tắc là độc lập, nhưng thực hành là dùng điểm lân cận. Có thể quy tắc chỉ là lý thuyết."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hành động 'dùng điểm lân cận để suy ra điểm ở giữa' đang dựa trên sự độc lập hay sự liên quan?"
+      },
+      {
+        "role": "Student",
+        "text": "...dựa trên sự liên quan. Nhưng em nghĩ giả định độc lập vẫn là một yêu cầu nền tảng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy giả định nào về 'sự liên quan' đó cho phép bạn kẻ một đường thẳng giữa hai điểm?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là giả định chúng... có một mối quan hệ thẳng, tuyến tính với nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tóm lại, bạn đã nhầm lẫn khi áp dụng yêu cầu 'biến độc lập' vào nội suy. Thực tế, nội suy hoạt động dựa trên giả định ngược lại: có một mối quan hệ tuyến tính giữa các điểm lân cận."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q15",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói hồi quy không thể dùng các biến khác để dự đoán. Vì sao bạn chắc chắn vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì điền dữ liệu là xử lý một cột. Hồi quy sẽ tính một giá trị từ cột đó rồi điền vào. Nó không thể “nhìn” sang các cột khác được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, mô hình hồi quy tuyến tính hoạt động thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó tìm một giá trị dự đoán dựa trên các giá trị đã biết trong cùng cột đó. Giống như trung bình nhưng phức tạp hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử mình thiếu 'giá nhà', nhưng có cột 'diện tích' và 'số phòng ngủ'."
+      },
+      {
+        "role": "Student",
+        "text": "Thì mình sẽ hồi quy trên cột 'giá nhà' để tìm giá trị điền vào. Cột 'diện tích' không liên quan."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu chỉ dùng cột 'giá nhà', thông tin để dự đoán đến từ đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Từ các giá nhà đã biết khác. Nhưng em thừa nhận cách này không có nhiều thông tin. Nhưng đó là cách nó hoạt động, nó không thể tự ý lấy dữ liệu cột khác."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy khái niệm 'hồi quy đa biến' dùng các cột khác làm đầu vào là sai sao?"
+      },
+      {
+        "role": "Student",
+        "text": "À... có thể đó là một loại khác. Vậy là hồi quy có thể dùng nhiều biến. Em đã nhầm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu hồi quy dùng các biến tương quan cao, nhược điểm sẽ là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nếu các biến đầu vào tương quan với nhau, nó có thể gây ra đa cộng tuyến và quá khớp."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Lỗi sai của bạn là cho rằng hồi quy chỉ hoạt động trên một biến, trong khi bản chất của nó là dùng các biến khác (features) để dự đoán."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q16",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng phương pháp mô hình là đơn giản và rẻ nhất. Vì sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì chỉ cần chạy một mô hình có sẵn là được kết quả. Nhanh hơn nhiều so với việc điền tay hay các phương pháp thống kê phức tạp."
+      },
+      {
+        "role": "Tutor",
+        "text": "Quá trình 'chạy một mô hình' đó bao gồm những bước nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Chọn mô hình, nạp dữ liệu vào, huấn luyện, rồi dự đoán giá trị thiếu. Các thư viện bây giờ hỗ trợ hết rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "So với việc chỉ điền giá trị trung bình, việc nào tốn công hơn?"
+      },
+      {
+        "role": "Student",
+        "text": "Điền trung bình thì nhanh hơn, nhưng ý tưởng dùng mô hình vẫn đơn giản. Nó tự học và điền, mình không phải can thiệp nhiều."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chi phí tính toán để 'tự học' đó có phải luôn nhỏ không?"
+      },
+      {
+        "role": "Student",
+        "text": "Em nghĩ là có. Máy tính bây giờ mạnh mà, chạy một lúc là xong. Chi phí đó không đáng kể."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu mô hình là mạng nơ-ron sâu cho 1 triệu dòng dữ liệu thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "...À, nếu vậy thì sẽ tốn rất nhiều thời gian và chi phí máy tính để huấn luyện."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy độ phức tạp và chi phí của phương pháp này phụ thuộc vào gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó phụ thuộc vào mô hình mình chọn và kích thước dữ liệu. Vậy nó không phải lúc nào cũng đơn giản và rẻ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã thấy 'dựa trên mô hình' không đồng nghĩa với 'đơn giản và rẻ'. Nó có thể chính xác cao, nhưng đi kèm chi phí tính toán và độ phức tạp."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q17",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng KNN imputation phát hiện được ngoại lệ. Sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó dùng các điểm lân cận. Nếu một điểm khác biệt so với lân cận, nó là ngoại lệ chứ sao."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mục đích chính của từ 'imputation' là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là điền vào các giá trị bị thiếu. Nhưng để điền, nó phải so sánh, quá trình so sánh đó chính là phát hiện."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử bạn có một điểm dữ liệu bị thiếu. KNN imputation làm gì với điểm đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó tìm k lân cận gần nhất và lấy trung bình của chúng để điền vào chỗ trống."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy đầu ra là một giá trị được điền, hay một nhãn 'ngoại lệ'?"
+      },
+      {
+        "role": "Student",
+        "text": "Là giá trị được điền. Nhưng nếu giá trị đó khác xa giá trị điền vào, thì chẳng phải điểm đó nên là ngoại lệ sao? Về bản chất là một."
+      },
+      {
+        "role": "Tutor",
+        "text": "KNN imputation chỉ chạy trên điểm bị thiếu. Làm sao nó phát hiện ngoại lệ cho các điểm đã có giá trị?"
+      },
+      {
+        "role": "Student",
+        "text": "...Chắc là không được. Nó chỉ điền vào chỗ thiếu thôi... Vậy nó không phải là phương pháp phát hiện ngoại lệ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, một phương pháp phát hiện ngoại lệ thực sự cần làm gì với mỗi điểm dữ liệu?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó phải xem xét mọi điểm và quyết định xem điểm đó có phải là ngoại lệ không, chứ không phải điền giá trị."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn giữa việc điền dữ liệu thiếu (imputation) và việc gán nhãn điểm bất thường (detection)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q18",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ EllipticEnvelope biến đổi dữ liệu thành dạng nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là một dạng hình học, như hình elip. Nó thay đổi các điểm dữ liệu để vừa với hình đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục tiêu của một thuật toán biến đổi đặc trưng là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là để tạo ra các đặc trưng mới, tốt hơn cho mô hình học."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu nó tạo đặc trưng mới, kết quả đầu ra sẽ là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Một bộ dữ liệu mới, với số cột hoặc giá trị khác đi. Nhưng em không cần biết đầu ra, tên nó đã nói lên rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử đầu ra của nó chỉ là hai số: 1 và -1. Điều đó có giống một bộ dữ liệu mới không?"
+      },
+      {
+        "role": "Student",
+        "text": "Nếu vậy thì nó có thể đang gán nhãn cho dữ liệu đã biến đổi. 1 là trong elip, -1 là ngoài. Vẫn là biến đổi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nó 'gán nhãn' cho điểm gốc hay 'biến đổi' điểm gốc?"
+      },
+      {
+        "role": "Student",
+        "text": "...Có vẻ nó chỉ gán nhãn. Gán nhãn một điểm là 'bình thường' hoặc 'bất thường'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một thuật toán chỉ gán nhãn điểm là 'bất thường' thuộc nhóm nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nhóm phát hiện ngoại lệ. Vậy nó dùng hình elip để quyết định điểm nào là ngoại lệ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn nhầm nó là biến đổi đặc trưng vì tên gọi, nhưng chức năng chính của nó là phân loại điểm."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q19",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói phương pháp này hoạt động tốt trên mọi loại phân phối. Tại sao lại vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó dựa trên trung bình và độ lệch chuẩn. Bất kỳ bộ dữ liệu nào cũng tính được hai chỉ số này, nên phải áp dụng được chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Độ lệch chuẩn đo lường chính xác điều gì quanh giá trị trung bình?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó đo độ phân tán của dữ liệu. Xem các điểm dữ liệu cách trung bình bao xa."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tưởng tượng dữ liệu lương: 99 người lương 10 triệu, 1 người lương 5 tỷ."
+      },
+      {
+        "role": "Student",
+        "text": "Ok, một bộ dữ liệu rất lệch."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giá trị trung bình lúc này có đại diện tốt cho đa số không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nó bị kéo hẳn về phía 5 tỷ. Nhưng về mặt toán học, nó vẫn là giá trị trung bình."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu dùng trung bình cộng trừ 3 lần độ lệch chuẩn, kết quả sẽ thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Khoảng đó sẽ cực rộng, có thể bao trùm cả 10 triệu và 5 tỷ. Vậy thì chẳng tìm ra ngoại lệ nào. Nhưng đó là do dữ liệu cực đoan, chứ không phải phương pháp sai."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy để phương pháp này 'hiệu quả', dữ liệu cần có đặc điểm gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là... dữ liệu không được quá lệch. Giá trị trung bình phải nằm ở nơi có nhiều dữ liệu tập trung. Giống như phân phối hình chuông."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, ban đầu bạn nghĩ nó dùng cho mọi phân phối. Nhưng thực tế nó phù hợp nhất khi dữ liệu đối xứng quanh trung bình, như phân phối Gaussian."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q20",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn viết rằng Min-Max scaling là một cách xử lý ngoại lệ. Cơ chế hoạt động của nó là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì nó đưa tất cả giá trị về khoảng [0, 1]. Điểm ngoại lệ có giá trị rất lớn sẽ bị co về 1, vậy là xử lý rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục đích chính của việc scale dữ liệu là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để các cột dữ liệu có cùng một thang đo, giúp mô hình hội tụ nhanh hơn. Nhưng nó cũng xử lý được ngoại lệ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét dãy [1, 2, 3, 100]. Điểm 100 là ngoại lệ. Sau khi Min-Max, giá trị của 100 là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Là 1. Thấy chưa, nó đã bị giới hạn lại rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy còn giá trị của điểm 3 thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Để tính... (3-1)/(100-1) = 2/99, khoảng 0.02. Có vấn đề gì đâu?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Trước khi scale, khoảng cách giữa 3 và 1 là 2. Sau khi scale, khoảng cách là 0.02. Cấu trúc dữ liệu có bị thay đổi không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có, nhưng đó là mục đích của scale mà? Quan trọng là điểm 100 đã không còn quá lớn nữa."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nó không lớn về giá trị tuyệt đối, nhưng nó đã làm các điểm khác bị dồn lại. 'Tính ngoại lệ' đã mất đi chưa?"
+      },
+      {
+        "role": "Student",
+        "text": "Chưa hẳn... nhưng nó đã làm giá trị của điểm ngoại lệ thay đổi. Vậy nên nó phải là một cách xử lý."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy Min-Max scaling có phải cách để xử lý ngoại lệ, hay nó chỉ bị ảnh hưởng tiêu cực bởi ngoại lệ?"
+      },
+      {
+        "role": "Student",
+        "text": "Có lẽ là nó bị ảnh hưởng bởi ngoại lệ. Vì nó nén tất cả các điểm khác lại. Vậy câu trả lời đúng cho câu hỏi ban đầu là gì?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Tốt. Vậy bạn thấy Min-Max scaling không phải để xử lý ngoại lệ mà là để đồng bộ thang đo. Sự tồn tại của ngoại lệ thực chất làm hỏng kết quả của Min-Max scaling."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q21",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "[A] Bạn nói CleanLab là công cụ vẽ biểu đồ. Vì sao bạn lại nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì để phát hiện vấn đề dữ liệu, cách tốt nhất là vẽ nó ra để nhìn. CleanLab chắc chắn phải có chức năng đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "[B] Vậy mục đích chính của thư viện như Matplotlib là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là để vẽ biểu đồ. Mình đưa dữ liệu, nó vẽ ra biểu đồ tương ứng."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Matplotlib có tự tìm ra điểm dữ liệu nào bị gán nhãn sai không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nó chỉ vẽ thôi. Mình phải tự nhìn vào biểu đồ để phát hiện."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Vậy CleanLab tự tìm lỗi, hay nó chỉ vẽ để bạn tự tìm?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó là công cụ 'tự động' mà. Nó phải vừa tìm vừa vẽ ra kết quả cho mình xem luôn chứ. Tách ra sao được."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Giả sử CleanLab chỉ trả về một danh sách các chỉ số (index) bị lỗi. Thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Nếu chỉ trả về danh sách index... thì nó không phải công cụ trực quan hóa rồi. Nó chỉ giống một bộ lọc."
+      },
+      {
+        "role": "Tutor",
+        "text": "[D] Vậy, chức năng cốt lõi của CleanLab là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là tìm kiếm và phát hiện các vấn đề trong dữ liệu, như OOD hay lỗi nhãn. Không phải vẽ biểu đồ."
+      },
+      {
+        "role": "Tutor",
+        "text": "[E] Chính xác. Bạn đã nhầm lẫn giữa việc 'tìm' vấn đề và 'hiển thị' vấn đề. CleanLab tập trung vào việc tìm kiếm tự động."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q22",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn giải thích `set_index` là xóa chỉ mục vì 'set' là đặt lại. Vì sao 'set' có nghĩa là xóa?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì 'set' là đặt lại. Giống như reset một trò chơi, là đưa về trạng thái ban đầu, tức là không có gì. Nên nó xóa chỉ mục cũ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trong lập trình, lệnh `x = 5` có phải là xóa biến `x` không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, đó là gán giá trị. Nhưng `set_index` là một hàm, nó phức tạp hơn. Nó phải tác động lên cấu trúc bảng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hàm `set_index` cần tham số là một cột. Tham số đó dùng để làm gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để chỉ định ngữ cảnh xóa. Chắc nó cần biết mình đang ở cột nào để xóa chỉ mục tương ứng. Logic là vậy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu chỉ để xóa, sao lệnh không tên là `delete_index()` cho rõ ràng?"
+      },
+      {
+        "role": "Student",
+        "text": "Tên hàm đôi khi khó hiểu. Quan trọng là em nghĩ nó sẽ xóa chỉ mục hiện tại và trả về chỉ mục số mặc định."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nếu nó lấy cột bạn đưa vào để 'đặt' làm chỉ mục mới thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "...Tức là nó không xóa, mà là thay thế chỉ mục cũ bằng dữ liệu của một cột?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Lỗi sai là diễn giải 'set' là xóa. Thực tế `set_index` dùng một cột có sẵn để đặt nó làm chỉ mục mới cho bảng."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q23",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng `reset_index` dùng để đổi tên cột. Vậy lệnh `rename()` dùng để làm gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì cũng là đổi tên cột. Nhưng `reset_index` chắc là một cách khác, kiểu 'reset' hàng loạt tên cột về mặc định."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy chữ 'index' trong `reset_index` có nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là chỉ mục của cột, thứ tự các cột."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mình có DataFrame với index hàng là ['a', 'b', 'c']. Lệnh `reset_index` tác động vào đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ reset tên các cột về 0, 1, 2... chứ không tác động đến index hàng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Thế còn tham số `drop=True` trong lệnh thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì nó sẽ 'drop' (bỏ) tên cột cũ đi. Logic vẫn vậy mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu `reset_index` chỉ tác động vào tên cột, sao nó lại có tham số liên quan đến index cũ?"
+      },
+      {
+        "role": "Student",
+        "text": "Chờ đã... `drop=True` là bỏ đi index cũ. Vậy tức là nó có tác động đến index hàng. Vậy là nó làm cả hai việc à?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, trọng tâm của lệnh này là 'index' hay là 'cột'?"
+      },
+      {
+        "role": "Student",
+        "text": "Là index. Nó reset index hàng về mặc định (0, 1, 2...). Và `drop=True` là bỏ luôn cái index cũ, không giữ lại."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Lập luận của bạn ban đầu cho rằng `reset_index` xử lý tên cột, nhưng thực tế nó chỉ xử lý index của hàng."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q24",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói lệnh này đổi tên cột thành 'int'. Tại sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì cú pháp `data['column'] = ...` là để gán. Nó gán cái tên 'int' vào cột đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trong pandas, lệnh thường dùng để đổi tên cột là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là `rename()`. Nhưng có thể có nhiều cách mà, đây là một cách khác."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu ta chạy `astype(str)`, cột sẽ đổi tên thành 'str' à?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng, logic là vậy. Tham số trong ngoặc là tên mới."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét cột A có giá trị `[1.1, 2.2]`. Sau lệnh `data['A'] = data['A'].astype(int)`, tên cột là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là 'int'? À không... tên cột vẫn là 'A' chứ. Sao lạ vậy?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Tên cột không đổi. Vậy có thứ gì đã thay đổi không?"
+      },
+      {
+        "role": "Student",
+        "text": "Giá trị bên trong. Nó từ `[1.1, 2.2]` thành `[1, 2]`. Nó đã biến số thực thành số nguyên."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mục đích thật sự của `astype(int)` là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó dùng để thay đổi kiểu dữ liệu của các giá trị trong cột, ép chúng thành số nguyên."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. `astype` thay đổi kiểu dữ liệu, không phải tên cột. Lệnh đổi tên là `rename()`."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q25",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ `replace` liên quan đến chuẩn hóa Z-score như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì nó thay đổi giá trị để đưa về một dạng chuẩn. Chuẩn hóa Z-score cũng làm vậy mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chuẩn hóa Z-score cần tính toán những đại lượng nào của dữ liệu?"
+      },
+      {
+        "role": "Student",
+        "text": "Cần giá trị trung bình và độ lệch chuẩn của cả cột."
+      },
+      {
+        "role": "Tutor",
+        "text": "Lệnh `replace('A', 'B')` có tính toán trung bình không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không. Nhưng nó vẫn là chuẩn hóa, vì nó đưa giá trị 'A' về 'B' theo một tiêu chuẩn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử cột điểm có [5, 6, 100]. Lệnh `replace(100, 10)` có phải Z-score không?"
+      },
+      {
+        "role": "Student",
+        "text": "Về bản chất là có, nó chuẩn hóa giá trị bất thường 100 về giá trị hợp lệ 10."
+      },
+      {
+        "role": "Tutor",
+        "text": "Khi đó, giá trị 5 và 6 có bị thay đổi không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, chỉ có 100 bị thay đổi. Nhưng như vậy là đúng rồi mà?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Chuẩn hóa Z-score có bỏ qua giá trị 5 và 6 không?"
+      },
+      {
+        "role": "Student",
+        "text": "À không... Z-score sẽ biến đổi tất cả các giá trị trong cột dựa trên trung bình chung."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy `replace` và Z-score khác nhau ở điểm cốt lõi nào?"
+      },
+      {
+        "role": "Student",
+        "text": "`replace` chỉ tác động lên giá trị cụ thể được chỉ định, còn Z-score biến đổi toàn bộ cột. Vậy nó dùng để sửa lỗi dữ liệu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. `replace` sửa giá trị cụ thể, không phải chuẩn hóa Z-score. Bạn đã nhầm lẫn giữa việc thay thế và biến đổi thống kê."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q26",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng `drop_duplicates()` dùng để bỏ cột thiếu dữ liệu. Vì sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì 'duplicate' là thừa, mà dữ liệu thiếu (NaN) cũng là một dạng dữ liệu không mong muốn, nên hàm này sẽ loại bỏ nó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, thế nào là một 'dòng trùng lặp'?"
+      },
+      {
+        "role": "Student",
+        "text": "Là một dòng có nhiều giá trị giống hệt dòng khác, hoặc có thể là dòng chứa giá trị rỗng mà các dòng khác không có."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét bảng: Dòng 1 là [A, B], Dòng 2 là [A, B]. `drop_duplicates()` sẽ làm gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ xóa Dòng 2 đi vì nó giống hệt Dòng 1."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Giờ xét bảng: Dòng 1 là [A, B], Dòng 2 là [C, NaN]. Hàm này sẽ làm gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó phải xóa Dòng 2 chứ, vì nó có dữ liệu thiếu. Đó là chức năng của nó mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hàm này tìm các dòng 'giống hệt nhau' để xóa. Dòng 1 và 2 có giống hệt nhau không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không... nhưng nó vẫn nên xử lý được NaN chứ. Em nghĩ có tham số nào đó để làm việc đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy chốt lại, `drop_duplicates()` tìm kiếm sự 'giống hệt nhau' hay tìm 'ô trống'?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó tìm sự giống hệt nhau. Em đã nhầm. Vậy nó chỉ loại bỏ các dòng trùng lặp hoàn toàn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm `drop_duplicates` (xóa dòng trùng) với `dropna` (xóa dòng/cột có giá trị thiếu)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q27",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói `drop` chỉ dùng để xóa dòng. Vậy tham số `axis=1` trong lệnh có ý nghĩa gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc đó là một tham số phụ thôi. Mặc định của `drop` là xóa dòng mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giá trị mặc định của `axis` trong hàm `drop` là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là 0, tương đương với xóa dòng. Nên em mới nói nó chỉ dùng để xóa dòng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nếu ta cố tình truyền vào giá trị `axis=1`, chuyện gì sẽ xảy ra?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì sẽ báo lỗi chứ sao. Lệnh này được thiết kế để xóa dòng, không phải cột."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử có DataFrame 2 dòng, 2 cột. Lệnh `df.drop('tên_cột', axis=1)` sẽ báo lỗi à?"
+      },
+      {
+        "role": "Student",
+        "text": "Vâng, em chắc chắn nó sẽ báo lỗi. Nếu muốn xóa cột phải dùng lệnh khác."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, `axis=1` làm cho lệnh báo lỗi. Còn `axis=0` thì xóa dòng. Có đúng không?"
+      },
+      {
+        "role": "Student",
+        "text": "... Khoan. Nếu nó được thiết kế để báo lỗi thì người ta đưa tham số đó vào làm gì? Có lẽ `axis=1` có nghĩa là xóa cột."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy bạn hãy dùng quy tắc mới này trả lời lại câu hỏi ban đầu."
+      },
+      {
+        "role": "Student",
+        "text": "Lệnh `data.drop(columns=[list_cols], axis=1)` dùng để loại bỏ các cột được chỉ định."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Ban đầu bạn đã sai vì chỉ nhớ trường hợp mặc định (xóa dòng). Tham số `axis` quyết định đối tượng bị xóa: `0` là dòng, `1` là cột."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q28",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng cú pháp `data[...]` dùng để đổi kiểu dữ liệu. Điều gì trong đó gợi ý điều này?"
+      },
+      {
+        "role": "Student",
+        "text": "Dấu ngoặc vuông `[]` thường dùng để truy cập hoặc thay đổi. Em nghĩ nó là để thay đổi kiểu dữ liệu của phần được chọn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Phần bên trong ngoặc vuông, `data['column_filter'] == 'abc'`, trả về kết quả gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó trả về một chuỗi giá trị True hoặc False, tùy vào điều kiện có đúng với mỗi dòng không."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy ta đang đưa một chuỗi True/False vào `data[]`. Việc này đổi kiểu dữ liệu như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ chọn những dòng có giá trị True và chỉ đổi kiểu dữ liệu của những dòng đó thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Cú pháp này có chỉ định kiểu dữ liệu mới không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Không. Nhưng có thể nó dùng một kiểu mặc định nào đó. Logic của em vẫn có lý mà?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu chỉ đổi kiểu của vài dòng, các dòng khác thì sao? Một cột có thể chứa nhiều kiểu dữ liệu không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chà... không được. Một cột chỉ có một kiểu dữ liệu. Logic của em có vẻ mâu thuẫn ở điểm này."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nếu không phải đổi kiểu, việc đưa chuỗi True/False vào `data[]` có thể làm gì khác?"
+      },
+      {
+        "role": "Student",
+        "text": "Có lẽ... nó chỉ giữ lại những dòng tương ứng với giá trị True? Giống như một cái bộ lọc."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tóm lại, cú pháp `data[điều_kiện]` dùng để lọc các dòng mà điều kiện là True, chứ không phải để thay đổi kiểu dữ liệu."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q29",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng chỉ cần đếm. Vậy tại sao bạn nghĩ kết quả là 1 hoặc 2?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì đây là ví dụ minh họa thôi. Người ta sẽ không cho một con số lớn, phức tạp. Chắc chỉ có 1 hoặc 2 lần xuất hiện là cùng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đếm tần số xuất hiện của 'Red' có nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là xem có bao nhiêu chữ 'Red' trong danh sách đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử danh sách là: [Red, Blue, Red, Green, Red]. Tần số của 'Red' là mấy?"
+      },
+      {
+        "role": "Student",
+        "text": "Là 3. Nhưng ví dụ trong bài giảng không thể nhiều như vậy. Nó chỉ để kiểm tra khái niệm thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tại sao bạn lại mặc định ví dụ phải đơn giản?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì mục đích là dạy khái niệm đếm, không phải để thách đố. Nên đáp án không thể là một số ngẫu nhiên như 3."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu danh sách là [Red, Red, Red, Red, Red], tần số là mấy?"
+      },
+      {
+        "role": "Student",
+        "text": "Là 5... À. Vậy là không có quy tắc nào về việc ví dụ phải đơn giản. Cứ có bao nhiêu thì đếm bấy nhiêu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, quy tắc chung để đếm tần số là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là đếm tất cả các lần xuất hiện của một giá trị trong dữ liệu, không giả định trước. Quay lại câu hỏi, vậy đáp án phải là 3."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Ban đầu bạn đã giả định rằng ví dụ phải có số lần xuất hiện ít. Thực tế, đếm tần số là một thao tác chính xác, bất kể kết quả."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q30",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng use_vehicle là 1 chỉ khi cả ba cột Bus, Car, Motorbike đều là 1. Vì sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì đây là cột tổng hợp. Nó phải thể hiện việc sử dụng TẤT CẢ các phương tiện được liệt kê."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, ý nghĩa của 'use_vehicle' theo bạn là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là một người có sử dụng cả xe bus, xe hơi và xe máy. Phải có cả ba thì mới tính."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét một người chỉ đi xe bus. Tức là Bus=1, Car=0, Motorbike=0. Họ có 'dùng phương tiện' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Trong thực tế thì có, nhưng theo định nghĩa của cột tổng hợp này thì không. Cột này đòi hỏi cả ba."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy cột `use_vehicle` của người đó bằng mấy theo logic của bạn?"
+      },
+      {
+        "role": "Student",
+        "text": "Bằng 0. Vì không thỏa mãn điều kiện 'tất cả'. Em thấy logic này vẫn nhất quán mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một người đi xe bus, nhưng cột 'sử dụng phương tiện' lại là 0. Bạn thấy kết quả này hợp lý chứ?"
+      },
+      {
+        "role": "Student",
+        "text": "...Nghe thì vô lý, nhưng nếu không phải là 'tất cả' thì làm sao biết được? Nếu chỉ 1 cái là đủ, thì cột này quá đơn giản."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy quy tắc nào sẽ làm cho cột 'sử dụng phương tiện' có ý nghĩa trong mọi trường hợp?"
+      },
+      {
+        "role": "Student",
+        "text": "Có lẽ là chỉ cần một trong các cột bằng 1 là đủ. Vậy thì use_vehicle sẽ bằng 1 khi ít nhất một trong các cột bằng 1."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Lỗi sai của bạn là đã nhầm lẫn điều kiện 'ít nhất một' (phép OR) với 'tất cả' (phép AND)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q31",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ rằng cứ đặc trưng chuỗi phức tạp là nên xóa bỏ ngay lập tức?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Giữ lại chỉ làm mô hình phức tạp hơn, khó xử lý và dễ gây lỗi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục đích của một đặc trưng trong mô hình là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để cung cấp thông tin cho mô hình học và dự đoán. Nhưng đặc trưng phải 'sạch' và dễ dùng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử có đặc trưng 'thời gian giao dịch': \"2023-10-27 15:30:45\". Đây là chuỗi phức tạp. Xóa nó đi?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng, tôi sẽ xóa nó. Quá chi tiết và rắc rối. Giữ lại không đáng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu bài toán là phát hiện gian lận, mà gian lận thường xảy ra vào đêm thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì... có thể phải giữ lại. Nhưng xử lý chuỗi này vẫn rất phiền phức. Bỏ đi vẫn là lựa chọn an toàn hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Thay vì bỏ đi, ta có thể tách \"giờ\", \"phút\", \"ngày trong tuần\" ra không?"
+      },
+      {
+        "role": "Student",
+        "text": "Ý bạn là tách thành các cột riêng? Nếu vậy thì... thông tin vẫn được giữ lại. Như vậy thì có thể có ích."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy với một đặc trưng chuỗi phức tạp nhưng có cấu trúc, ta nên làm gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Có lẽ là... xem xét việc phân rã nó thành các đặc trưng nhỏ hơn, thay vì xóa bỏ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Lỗi sai của bạn là cho rằng phức tạp thì phải xóa. Cách đúng là xem xét phân rã nó để tận dụng thông tin."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q32",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng chuỗi này có thể diễn giải theo cách khác. Cụ thể là cách nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Ví dụ '06' là mã khoa, '12' là tháng sinh, '450' là số thứ tự. Tùy quy ước thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy quy ước đó có áp dụng cho mọi chuỗi tương tự không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không hẳn. Em nghĩ mỗi loại mã có quy ước riêng, không có cái nào là chung hết."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nếu mình đưa chuỗi '0721321', bạn đọc nó thế nào theo logic của bạn?"
+      },
+      {
+        "role": "Student",
+        "text": "Chịu. Phải biết quy ước của chuỗi đó là gì đã. Không có quy tắc chung thì sao biết được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu có một quy tắc, nó có nên nhất quán cho cả hai chuỗi không?"
+      },
+      {
+        "role": "Student",
+        "text": "Ừm... Nếu đây là ví dụ trong bài giảng thì chắc phải có một quy tắc nhất quán."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy thử tìm một cấu trúc cố định cho '0612450' xem nào."
+      },
+      {
+        "role": "Student",
+        "text": "Có lẽ là... 06 (năm), 1 (hệ), 2 (khoa), 450 (STT)? Cấu trúc này có vẻ hợp lý."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Ban đầu bạn tin rằng không có quy tắc cố định. Giờ bạn thấy nó có cấu trúc cụ thể."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q33",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ rằng một đặc trưng mới chỉ có thể được tạo từ một cột duy nhất?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Giống như mình chuẩn hóa một cột, hay lấy log của nó. Luôn là một-ra-một."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mục đích của 'tổng hợp đặc trưng' là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là tạo ra đặc trưng mới tốt hơn. Nhưng nó phải dựa trên một đặc trưng gốc chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu có cột 'Họ' và cột 'Tên', làm sao tạo cột 'Họ và Tên'?"
+      },
+      {
+        "role": "Student",
+        "text": "Đó chỉ là ghép chuỗi thôi. Trong machine learning, đặc trưng phải có ý nghĩa, không chỉ là ghép."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy việc tạo ra 'Toyota_Sedan' từ 'Toyota' và 'Sedan' không có ý nghĩa?"
+      },
+      {
+        "role": "Student",
+        "text": "… Nó có ý nghĩa, nhưng em vẫn nghĩ thường thì chỉ xử lý trên một cột."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tên cột 'Make_Type' gợi ý điều gì về nguồn gốc của nó?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là... nó được tạo từ cả 'Make' và 'Type'. Có lẽ em đã nhầm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, một đặc trưng mới có thể tạo từ nhiều đặc trưng không? Hãy trả lời lại câu hỏi."
+      },
+      {
+        "role": "Student",
+        "text": "Có thể. Cột Make_Type được tạo từ nhiều đặc trưng thành phần như Make và Type."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm khi cho rằng một đặc trưng mới chỉ có thể tạo từ một nguồn. Tổng hợp đặc trưng thường kết hợp nhiều đặc trưng cũ."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q34",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng có thể dùng hàm `replace` để tổng hợp. Ý tưởng của bạn là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì mình thay thế tất cả giá trị trong một nhóm bằng một giá trị tóm tắt. Ví dụ, tính trung bình rồi thay tất cả bằng số trung bình đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Được. Vậy giá trị trung bình đó được tính ra từ đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì mình tính trước. Ví dụ nhóm có [10, 20, 60], trung bình là 30. Em sẽ dùng `replace` để đổi cả ba số thành 30."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy bạn phải tính trung bình trước khi dùng `replace`?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng thế. `replace` là bước để thể hiện kết quả cuối cùng. Vẫn là một phần của quá trình."
+      },
+      {
+        "role": "Tutor",
+        "text": "Câu hỏi là dùng hàm nào để *tổng hợp*. Nếu bạn đã tự tính, vậy hàm nào đã làm việc đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Nhưng nếu không có `replace`, làm sao gán giá trị tổng hợp đó vào bảng được? Logic của em vẫn có lý mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Ta cần một giá trị duy nhất cho mỗi nhóm, hay nhiều giá trị lặp lại?"
+      },
+      {
+        "role": "Student",
+        "text": "Một giá trị duy nhất thôi. Ví dụ 'doanh thu trung bình của Hà Nội' là một con số."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy hàm nào giúp tính ra *một con số đó* từ nhiều dòng dữ liệu?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là hàm như `mean`... và phải dùng kèm một hàm khác để nhóm lại. Chắc là `groupby`."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tóm lại: `replace` chỉ thay thế giá trị có sẵn. `groupby` kết hợp `mean` mới thực sự tính toán và tạo ra một giá trị tổng hợp cho mỗi nhóm."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q35",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói chỉ cần lấy một giá trị lương bất kỳ của HCM. Vì sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì đề bài hỏi 'lương của HCM', em thấy có người ở HCM lương như vậy thì em chọn thôi. Nó là một giá trị có thật."
+      },
+      {
+        "role": "Tutor",
+        "text": "Từ 'Avg' trong 'AvgSalary' có nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là trung bình. Nhưng đây là nhóm HCM, thì lấy một giá trị đại diện là được chứ?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử lương của 3 người ở HCM là 1 triệu, 2 triệu, và 100 triệu."
+      },
+      {
+        "role": "Student",
+        "text": "Thì em có thể chọn 1, 2, hoặc 100. Cả ba đều là lương thật ở HCM."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy lương trung bình của HCM có thể là 1 triệu, cũng có thể là 100 triệu?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Tùy mình chọn thôi. Lấy số nào cũng là lương thật mà, sao lại sai được?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Một báo cáo nói lương trung bình là 1 triệu, báo cáo khác nói 100 triệu. Cả hai đều đúng?"
+      },
+      {
+        "role": "Student",
+        "text": "...Nghe hơi kỳ. Một giá trị trung bình phải là một số cụ thể chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy làm sao từ 1, 2, và 100 có được một số đại diện duy nhất?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải... tính trung bình cộng của cả ba số đó. (1+2+100)/3. Giờ em biết phải làm gì rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. AvgSalary của nhóm là trung bình cộng của tất cả giá trị trong nhóm, không phải là một giá trị bất kỳ."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q36",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng đặc trưng cụm được tạo ra từ việc chuẩn hóa. Vì sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì để chạy các thuật toán phân cụm như K-Means, mình phải chuẩn hóa dữ liệu trước. Không chuẩn hóa thì kết quả sẽ sai."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục đích của việc chuẩn hóa dữ liệu là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để đưa các đặc trưng về cùng một thang đo, tránh đặc trưng có giá trị lớn lấn át đặc trưng có giá trị nhỏ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử mình có một cột 'Thành phố' (Hà Nội, TPHCM). Cột này có cần chuẩn hóa không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, đó là dữ liệu phân loại, không chuẩn hóa được. Nhưng các cột số thì phải chuẩn hóa."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mình có thể phân cụm người dùng theo 'Thành phố' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Được chứ. Mình sẽ có cụm người dùng Hà Nội, cụm TPHCM. Nhưng đó là trường hợp quá đơn giản."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trong trường hợp đó, đặc trưng cụm 'Thành phố' được tạo ra từ đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "À... nó có sẵn từ việc phân nhóm theo chính cột đó. Không qua chuẩn hóa."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy quy tắc chung để tạo ra một đặc trưng cụm là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là tìm cách phân nhóm các điểm dữ liệu. Việc phân nhóm đó có thể dựa trên một hoặc nhiều đặc trưng có sẵn. Sau đó, nhãn của nhóm đó trở thành đặc trưng cụm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm lẫn giữa bước tiền xử lý (chuẩn hóa) và quá trình tạo ra đặc trưng từ kết quả phân cụm."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q37",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ rằng mục tiêu của PCA luôn là giảm về 1 thành phần chính?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Tên của nó là giảm chiều, vậy nên phải giảm tối đa về 1 chiều."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mục tiêu duy nhất của PCA là giảm số chiều?"
+      },
+      {
+        "role": "Student",
+        "text": "Chủ yếu là vậy. Để làm cho mô hình máy học chạy nhanh hơn và đơn giản hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giữa giảm chiều và giữ lại thông tin, cái nào quan trọng hơn?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải giảm chiều chứ. Nếu không thì dùng PCA làm gì?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu dữ liệu gốc có 4 đặc trưng, mình nén về 1. Điều gì xảy ra với thông tin?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì thông tin được tóm tắt vào 1 thành phần chính đó. Thành phần đó giữ những gì tinh túy nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu phần 'tinh túy' đó chỉ chiếm 40% thông tin gốc thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "...Vậy là có thể không đủ. Tức là số lượng thành phần còn tùy vào lượng thông tin mình muốn giữ?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy làm sao ta quyết định số thành phần chính trong bài toán cụ thể này?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc phải xem biểu đồ phương sai tích lũy. Chọn k thành phần sao cho giữ được >90% thông tin. Trong slide đó, 2 thành phần là đủ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tóm lại, PCA không phải lúc nào cũng giảm về 1, mà là tìm sự cân bằng giữa việc giảm chiều và việc giữ lại lượng thông tin cần thiết."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q38",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói biến đổi đặc trưng luôn làm giảm số dòng. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì khi xử lý dữ liệu, mình thường phải xóa các dòng bị lỗi hoặc thiếu thông tin. Đó là bước đầu tiên."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy việc xóa dòng lỗi đó là 'biến đổi đặc trưng' à?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng chứ. Nó là một phần của việc chuẩn bị dữ liệu. Mục đích là làm bộ dữ liệu gọn và sạch hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét cột 'Giới tính' có giá trị 'Nam', 'Nữ'. Biến đổi nó thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì mã hóa thành 0 và 1. Nhưng đó chỉ là trường hợp đặc biệt. Hầu hết các bước chuẩn bị đều liên quan đến việc loại bỏ dữ liệu thừa."
+      },
+      {
+        "role": "Tutor",
+        "text": "Việc mã hóa 'Nam'/'Nữ' có làm giảm số dòng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nhưng nó không phải mục đích chính. Mục đích chính của việc xử lý là dọn dẹp, tức là phải xóa bớt đi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy biến đổi đặc trưng có luôn luôn làm giảm số dòng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có lẽ không phải 'luôn luôn'. Vậy tại sao mình lại phải mã hóa thành 0 và 1?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Một mô hình hồi quy tuyến tính có hiểu được chữ 'Nam' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không. Nó chỉ hiểu số. À, vậy là để mô hình có thể đọc được dữ liệu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm lẫn việc xóa dữ liệu với biến đổi đặc trưng. Biến đổi đặc trưng là để chuyển dữ liệu sang định dạng mô hình yêu cầu, ví dụ như dạng số."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q39",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn giải thích được không, vì sao One-hot encoding lại giúp giảm nhiễu?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó là một phép biến đổi dữ liệu. Khi biến đổi, cấu trúc dữ liệu thay đổi, nên ảnh hưởng của nhiễu sẽ giảm."
+      },
+      {
+        "role": "Tutor",
+        "text": "One-hot encoding biến đổi loại dữ liệu nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Dữ liệu dạng category (phân loại)."
+      },
+      {
+        "role": "Tutor",
+        "text": "Ok. Giờ mình có cột 'Tuổi': [25, 30, 28, 95]. Giá trị 95 là nhiễu. One-hot encoding áp dụng thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Không áp dụng trực tiếp được. Nhưng em sẽ chia thành các khoảng tuổi, ví dụ 'trẻ', 'trung niên', 'già'. Rồi One-hot. Lúc đó, 95 chỉ là 'già', ảnh hưởng của nó đã giảm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trong quy trình bạn vừa nói, bước nào làm giảm ảnh hưởng của con số 95?"
+      },
+      {
+        "role": "Student",
+        "text": "Cả hai bước. Phải chia khoảng rồi mới One-hot được. Chúng là một quy trình."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu chỉ có bước chia khoảng, giá trị 95 đã thành 'già'. Ảnh hưởng của nó còn không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Hết rồi. Nó đã bị gộp vào nhóm 'già'. Vậy là bước chia khoảng mới là bước chính..."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Vậy One-hot encoding có thực sự làm giảm nhiễu giá trị số không? Hay nó có mục đích khác?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó chỉ mã hóa cái category 'già' thôi. Vậy nó không phải để giảm nhiễu. Em sẽ xem lại các lựa chọn khác. Log transform và Robust Scaler tác động trực tiếp lên giá trị số."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tóm lại, One-hot encoding dùng để mã hóa dữ liệu phân loại, không phải công cụ để giảm nhiễu giá trị số. Việc giảm nhiễu xảy ra ở bước xử lý giá trị, không phải ở bước mã hóa."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q40",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng binning làm tăng số lượng dòng dữ liệu. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì 'binning' là chia nhỏ dữ liệu ra. Khi mình chia một thứ ra thì nó phải tạo ra nhiều phần hơn, tức là nhiều dòng hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trong một bảng dữ liệu, một 'dòng' thường biểu thị điều gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó biểu thị một đối tượng, một quan sát. Ví dụ như một khách hàng hoặc một sản phẩm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mình có 5 khách hàng với tuổi: 20, 25, 30, 35, 40. Bảng này có mấy dòng?"
+      },
+      {
+        "role": "Student",
+        "text": "Có 5 dòng, mỗi dòng cho một người."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giờ mình chia tuổi thành 2 bin: 'Dưới 30' và 'Từ 30 trở lên'. Khách hàng đầu tiên thuộc bin nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Khách hàng 20 tuổi thuộc bin 'Dưới 30'. Nhưng việc chia đó không phải là làm dữ liệu nhiều lên sao?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Sau khi gán nhãn cho cả 5 khách hàng, bảng dữ liệu cuối cùng có mấy dòng?"
+      },
+      {
+        "role": "Student",
+        "text": "Vẫn là 5 dòng... Nhưng mình đã tạo ra các bin mới mà. Logic của em vẫn thấy đúng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Các bin đó là giá trị mới, hay là nhãn dán cho các dòng đã có?"
+      },
+      {
+        "role": "Student",
+        "text": "Là nhãn... à. Vậy là số lượng khách hàng, tức số dòng, không thay đổi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy binning thực sự thay đổi cái gì và giữ nguyên cái gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó thay đổi giá trị trong cột tuổi thành giá trị nhóm, nhưng giữ nguyên số dòng. Mục tiêu của nó là chia giá trị liên tục thành các nhóm có ý nghĩa."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Lỗi sai của bạn là nhầm lẫn việc tạo ra các nhóm (bin) với việc tạo ra các dòng dữ liệu mới. Binning chỉ gom nhóm giá trị, không làm thay đổi số lượng dòng."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q41",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn đã nhân log(b) với log(exp(a*X)). Vì sao bạn dùng phép nhân ở đây?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì đề bài là phép nhân mà. Y = b nhân với exp(...), nên khi lấy log, mình cũng phải nhân log của chúng với nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy quy tắc chung của bạn là log(A * B) = log(A) * log(B)?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Quy tắc phải nhất quán chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Được thôi. Mình thử với số nhé. A=10, B=100. log(A * B) bằng bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "A*B là 1000. log(1000) = 3."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tốt. Vậy theo quy tắc của bạn, log(A) * log(B) bằng bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "log(10) * log(100) = 1 * 2 = 2. Hừm... Sao lại khác nhau nhỉ? Chắc quy tắc này chỉ đúng với biến, không đúng với số?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Một quy tắc toán học có nên có ngoại lệ như vậy không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là không... Vậy phép nhân bên trong log sẽ biến thành phép gì bên ngoài?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy, nó biến thành một phép toán khác. Giờ bạn hãy áp dụng lại cho bài toán ban đầu."
+      },
+      {
+        "role": "Student",
+        "text": "À, phép nhân thành phép cộng. Vậy phải là log(Y) = log(b) + log(exp(a*X)). Mà log(exp(...)) thì bằng chính nó. Đáp án là log(Y) = log(b) + a*X."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm lẫn quy tắc log của một tích thành phép nhân các log, trong khi quy tắc đúng là tổng các log."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q42",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói One-hot encoding tạo ra cột số. Điều này biến nó thành phép biến đổi cho dữ liệu số à?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Đầu ra là số 0 và 1, là số, nên nó phải là phép biến đổi cho dữ liệu số chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mục đích chính của One-hot encoding là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là để chuyển đổi dữ liệu, ví dụ chữ, thành dạng số để mô hình máy học có thể xử lý được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nó xử lý đầu vào là chữ hay số?"
+      },
+      {
+        "role": "Student",
+        "text": "Đầu vào là chữ, nhưng kết quả lại là số. Nên em nghĩ nó áp dụng cho cả hai, hoặc ít nhất cũng là một kĩ thuật liên quan đến số."
+      },
+      {
+        "role": "Tutor",
+        "text": "Thử ví dụ: cột 'Thành phố' có 'Hà Nội', 'Huế', 'TP.HCM'. One-hot xong, ta có thể tính giá trị trung bình của chúng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Tất nhiên là không. Nhưng nó vẫn là số mà. Em vẫn có thể nói vector [0, 0, 1] khác vector [0, 1, 0]."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy vector đại diện cho 'TP.HCM' có 'lớn hơn' vector của 'Huế' không?"
+      },
+      {
+        "role": "Student",
+        "text": "… So sánh vậy thì không có ý nghĩa. Chúng chỉ khác nhau thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu các phép toán số học trên kết quả không có ý nghĩa, vậy bản chất dữ liệu nó xử lý là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là dữ liệu không có thứ tự... là dữ liệu định danh (categorical). Vậy quay lại câu hỏi, đáp án là Min-Max scaling."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Lỗi sai của bạn là nhầm lẫn giữa output (kết quả) là số và input (đầu vào) mà phép biến đổi đó được thiết kế để xử lý."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q43",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn dùng công thức của Min-Max scaling. Vì sao bạn nghĩ nó và Z-score là một?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì cả hai đều là 'chuẩn hóa' mà. Mục đích là đưa dữ liệu về một thang đo chung, dễ so sánh hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một 'thang đo chung' theo ý bạn có đặc điểm gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là các giá trị nằm trong một khoảng cố định, ví dụ từ 0 đến 1. Công thức min-max làm được điều đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, Z-score của một điểm dữ liệu có luôn nằm trong khoảng [0, 1] không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc chắn rồi. Vì nó cũng là chuẩn hóa, nên cũng phải có một khoảng cố định nào đó, có thể là [0, 1] hoặc [-1, 1]."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu một giá trị x cách trung bình (μ) đúng bằng 3 lần độ lệch chuẩn (σ), Z-score của nó là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Khoan... Nếu x = μ + 3σ, thì z = ( (μ + 3σ) - μ ) / σ = 3σ / σ = 3. Số 3 không nằm trong khoảng [0, 1]."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy giả định ban đầu của bạn về 'khoảng cố định' có còn đúng cho Z-score không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có lẽ là không. Vậy Z-score không giới hạn giá trị trong một khoảng, mà nó đo lường cái khác."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy Z-score đo lường điều gì và dùng thông số nào của dữ liệu?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó đo khoảng cách từ một điểm đến trung bình, tính bằng đơn vị độ lệch chuẩn. Công thức phải là z = (x - μ) / σ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng rồi. Lỗi sai của bạn là cho rằng mọi phương pháp chuẩn hóa đều phải đưa giá trị về một khoảng cố định như Min-Max. Z-score thì khác, nó định tâm dữ liệu về trung bình 0 và độ lệch chuẩn 1."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q44",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "[A] Bạn nghĩ Robust Scaler xử lý dữ liệu danh mục như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì nó là một kỹ thuật biến đổi dữ liệu, chắc nó sẽ gán một số nào đó cho mỗi danh mục rồi scale các số đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "[B] Robust Scaler tính toán dựa trên những giá trị nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Em không nhớ chính xác công thức, nhưng nó dùng median và interquartile range (IQR)."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Tốt. Giờ thử với cột 'Thành phố': ['Hà Nội', 'Đà Nẵng', 'HCM']. Median của cột này là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Làm gì có median. Nhưng nếu mình gán số, ví dụ 'Hà Nội'=1, 'Đà Nẵng'=2, 'HCM'=3 thì median là 'Đà Nẵng'."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Tại sao bạn lại gán số theo thứ tự đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì gán sao cũng được, chỉ là để có số mà tính thôi. Miễn là nó scale được là được."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Nếu mình gán 'HCM'=1, 'Đà Nẵng'=2, 'Hà Nội'=3 thì median bây giờ là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Vẫn là 'Đà Nẵng'... À không, đợi đã. Nó không thay đổi à? Chờ chút... À không, thứ tự thay đổi thì median vẫn là giá trị ở giữa, vẫn là 2."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Chính xác, giá trị ở giữa. Nhưng kết quả của Scaler có còn ý nghĩa không khi nó phụ thuộc vào cách bạn gán số tùy tiện?"
+      },
+      {
+        "role": "Student",
+        "text": "Hmm... Chắc là không. Kết quả sẽ khác nhau hoàn toàn. Nó không có ý nghĩa thống kê."
+      },
+      {
+        "role": "Tutor",
+        "text": "[D] Vậy phép toán nào không thể áp dụng cho dữ liệu danh mục một cách có ý nghĩa?"
+      },
+      {
+        "role": "Student",
+        "text": "Các phép toán thống kê yêu cầu thứ tự và khoảng cách. Vậy Robust Scaler không dùng được. Nó là đáp án."
+      },
+      {
+        "role": "Tutor",
+        "text": "[E] Chính xác. Robust Scaler dựa trên median và quantile, các phép toán chỉ có nghĩa trên dữ liệu số. Dữ liệu danh mục không có các thuộc tính đó."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q45",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói chọn lựa đặc trưng làm tăng số chiều. Vì sao lại thế?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì mình phải kết hợp các đặc trưng cũ để tạo ra cái mới tốt hơn. Nên số lượng phải tăng chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Từ 'chọn lựa' theo bạn có nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là lấy ra cái tốt nhất. Nhưng để có cái tốt nhất thì phải tạo ra nó từ những cái có sẵn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mình có bộ dữ liệu với 3 đặc trưng: [Chiều cao, Cân nặng, Tuổi]. Bạn sẽ 'chọn lựa' thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Em sẽ tạo ra chỉ số BMI từ Chiều cao và Cân nặng. Vậy là có thêm 1 đặc trưng mới, tốt hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đó là bạn đang 'tạo' đặc trưng. Nếu chỉ được 'chọn' trong 3 cái có sẵn thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Nhưng vậy thì đâu có tối ưu. Phải tạo thêm mới tốt chứ. Chọn trong cái cũ thì có tác dụng gì?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử đặc trưng 'Tuổi' không liên quan đến bài toán. Giữ nó lại có ích không?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì cứ để đó thôi, biết đâu nó có ích mà mình không biết. Thêm vẫn hơn bớt chứ ạ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'chọn lựa' có phải là giữ lại toàn bộ không? Hay là loại bỏ cái không cần thiết?"
+      },
+      {
+        "role": "Student",
+        "text": "...Là loại bỏ. Vậy là số đặc trưng sẽ giảm đi. Em hiểu rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy chọn lựa đặc trưng ảnh hưởng thế nào đến số chiều? Hãy áp dụng để trả lời câu hỏi ban đầu."
+      },
+      {
+        "role": "Student",
+        "text": "Chọn lựa đặc trưng giúp giảm nhiễu và tăng độ chính xác, vì nó loại bỏ những đặc trưng không liên quan, làm giảm số chiều dữ liệu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm 'chọn lựa' (giảm số chiều) với 'tạo' đặc trưng (có thể làm tăng số chiều)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q46",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng Forward Selection là phương pháp Filter. Vì sao bạn gộp chúng làm một?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì cả hai đều dùng để chọn đặc trưng. Mục đích cuối cùng là như nhau, nên chúng phải cùng loại."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một phương pháp Filter có cần một mô hình học máy để đánh giá không?"
+      },
+      {
+        "role": "Student",
+        "text": "Tất nhiên là có. Làm sao biết một đặc trưng là tốt hay không nếu không chạy thử trên mô hình?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Hãy xem xét hệ số tương quan Pearson. Nó có cần một mô hình để tính toán không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là có chứ. Nó cũng là một phương pháp, nó phải được đánh giá bằng một mô hình nào đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hệ số Pearson chỉ đo mối quan hệ tuyến tính giữa hai biến. Còn Forward Selection thì sao, nó cần gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó cũng chọn biến. Mình vẫn thấy chúng giống nhau. Cái chi tiết về mô hình không quan trọng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu không có một mô hình cụ thể (ví dụ Hồi quy), Forward Selection có chạy được không?"
+      },
+      {
+        "role": "Student",
+        "text": "À... không, nó cần mô hình để đo lỗi. Nhưng đó là cách để nó hoạt động hiệu quả hơn thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, một cái bắt buộc cần mô hình, một cái không. Đây có phải là điểm khác biệt cốt lõi không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Có lẽ vậy. Cái cần mô hình thì không phải là Filter?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Forward Selection là phương pháp Wrapper vì nó 'bao' một mô hình để đánh giá. Filter thì độc lập."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q47",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói Standardization là Wrapper vì nó là một bước trong pipeline. Đúng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Nó \"bọc\" dữ liệu lại trước khi đưa vào mô hình mà. Đó là định nghĩa của wrapper."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, mục đích cốt lõi của một phương pháp Wrapper là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là để chọn ra các đặc trưng tốt nhất cho mô hình, cải thiện hiệu suất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Standardization có \"chọn\" hay \"loại bỏ\" đặc trưng nào không?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó không loại bỏ, nhưng nó làm cho các đặc trưng tốt hơn. Việc này cũng là để cải thiện hiệu suất, nên nó vẫn liên quan chặt chẽ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu chỉ chạy Standardization, bạn có biết cột nào nên giữ, cột nào nên bỏ không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không trực tiếp, nhưng nó là một phần không thể thiếu của quá trình. Không có nó, kết quả của các phương pháp chọn lọc khác sẽ sai lệch."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy sự khác biệt giữa \"biến đổi giá trị\" và \"lựa chọn tập con\" là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "...Một cái là thay đổi thang đo của tất cả các cột. Một cái là quyết định giữ hay bỏ cả cột. Nó khác nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo định nghĩa đó, Standardization thuộc nhóm nào trong hai nhóm trên?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó là 'biến đổi giá trị'. Không phải phương pháp lựa chọn đặc trưng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tóm lại, Wrapper dùng hiệu suất mô hình để chọn đặc trưng. Standardization là một bước tiền xử lý, không phải phương pháp lựa chọn."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q48",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng PCA là Embedded vì nó thay đổi tập đặc trưng. Tại sao việc đó lại biến nó thành Embedded?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì Embedded là phương pháp chọn lọc đặc trưng được tích hợp vào mô hình. PCA tạo ra đặc trưng mới, nó thay đổi hoàn toàn bộ đặc trưng, nên nó phải được tích hợp."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một mô hình Embedded cần thông tin gì để chọn đặc trưng?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó cần biết về dữ liệu để chọn ra những đặc trưng tốt nhất cho việc dự đoán."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Vậy PCA có sử dụng biến mục tiêu (y) để tạo đặc trưng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nó chỉ dựa vào các biến đầu vào (X). Nhưng nó vẫn tạo ra các đặc trưng tốt hơn, cô đọng hơn. Mục đích cuối cùng vẫn là cho mô hình."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu mình hoán vị ngẫu nhiên các nhãn (y), kết quả của PCA có thay đổi không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không thay đổi... Nhưng không ai làm vậy cả. Rõ ràng là PCA là một bước trong quy trình xây dựng mô hình, nó phải có liên quan."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một phương pháp 'tích hợp' có nên độc lập với mục tiêu dự đoán như vậy không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Chắc là không. Vậy là nó không thực sự 'tích hợp' vào việc học, mà chỉ là bước chuẩn bị."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy quy tắc để một phương pháp là Embedded là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó phải lựa chọn đặc trưng trong quá trình huấn luyện và dựa trên hiệu suất của mô hình với biến mục tiêu. Giờ thì mình thấy PCA không phải."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Sai lầm của bạn là cho rằng mọi phương pháp thay đổi đặc trưng đều là Embedded. Thực tế, Embedded model phải tích hợp việc lựa chọn đặc trưng vào quá trình huấn luyện, dựa trên mục tiêu dự đoán. PCA thì không."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q49",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "[A] Bạn cho rằng Label Encoding là giảm chiều dữ liệu. Vì sao chuyển chữ thành số lại làm giảm chiều?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó làm cho cột dữ liệu từ dạng chữ phức tạp thành dạng số đơn giản hơn. Dữ liệu gọn hơn tức là chiều đã giảm."
+      },
+      {
+        "role": "Tutor",
+        "text": "[B] Vậy theo bạn, 'chiều' của dữ liệu được đo bằng gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là độ phức tạp hoặc kích thước của bộ dữ liệu. Label Encoding làm nó đơn giản đi, nên là giảm chiều."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Mình có 1000 hàng dữ liệu, với 1 cột 'Thành Phố'. Sau khi Label Encoding, mình có bao nhiêu cột?"
+      },
+      {
+        "role": "Student",
+        "text": "Vẫn là 1 cột thôi, nhưng giờ là cột số."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Vậy số cột, hay số chiều, có thay đổi không?"
+      },
+      {
+        "role": "Student",
+        "text": "Số cột thì không, nhưng bản chất dữ liệu đã thay đổi. Nó được nén lại thành số. Em vẫn nghĩ đó là một dạng giảm chiều."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Hãy xét PCA. Nếu bạn đưa 10 cột vào PCA và giữ lại 2 thành phần chính, bạn còn lại bao nhiêu cột?"
+      },
+      {
+        "role": "Student",
+        "text": "Còn lại 2 cột. Khác với Label Encoding."
+      },
+      {
+        "role": "Tutor",
+        "text": "[D] Vậy điểm khác biệt cốt lõi giữa hai phương pháp này là gì, xét về số cột?"
+      },
+      {
+        "role": "Student",
+        "text": "PCA thực sự làm giảm số cột, còn Label Encoding thì không. Có lẽ giảm chiều là phải làm giảm số cột."
+      },
+      {
+        "role": "Tutor",
+        "text": "[E] Chính xác. Bạn đã nhầm lẫn giữa việc 'biến đổi dữ liệu' (encoding) và 'giảm chiều' (dimensionality reduction). Giảm chiều là phải làm giảm số lượng đặc trưng."
+      }
+    ]
+  },
+  {
+    "question_id": "ch4_q50",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói Matplotlib là công cụ chọn đặc trưng. Nó 'chọn' bằng cách nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó vẽ biểu đồ tầm quan trọng. Nhìn vào đó là mình biết đặc trưng nào cần giữ lại."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, chức năng của 'công cụ chọn đặc trưng' là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là tính toán và đưa ra kết quả để mình quyết định. Matplotlib giúp mình thấy kết quả đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Matplotlib có tự 'tính toán' tầm quan trọng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nó lấy dữ liệu từ scikit-learn rồi vẽ. Nhưng không có nó thì làm sao mình 'thấy' để mà chọn?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Một cái nhiệt kế đo nhiệt độ. Một cây bút ghi lại con số. Cái nào đang 'đo'?"
+      },
+      {
+        "role": "Student",
+        "text": "Nhiệt kế đo. Nhưng bút ghi lại thì mới có giá trị. Chúng liên quan mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy cây bút có phải là 'công cụ đo nhiệt độ' không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Không, nó là công cụ ghi lại. Matplotlib cũng chỉ hiển thị thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy sự khác biệt cốt lõi giữa công cụ tính toán và công cụ hiển thị là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Một cái tạo ra giá trị, một cái chỉ trình bày giá trị đó. Vậy đáp án phải là LOFO."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn công cụ hiển thị (Matplotlib) với công cụ tính toán thực hiện việc chọn lựa."
+      }
+    ]
+  }
+]

@@ -1,0 +1,633 @@
+[
+  {
+    "question_id": "ch11_q1",
+    "concepts": [
+      "Mục đích triển khai mô hình máy học",
+      "Vòng đời mô hình máy học"
+    ],
+    "misconceptions": [
+      "cho rằng mục đích của việc triển khai là để cải thiện mô hình, ví dụ như giảm số lượng đặc trưng, vì nhầm lẫn giai đoạn triển khai với giai đoạn tiền xử lý và huấn luyện.",
+      "tin rằng triển khai mô hình nhằm mục đích đạt đến sự hoàn hảo tuyệt đối, như độ chính xác 100%, vì nghĩ rằng chỉ có mô hình hoàn hảo mới được đưa vào sử dụng.",
+      "cho rằng triển khai và huấn luyện là hai phương pháp loại trừ lẫn nhau, và có thể dùng triển khai để thay thế cho việc huấn luyện mô hình."
+    ],
+    "reasoning": "Triển khai mô hình là bước đưa mô hình đã được huấn luyện vào môi trường sản phẩm để người dùng hoặc hệ thống khác có thể sử dụng. Các lựa chọn sai nhầm lẫn mục đích triển khai với các giai đoạn khác như tiền xử lý dữ liệu, huấn luyện, hoặc đặt ra các mục tiêu phi thực tế."
+  },
+  {
+    "question_id": "ch11_q2",
+    "concepts": [
+      "Phản hồi về mô hình (model feedback)",
+      "Giám sát mô hình sau triển khai"
+    ],
+    "misconceptions": [
+      "cho rằng phản hồi về mô hình chỉ có thể đến từ các tập dữ liệu tĩnh được dùng trong quá trình phát triển như tập train và validation.",
+      "tin rằng sau khi huấn luyện xong, mô hình không còn cần nhận phản hồi từ bất cứ nguồn nào khác ngoài tập validation, vì cho rằng tập validation đại diện cho toàn bộ các trường hợp trong thực tế."
+    ],
+    "reasoning": "Phản hồi về mô hình trong thực tế có thể đến từ nhiều nguồn, bao gồm cả phản hồi trực tiếp (người dùng báo cáo) và gián tiếp (phân tích hành vi người dùng), không chỉ giới hạn trong các tập dữ liệu huấn luyện hay kiểm định."
+  },
+  {
+    "question_id": "ch11_q3",
+    "concepts": [
+      "Trải nghiệm người dùng với AI",
+      "Sự hiện diện của mô hình máy học"
+    ],
+    "misconceptions": [
+      "cho rằng người dùng lúc nào cũng biết mình đang tương tác với một mô hình máy học, vì nghĩ rằng các tính năng AI luôn được quảng bá và làm nổi bật.",
+      "tin rằng các mô hình máy học luôn hoạt động một cách vô hình và người dùng không bao giờ nhận ra sự tồn tại của chúng, vì nghĩ rằng chúng chỉ là một phần của backend."
+    ],
+    "reasoning": "Người dùng có thể nhận thức được sự tồn tại của mô hình (ví dụ: chatbot, trợ lý ảo) hoặc không (ví dụ: hệ thống gợi ý sản phẩm, phát hiện gian lận). Do đó, sự tồn tại của mô hình có thể là hữu hình hoặc vô hình tùy vào ứng dụng."
+  },
+  {
+    "question_id": "ch11_q4",
+    "concepts": [
+      "Technical debt trong MLOps",
+      "Cấu trúc hệ thống máy học"
+    ],
+    "misconceptions": [
+      "cho rằng code của mô hình máy học là phần lớn nhất và phức tạp nhất trong toàn bộ hệ thống, vì họ chỉ tập trung vào phần 'học' của 'máy học'.",
+      "tin rằng code mô hình và hạ tầng phục vụ (serving infrastructure) luôn có sự tương quan về kích thước, ví dụ như code mô hình phải lớn hơn.",
+      "cho rằng code mô hình không liên quan hoặc tách biệt hoàn toàn với hệ thống triển khai, vì nghĩ rằng chỉ cần 'ném' mô hình vào là hệ thống sẽ tự chạy."
+    ],
+    "reasoning": "Trong một hệ thống MLOps hoàn chỉnh, phần code của mô hình (ví dụ: code train, predict) thường chỉ chiếm một tỷ trọng rất nhỏ so với toàn bộ các thành phần khác như thu thập dữ liệu, quản lý tài nguyên, serving, và giám sát."
+  },
+  {
+    "question_id": "ch11_q5",
+    "concepts": [
+      "Công nghệ triển khai máy học",
+      "Hệ sinh thái MLOps"
+    ],
+    "misconceptions": [
+      "cho rằng các nhóm công nghệ như nền tảng dữ liệu, thư viện máy học, và hạ tầng đóng gói là các lựa chọn riêng rẽ, không thể kết hợp với nhau trong một hệ thống.",
+      "tin rằng chỉ cần một loại công nghệ, ví dụ như thư viện máy học, là đủ để triển khai một hệ thống hoàn chỉnh, vì chưa hình dung được sự phức tạp của việc tích hợp nhiều thành phần."
+    ],
+    "reasoning": "Các công nghệ triển khai mô hình rất đa dạng và thường được kết hợp với nhau, bao gồm các nền tảng dữ liệu lớn, thư viện máy học chuyên dụng, hạ tầng đóng gói và các nền tảng kết hợp (ví dụ: MLOps platform) để tạo thành một hệ thống hoàn chỉnh."
+  },
+  {
+    "question_id": "ch11_q6",
+    "concepts": [
+      "Kiến trúc Client-Server",
+      "Vị trí triển khai mô hình"
+    ],
+    "misconceptions": [
+      "cho rằng server là thành phần nằm ở phía local, vì nhầm lẫn giữa máy tính cá nhân có thể chạy server (localhost) với kiến trúc hệ thống phân tán.",
+      "tin rằng database và REST API là các thành phần phía local, vì không phân biệt được giữa nơi xử lý logic (client) và nơi cung cấp dữ liệu/dịch vụ (server)."
+    ],
+    "reasoning": "Trong kiến trúc client-server, 'client' là thành phần chạy ở phía người dùng (local), chẳng hạn như trình duyệt web hoặc ứng dụng di động. 'Server', 'database', và 'REST API' là các thành phần nằm ở phía xa (remote) để xử lý yêu cầu và cung cấp dịch vụ."
+  },
+  {
+    "question_id": "ch11_q7",
+    "concepts": [
+      "Dự đoán theo lô (Batch prediction)",
+      "Các phương thức triển khai mô hình"
+    ],
+    "misconceptions": [
+      "cho rằng 'batch prediction' là dự đoán theo thời gian thực, vì nhầm lẫn giữa hai phương thức triển khai đối lập nhau là online và offline.",
+      "tin rằng 'batch prediction' đồng nghĩa với dự đoán trên thiết bị biên (edge), vì không phân biệt được giữa 'cách thức' xử lý (theo lô) và 'nơi' xử lý (thiết bị).",
+      "cho rằng 'batch prediction' là bất kỳ dự đoán nào được thực hiện qua REST API, vì gắn liền công nghệ giao tiếp (API) với phương thức tính toán."
+    ],
+    "reasoning": "Batch prediction, hay dự đoán theo lô, là quá trình chạy mô hình để đưa ra dự đoán trên một tập hợp lớn dữ liệu cùng một lúc, thường được thực hiện định kỳ. Điều này trái ngược với dự đoán thời gian thực, vốn xử lý từng yêu cầu riêng lẻ khi chúng đến."
+  },
+  {
+    "question_id": "ch11_q8",
+    "concepts": [
+      "Kiến trúc của batch prediction",
+      "Lưu trữ kết quả dự đoán (caching)"
+    ],
+    "misconceptions": [
+      "cho rằng batch prediction hoạt động bằng cách gửi toàn bộ mô hình hoặc trọng số đến client để chạy, vì nhầm lẫn với cơ chế của edge prediction.",
+      "tin rằng mô hình cần được huấn luyện lại sau mỗi request để thực hiện batch prediction, vì nhầm lẫn giữa việc dự đoán (inference) và việc huấn luyện (training).",
+      "cho rằng batch prediction nghĩa là tải mô hình vào trình duyệt web, vì nhầm lẫn với các framework như TensorFlow.js."
+    ],
+    "reasoning": "Batch prediction thường hoạt động bằng cách định kỳ chạy mô hình trên một lượng lớn dữ liệu mới và lưu trước kết quả vào một nơi truy cập nhanh như database hoặc cache. Khi người dùng cần, hệ thống sẽ lấy kết quả đã được tính sẵn này ra, giúp giảm độ trễ."
+  },
+  {
+    "question_id": "ch11_q9",
+    "concepts": [
+      "Điều kiện áp dụng batch prediction",
+      "Đánh đổi trong các phương pháp triển khai"
+    ],
+    "misconceptions": [
+      "cho rằng batch prediction phù hợp khi dữ liệu đến liên tục và cần phản hồi ngay, vì không hiểu được bản chất xử lý theo lô sẽ có độ trễ trong việc cập nhật dữ liệu.",
+      "tin rằng batch prediction chỉ có thể chạy trên GPU, vì nghĩ rằng xử lý lô lớn luôn đòi hỏi phần cứng chuyên dụng.",
+      "cho rằng batch prediction chỉ áp dụng được khi người dùng offline, vì nhầm lẫn giữa việc xử lý dữ liệu offline và trạng thái kết nối của người dùng."
+    ],
+    "reasoning": "Batch prediction là một lựa chọn khả thi và hiệu quả khi toàn bộ tập dữ liệu cần xử lý trong một lần chạy là đủ nhỏ để quản lý được về mặt tài nguyên và thời gian. Nó không phù hợp cho các ứng dụng yêu cầu phản hồi tức thì."
+  },
+  {
+    "question_id": "ch11_q10",
+    "concepts": [
+      "Ưu điểm của batch prediction",
+      "Độ trễ trong hệ thống ML"
+    ],
+    "misconceptions": [
+      "tin rằng batch prediction giúp dữ liệu dự đoán luôn được cập nhật tức thời, vì không hiểu rằng kết quả chỉ được làm mới sau mỗi chu kỳ chạy theo lô.",
+      "cho rằng mô hình trong batch prediction không bao giờ lỗi thời, vì nhầm lẫn giữa việc có kết quả nhanh cho người dùng và việc mô hình không được cập nhật liên tục với dữ liệu mới nhất."
+    ],
+    "reasoning": "Ưu điểm của batch prediction là dễ thực hiện và mang lại độ trễ thấp cho người dùng cuối (vì kết quả đã được tính toán trước). Tuy nhiên, nhược điểm là dữ liệu dự đoán không được cập nhật tức thời mà chỉ theo chu kỳ."
+  },
+  {
+    "question_id": "ch11_q11",
+    "concepts": [
+      "Nhược điểm của batch prediction",
+      "Tính lỗi thời của mô hình"
+    ],
+    "misconceptions": [
+      "cho rằng batch prediction luôn yêu cầu client phải có internet, vì không phân biệt được nơi xử lý (server) và nơi tiêu thụ kết quả (client).",
+      "tin rằng batch prediction không thể mở rộng quy mô tính toán, dù đây chính là một trong các nhược điểm được nêu (khó tăng quy mô nếu dữ liệu phức tạp).",
+      "cho rằng mô hình không bao giờ lỗi thời trong batch prediction, đây là một niềm tin sai lầm phổ biến."
+    ],
+    "reasoning": "Batch prediction có các nhược điểm chính: dữ liệu dự đoán không được cập nhật liên tục, mô hình có thể trở nên lỗi thời giữa các lần chạy, và việc xử lý các lô dữ liệu ngày càng lớn hoặc phức tạp có thể khó mở rộng về mặt tính toán."
+  },
+  {
+    "question_id": "ch11_q12",
+    "concepts": [
+      "Lựa chọn giữa batch và real-time prediction",
+      "Trường hợp sử dụng của batch prediction"
+    ],
+    "misconceptions": [
+      "cho rằng nên dùng batch prediction khi cần phản hồi ngay lập tức, vì nhầm lẫn với real-time prediction.",
+      "tin rằng batch prediction được dùng khi muốn client tự chạy mô hình, vì nhầm lẫn với edge prediction.",
+      "cho rằng mục đích của batch prediction là để tránh dùng database, trong khi thực tế nó thường dùng database để lưu kết quả."
+    ],
+    "reasoning": "Batch prediction là lựa chọn tối ưu khi cần xử lý một lượng lớn dữ liệu cùng một lúc và không yêu cầu kết quả phải được cập nhật tức thì. Nó phù hợp cho các tác vụ như tạo báo cáo, gợi ý hàng loạt, v.v."
+  },
+  {
+    "question_id": "ch11_q13",
+    "concepts": [
+      "Lợi ích của batch prediction",
+      "Độ trễ dự đoán"
+    ],
+    "misconceptions": [
+      "cho rằng batch prediction trực tiếp làm tăng độ chính xác của mô hình, vì nhầm lẫn giữa hiệu năng hệ thống (độ trễ) và chất lượng mô hình (độ chính xác).",
+      "tin rằng batch prediction có khả năng tự động chọn siêu tham số, vì nhầm lẫn giữa giai đoạn triển khai và giai đoạn huấn luyện/tinh chỉnh mô hình.",
+      "cho rằng batch prediction giúp loại bỏ hoàn toàn database, trong khi thực tế nó thường phụ thuộc vào database để lưu kết quả."
+    ],
+    "reasoning": "Lợi ích chính của batch prediction đối với người dùng cuối là giảm độ trễ khi truy vấn. Vì kết quả đã được tính toán và lưu trữ sẵn, hệ thống chỉ cần đọc ra thay vì phải chạy mô hình từ đầu, giúp phản hồi gần như ngay lập tức."
+  },
+  {
+    "question_id": "ch11_q14",
+    "concepts": [
+      "Ví dụ thực tế của batch prediction",
+      "Phân biệt các kịch bản triển khai"
+    ],
+    "misconceptions": [
+      "cho rằng batch prediction phù hợp cho việc phân loại ảnh trực tiếp trên trình duyệt, vì nhầm lẫn với edge prediction hoặc real-time prediction.",
+      "tin rằng chatbot cần trả lời ngay là một ứng dụng của batch prediction, trong khi đây là ví dụ điển hình của real-time prediction.",
+      "cho rằng batch prediction được thiết kế để hoạt động khi client mất kết nối mạng, vì nhầm lẫn với các ứng dụng offline hoàn toàn trên thiết bị."
+    ],
+    "reasoning": "Batch prediction phù hợp nhất với các tình huống mà dự đoán có thể được tính toán định kỳ cho một nhóm đối tượng, ví dụ như tạo gợi ý sản phẩm hàng ngày cho tất cả người dùng. Các kịch bản yêu cầu tương tác tức thời không phù hợp với phương pháp này."
+  },
+  {
+    "question_id": "ch11_q15",
+    "concepts": [
+      "Kiến trúc Model-in-service",
+      "Các phương thức triển khai mô hình"
+    ],
+    "misconceptions": [
+      "cho rằng model-in-service là mô hình chạy trên client, vì nhầm lẫn với edge prediction.",
+      "tin rằng model-in-service chỉ dùng cho dự đoán theo lô, vì không phân biệt được kiến trúc này có thể phục vụ cả dự đoán thời gian thực.",
+      "cho rằng model-in-service có nghĩa là dùng mô hình của bên thứ ba, vì nhầm lẫn với việc sử dụng các dịch vụ API có sẵn."
+    ],
+    "reasoning": "Model-in-service là một mẫu kiến trúc triển khai, trong đó mô hình máy học được đóng gói và chạy trong cùng một tiến trình (process) hoặc trên cùng một máy chủ (server) với ứng dụng web."
+  },
+  {
+    "question_id": "ch11_q16",
+    "concepts": [
+      "Luồng hoạt động của Model-in-service",
+      "Tương tác giữa web server và mô hình"
+    ],
+    "misconceptions": [
+      "cho rằng trong model-in-service, web server sẽ gửi mô hình đến thiết bị của người dùng, vì nhầm lẫn với edge prediction.",
+      "tin rằng web server trong kiến trúc này chỉ lấy kết quả có sẵn từ database, vì nhầm lẫn với batch prediction.",
+      "cho rằng web server và mô hình là hai thực thể hoàn toàn không tương tác, điều này mâu thuẫn với bản chất của việc tích hợp."
+    ],
+    "reasoning": "Trong kiến trúc model-in-service, khi web server nhận được một yêu cầu từ người dùng cần đến dự đoán, nó sẽ tải mô hình (nếu chưa tải) vào bộ nhớ và gọi hàm dự đoán của mô hình để xử lý yêu cầu đó."
+  },
+  {
+    "question_id": "ch11_q17",
+    "concepts": [
+      "Ưu điểm của Model-in-service",
+      "Tái sử dụng hạ tầng"
+    ],
+    "misconceptions": [
+      "cho rằng model-in-service không cần internet, trong khi nó là một dịch vụ phía máy chủ và client cần internet để truy cập.",
+      "tin rằng model-in-service không có độ trễ, vì bỏ qua độ trễ mạng và thời gian tính toán của mô hình.",
+      "cho rằng model-in-service không cần web server, điều này mâu thuẫn với định nghĩa của nó là mô hình được đặt chung với web server."
+    ],
+    "reasoning": "Một ưu điểm lớn của model-in-service là tính đơn giản và khả năng tận dụng hạ tầng web server hiện có. Doanh nghiệp có thể thêm chức năng máy học vào ứng dụng của mình mà không cần xây dựng một hệ thống phục vụ mô hình riêng biệt."
+  },
+  {
+    "question_id": "ch11_q18",
+    "concepts": [
+      "Nhược điểm của Model-in-service",
+      "Vấn đề về tài nguyên và scaling"
+    ],
+    "misconceptions": [
+      "cho rằng một khi đã triển khai theo kiểu model-in-service thì không thể cập nhật được mô hình, vì nghĩ rằng việc đóng gói chung là vĩnh viễn.",
+      "tin rằng mô hình và web server luôn có yêu cầu tài nguyên và khả năng mở rộng giống nhau, vì không nhận ra sự khác biệt cơ bản giữa tác vụ web (I/O-bound) và tác vụ ML (CPU/GPU-bound)."
+    ],
+    "reasoning": "Các nhược điểm chính của model-in-service liên quan đến tài nguyên và khả năng mở rộng: mô hình (đặc biệt là mô hình lớn) có thể chiếm dụng tài nguyên (CPU, RAM) của web server, phần cứng của web server có thể không tối ưu cho ML, và nhu cầu mở rộng của mô hình và web server có thể khác nhau."
+  },
+  {
+    "question_id": "ch11_q19",
+    "concepts": [
+      "Xung đột tài nguyên trong Model-in-service",
+      "Nhược điểm của Model-in-service"
+    ],
+    "misconceptions": [
+      "cho rằng web server và mô hình luôn scale giống nhau, vì không nhận ra rằng lưu lượng truy cập web và nhu cầu tính toán cho mô hình là hai yếu tố có thể biến đổi độc lập.",
+      "tin rằng vấn đề chính là web server không bao giờ đủ tài nguyên cho phần web, mà không nhận ra rằng chính mô hình ML mới là tác nhân gây tiêu tốn tài nguyên đột biến.",
+      "cho rằng không thể đóng gói mô hình, đây là một khẳng định sai vì việc đóng gói là tiền đề của kiến trúc này."
+    ],
+    "reasoning": "Một vấn đề lớn của model-in-service là khi mô hình máy học lớn và phức tạp, nó có thể tiêu tốn một lượng tài nguyên đáng kể của web server. Điều này có thể làm chậm hoặc ảnh hưởng đến khả năng phục vụ các yêu cầu web thông thường của máy chủ đó."
+  },
+  {
+    "question_id": "ch11_q20",
+    "concepts": [
+      "Lợi ích của Model-in-service",
+      "Tự động hóa quy trình"
+    ],
+    "misconceptions": [
+      "cho rằng model-in-service làm tăng độ trễ, tăng chi phí, hoặc giảm độ chính xác, vì nhầm lẫn với các nhược điểm tiềm ẩn hoặc so sánh không hợp lý với các phương pháp khác.",
+      "tin rằng việc triển khai một dịch vụ tự động sẽ phức tạp và tốn nhiều công sức hơn là làm thủ công, vì chỉ nhìn vào chi phí thiết lập ban đầu."
+    ],
+    "reasoning": "Bằng cách tích hợp mô hình vào một dịch vụ, các dự đoán có thể được thực hiện tự động khi có yêu cầu, giúp giảm bớt các công việc thủ công mà trước đây có thể cần con người thực hiện, ví dụ như phân loại email, gán nhãn dữ liệu..."
+  },
+  {
+    "question_id": "ch11_q21",
+    "concepts": [
+      "So sánh Model-in-service và Model-as-service",
+      "Kiến trúc triển khai"
+    ],
+    "misconceptions": [
+      "cho rằng model-in-service chạy trên client, vì nhầm lẫn với edge prediction.",
+      "tin rằng model-in-service không cần server, điều này mâu thuẫn với chính tên gọi 'in-service'.",
+      "cho rằng model-in-service chỉ dùng cho batch prediction, trong khi nó thường được dùng cho real-time prediction."
+    ],
+    "reasoning": "Điểm khác biệt cốt lõi giữa hai kiến trúc là vị trí đặt mô hình. Model-in-service tích hợp mô hình vào cùng một dịch vụ với ứng dụng web, trong khi model-as-service tách mô hình ra thành một dịch vụ độc lập."
+  },
+  {
+    "question_id": "ch11_q22",
+    "concepts": [
+      "Kiến trúc Model-as-service",
+      "Microservices trong MLOps"
+    ],
+    "misconceptions": [
+      "cho rằng model-as-service là đặt mô hình trong database, vì nhầm lẫn giữa nơi lưu trữ trọng số và nơi thực thi mô hình.",
+      "tin rằng model-as-service luôn chạy trên trình duyệt, vì nhầm lẫn với các thư viện như TensorFlow.js.",
+      "cho rằng mô hình chỉ được cache dưới dạng file, vì không hiểu rằng đây là một dịch vụ (service) đang chạy, không phải là một file tĩnh."
+    ],
+    "reasoning": "Model-as-service là một mẫu kiến trúc triển khai trong đó mô hình máy học được chạy trên một máy chủ riêng biệt, chuyên dụng và được cung cấp như một dịch vụ (thường qua API) cho các ứng dụng khác sử dụng."
+  },
+  {
+    "question_id": "ch11_q23",
+    "concepts": [
+      "Tương tác trong Model-as-service",
+      "Giao tiếp qua API"
+    ],
+    "misconceptions": [
+      "cho rằng mỗi khi có request, mô hình phải được huấn luyện lại từ đầu, vì nhầm lẫn giữa inference và training.",
+      "tin rằng logic của mô hình được đặt trong DNS server, một sự nhầm lẫn nghiêm trọng về chức năng của các thành phần trong hệ thống mạng.",
+      "cho rằng web backend sẽ tải model về client để chạy, vì nhầm lẫn với edge prediction."
+    ],
+    "reasoning": "Trong kiến trúc model-as-service, web backend (hoặc bất kỳ client nào) tương tác với mô hình bằng cách gửi một yêu cầu (thường là qua HTTP, ví dụ như gọi một REST API) đến dịch vụ mô hình và nhận lại kết quả dự đoán."
+  },
+  {
+    "question_id": "ch11_q24",
+    "concepts": [
+      "Ưu điểm của Model-as-service",
+      "Tính module và khả năng mở rộng"
+    ],
+    "misconceptions": [
+      "cho rằng model-as-service không có độ trễ, vì bỏ qua độ trễ mạng phát sinh do việc gọi một dịch vụ riêng biệt.",
+      "tin rằng việc tách riêng mô hình ra sẽ làm tăng độ ổn định của toàn hệ thống một cách tuyệt đối, mà không cân nhắc đến việc phải quản lý thêm một dịch vụ nữa.",
+      "cho rằng đã là dịch vụ thì không thể có độ trễ, vì nghĩ rằng mọi thứ trên mạng đều là tức thì."
+    ],
+    "reasoning": "Ưu điểm của model-as-service đến từ việc tách biệt: lỗi của dịch vụ mô hình không làm sập ứng dụng web, có thể tối ưu phần cứng và mở rộng quy mô cho dịch vụ mô hình một cách độc lập, và dịch vụ này có thể được tái sử dụng bởi nhiều ứng dụng khác nhau."
+  },
+  {
+    "question_id": "ch11_q25",
+    "concepts": [
+      "Nhược điểm của Model-as-service",
+      "Độ trễ mạng và sự phức tạp của hạ tầng"
+    ],
+    "misconceptions": [
+      "cho rằng một dịch vụ mô hình không thể được tái sử dụng, điều này trái ngược với một trong những ưu điểm chính của kiến trúc này.",
+      "tin rằng model-as-service chỉ có thể chạy trên một máy duy nhất, vì không hiểu rằng 'service' có thể được mở rộng trên nhiều máy chủ.",
+      "cho rằng độ trễ không phải là vấn đề vì máy tính rất nhanh, bỏ qua yếu tố độ trễ mạng."
+    ],
+    "reasoning": "Các nhược điểm chính của model-as-service là có thể phát sinh thêm độ trễ do giao tiếp mạng giữa các dịch vụ, và việc quản lý một hạ tầng với nhiều dịch vụ riêng biệt sẽ phức tạp hơn so với một ứng dụng nguyên khối."
+  },
+  {
+    "question_id": "ch11_q26",
+    "concepts": [
+      "Trường hợp sử dụng Model-as-service",
+      "Tái sử dụng dịch vụ"
+    ],
+    "misconceptions": [
+      "cho rằng model-as-service phù hợp để chạy offline hoàn toàn trên client, vì nhầm lẫn với edge prediction.",
+      "tin rằng kiến trúc này phù hợp khi không muốn dùng web backend, trong khi nó thường được gọi bởi một web backend.",
+      "cho rằng đây là giải pháp cho việc demo nội bộ trên một máy cá nhân, một trường hợp quá đơn giản không cần đến sự phức tạp của kiến trúc này."
+    ],
+    "reasoning": "Model-as-service đặc biệt phù hợp khi một mô hình cần được sử dụng bởi nhiều ứng dụng hoặc dịch vụ khác nhau. Việc tạo ra một API chung cho mô hình giúp việc tái sử dụng trở nên dễ dàng và nhất quán."
+  },
+  {
+    "question_id": "ch11_q27",
+    "concepts": [
+      "Triển khai mô hình dạng dịch vụ",
+      "REST API trong MLOps"
+    ],
+    "misconceptions": [
+      "cho rằng PCA, KMeans, và Cross-validation là các công cụ triển khai, vì nhầm lẫn giữa các thuật toán/kỹ thuật trong machine learning với các công nghệ để đưa mô hình ra sản phẩm.",
+      "tin rằng bất kỳ khái niệm nào liên quan đến ML đều có thể là một công cụ triển khai."
+    ],
+    "reasoning": "Khi triển khai mô hình dưới dạng dịch vụ, REST API là một công nghệ giao tiếp cực kỳ phổ biến để cho phép các ứng dụng khác 'gọi' và sử dụng mô hình. PCA, KMeans, Cross-validation là các thuật toán và kỹ thuật dùng trong quá trình xây dựng và đánh giá mô hình, không phải công nghệ triển khai."
+  },
+  {
+    "question_id": "ch11_q28",
+    "concepts": [
+      "Các khía cạnh của triển khai dịch vụ ML",
+      "Kỹ thuật hệ thống cho MLOps"
+    ],
+    "misconceptions": [
+      "cho rằng các yếu tố như quản lý phụ thuộc, hiệu năng, mở rộng chỉ quan trọng ở phần mềm truyền thống và không áp dụng cho ML.",
+      "tin rằng triển khai chỉ đơn giản là chạy một file script và không cần quan tâm đến các vấn đề kỹ thuật hệ thống phức tạp."
+    ],
+    "reasoning": "Triển khai mô hình dưới dạng một dịch vụ tin cậy đòi hỏi phải quan tâm đến nhiều khía cạnh của kỹ thuật phần mềm và hệ thống, bao gồm quản lý các thư viện phụ thuộc, tối ưu hiệu năng để giảm độ trễ, thiết kế để có thể mở rộng theo chiều ngang khi tải tăng, và quy trình triển khai tự động."
+  },
+  {
+    "question_id": "ch11_q29",
+    "concepts": [
+      "Định nghĩa Model-as-service",
+      "Dự đoán thời gian thực"
+    ],
+    "misconceptions": [
+      "cho rằng model-as-service là dự đoán theo lô, vì nhầm lẫn giữa hai phương thức triển khai khác nhau.",
+      "tin rằng dịch vụ này chỉ dự đoán từ dữ liệu lịch sử mà không thể xử lý dữ liệu mới, vì nhầm lẫn với batch prediction.",
+      "cho rằng model-as-service là dự đoán trên thiết bị biên, vì nhầm lẫn với edge prediction."
+    ],
+    "reasoning": "Model-as-service prediction về cơ bản là cung cấp khả năng dự đoán theo thời gian thực (real-time) thông qua một dịch vụ web. Mỗi yêu cầu đến sẽ được xử lý và trả về kết quả ngay lập tức."
+  },
+  {
+    "question_id": "ch11_q30",
+    "concepts": [
+      "Dự đoán tại biên (Edge prediction)",
+      "Điện toán biên (Edge computing)"
+    ],
+    "misconceptions": [
+      "cho rằng edge prediction là mô hình chạy ở server riêng, vì nhầm lẫn với model-as-service.",
+      "tin rằng edge prediction chạy định kỳ trên database, vì nhầm lẫn với batch prediction.",
+      "cho rằng mô hình được tích hợp trong DNS server, một sự nhầm lẫn về chức năng của các thành phần mạng."
+    ],
+    "reasoning": "Edge prediction là phương pháp triển khai trong đó mô hình máy học được chạy trực tiếp trên thiết bị của người dùng cuối (máy trạm), chẳng hạn như điện thoại di động, máy tính cá nhân, hoặc các thiết bị IoT."
+  },
+  {
+    "question_id": "ch11_q31",
+    "concepts": [
+      "Luồng hoạt động của Edge prediction",
+      "Triển khai mô hình trên client"
+    ],
+    "misconceptions": [
+      "cho rằng edge prediction là đặt mô hình chung với web server, vì nhầm lẫn với model-in-service.",
+      "tin rằng edge prediction là chạy batch prediction trong database, vì nhầm lẫn với một kiến trúc hoàn toàn khác.",
+      "cho rằng client phải tạo REST API để thực hiện edge prediction, trong khi thực tế client 'gọi' mô hình trực tiếp cục bộ."
+    ],
+    "reasoning": "Edge prediction hoạt động bằng cách gửi các file cần thiết của mô hình (ví dụ: trọng số) đến thiết bị biên. Sau đó, ứng dụng trên thiết bị sẽ tải mô hình này vào bộ nhớ và thực hiện dự đoán trực tiếp mà không cần gửi dữ liệu lên server."
+  },
+  {
+    "question_id": "ch11_q32",
+    "concepts": [
+      "Ưu điểm của Edge prediction",
+      "Bảo mật và độ trễ"
+    ],
+    "misconceptions": [
+      "cho rằng edge prediction dễ cập nhật hơn model-as-service, trong khi thực tế việc cập nhật mô hình trên hàng triệu thiết bị phân tán lại khó hơn nhiều so với cập nhật một dịch vụ tập trung.",
+      "tin rằng edge prediction không có ưu điểm gì so với các phương pháp server-side, vì chỉ tập trung vào nhược điểm tài nguyên hạn chế của thiết bị."
+    ],
+    "reasoning": "Ưu điểm chính của edge prediction bao gồm độ trễ rất thấp (vì không có độ trễ mạng), khả năng hoạt động không cần internet, và tính bảo mật dữ liệu cao hơn do dữ liệu nhạy cảm của người dùng không cần rời khỏi thiết bị."
+  },
+  {
+    "question_id": "ch11_q33",
+    "concepts": [
+      "Nhược điểm của Edge prediction",
+      "Hạn chế của thiết bị biên"
+    ],
+    "misconceptions": [
+      "cho rằng tài nguyên máy trạm là vô hạn và có thể chạy bất kỳ mô hình nào, vì chỉ quen thuộc với môi trường server mạnh mẽ.",
+      "tin rằng việc cập nhật mô hình trên thiết bị người dùng là dễ dàng, vì không hình dung được quy mô và sự đa dạng của các thiết bị cần quản lý.",
+      "cho rằng việc debug trên thiết bị của người dùng cũng dễ như debug trên máy chủ của mình."
+    ],
+    "reasoning": "Edge prediction đối mặt với nhiều thách thức: tài nguyên trên thiết bị biên (CPU, RAM, pin) có hạn, các framework và thư viện có thể không đầy đủ, việc cập nhật mô hình cho tất cả người dùng rất phức tạp, và việc theo dõi, debug lỗi trên thiết bị của người dùng gần như là không thể."
+  },
+  {
+    "question_id": "ch11_q34",
+    "concepts": [
+      "Yếu tố quan trọng trong Edge prediction",
+      "Khả năng mở rộng (Scalability)"
+    ],
+    "misconceptions": [
+      "cho rằng độ chính xác luôn là yếu tố quan trọng nhất trong mọi bối cảnh, mà không cân nhắc đến các ràng buộc về hệ thống.",
+      "tin rằng tốc độ xử lý trên một thiết bị đơn lẻ là quan trọng nhất, mà không xét đến khả năng phục vụ hàng triệu thiết bị.",
+      "cho rằng chi phí triển khai là quan trọng nhất, mà bỏ qua yếu tố kỹ thuật để hệ thống hoạt động được ở quy mô lớn."
+    ],
+    "reasoning": "Khi triển khai tại biên, khả năng mở rộng (scalability) là cực kỳ quan trọng. Điều này không chỉ có nghĩa là mô hình phải chạy nhanh trên một thiết bị, mà còn là toàn bộ hệ thống (cập nhật, giám sát) phải có khả năng quản lý hàng triệu thiết bị một cách hiệu quả."
+  },
+  {
+    "question_id": "ch11_q35",
+    "concepts": [
+      "Triển khai dạng ứng dụng web",
+      "Mục đích demo và POC (Proof of Concept)"
+    ],
+    "misconceptions": [
+      "cho rằng ứng dụng web là cách để cung cấp dịch vụ cho bên thứ ba khai thác, vì nhầm lẫn giữa một giao diện demo với một API service.",
+      "tin rằng ứng dụng web có thể chạy không cần internet trên edge device, vì nhầm lẫn giữa hai phương thức triển khai khác nhau.",
+      "cho rằng ứng dụng web là công cụ để giám sát drift, vì nhầm lẫn giữa giao diện người dùng và công cụ backend."
+    ],
+    "reasoning": "Triển khai dưới dạng một ứng dụng web đơn giản (sử dụng các công cụ như Streamlit, Gradio) là một cách rất hiệu quả để demo tính năng của mô hình cho các bên liên quan như khách hàng hoặc quản lý. Nó giúp trực quan hóa khả năng của mô hình một cách nhanh chóng."
+  },
+  {
+    "question_id": "ch11_q36",
+    "concepts": [
+      "Trường hợp sử dụng ứng dụng web demo",
+      "Khả năng tiếp cận"
+    ],
+    "misconceptions": [
+      "cho rằng ứng dụng web demo được dùng khi cần client tự chạy mô hình offline, vì nhầm lẫn với edge prediction.",
+      "tin rằng ứng dụng web demo có thể thay thế hoàn toàn cho các API service hoặc các hệ thống triển khai phức tạp khác, vì không thấy được sự khác biệt về quy mô và độ tin cậy."
+    ],
+    "reasoning": "Triển khai dạng ứng dụng web rất phù hợp khi mục tiêu là demo, cho phép người dùng (khách hàng, quản lý) tương tác với mô hình một cách dễ dàng chỉ với một trình duyệt và kết nối internet, không cần cài đặt phức tạp."
+  },
+  {
+    "question_id": "ch11_q37",
+    "concepts": [
+      "Công cụ tạo ứng dụng web cho ML",
+      "Streamlit và Gradio"
+    ],
+    "misconceptions": [
+      "cho rằng Flask và FastAPI là công cụ để tạo giao diện người dùng có sẵn, vì nhầm lẫn giữa web framework (để xây dựng API và backend) với UI framework (để tạo giao diện nhanh).",
+      "tin rằng mọi web framework đều có chức năng xây dựng giao diện người dùng trực quan một cách dễ dàng như Streamlit/Gradio."
+    ],
+    "reasoning": "Streamlit và Gradio là các thư viện Python được thiết kế đặc biệt để giúp các nhà khoa học dữ liệu nhanh chóng xây dựng các ứng dụng web tương tác để demo mô hình của họ mà không cần nhiều kiến thức về phát triển web. Flask và FastAPI thường được dùng để xây dựng API backend hơn."
+  },
+  {
+    "question_id": "ch11_q38",
+    "concepts": [
+      "Các thành phần giao diện người dùng (UI Control)",
+      "Xây dựng ứng dụng với Streamlit"
+    ],
+    "misconceptions": [
+      "cho rằng DecisionTree là một control giao diện người dùng, vì nhầm lẫn giữa một thuật toán máy học với một thành phần trên màn hình.",
+      "tin rằng chỉ có các control phức tạp mới dùng để xây dựng ứng dụng, mà không nhận ra các thành phần cơ bản như nhãn, hộp văn bản, nút bấm là nền tảng."
+    ],
+    "reasoning": "Khi xây dựng một ứng dụng web, dù đơn giản, chúng ta cần sử dụng các control (thành phần điều khiển) giao diện người dùng cơ bản như Label (nhãn), Textbox (hộp nhập văn bản), và Button (nút bấm) để người dùng có thể tương tác. DecisionTree là một loại mô hình máy học, không phải là một thành phần giao diện."
+  },
+  {
+    "question_id": "ch11_q39",
+    "concepts": [
+      "Cổng mạng (Port) mặc định",
+      "Công cụ Streamlit"
+    ],
+    "misconceptions": [
+      "cho rằng cổng 5000 hoặc 8000 là của Streamlit, vì đây là các cổng mặc định phổ biến của các web framework khác như Flask hoặc FastAPI.",
+      "tin rằng cổng 3306 (cổng mặc định của MySQL) được dùng để host dịch vụ web, vì nhầm lẫn giữa cổng dịch vụ web và cổng dịch vụ database."
+    ],
+    "reasoning": "Mỗi ứng dụng mạng cần chạy trên một cổng (port) cụ thể. Theo mặc định, Streamlit chạy ứng dụng web trên cổng 8501. Các cổng khác như 5000 (Flask), 8000 (FastAPI), 3306 (MySQL) là mặc định của các dịch vụ khác."
+  },
+  {
+    "question_id": "ch11_q40",
+    "concepts": [
+      "Quy trình triển khai với Streamlit",
+      "Quản lý môi trường và thư viện"
+    ],
+    "misconceptions": [
+      "cho rằng phải tạo database hoặc huấn luyện lại mô hình trước khi cài đặt công cụ, vì không theo đúng trình tự logic: phải có công cụ trước rồi mới dùng nó để làm việc khác.",
+      "tin rằng việc tạo REST API là bước đầu tiên, trong khi Streamlit tạo ra một ứng dụng web hoàn chỉnh chứ không chỉ là một API."
+    ],
+    "reasoning": "Để triển khai một ứng dụng web bằng Streamlit, bước đầu tiên và cơ bản nhất là phải cài đặt chính thư viện Streamlit vào môi trường Python của bạn. Các bước khác như chuẩn bị mô hình, viết code ứng dụng sẽ diễn ra sau đó."
+  },
+  {
+    "question_id": "ch11_q41",
+    "concepts": [
+      "Công cụ xây dựng API",
+      "Flask và FastAPI"
+    ],
+    "misconceptions": [
+      "cho rằng Streamlit và Gradio là công cụ để triển khai dịch vụ API, vì nhầm lẫn giữa việc tạo một ứng dụng web có giao diện hoàn chỉnh với việc tạo một điểm cuối (endpoint) API chỉ trả về dữ liệu.",
+      "tin rằng mọi công cụ liên quan đến web trong Python đều có thể dùng để tạo API một cách hiệu quả."
+    ],
+    "reasoning": "Flask và FastAPI là hai web framework rất phổ biến trong hệ sinh thái Python để xây dựng các dịch vụ API. Chúng cung cấp các công cụ mạnh mẽ để định nghĩa các endpoint, xử lý request và response. Streamlit và Gradio tập trung hơn vào việc tạo giao diện người dùng."
+  },
+  {
+    "question_id": "ch11_q42",
+    "concepts": [
+      "Trường hợp sử dụng API",
+      "Tích hợp hệ thống"
+    ],
+    "misconceptions": [
+      "cho rằng triển khai API là để demo giao diện cho khách hàng cuối, vì nhầm lẫn giữa một dịch vụ backend (API) và một ứng dụng frontend (giao diện người dùng).",
+      "tin rằng API được thiết kế để dùng offline trên client, điều này mâu thuẫn với bản chất của API là một dịch vụ được truy cập qua mạng."
+    ],
+    "reasoning": "Triển khai mô hình dưới dạng dịch vụ API là lựa chọn lý tưởng khi bạn cần cung cấp khả năng của mô hình cho các hệ thống khác (của bên thứ ba hoặc của chính bạn) khai thác, hoặc khi bạn muốn tái sử dụng mô hình đó trong nhiều ứng dụng khác nhau."
+  },
+  {
+    "question_id": "ch11_q43",
+    "concepts": [
+      "Vấn đề sau triển khai",
+      "Khoảng cách giữa môi trường phát triển và thực tế"
+    ],
+    "misconceptions": [
+      "cho rằng sau khi triển khai, mối quan tâm chính là làm cho mô hình huấn luyện nhanh hơn, vì vẫn còn suy nghĩ trong giai đoạn phát triển.",
+      "tin rằng có thể bỏ qua bước thu thập phản hồi (feedback) vì mô hình đã 'tốt' rồi.",
+      "cho rằng cần phải giảm số lượng đặc trưng sau khi đã triển khai, một hành động thuộc về giai đoạn tiền xử lý."
+    ],
+    "reasoning": "Một câu hỏi quan trọng nhất sau khi triển khai là liệu hiệu năng tốt của mô hình trên tập dữ liệu tĩnh (validation set) có được duy trì khi nó hoạt động trong môi trường thực tế hay không. Đây là tiền đề cho sự cần thiết của việc giám sát mô hình."
+  },
+  {
+    "question_id": "ch11_q44",
+    "concepts": [
+      "Các vấn đề của mô hình trong thực tế",
+      "Data drift và model drift"
+    ],
+    "misconceptions": [
+      "cho rằng tập validation có thể tự động mở rộng, vì không hiểu rằng đây là một tập dữ liệu tĩnh.",
+      "tin rằng hệ thống có thể tự động loại bỏ data drift mà không cần bất kỳ sự can thiệp hay giám sát nào, một niềm tin quá lạc quan vào tự động hóa.",
+      "cho rằng một khi đã triển khai, mô hình và dữ liệu sẽ không bao giờ thay đổi."
+    ],
+    "reasoning": "Sau khi triển khai, thế giới thực không tĩnh tại. Phân bố của dữ liệu đầu vào có thể thay đổi (data drift), hoặc chính khái niệm cần dự đoán có thể thay đổi (concept drift), dẫn đến việc mô hình trở nên kém hiệu quả."
+  },
+  {
+    "question_id": "ch11_q45",
+    "concepts": [
+      "Các loại dịch chuyển dữ liệu (Data Drift)",
+      "Dịch chuyển tức thời (Instantaneous drift)"
+    ],
+    "misconceptions": [
+      "cho rằng một sự thay đổi đột ngột là 'gradual drift', vì nhầm lẫn giữa hai khái niệm đối lập về tốc độ thay đổi.",
+      "tin rằng một sự kiện như đại dịch là 'seasonal drift', vì nghĩ 'mùa' có thể là một sự kiện lớn thay vì một chu kỳ lặp lại.",
+      "cho rằng biến động đột ngột là 'temporary drift', vì tập trung vào việc sự kiện có thể kết thúc mà không chú ý đến đặc tính 'tức thời' của sự thay đổi tại thời điểm nó xảy ra."
+    ],
+    "reasoning": "Dịch chuyển tức thời (Instantaneous drift) mô tả một sự thay đổi đột ngột, gần như ngay lập tức trong phân phối dữ liệu. Nguyên nhân thường là các sự kiện lớn, bất ngờ (như đại dịch) hoặc việc áp dụng mô hình cho một môi trường hoàn toàn mới."
+  },
+  {
+    "question_id": "ch11_q46",
+    "concepts": [
+      "Các loại dịch chuyển dữ liệu (Data Drift)",
+      "Dịch chuyển từ từ (Gradual drift)"
+    ],
+    "misconceptions": [
+      "cho rằng sự thay đổi sở thích người dùng là một sự kiện 'tức thời', vì không nhận ra rằng đây là một quá trình diễn ra theo thời gian.",
+      "tin rằng sự thay đổi này là 'theo mùa', vì nhầm lẫn giữa một xu hướng dài hạn và một chu kỳ lặp lại.",
+      "cho rằng đây là 'tạm thời', vì có thể nghĩ rằng sở thích sẽ quay lại như cũ, nhưng 'gradual' mô tả đúng nhất quá trình thay đổi chậm."
+    ],
+    "reasoning": "Dịch chuyển từ từ (Gradual drift) mô tả sự thay đổi chậm và liên tục trong phân phối dữ liệu theo thời gian. Ví dụ điển hình là sự thay đổi trong sở thích, hành vi của người dùng hoặc sự cạnh tranh từ các sản phẩm mới."
+  },
+  {
+    "question_id": "ch11_q47",
+    "concepts": [
+      "Các loại dịch chuyển dữ liệu (Data Drift)",
+      "Dịch chuyển theo mùa (Seasonal drift)"
+    ],
+    "misconceptions": [
+      "cho rằng sự thay đổi theo chu kỳ là 'tạm thời', vì mỗi chu kỳ chỉ kéo dài một khoảng thời gian ngắn.",
+      "tin rằng đây là 'từ từ', vì không nhận ra tính chất lặp lại có quy luật của nó.",
+      "cho rằng đây là 'tức thời', vì có thể nghĩ rằng sự thay đổi giữa các mùa là đột ngột."
+    ],
+    "reasoning": "Dịch chuyển theo mùa (Seasonal drift) là những thay đổi có tính chu kỳ, lặp đi lặp lại theo một quy luật thời gian nhất định (hàng ngày, hàng tuần, hàng năm). Ví dụ, hành vi mua sắm trực tuyến thay đổi giữa ngày và đêm, hoặc giữa các mùa trong năm."
+  },
+  {
+    "question_id": "ch11_q48",
+    "concepts": [
+      "Các loại dịch chuyển dữ liệu (Data Drift)",
+      "Dịch chuyển tạm thời (Temporary drift)"
+    ],
+    "misconceptions": [
+      "cho rằng một cuộc tấn công là một sự kiện 'theo mùa' nếu nó lặp lại, nhưng 'temporary' mô tả đúng hơn tính chất bất thường và ngắn hạn của nó.",
+      "tin rằng đây là 'từ từ' hoặc 'tức thời', vì không nắm được đặc điểm chính là sự thay đổi chỉ tồn tại trong một khoảng thời gian ngắn rồi biến mất."
+    ],
+    "reasoning": "Dịch chuyển tạm thời (Temporary drift) mô tả một sự thay đổi đột ngột nhưng chỉ tồn tại trong một khoảng thời gian ngắn trước khi dữ liệu quay trở lại trạng thái bình thường. Điều này có thể xảy ra do một sự kiện đặc biệt, một chiến dịch quảng cáo, hoặc một cuộc tấn công vào hệ thống."
+  },
+  {
+    "question_id": "ch11_q49",
+    "concepts": [
+      "Giám sát mô hình (Model Monitoring)",
+      "Các chỉ số giám sát"
+    ],
+    "misconceptions": [
+      "cho rằng chỉ cần một hoặc hai loại thông tin (ví dụ: chỉ độ chính xác) là đủ để giám sát mô hình, vì chưa thấy được sự đa dạng của các vấn đề có thể xảy ra.",
+      "tin rằng càng có nhiều loại thông tin giám sát càng tốt mà không cần biết chúng là gì."
+    ],
+    "reasoning": "Để giám sát một mô hình một cách toàn diện, cần theo dõi bốn loại thông tin chính: hiệu năng phần mềm, chất lượng dữ liệu đầu vào và đầu ra, dịch chuyển dữ liệu (data drift), và dịch chuyển khái niệm (concept drift)."
+  },
+  {
+    "question_id": "ch11_q50",
+    "concepts": [
+      "Quy trình giám sát drift",
+      "So sánh phân phối dữ liệu"
+    ],
+    "misconceptions": [
+      "cho rằng phải luôn huấn luyện lại mô hình trước khi so sánh dữ liệu, vì nhầm lẫn giữa việc giám sát và việc cập nhật mô hình.",
+      "tin rằng chỉ cần xem xét dữ liệu mới mà không cần một 'chuẩn' tham chiếu để so sánh.",
+      "cho rằng việc so sánh chỉ cần thực hiện một lần khi triển khai và không cần lặp lại."
+    ],
+    "reasoning": "Quy trình cơ bản để giám sát drift là xác định một khoảng thời gian (window) mà dữ liệu được coi là 'tốt' làm tham chiếu, sau đó liên tục so sánh phân phối của dữ liệu mới với phân phối tham chiếu đó bằng cách sử dụng các chỉ số (metric) thống kê."
+  }
+]

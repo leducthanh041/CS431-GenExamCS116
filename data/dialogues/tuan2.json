@@ -1,0 +1,2900 @@
+[
+  {
+    "question_id": "q1",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng Pandas dùng cho mọi loại phép toán, bao gồm cả ma trận đa chiều. Vì sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì Pandas là thư viện xử lý dữ liệu mạnh nhất. Ma trận cũng là dữ liệu, nên dĩ nhiên Pandas phải xử lý được, và phải hiệu quả."
+      },
+      {
+        "role": "Tutor",
+        "text": "Pandas dùng cấu trúc dữ liệu chính nào để làm việc?"
+      },
+      {
+        "role": "Student",
+        "text": "DataFrame. Nó là một cái bảng, giống Excel. Rất mạnh."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy làm sao bạn biểu diễn một ma trận 3 chiều (ví dụ: 10x10x10) trong một cái bảng 2 chiều?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc chắn là có cách. Có thể dùng nhiều DataFrame hoặc dùng MultiIndex. Pandas linh hoạt mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Cách đó có được gọi là 'hiệu quả' cho phép nhân ma trận không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có thể không nhanh nhất, nhưng nó làm được. Về cơ bản nó vẫn là công cụ cho dữ liệu số."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tại sao người ta lại tạo ra cả NumPy và Pandas nếu chúng làm cùng một việc?"
+      },
+      {
+        "role": "Student",
+        "text": "... Chắc là NumPy có trước, rồi Pandas ra sau mạnh hơn nên thay thế?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, một cái chuyên cho bảng 2 chiều, một cái chuyên cho mảng N-chiều. Cái nào sẽ tối ưu cho 'ma trận đa chiều'?"
+      },
+      {
+        "role": "Student",
+        "text": "Nếu nói vậy thì... có lẽ là cái chuyên cho mảng N-chiều. Vậy đáp án là NumPy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn vai trò của Pandas (phân tích dữ liệu dạng bảng) với NumPy (tính toán số hiệu năng cao trên mảng đa chiều)."
+      }
+    ]
+  },
+  {
+    "question_id": "q2",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng NumPy có thể trực quan hóa. Cơ sở cho suy luận này là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì NumPy là thư viện cốt lõi để xử lý số. Mọi dữ liệu đều phải qua NumPy, nên nó phải có khả năng vẽ biểu đồ chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy chức năng chính mà NumPy cung cấp cho bạn là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là tạo và tính toán trên các mảng (array) đa chiều. Rất nhanh và hiệu quả."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tốt. Vậy bạn sẽ dùng lệnh NumPy nào để vẽ một biểu đồ đường?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là một hàm như `numpy.plot()` hay gì đó tương tự. Em không nhớ chính xác, nhưng một thư viện nền tảng như vậy phải có."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử không có hàm `plot`. Dữ liệu số và hình ảnh có phải là một không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không... Dữ liệu là số, hình ảnh là pixel. Nhưng NumPy xử lý dữ liệu, nên nó phải có cách để hiển thị kết quả trực quan."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy việc 'xử lý' và 'hiển thị' có phải là hai nhiệm vụ riêng biệt không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có lẽ... Tức là NumPy chỉ chuẩn bị dữ liệu, còn một thư viện khác sẽ 'vẽ' nó lên?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Vậy hãy xem lại câu hỏi. Thư viện nào làm nhiệm vụ 'vẽ' đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Vậy thì phải là Matplotlib. Vì nó chuyên về plotting."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã thấy rằng NumPy tập trung vào xử lý số, còn Matplotlib chịu trách nhiệm trực quan hóa dữ liệu đó."
+      }
+    ]
+  },
+  {
+    "question_id": "q3",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng 'Array' và 'Tensor' là object của Pandas. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì trong khoa học dữ liệu, chúng đều là cấu trúc đa chiều để chứa dữ liệu. Về bản chất là giống nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy thư viện nào cung cấp object 'Array'?"
+      },
+      {
+        "role": "Student",
+        "text": "NumPy. Nhưng Pandas được xây dựng trên NumPy, nên chúng về cơ bản là một hệ sinh thái, có thể coi là của chung."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu chỉ `import pandas as pd`, bạn có tạo được một NumPy Array không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, phải `import numpy as np`. Nhưng thực tế ai dùng Pandas mà không dùng NumPy? Chúng luôn đi cùng nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy để tạo một object, bạn phải gọi đúng thư viện của nó?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng, nhưng về mặt khái niệm chúng vẫn cùng một nhóm. DataFrame chỉ là một dạng Array phức tạp hơn thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một DataFrame chứa được cả chữ và số. Một NumPy Array thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó chỉ chứa một kiểu dữ liệu... Nhưng đó là chi tiết thôi, không thay đổi bản chất chúng là cấu trúc dữ liệu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu một object cần thư viện riêng và có quy tắc riêng, nó có phải object *cơ bản* của Pandas không?"
+      },
+      {
+        "role": "Student",
+        "text": "…Chắc là không. Vậy các object cơ bản của Pandas là DataFrame và Series."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm lẫn các cấu trúc dữ liệu từ các thư viện liên quan. Object cốt lõi của Pandas là DataFrame và Series."
+      }
+    ]
+  },
+  {
+    "question_id": "q4",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "[A] Bạn cho rằng kết quả là nối hai array lại. Tại sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì trong Python, dấu cộng dùng cho list là để nối chúng. Em nghĩ NumPy array cũng vậy."
+      },
+      {
+        "role": "Tutor",
+        "text": "[B] Vậy theo bạn, array và list hoạt động giống hệt nhau với toán tử '+'?"
+      },
+      {
+        "role": "Student",
+        "text": "Về cơ bản là thế. Cùng là một danh sách các con số mà, nên quy tắc phải giống nhau chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Nếu cộng là nối, vậy phép trừ `np.array([1, 2, 3]) - np.array([1])` sẽ ra gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Phép trừ... Chắc là lỗi. Hoặc là nó sẽ bỏ số 1 khỏi array đầu tiên. Nhưng logic nối không áp dụng được."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Nó không hợp lý lắm, đúng không? Vậy thử phép nhân: `np.array([1, 2, 3]) * 2`?"
+      },
+      {
+        "role": "Student",
+        "text": "Theo logic của list, nó sẽ là `[1, 2, 3, 1, 2, 3]`. Em vẫn nghĩ logic này đúng."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] NumPy là thư viện cho tính toán khoa học. Kết quả `[2, 4, 6]` có ý nghĩa toán học hơn không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Có lẽ. Phép nhân với một số thì đúng là nên nhân từng phần tử. Vậy logic của em sai ở phép nhân."
+      },
+      {
+        "role": "Tutor",
+        "text": "[D] Nếu phép nhân hoạt động trên từng phần tử, phép cộng thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc nó cũng hoạt động trên từng phần tử. Vậy `[1+1, 2+3, 3+4]`, kết quả là `array([2, 5, 7])`."
+      },
+      {
+        "role": "Tutor",
+        "text": "[E] Chính xác. Nhầm lẫn của bạn là áp dụng quy tắc nối chuỗi của list cho phép toán trên NumPy array, vốn được thiết kế cho các phép toán theo từng phần tử."
+      }
+    ]
+  },
+  {
+    "question_id": "q5",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "[A] Bạn cho rằng kết quả là một list Python. Vì sao không phải là một NumPy array?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó là một dãy số, `[2, 3, 4]`. Đó là một list mà. NumPy array chỉ là cách tạo ra nó thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "[B] Vậy `np.array` và `list` Python là một, không có gì khác biệt sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là `np.array` có thêm vài hàm toán học. Nhưng sau khi tính toán xong thì trả về list cho tiện."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Giả sử kết quả là list `k = [2, 3, 4]`. Thử tính `k + 2` xem."
+      },
+      {
+        "role": "Student",
+        "text": "Cái đó sẽ báo lỗi. List không thể cộng trực tiếp với một số được."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Nhưng phép tính gốc `np.array([1, 2, 3]) + 1` lại thực hiện được. Bạn thấy mâu thuẫn không?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì phép cộng đầu tiên là một trường hợp đặc biệt của NumPy. Nhưng kết quả của nó phải là một list chuẩn chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Vậy mọi phép toán trên NumPy array đều trả về một list Python?"
+      },
+      {
+        "role": "Student",
+        "text": "Hmm... Nếu vậy thì việc cộng liên tiếp sẽ không thể thực hiện được. Nó phải giữ lại kiểu array."
+      },
+      {
+        "role": "Tutor",
+        "text": "[D] Vậy, phép toán trên một `np.array` sẽ trả về đối tượng có kiểu dữ liệu gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ trả về một `np.array` mới. Vậy kết quả là `array([2, 3, 4])`."
+      },
+      {
+        "role": "Tutor",
+        "text": "[E] Chính xác. Phép toán trên NumPy array trả về một array mới để duy trì khả năng tính toán vector hóa, không phải một list."
+      }
+    ]
+  },
+  {
+    "question_id": "q6",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng kết quả là một list. Điều gì khiến bạn chắc chắn như vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì vế phải là một list, nên khi cộng vào, kết quả cuối cùng phải là list chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo logic đó, `[1, 2] + [3, 4]` trong Python ra kết quả gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Ra `[1, 2, 3, 4]`. Đó là phép nối list. Phép tính của NumPy cũng nên tương tự."
+      },
+      {
+        "role": "Tutor",
+        "text": "Ok. Vậy `np.array([1, 2, 3]) + [1, 3, 4]` theo logic nối list sẽ ra sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ nối array và list lại... Chắc là `array([1, 2, 3, 1, 3, 4])`? Nó phải là nối."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu vậy, phép tính `np.array([1, 2]) + 5` sẽ ra kết quả gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Cái đó thì không nối được. Chắc là lỗi. Logic của em chỉ đúng khi cộng với list."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy NumPy có hai quy tắc cộng khác nhau à? Một cho số, một cho list?"
+      },
+      {
+        "role": "Student",
+        "text": "…Nghe không hợp lý lắm. Phép cộng phải nhất quán. Có lẽ nó không phải là phép nối."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu không phải nối, vậy `+` làm gì với từng phần tử tương ứng?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó cộng từng phần tử. 1+1, 2+3, 3+4. Kết quả là `array([2, 5, 7])`."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã sai khi cho rằng `+` giữa array và list là phép nối, và kết quả là list. Thực tế, đó là phép cộng theo từng phần tử và kết quả luôn là một NumPy array."
+      }
+    ]
+  },
+  {
+    "question_id": "q7",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng kết quả là mảng 1D vì nó 'đơn giản' hơn. Logic này luôn đúng chứ?"
+      },
+      {
+        "role": "Student",
+        "text": "Vâng, khi kết hợp một thứ phức tạp và một thứ đơn giản, kết quả nên theo dạng đơn giản hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hình dạng của mảng `np.array([[1, 2, 3]])` là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là `(1, 3),` một mảng 2D."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nếu ta cộng mảng 2D đó với số 5 thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Số 5 còn đơn giản hơn cả mảng 1D. Vậy kết quả phải là một con số chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một con số? Phép cộng này có áp dụng cho từng phần tử không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có, nhưng quy tắc cuối cùng vẫn phải là cái đơn giản nhất thắng. Nó phải co lại thành một số."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy `[[1, 2, 3]] + 5` sẽ ra một số, ví dụ `11`? Kết quả này hợp lý không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Không. Nghe vô lý. Kết quả phải là `[[6, 7, 8]]`. Nó vẫn là mảng 2D."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy quy tắc 'về dạng đơn giản hơn' của bạn còn đúng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có lẽ là không. Vậy với bài toán ban đầu, mảng 1D và 2D, kết quả sẽ là mảng 2D, tức `[[2, 5, 7]]`."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Khi cộng, NumPy sẽ 'mở rộng' mảng ít chiều hơn để khớp, chứ không 'thu gọn' mảng nhiều chiều hơn."
+      }
+    ]
+  },
+  {
+    "question_id": "q8",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn tính x là `[1, 2, 3, 4]`. Vì sao bạn lại nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì lệnh là `np.arange(1, 4)`. Có nghĩa là tạo một mảng chạy từ 1 đến 4."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tham số thứ hai, số 4, có ý nghĩa gì trong lệnh `arange`?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó là điểm dừng. Dừng ở 4 thì mảng phải chứa số 4 chứ. Đó là logic thông thường."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo logic đó, `np.arange(1, 2)` sẽ tạo ra mảng nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Dễ mà, `[1, 2]`. Bắt đầu từ 1, dừng ở 2. Rất rõ ràng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bạn thử chạy `print(np.arange(1, 2))` xem kết quả là gì."
+      },
+      {
+        "role": "Student",
+        "text": "…Nó ra `[1]`. Chắc đây là trường hợp đặc biệt thôi, không thể áp dụng cho `(1, 4)` được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy điểm 'dừng' của `arange` có được bao gồm trong mảng kết quả không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có vẻ là không. Nó dừng ngay *trước* điểm đó. Vậy `x` thực ra là `[1, 2, 3]`."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Giờ bạn hãy tính lại với giá trị đúng của `x`."
+      },
+      {
+        "role": "Student",
+        "text": "Nếu `x` là `[1, 2, 3]`, thì `y` gấp đôi `x`. Tính lại theo công thức... kết quả ra 1.0."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Lỗi của bạn là giả định rằng tham số `stop` của `arange` được bao gồm trong kết quả. Thực tế, nó là điểm giới hạn trên không bao gồm."
+      }
+    ]
+  },
+  {
+    "question_id": "q9",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn nói `axis=0` dùng để nối cột. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì 0 là trục đầu tiên. Dữ liệu thường được tổ chức theo cột, nên trục đầu tiên phải là cột."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trục (axis) trong pandas biểu thị điều gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó chỉ hướng mà một thao tác được áp dụng. `axis=0` là hướng đầu tiên."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử mình có hai DataFrame, mỗi cái chỉ có một hàng. Nối chúng với `axis=0` thì kết quả trông thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ đặt hai hàng đó cạnh nhau, tạo thành một hàng duy nhất với nhiều cột hơn. Vì mình đang nối cột."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hàm `concat` có nghĩa là 'nối tiếp'. `axis=0` nối tiếp theo chỉ số hàng. Kết quả sẽ thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nhưng `axis=0` là trục chính, nó phải ưu tiên cho cột chứ? Cách tổ chức dữ liệu quan trọng nhất là cột mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hãy tưởng tượng `axis=0` là xếp chồng lên nhau. `axis=1` là xếp cạnh nhau. Vậy `axis=0` tạo thêm hàng hay cột?"
+      },
+      {
+        "role": "Student",
+        "text": "...Xếp chồng lên nhau thì sẽ có thêm hàng. Vậy là `axis=0` dành cho hàng sao?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy để ghép hai DataFrame sao cho các cột của chúng nằm cạnh nhau, bạn cần tham số gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nếu `axis=0` là hàng, thì để nối cột phải dùng `axis=1`."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Ban đầu bạn cho rằng `axis=0` là cột vì nó là trục 'đầu tiên', nhưng trong pandas, nó tương ứng với hàng (index)."
+      }
+    ]
+  },
+  {
+    "question_id": "q10",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói nối ngang trực quan hơn. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì mình thêm cột thông tin mới vào. Giống như ghép hai bảng tính excel cạnh nhau vậy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy `concat` có nghĩa là 'thêm thông tin mới'?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng rồi. Mở rộng dữ liệu. Thêm cột là cách mở rộng phổ biến nhất, nên nó phải là mặc định."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mình có hai danh sách lớp khác nhau, df1 và df2. Nối chúng lại để làm gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để có một danh sách tổng hợp. Nhưng nếu df1 là tên, df2 là điểm thì nối ngang vẫn hợp lý hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Ok. Giờ cả hai df đều là danh sách lớp, cùng cột 'Tên'. Nối ngang sẽ ra gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Sẽ có cột 'Tên' rồi lại có cột 'Tên' nữa. Hơi thừa nhưng logic của việc nối ngang vẫn vậy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy gộp hai danh sách lớp thành một danh sách dài hơn thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì đó là nối dọc... nhưng đó là một trường hợp cụ thể. Mặc định phải là cái chung nhất chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hành động nào `concat` cần làm thường xuyên hơn: gộp sổ điểm hay gộp danh sách?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là gộp các danh sách... Vậy mặc định là để xử lý việc đó? Tức là nối dọc."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy bạn hãy trả lời lại câu hỏi ban đầu. Mặc định của `concat` là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là nối theo chiều dọc."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã cho rằng nối ngang trực quan hơn nên là mặc định. Thực tế, mặc định của `concat` là nối dọc (axis=0) để xếp chồng dữ liệu."
+      }
+    ]
+  },
+  {
+    "question_id": "q11",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói `fillna` dùng để xoá. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì `fill` là lấp đầy, tức là xử lý chỗ trống. Dữ liệu khuyết thì phải xoá đi cho sạch."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trong Pandas, \"dữ liệu khuyết\" thường được biểu diễn thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Là một ô trống, hoặc giá trị NaN. Phải xoá những dòng chứa nó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Cú pháp là `df.fillna(0)`. Số 0 ở đây có vai trò gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó là tham số thôi. Lệnh này có nghĩa là xoá các giá trị NaN. Chắc số 0 là giá trị mặc định."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu chỉ để xoá, tại sao cần truyền vào một giá trị như số 0?"
+      },
+      {
+        "role": "Student",
+        "text": "Để phân biệt với lệnh `dropna()` không có tham số? Hoặc có thể nó xoá theo điều kiện liên quan đến số 0."
+      },
+      {
+        "role": "Tutor",
+        "text": "Thử với `df.fillna('Không có')`. Lệnh này xoá cái gì?"
+      },
+      {
+        "role": "Student",
+        "text": "... Lệnh này sẽ thay thế mọi ô trống bằng chuỗi 'Không có'. Nó không xoá."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, bạn định nghĩa lại xem `fillna(value)` thực sự làm gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó dùng để điền `value` được cung cấp vào những ô bị khuyết."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm `fillna` (điền/thay thế) với một hàm khác dùng để xoá."
+      }
+    ]
+  },
+  {
+    "question_id": "q12",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn cho rằng có thể dùng `=` để so sánh. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì `=` là bằng. Em muốn tìm các dòng có giá trị bằng một số nào đó, thì dùng `=` thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trong Python, hai toán tử `=` và `==` khác nhau ở điểm nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Chúng gần giống nhau. `==` là so sánh chặt chẽ hơn, nhưng trong nhiều trường hợp, `=` vẫn dùng để so sánh được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hãy thử một ví dụ. `x = 10`. Câu lệnh này làm gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó gán giá trị 10 cho biến x. Nhưng trong Pandas, nó có thể mang nghĩa khác."
+      },
+      {
+        "role": "Tutor",
+        "text": "Pandas được xây dựng trên Python. Liệu nó có thay đổi cú pháp cơ bản không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là không... Vậy nếu `df1.Y = 10` là một phép gán, nó sẽ làm gì với cột Y?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Một phép gán thì làm gì với dữ liệu? Nó có giúp bạn chọn ra dòng thỏa điều kiện không?"
+      },
+      {
+        "role": "Student",
+        "text": "À không... nó sẽ ghi đè toàn bộ cột Y thành 10. Vậy để so sánh, em phải dùng `==` hoặc `>`."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, để lấy các dòng có Y lớn hơn 10, câu lệnh đúng là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là `df1[df1.Y > 10]`."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã thấy `=` dùng để gán giá trị, còn `==` và `>` mới dùng để so sánh tạo điều kiện lọc."
+      }
+    ]
+  },
+  {
+    "question_id": "q13",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn giải thích thử, toán tử `==` sẽ so sánh cột X với danh sách kia thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì nó sẽ kiểm tra mỗi hàng trong cột X, xem giá trị đó có bằng 'AB' hoặc 'A' không."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử cột X là ['AB', 'C', 'A']. Kết quả của `X == ['AB', 'A']` là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải là [True, False, True] chứ. Đó là kết quả em muốn mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Pandas so sánh 'element-wise'. ['AB', 'C', 'A'] có độ dài 3. ['AB', 'A'] có độ dài 2. Chúng có khớp nhau không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không. Nhưng nó phải tự hiểu là em muốn kiểm tra từng phần tử của X với cả danh sách chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy `==` có phải là toán tử để 'kiểm tra một phần tử có trong một danh sách' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là không... Vậy nếu không phải `==`, thì phải dùng cái gì đó khác để 'kiểm tra trong'..."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Vậy bạn sẽ viết lại câu lệnh để lọc các giá trị 'có trong' danh sách đó như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "df1[df1.X.isin(['AB', 'A'])]. Dùng phương thức isin()."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Toán tử `==` dùng để so sánh bằng, thường là giữa cột và một giá trị đơn, hoặc hai cột cùng kích thước. `.isin()` mới dùng để kiểm tra thành viên."
+      }
+    ]
+  },
+  {
+    "question_id": "q14",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn dùng `df1['X', 'Z']`. Bạn tin rằng cú pháp này sẽ hoạt động thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ lấy cột 'X' và cột 'Z'. Đây là cách logic nhất để chọn nhiều cột."
+      },
+      {
+        "role": "Tutor",
+        "text": "Để lấy một cột 'X', bạn dùng lệnh gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Tất nhiên là `df1['X']`. Nó hoạt động tốt."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy `df1['X', 'Z']` đang truyền mấy giá trị vào ngoặc vuông?"
+      },
+      {
+        "role": "Student",
+        "text": "Hai giá trị, 'X' và 'Z'. Rất rõ ràng mà. Tại sao lại không được?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Trong Python, một danh sách `my_list[0, 1]` có hoạt động không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nó sẽ báo lỗi. Nhưng đây là pandas, nó nên thông minh hơn chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Pandas cần một đối tượng để chọn. 'X' là một đối tượng. Vậy 'X', 'Z' là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là hai đối tượng riêng biệt. À... tôi bắt đầu thấy vấn đề."
+      },
+      {
+        "role": "Tutor",
+        "text": "Làm thế nào để nhóm 'X' và 'Z' thành một đối tượng duy nhất?"
+      },
+      {
+        "role": "Student",
+        "text": "Bằng cách đặt chúng vào một danh sách, như là `['X', 'Z']`. Vậy lệnh đúng là `df1[['X', 'Z']]`?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Toán tử `[]` chỉ nhận một đối tượng. Để chọn nhiều cột, bạn phải gói các tên cột vào một danh sách."
+      }
+    ]
+  },
+  {
+    "question_id": "q15",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói `df1[['X']]` trả về Series. Dựa vào đâu bạn kết luận vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì nó lấy ra cột 'X' mà. Lấy một cột thì phải là một Series chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một Series và một DataFrame khác nhau cơ bản ở điểm nào?"
+      },
+      {
+        "role": "Student",
+        "text": "DataFrame là một cái bảng 2 chiều, có hàng và cột. Series chỉ là một cột, là 1 chiều."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một DataFrame có thể chỉ có một cột không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có, nhưng nó vẫn là DataFrame. Còn `df1[['X']]` là đang lấy một cột, nên nó là Series."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trong code, lệnh nào dùng để kiểm tra kiểu của một đối tượng?"
+      },
+      {
+        "role": "Student",
+        "text": "Dùng hàm `type()`."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nếu bạn gõ `type(df1[['X']])`, bạn đoán kết quả là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc chắn nó sẽ là `<class 'pandas.core.series.Series'>`."
+      },
+      {
+        "role": "Tutor",
+        "text": "Kết quả đó có mâu thuẫn với việc DataFrame có thể có một cột không?"
+      },
+      {
+        "role": "Student",
+        "text": "Để mình thử chạy... Kết quả lại là DataFrame. Sao lại thế được? Chắc do phiên bản pandas khác nhau?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Hay là do số lượng cặp ngoặc vuông quyết định kiểu trả về?"
+      },
+      {
+        "role": "Student",
+        "text": "À, có lẽ vậy. Một cặp ngoặc cho Series, còn hai cặp ngoặc cho DataFrame, kể cả khi chỉ có một cột."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng rồi. Lỗi sai của bạn là cho rằng `[['X']]` trả về Series. Thực tế, cú pháp hai ngoặc vuông luôn tạo ra một DataFrame."
+      }
+    ]
+  },
+  {
+    "question_id": "q16",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn cộng giá mở và đóng cửa. Tại sao lại dùng phép cộng ở đây?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì cộng lại để ra giá trị tổng trong ngày của cổ phiếu đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, 'giá trị giao dịch' trong ngày nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là tổng giá trị của cổ phiếu trong ngày đó. Phép cộng thể hiện điều đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu một cổ phiếu có giá không đổi, mở 10, đóng 10. Giá trị giao dịch là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Theo cách của em là 20. Đó là giá trị của nó trong ngày."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu không có ai mua bán cổ phiếu đó thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì... giá trị nó vẫn vậy chứ? Nó vẫn là 20."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một thứ có giá trị nhưng không được giao dịch, có tạo ra 'giá trị giao dịch' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Ừm... chắc là không. 'Giao dịch' nghĩa là phải có mua bán."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy công thức của bạn đang thiếu yếu tố nào để thể hiện việc 'mua bán'?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải có số lượng cổ phiếu đã được mua bán. Tức là cột `volume`."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy công thức để tính giá trị giao dịch nên kết hợp các cột nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải lấy giá nhân với khối lượng. Chắc là giá đóng cửa. Vậy là `stocks.close * stocks.volume`."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng rồi. Ban đầu bạn nhầm 'giá trị giao dịch' với một loại giá đại diện. Giá trị giao dịch là tổng tiền trao đổi, tức là (giá) x (khối lượng)."
+      }
+    ]
+  },
+  {
+    "question_id": "q17",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn giải thích rằng 'load' và 'read' là đồng nghĩa. Vì sao đó là lý do chọn `load_csv`?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì hàm này dùng để 'tải' dữ liệu từ file vào chương trình, nên 'load' mô tả đúng bản chất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trong lập trình, tên hàm có luôn phải theo nghĩa đen của từ không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không phải luôn luôn, nhưng nó nên logic. 'Load' logic hơn 'read' ở đây."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy để lưu dữ liệu ra file, bạn đoán hàm sẽ tên là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là `pd.save_csv`. 'Save' là lưu, đối ngược với 'load'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Thực tế hàm đó là `to_csv`. Cặp `to_csv` và `load_csv` có nhất quán không?"
+      },
+      {
+        "role": "Student",
+        "text": "Nghe hơi lạ, nhưng vẫn có thể hiểu được. 'To' là tới file, 'load' là từ file."
+      },
+      {
+        "role": "Tutor",
+        "text": "Pandas cũng có `to_excel`, `to_json`. Hàm đọc tương ứng của chúng là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "...Nếu theo logic của em thì là `load_excel`, `load_json`. Nhưng em chưa thấy bao giờ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy quy tắc đặt tên của pandas cho việc đọc và ghi có vẻ là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Có vẻ là một cặp... `to_` để ghi và `read_` để đọc. Vậy phải là `read_csv`."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Dù 'load' và 'read' có thể đồng nghĩa, quy ước của thư viện là `read_*` để đọc và `to_*` để ghi."
+      }
+    ]
+  },
+  {
+    "question_id": "q18",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng mỗi hàng là một 'variable'. Vì sao bạn lại nghĩ như vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì mỗi hàng chứa một tập hợp dữ liệu khác nhau, nó thay đổi. Cái gì thay đổi thì là biến."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một cách suy luận. Vậy theo bạn, một 'cột' được gọi là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Cột sẽ là một 'observation'. Vì nó là một điểm dữ liệu cụ thể, ví dụ cột 'Tuổi' là một quan sát về tuổi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tưởng tượng bảng điểm: hàng là sinh viên, cột là Toán, Lý, Hóa."
+      },
+      {
+        "role": "Student",
+        "text": "Vâng, em đang hình dung."
+      },
+      {
+        "role": "Tutor",
+        "text": "Áp dụng logic của bạn, hàng 'Nguyễn Văn A' là một 'variable' đúng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng. Nó là biến 'Nguyễn Văn A' chứa các giá trị điểm của bạn đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu ta thêm cột 'Văn', ta đã thêm một 'observation' hay một 'variable'?"
+      },
+      {
+        "role": "Student",
+        "text": "Thêm một 'observation' về điểm Văn... Khoan đã. Logic này có vẻ mâu thuẫn rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy đâu là đặc tính có thể đo lường (variable), đâu là đối tượng được quan sát (observation)?"
+      },
+      {
+        "role": "Student",
+        "text": "Cột 'Văn' là đặc tính (variable), còn hàng 'Nguyễn Văn A' là đối tượng quan sát (observation). Vậy đáp án là Observation."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn vai trò của hàng và cột. Hàng là một 'observation', cột là một 'variable'."
+      }
+    ]
+  },
+  {
+    "question_id": "q19",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng cột dữ liệu là một 'Observation'. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì mỗi cột chứa một loại thông tin mà chúng ta quan sát. Ví dụ, cột 'chiều cao' là các quan sát về chiều cao."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một 'Observation' trong thống kê mô tả điều gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó là một bản ghi hoàn chỉnh, một mẫu dữ liệu. Giống như một hàng trong bảng tính Excel."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hãy tưởng tượng một bảng có 3 sinh viên. Cột 1 là 'Tên', Cột 2 là 'Điểm'."
+      },
+      {
+        "role": "Student",
+        "text": "Được thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu cột là 'Observation', vậy cột 'Điểm' là một quan sát duy nhất?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng. Đó là quan sát của mình về điểm số của cả lớp."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy hàng 'An, 8 điểm' chứa thông tin gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Thông tin về sinh viên An. Đó cũng là một quan sát chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy trong bảng này, cả hàng và cột đều là 'Observation'?"
+      },
+      {
+        "role": "Student",
+        "text": "Khoan đã... Nếu vậy thì một khái niệm lại mô tả hai thứ khác nhau. Hơi vô lý."
+      },
+      {
+        "role": "Tutor",
+        "text": "Khái niệm nào dùng để chỉ một thuộc tính như 'Điểm' hay 'Tên'?"
+      },
+      {
+        "role": "Student",
+        "text": "Là 'Biến' (Variable), vì giá trị của nó thay đổi theo từng sinh viên. Vậy cột phải là Variable."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm 'Observation' (một hàng/đối tượng) với 'Variable' (một cột/thuộc tính)."
+      }
+    ]
+  },
+  {
+    "question_id": "q20",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói `pivot` là một cách nối bảng. Vậy nó nối những gì với nhau?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì nó nối các dòng có cùng `date` lại. Giống như `merge` trên cột `date` vậy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy `merge` và `pivot` có khác nhau không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc `pivot` là trường hợp đặc biệt của `merge`. Về bản chất vẫn là nối thông tin lại thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử có 2 dòng: (date1, AAPL, 150) và (date1, GOOG, 2500). Lệnh `pivot` sẽ làm gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ nối chúng lại dựa trên `date1`, kết quả sẽ là một dòng lớn hơn chứa thông tin cả hai."
+      },
+      {
+        "role": "Tutor",
+        "text": "Lệnh pivot là `index='date', columns='symbol'`. Giá trị trong cột `symbol` sẽ đi đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó là cột tham chiếu để... khoan. `columns='symbol'`... tức là 'AAPL' và 'GOOG' sẽ thành tên cột mới?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu chúng thành cột mới, kết quả có còn là một dòng 'dài hơn' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không. Nó sẽ là một dòng, một cột 'AAPL', một cột 'GOOG'. Vậy nó không hề 'nối' hai dòng lại."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy `pivot` thực sự làm gì thay vì 'nối'?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó xoay các giá trị từ một cột (`symbol`) thành các cột mới. Nó là tái cấu trúc bảng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm `pivot` với `merge`. `pivot` xoay dữ liệu từ dạng dài sang rộng, còn `merge` kết hợp các bảng riêng biệt."
+      }
+    ]
+  },
+  {
+    "question_id": "q21",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ tại sao kết quả sẽ là một cột duy nhất tên 'values'?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì parameter tên là `values`. Khi mình truyền một list vào đó, pandas phải gộp chúng lại dưới tên chung đó chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu `values='close'`, tên các cột mới là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là các giá trị duy nhất trong cột `columns` mà mình chỉ định. Cái đó thì đơn giản."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy khi `values=['close', 'volume']`, tại sao logic đó lại thay đổi?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì lúc này có hai nguồn dữ liệu. Đâu thể tạo cột theo giá trị `columns` được nữa. Phải có một cột 'values' để chứa cả hai."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử cột `columns` của bạn có giá trị 'MSN' và 'VNM'. Làm sao phân biệt `close` của MSN và `close` của VNM trong cột 'values' đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ là một cặp giá trị, ví dụ (giá_đóng_cửa, khối_lượng) cho mỗi mã cổ phiếu. Nhưng tất cả nằm dưới một cột 'values' lớn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy pandas cần một tên cho 'close' và một tên cho 'MSN'. Nó kết hợp chúng thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là... nó không làm thế. Logic của tôi có vẻ không ổn. Nó phải có cách để giữ lại cả hai thông tin."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Vậy cấu trúc nào cho phép giữ cả hai cấp thông tin đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Có lẽ là cột lồng nhau? Một cấp là 'close', 'volume', cấp kia là 'MSN', 'VNM'. À, gọi là cột nhiều mức."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Khi `values` là một danh sách, pivot tạo ra các cột nhiều mức để duy trì tất cả các chiều thông tin."
+      }
+    ]
+  },
+  {
+    "question_id": "q22",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói hàm mặc định là `sum`. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì pivot table thường dùng để tính tổng mà. Nó là chức năng hợp lý và phổ biến nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hàm mặc định nghĩa là gì trong trường hợp này?"
+      },
+      {
+        "role": "Student",
+        "text": "Là hàm được dùng khi mình không điền tham số `aggfunc`."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử có một bảng điểm với các dòng điểm '10' trùng lặp. Pivot không `aggfunc` sẽ ra sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì nó sẽ cộng các điểm lại. Nếu có 3 dòng điểm 10 thì kết quả là 30."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mục đích của pivot lúc đó là gì nếu nó chỉ cộng lại?"
+      },
+      {
+        "role": "Student",
+        "text": "Để gom nhóm và tính tổng. Em không thấy có vấn đề gì với logic đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Thử chạy code với một DataFrame chỉ có giá trị 1. Kết quả là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "...Kết quả là 1. Không phải tổng số các số 1. Cái này lạ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hàm nào sẽ trả về 1 từ một dãy toàn số 1?"
+      },
+      {
+        "role": "Student",
+        "text": "Trung bình cộng... `mean`. Vậy ra mặc định là `mean`. Giờ thì em đã thấy. Vậy câu trả lời là `np.mean`."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm vì `sum` là một ứng dụng phổ biến, nhưng `mean` mới là mặc định để đảm bảo kết quả không bị sai lệch khi gặp giá trị trùng lặp."
+      }
+    ]
+  },
+  {
+    "question_id": "q23",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn cho rằng Matplotlib chỉ tập trung vào hàm `plot`. Vì sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì mọi biểu đồ về cơ bản đều là các đường nối những điểm dữ liệu. Hàm `plot` làm đúng việc đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục đích chung của một thư viện như Matplotlib là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để trực quan hóa dữ liệu, biến số liệu thành hình ảnh."
+      },
+      {
+        "role": "Tutor",
+        "text": "Làm sao bạn dùng `plot` để vẽ biểu đồ cột thể hiện doanh thu 12 tháng?"
+      },
+      {
+        "role": "Student",
+        "text": "Em sẽ vẽ các đường thẳng đứng cho mỗi cột. Vẫn là dùng `plot` để nối các điểm đầu và cuối của cột thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy còn biểu đồ tròn để thể hiện thị phần các công ty thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Cái này... `plot` chỉ vẽ đường thẳng. Em không nghĩ nó vẽ được hình tròn hay các miếng bánh."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một thư viện trực quan hóa có nên giới hạn ở việc vẽ đường thẳng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là không. Nó cần hỗ trợ nhiều loại biểu đồ khác nữa. Vậy ngoài `plot`, phải có các thành phần khác."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tóm lại, sai lầm của bạn là cho rằng `plot` là công cụ duy nhất, trong khi Matplotlib là một bộ công cụ với nhiều hàm cho nhiều loại biểu đồ."
+      }
+    ]
+  },
+  {
+    "question_id": "q24",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng 'bar' và 'pie' là ví dụ chính. Vì sao bạn chắc chắn vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì đây là hai loại biểu đồ cơ bản nhất. Ai học vẽ biểu đồ cũng bắt đầu từ đây."
+      },
+      {
+        "role": "Tutor",
+        "text": "Câu hỏi nhấn mạnh điều gì về các ví dụ trong slide?"
+      },
+      {
+        "role": "Student",
+        "text": "Hỏi về ví dụ 'trực tiếp được minh họa'. Thì đó phải là những cái phổ biến nhất chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử slide chỉ có code cho `plot.hist()`. Biểu đồ 'bar' có được minh họa trực tiếp không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nhưng chắc chắn slide phải có cả 'bar'. Nó quá cơ bản để bỏ qua."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'minh họa trực tiếp' bằng code có nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là có hàm `df.plot.bar()` trong ví dụ. Nhưng em vẫn tin là nó phải có ở đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giữa `plot.scatter` và `plot.bar`, cái nào dùng cho hai cột số liên tục?"
+      },
+      {
+        "role": "Student",
+        "text": "`scatter`. `bar` thì cho biến phân loại. Hmm, có lẽ em cần xem lại slide."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy tiêu chí để chọn đáp án đúng là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là tìm xem hàm plot nào được gọi chính xác trong code, chứ không phải đoán cái nào phổ biến. Đáp án là `plot.hist` và `plot.scatter`."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Lỗi của bạn là giả định ví dụ phải là biểu đồ phổ biến nhất, thay vì bám vào code được minh họa trực tiếp."
+      }
+    ]
+  },
+  {
+    "question_id": "q25",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn cho rằng hàm `plot` không phải chủ đề chính. Tại sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì `plot` chỉ là một hàm thôi. Một chủ đề chính phải bao quát hơn, như 'các loại biểu đồ' hay 'cách dùng subplot'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một 'chủ đề chính' cần phải là một khái niệm rộng?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Nó phải là một nhóm chức năng, không phải một lệnh đơn lẻ. `plot` quá cơ bản."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu không có hàm `plot`, bạn vẽ biểu đồ đường thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc sẽ có hàm khác thay thế. Vấn đề là `plot` quá đơn giản để gọi là 'chủ đề chính'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một thư viện vẽ biểu đồ có thể hoạt động mà không có chức năng 'plot' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không... chắc là không. Chức năng đó phải có. Nhưng gọi nó là 'chủ đề chính' thì nghe không đúng."
+      },
+      {
+        "role": "Tutor",
+        "text": "So với 'gom nhóm dữ liệu với pivot', chức năng 'plot' liên quan đến Matplotlib hơn?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc chắn là `plot` liên quan hơn. 'Pivot' là của Pandas mà. À... vậy `plot` là cốt lõi, nên nó là chủ đề chính."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy dựa trên đó, bạn hãy chọn lại đáp án cho câu hỏi ban đầu."
+      },
+      {
+        "role": "Student",
+        "text": "Đáp án là 'Gom nhóm dữ liệu với pivot'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Ban đầu bạn đã nhầm lẫn giữa 'chủ đề chính' và 'khái niệm phức tạp'. Đôi khi, thứ cơ bản nhất lại là cốt lõi."
+      }
+    ]
+  },
+  {
+    "question_id": "q26",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "[A] Bạn nói quá hạn chế là một dạng của quá khớp. Vì sao lại vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì cả hai đều là lỗi của mô hình. Mô hình không học được quy luật đúng, nên nó hoạt động không hiệu quả."
+      },
+      {
+        "role": "Tutor",
+        "text": "[B] Một mô hình quá khớp hoạt động thế nào trên dữ liệu mới chưa từng thấy?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó hoạt động rất tệ."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Còn mô hình quá hạn chế thì sao trên dữ liệu mới?"
+      },
+      {
+        "role": "Student",
+        "text": "Cũng tệ. Thấy chưa, cả hai đều tệ trên dữ liệu mới. Nên chúng liên quan."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Vậy hiệu suất trên dữ liệu *đã học* của chúng có giống nhau không?"
+      },
+      {
+        "role": "Student",
+        "text": "Cái quá khớp thì tốt trên dữ liệu học, còn cái kia thì tệ. Nhưng kết quả cuối cùng vẫn là mô hình hỏng."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Một học sinh thuộc lòng đáp án và một học sinh không học gì. Cả hai đều thi trượt. Bản chất vấn đề của họ có giống nhau không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không... Một người học quá chi tiết, người kia quá sơ sài. Chúng đối lập nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "[D] Vậy, quá khớp và quá hạn chế là hai vấn đề như thế nào? Giờ bạn hãy trả lời lại câu hỏi ban đầu."
+      },
+      {
+        "role": "Student",
+        "text": "Chúng là hai vấn đề đối lập. Quá khớp xảy ra khi mô hình quá phức tạp, học cả nhiễu của dữ liệu. Đáp án đúng là mô hình quá phức tạp."
+      },
+      {
+        "role": "Tutor",
+        "text": "[E] Đúng vậy. Ban đầu bạn đã nhầm lẫn hai khái niệm đối lập vì chúng có cùng hậu quả. Quá khớp là do quá phức tạp, còn quá hạn chế là do quá đơn giản."
+      }
+    ]
+  },
+  {
+    "question_id": "q27",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói quá khớp là khi cả lỗi huấn luyện và lỗi kiểm thử đều cao. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì 'quá khớp' là mô hình học không tốt. Nếu nó tệ thì lỗi ở đâu cũng phải cao chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mô hình được huấn luyện để 'khớp' vào tập dữ liệu nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Tập huấn luyện (training set)."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu nó 'khớp' vào tập huấn luyện, lỗi trên tập đó nên thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Lý thuyết thì lỗi phải thấp. Nhưng em nghĩ 'quá khớp' là trường hợp đặc biệt, nó học sai cách nên lỗi ở đâu cũng cao."
+      },
+      {
+        "role": "Tutor",
+        "text": "Từ 'quá' trong 'quá khớp' ám chỉ điều gì về việc học?"
+      },
+      {
+        "role": "Student",
+        "text": "Là học quá nhiều? Nhưng nó học quá nhiều thứ vô ích nên kết quả cuối cùng vẫn tệ mà. Logic của em vẫn đúng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu nó học 'quá nhiều' chi tiết từ tập huấn luyện, hiệu năng trên tập đó sẽ ra sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ ghi nhớ thuộc lòng tập đó... Vậy thì... lỗi trên tập huấn luyện phải thấp chứ? Vậy là mâu thuẫn rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, hãy định nghĩa lại đặc điểm lỗi của mô hình quá khớp."
+      },
+      {
+        "role": "Student",
+        "text": "Nó phải có lỗi huấn luyện rất thấp vì ghi nhớ dữ liệu, nhưng lỗi kiểm thử lại cao vì không tổng quát hóa được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn 'quá khớp' với 'chưa khớp' (underfitting) - là trạng thái lỗi cao ở mọi nơi. Quá khớp là học quá tốt trên tập huấn luyện nhưng lại tệ trên tập kiểm thử."
+      }
+    ]
+  },
+  {
+    "question_id": "q28",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn nói kiểm định chéo nhanh hơn hold-out. Điều gì khiến bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó chia dữ liệu thành các phần nhỏ hơn. Huấn luyện trên tập nhỏ hơn thì phải nhanh hơn chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Phương pháp hold-out huấn luyện mô hình bao nhiêu lần?"
+      },
+      {
+        "role": "Student",
+        "text": "Một lần thôi, trên tập training."
+      },
+      {
+        "role": "Tutor",
+        "text": "Còn 5-fold cross-validation thì sao? Huấn luyện mấy lần?"
+      },
+      {
+        "role": "Student",
+        "text": "5 lần. Nhưng mỗi lần là trên 4/5 dữ liệu, nên vẫn nhanh hơn huấn luyện trên cả tập lớn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử huấn luyện trên toàn bộ tập train mất 10 phút. Vậy 5 lần huấn luyện trên 4/5 dữ liệu thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì mỗi lần sẽ mất ít hơn 10 phút. Tổng lại chắc vẫn nhanh hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Ít hơn bao nhiêu? Nếu mỗi lần mất 8 phút thì tổng thời gian là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "5 nhân 8 là 40 phút... Lâu hơn 10 phút của hold-out. Logic này có gì đó sai sai."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu nó chậm hơn, tại sao người ta vẫn dùng kiểm định chéo?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là để có kết quả đánh giá đáng tin cậy hơn, không phụ thuộc vào một lần chia ngẫu nhiên."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Kiểm định chéo tốn nhiều thời gian hơn nhưng cho kết quả đánh giá ổn định và đáng tin cậy hơn hold-out."
+      }
+    ]
+  },
+  {
+    "question_id": "q29",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói mô hình chỉ huấn luyện một lần. Vậy tham số `cv=5` dùng để làm gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó dùng để chia dữ liệu ra 5 phần và báo cáo kết quả trên 5 phần đó. Nhưng mô hình vẫn là một thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục đích chính của việc kiểm tra chéo (cross-validate) là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để đánh giá hiệu năng của mô hình. Xem nó có tốt không."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu mô hình đã học trên toàn bộ dữ liệu, việc đánh giá lại trên chính dữ liệu đó có đáng tin không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đáng tin chứ. Nếu nó học tốt thì phải đạt điểm cao trên dữ liệu đó. Đó là bằng chứng nó đã học được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một học sinh học thuộc lòng đáp án. Điểm thi có phản ánh đúng năng lực của em đó không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không... vì ra đề khác là em đó không làm được. À... vậy là mô hình cũng không được 'thấy' trước bài kiểm tra?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Vậy với `cv=5`, quá trình huấn luyện và kiểm tra diễn ra thế nào để đảm bảo tính khách quan?"
+      },
+      {
+        "role": "Student",
+        "text": "Có lẽ nó huấn luyện trên 4 phần và kiểm tra trên phần thứ 5. Lặp lại 5 lần, mỗi lần một phần khác nhau làm bài kiểm tra?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Bạn đã tự tìm ra. Lỗi sai ban đầu là bạn nhầm lẫn việc đánh giá mô hình với việc huấn luyện mô hình cuối cùng để sử dụng."
+      }
+    ]
+  },
+  {
+    "question_id": "q30",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói StandardScaler đưa dữ liệu về [0, 1]. Dựa vào đâu bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì đó là mục đích của chuẩn hóa mà? Để các cột có cùng thang đo từ 0 đến 1 cho mô hình học."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục đích của chuẩn hóa có nhất thiết phải là khoảng [0, 1] không?"
+      },
+      {
+        "role": "Student",
+        "text": "Em nghĩ vậy là tối ưu nhất. Hầu hết các ví dụ em thấy đều biến đổi về khoảng đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mình có dữ liệu: [-10, 0, 10]. StandardScaler sẽ làm gì với nó?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ đưa về [0, 0.5, 1]. Giá trị nhỏ nhất là -10 thành 0, lớn nhất 10 thành 1."
+      },
+      {
+        "role": "Tutor",
+        "text": "Công thức của StandardScaler là (x - mean) / std. Trung bình của [-10, 0, 10] là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Trung bình là 0. Nhưng chia cho độ lệch chuẩn xong nó phải về dương chứ?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Độ lệch chuẩn có thể là số âm không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Không. Vậy -10 chia cho số dương vẫn là số âm. Nó không nằm trong [0, 1]."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy StandardScaler thực sự đảm bảo điều gì về dữ liệu đầu ra?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó làm cho trung bình bằng 0 và chia cho độ lệch chuẩn. Nó không đảm bảo khoảng [0, 1]."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm StandardScaler, vốn đưa trung bình về 0 và phương sai về 1, với MinMaxScaler, thứ đưa giá trị về khoảng [0, 1]."
+      }
+    ]
+  },
+  {
+    "question_id": "q31",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói Pipeline dùng để kiểm định chéo. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì khi dùng `cross_val_score`, người ta luôn đưa một Pipeline vào. Chúng phải là một cặp đi cùng nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hàm `cross_val_score` nhận vào những tham số nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó nhận một estimator (mô hình), dữ liệu X, y và số fold `cv`."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy estimator đó có thể là một mô hình đơn lẻ, như `LogisticRegression()`, được không?"
+      },
+      {
+        "role": "Student",
+        "text": "Được. Nhưng nếu vậy thì làm sao tiền xử lý dữ liệu? Phải có Pipeline mới đúng chuẩn chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy cái gì đang thực hiện việc chia-huấn luyện-đánh giá trên các fold?"
+      },
+      {
+        "role": "Student",
+        "text": "Là `cross_val_score`. Nhưng nó cần Pipeline để chạy cho đúng, không thể tách rời được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu bạn chỉ có mô hình, không tiền xử lý, `cross_val_score` có chạy được không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Chạy được. Vậy Pipeline chỉ đóng gói các bước lại để `cross_val_score` coi nó như một 'mô hình' thôi à?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu đúng là như vậy, vai trò chính của Pipeline là gì? Hãy trả lời lại câu hỏi."
+      },
+      {
+        "role": "Student",
+        "text": "Nó dùng để kết hợp các bước tiền xử lý và mô hình thành một chu trình duy nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn nhầm lẫn vì Pipeline thường được dùng bên trong `cross_val_score`. Nhưng Pipeline chỉ đóng gói quy trình, còn `cross_val_score` mới thực hiện việc kiểm định chéo."
+      }
+    ]
+  },
+  {
+    "question_id": "q32",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "[A] Bạn nghĩ vì sao mã hóa one-hot lại làm giảm số chiều dữ liệu?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó chuyển một cột chứa chữ thành các số 0 và 1. Nén thông tin lại thì phải giảm chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "[B] Số chiều của một bảng dữ liệu thường được hiểu là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là số cột, hay số thuộc tính của dữ liệu."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Giả sử có cột 'Màu Sắc' với 3 giá trị: 'Đỏ', 'Xanh', 'Vàng'. Sau khi one-hot, ta có mấy cột mới?"
+      },
+      {
+        "role": "Student",
+        "text": "Sẽ có 3 cột: 'Màu_Đỏ', 'Màu_Xanh', 'Màu_Vàng'. Nhưng nó chỉ là biểu diễn khác, thông tin gốc vẫn vậy, không thêm gì cả."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Vậy số cột đã thay đổi thế nào, từ mấy thành mấy?"
+      },
+      {
+        "role": "Student",
+        "text": "Từ 1 thành 3. Nhưng đó chỉ là trường hợp ít giá trị. Với dữ liệu phức tạp hơn, nó phải có cách để giảm chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Nếu cột 'Tỉnh thành' có 63 tỉnh, ta sẽ có bao nhiêu cột mới?"
+      },
+      {
+        "role": "Student",
+        "text": "Sẽ có 63 cột mới... Chà, vậy là tăng lên nhiều. Nhưng em vẫn thấy logic 'nén thông tin' hợp lý hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "[D] Vậy quy tắc chung là gì? One-hot ảnh hưởng đến số cột thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó làm tăng số cột. Số cột mới bằng số giá trị duy nhất trong cột gốc. Vậy nó làm tăng số chiều."
+      },
+      {
+        "role": "Tutor",
+        "text": "[E] Đúng. Ban đầu bạn tin rằng nó giảm chiều, nhưng thực tế one-hot tạo một cột mới cho mỗi loại, do đó làm tăng số chiều."
+      }
+    ]
+  },
+  {
+    "question_id": "q33",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng mỗi giá trị tuổi là một 'loại' khác nhau. Tại sao lại vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì tuổi 8, 9, 10 là các giá trị riêng biệt. Giống như 'mèo', 'chó', 'chim'. Nên phải one-hot encode để máy tính hiểu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Ok. Vậy biến 'phân loại' có đặc điểm cốt lõi là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là nó có các danh mục, các nhãn không có tính toán được. 'Chó' không thể cộng 'mèo'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Với one-hot encoding, bạn sẽ có bao nhiêu cột mới cho tuổi từ 8 đến 100?"
+      },
+      {
+        "role": "Student",
+        "text": "Sẽ có 93 cột. Số cột không quan trọng, miễn là logic đúng. Mỗi cột đại diện cho một tuổi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Sau khi mã hóa, mô hình 'thấy' quan hệ giữa tuổi 9 và 10 thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ thấy vector của tuổi 9 và 10 hoàn toàn khác nhau. Chúng là hai 'loại' độc lập."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy quan hệ giữa tuổi 9 và 10 có giống quan hệ giữa tuổi 9 và 90 không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Về mặt vector thì chúng đều khác biệt như nhau. Nhưng thực tế thì không... Có vẻ không ổn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu thông tin 'gần nhau' hay 'thứ tự' bị mất, thì ta nên dùng phương pháp nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là... giữ nguyên giá trị số của nó. Để mô hình tự học được mối quan hệ về khoảng cách."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tóm lại, bạn đã nhầm khi coi tuổi là biến phân loại độc lập. Giữ nguyên giá trị số sẽ bảo toàn được tính thứ tự và khoảng cách."
+      }
+    ]
+  },
+  {
+    "question_id": "q34",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn nói hồi quy tuyến tính thông thường tự chọn được đặc trưng. Nó làm điều đó bằng cách nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ gán trọng số thấp cho các đặc trưng không quan trọng. Trọng số càng thấp thì đặc trưng đó càng ít được 'chọn'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trọng số thấp có giống với trọng số bằng 0 không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không hẳn. Nhưng nếu nó đủ nhỏ, ví dụ 0.0001, thì coi như không quan trọng rồi. Về cơ bản là đã chọn lọc."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử có 100 đặc trưng nhiễu. Hồi quy thường sẽ cho ra bao nhiêu trọng số khác 0?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là cả 100 trọng số đều khác 0. Nhưng 100 cái đó sẽ rất nhỏ. Tôi vẫn thấy đó là một dạng chọn lọc."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mô hình đã 'loại bỏ' hay 'giữ lại' 100 đặc trưng nhiễu đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó... giữ lại, nhưng với mức độ quan trọng thấp. Vậy là nó không thực sự loại bỏ chúng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy để thực sự loại bỏ, trọng số của đặc trưng nhiễu phải là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải bằng 0. Muốn vậy thì phải dùng phương pháp khác... chắc là Lasso."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy dựa trên điều đó, bạn hãy trả lời lại câu hỏi ban đầu."
+      },
+      {
+        "role": "Student",
+        "text": "Mô hình có khả năng tự động chọn lọc là Hồi quy tuyến tính với L1 regularization (Lasso)."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tóm lại: Hồi quy thường chỉ giảm tầm quan trọng của đặc trưng, không loại bỏ. Chỉ khi trọng số về 0 (như Lasso) thì mới là chọn lọc."
+      }
+    ]
+  },
+  {
+    "question_id": "q35",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "[A] Bạn nói tăng độ sâu sẽ hạn chế quá khớp. Một cây sâu hơn học được điều gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó học được nhiều quy tắc chi tiết hơn. Càng chi tiết thì càng chính xác chứ ạ."
+      },
+      {
+        "role": "Tutor",
+        "text": "[B] Mục tiêu của mô hình là chính xác trên dữ liệu huấn luyện hay dữ liệu mới?"
+      },
+      {
+        "role": "Student",
+        "text": "Cả hai. Nhưng phải đúng trên dữ liệu huấn luyện thì mới mong đúng trên dữ liệu mới được."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Giả sử có một điểm dữ liệu lạ, duy nhất. Cây rất sâu sẽ làm gì với nó?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ tạo một nhánh riêng, một quy tắc riêng cho điểm đó để phân loại đúng."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Quy tắc cho một điểm duy nhất đó có hữu ích cho dữ liệu trong tương lai không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có chứ. Đó có thể là một trường hợp ngoại lệ quan trọng mà mô hình cần ghi nhớ."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Nếu điểm đó chỉ là nhiễu, do nhập sai dữ liệu thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Nhưng làm sao biết nó là nhiễu? Dữ liệu đưa vào thế nào thì mô hình phải học thế đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Một mô hình học thuộc lòng cả lỗi sai sẽ dự đoán thế nào trên dữ liệu sạch?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là nó sẽ áp dụng cả quy tắc sai đó... Vậy là học quá chi tiết lại không tốt."
+      },
+      {
+        "role": "Tutor",
+        "text": "[D] Vậy để hạn chế việc học những chi tiết vô ích này, ta nên làm gì với cây?"
+      },
+      {
+        "role": "Student",
+        "text": "Không cho nó phát triển quá sâu. Phải có cách nào đó giới hạn nó lại."
+      },
+      {
+        "role": "Tutor",
+        "text": "[E] Đúng. Tăng độ sâu không giới hạn khiến cây học thuộc lòng dữ liệu, kể cả nhiễu, gây ra quá khớp. Hạn chế độ sâu, hay cắt tỉa, mới là cách khắc phục."
+      }
+    ]
+  },
+  {
+    "question_id": "q36",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn viết rằng Bagging và Boosting chỉ dùng cho cây quyết định. Điều gì làm bạn chắc chắn vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì đó là định nghĩa của chúng. Random Forest dùng Bagging với cây, Gradient Boosting cũng dùng cây."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, 'Bagging' là một thuật toán, hay một phương pháp chung?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó là một thuật toán cụ thể. Lấy mẫu bootstrap rồi xây dựng nhiều cây quyết định."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu mình có 10 mô hình SVM, rồi cũng lấy mẫu bootstrap để huấn luyện chúng thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì đó không phải là Bagging. Bagging bắt buộc phải là cây quyết định. Đó là cách nó hoạt động."
+      },
+      {
+        "role": "Tutor",
+        "text": "Quá trình 'lấy mẫu bootstrap và tổng hợp kết quả' có phụ thuộc vào loại mô hình không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, quá trình đó thì không. Nhưng nếu không dùng cây thì không gọi là Bagging."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy tên gọi quan trọng hơn bản chất của kỹ thuật sao?"
+      },
+      {
+        "role": "Student",
+        "text": "... Chắc là không. Về lý thuyết thì có thể áp dụng quá trình đó cho mô hình khác."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy quy tắc chung ở đây là gì? Bagging có giới hạn ở loại mô hình nào không?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó là một phương pháp kết hợp mô hình, không bị giới hạn. Cây quyết định chỉ là một trường hợp."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn phương pháp (Bagging) với một triển khai cụ thể của nó (Random Forest). Bagging và Boosting là các kỹ thuật meta, có thể áp dụng cho nhiều loại mô hình cơ sở."
+      }
+    ]
+  },
+  {
+    "question_id": "q37",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "[A] Bạn nói Logistic Regression xử lý được quan hệ phi tuyến phức tạp. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó là một mô hình phân loại mạnh. Nó có thể tìm ra mối liên hệ giữa các đặc trưng để phân lớp."
+      },
+      {
+        "role": "Tutor",
+        "text": "[B] Vậy đường ranh giới quyết định mà Logistic Regression tạo ra có dạng gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó là một đường cong phức tạp chứ, để phù hợp với dữ liệu phi tuyến."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Tưởng tượng dữ liệu có 2 lớp, lớp A nằm trong một vòng tròn, lớp B nằm ngoài. Logistic Regression sẽ vẽ đường phân chia thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ vẽ một đường cong bao quanh lớp A để tách nó ra khỏi lớp B."
+      },
+      {
+        "role": "Tutor",
+        "text": "Về bản chất, Logistic Regression tạo ra một đường thẳng hoặc một siêu phẳng. Một đường thẳng có thể tách hai vòng tròn lồng nhau không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, một đường thẳng thì không được. Nhưng em chắc chắn Logistic Regression mạnh hơn thế, nó phải có cách nào đó chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "[D] Vậy để tách được dữ liệu hình vòng xuyến đó, ta cần loại ranh giới nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Một ranh giới không phải đường thẳng. Có thể là một đường cong khép kín."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Giữa Logistic Regression và Random Forest, mô hình nào có khả năng tạo ra ranh giới phức tạp đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là Random Forest... vì nó kết hợp nhiều cây quyết định. Vậy em nên dùng Random Forest cho bài này."
+      },
+      {
+        "role": "Tutor",
+        "text": "[E] Tốt. Vậy bạn đã thấy, Logistic Regression có ranh giới tuyến tính. Nó không thể tự xử lý các quan hệ phi tuyến phức tạp như trong bài toán này."
+      }
+    ]
+  },
+  {
+    "question_id": "q38",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng accuracy là tốt nhất vì nó đo tỷ lệ đúng tổng thể. Tại sao việc này lại quan trọng nhất?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó cho biết mô hình đúng bao nhiêu phần trăm. Tỷ lệ đúng càng cao thì mô hình càng tốt, rõ ràng là vậy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mục tiêu cốt lõi của bài toán này là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là phát hiện gian lận. Nên mô hình phải phân loại đúng nhiều nhất có thể."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử có 1000 bài thi, chỉ 2 bài gian lận. Một mô hình luôn đoán 'không gian lận'. Accuracy của nó là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó đoán sai 2 trường hợp gian lận. Vậy là đúng 998/1000. Accuracy là 99.8%."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một mô hình với accuracy 99.8% có được coi là tốt không?"
+      },
+      {
+        "role": "Student",
+        "text": "Rất tốt chứ. Con số gần như tuyệt đối. Nó chỉ sai có 2 trường hợp thôi mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mô hình đó đã phát hiện được bao nhiêu bài gian lận?"
+      },
+      {
+        "role": "Student",
+        "text": "Ừm... không bài nào. Nhưng nó vẫn đúng trong 998 trường hợp còn lại. Accuracy vẫn rất cao."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mục tiêu 'phát hiện gian lận' của bạn đã đạt được chưa?"
+      },
+      {
+        "role": "Student",
+        "text": "Chưa... Nhưng con số accuracy lại cho thấy nó là mô hình tốt. Thật mâu thuẫn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy khi 'gian lận' rất hiếm, chỉ nhìn vào accuracy có đủ không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có lẽ là không. Phải quan tâm đến việc nó có bắt được ca gian lận nào không. Vậy trong các dự đoán 'gian lận', mình cần đo độ chính xác của chúng. Đó là Precision."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Với dữ liệu mất cân bằng, accuracy cao có thể gây hiểu lầm. Precision giúp đánh giá chất lượng của các dự đoán 'dương tính', là các trường hợp bị nghi gian lận."
+      }
+    ]
+  },
+  {
+    "question_id": "q39",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng GroupKFold là đủ. Vì sao yếu tố mất cân bằng có thể bỏ qua?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì yêu cầu là đánh giá trên bệnh viện mới. GroupKFold đảm bảo cả bệnh viện nằm trong test, đó là quan trọng nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục tiêu của GroupKFold có phải là giữ nguyên tỉ lệ lớp trong mỗi fold không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, mục tiêu là giữ nguyên nhóm. Tỉ lệ lớp không quan trọng bằng việc mô hình học được đặc trưng của bệnh viện."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử có 2 lớp: 'bệnh' và 'không bệnh', tỉ lệ 1/99. Một fold test chỉ chứa các bệnh viện không có ca 'bệnh' nào. Điều gì xảy ra?"
+      },
+      {
+        "role": "Student",
+        "text": "Trường hợp đó hiếm. Nhưng nếu có, mô hình sẽ dự đoán 'không bệnh' và vẫn đạt accuracy cao trên fold đó. Chứng tỏ nó tốt."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một mô hình luôn đoán 'không bệnh' có thực sự học được gì về lớp 'bệnh' không?"
+      },
+      {
+        "role": "Student",
+        "text": "…Chắc là không. Nhưng lỗi đó là do dữ liệu chứ không phải do cách chia. GroupKFold vẫn là đúng nhất cho bài toán về nhóm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy để đánh giá đúng, ta cần một cách chia vừa giữ nhóm, vừa làm gì nữa?"
+      },
+      {
+        "role": "Student",
+        "text": "…Vừa phải đảm bảo mỗi fold có tỉ lệ lớp tương tự nhau. Vậy nên dùng StratifiedGroupKFold?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Bạn đã tự chỉ ra: GroupKFold chỉ lo về nhóm, còn 'stratified' lo về tỉ lệ lớp. Kết hợp cả hai mới giải quyết được bài toán."
+      }
+    ]
+  },
+  {
+    "question_id": "q40",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng tăng λ sẽ làm các trọng số bằng nhau. Vì sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì đó là cách làm mô hình đơn giản hơn. Phạt nặng nghĩa là không thiên vị đặc trưng nào, nên chúng phải bằng nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hàm mất mát của Ridge có những thành phần nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Gồm phần lỗi dự đoán và phần phạt λ nhân với tổng bình phương các trọng số."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử đặc trưng A rất quan trọng, B thì không."
+      },
+      {
+        "role": "Student",
+        "text": "Vậy ban đầu trọng số của A (w_A) sẽ lớn hơn của B (w_B) rất nhiều."
+      },
+      {
+        "role": "Tutor",
+        "text": "Khi λ tăng, mô hình sẽ phạt w_A^2 và w_B^2 thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó phải phạt w_A mạnh hơn để kéo nó xuống bằng với w_B. Đó là mục tiêu mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giảm một số từ 10 xuống 5, và một số từ 2 xuống 1. Chúng đã bằng nhau chưa?"
+      },
+      {
+        "role": "Student",
+        "text": "...Chưa. Nhưng chúng đang tiến lại gần nhau hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chúng đang tiến lại gần nhau, hay cùng tiến về một giá trị khác?"
+      },
+      {
+        "role": "Student",
+        "text": "Có lẽ... chúng đang cùng tiến về 0. Vì giá trị càng lớn càng bị phạt nặng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy quy luật chung khi tăng λ là gì? Áp dụng lại vào câu hỏi xem."
+      },
+      {
+        "role": "Student",
+        "text": "Là làm co các trọng số về gần 0, chứ không phải làm chúng bằng nhau. Đáp án đúng là làm co các trọng số về gần bằng 0."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Tăng λ không ép trọng số bằng nhau, mà co chúng về 0, đặc biệt là các trọng số lớn."
+      }
+    ]
+  },
+  {
+    "question_id": "q41",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn viết rằng PCA làm tăng số chiều. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó tạo ra các thành phần chính mới. Có cột mới tức là tăng chiều."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'chiều của dữ liệu' đối với bạn nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là số lượng cột, số feature. Quá rõ ràng rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Ok. Dữ liệu có 100 feature. Bạn dùng PCA tạo 2 thành phần chính. Kết quả có bao nhiêu cột?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì là 102 cột chứ sao? 100 cột cũ và 2 cột mới được tạo ra."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy các feature cũ và các thành phần chính mới tồn tại song song?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy, PCA chỉ thêm vào thôi chứ không bỏ đi. Logic của em là vậy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục tiêu của PCA là tóm tắt thông tin. Giữ lại cả 100 cột cũ và 2 cột tóm tắt có thừa thãi không?"
+      },
+      {
+        "role": "Student",
+        "text": "Hmm... nếu nói vậy thì đúng là thừa. Việc tóm tắt đã mất ý nghĩa. Có lẽ các cột cũ không còn nữa?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu 100 cột cũ được thay thế bằng 2 cột mới, số chiều đã thay đổi thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó giảm từ 100 xuống 2. Vậy mục đích của PCA là giảm số chiều."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Lỗi sai của bạn là cho rằng PCA 'thêm' vào, trong khi nó 'thay thế'. PCA giảm số chiều bằng cách thay nhiều feature cũ bằng ít thành phần chính mới."
+      }
+    ]
+  },
+  {
+    "question_id": "q42",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói hệ số tương quan đo độ nghiêng. Độ nghiêng của cái gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Của bộ dữ liệu chứ gì. Để xem nó lệch trái hay lệch phải."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mình cần mấy biến để đo độ nghiêng?"
+      },
+      {
+        "role": "Student",
+        "text": "Một biến là đủ rồi. Xem phân phối của nó là biết."
+      },
+      {
+        "role": "Tutor",
+        "text": "Thế hệ số tương quan cần mấy biến để tính?"
+      },
+      {
+        "role": "Student",
+        "text": "Cũng là một chứ? Đo độ nghiêng của biến đó thì nó phải là một."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu mình có bộ dữ liệu chỉ gồm chiều cao. Hệ số tương quan của nó là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì mình tính độ nghiêng của chiều cao thôi. Hai cái đó là một mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy tương quan giữa 'chiều cao' và 'cân nặng' thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "...Cái đó thì đo sự liên quan. Nó không phải là độ nghiêng à?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Độ nghiêng của 'một biến' và liên quan giữa 'hai biến'. Chúng có giống nhau không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không. Độ nghiêng mô tả hình dạng của một biến, còn tương quan đo mối quan hệ giữa hai biến. Vai trò của nó là đo mức độ liên quan tuyến tính."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm lẫn vai trò của độ nghiêng (đo trên một biến) với hệ số tương quan (đo mối quan hệ giữa hai biến)."
+      }
+    ]
+  },
+  {
+    "question_id": "q43",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng RandomizedSearch duyệt hết các tổ hợp. Vậy nó khác GridSearchCV ở đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó cũng duyệt hết, nhưng thứ tự ngẫu nhiên nên có thể sẽ tìm ra kết quả tốt nhanh hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tham số nào quyết định số lần thử của RandomizedSearch?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải là kích thước của lưới tham số chứ. Càng nhiều tổ hợp thì càng phải thử nhiều."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử có 1 triệu tổ hợp, và bạn set `n_iter=10`. Nó sẽ chạy bao nhiêu lần?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó phải chạy hết 1 triệu lần để đảm bảo không bỏ sót. `n_iter` chắc là một cài đặt phụ nào đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tài liệu nói `n_iter` là số lượng ứng viên tham số được lấy mẫu. Vậy là 10 hay 1 triệu?"
+      },
+      {
+        "role": "Student",
+        "text": "Nhưng nếu chỉ chạy 10 lần trong 1 triệu khả năng, làm sao gọi là 'search' được? Vô lý."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy chi phí tính toán của nó phụ thuộc vào `n_iter` hay kích thước lưới?"
+      },
+      {
+        "role": "Student",
+        "text": "Nếu theo định nghĩa, nó chỉ chạy 10 lần... thì chi phí phụ thuộc vào `n_iter`. Chi phí sẽ cố định."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm lẫn rằng RandomizedSearchCV phải duyệt toàn bộ như GridSearchCV. Thực tế, chi phí của nó cố định qua `n_iter`."
+      }
+    ]
+  },
+  {
+    "question_id": "q44",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "[A] Bạn nói StandardScaler dùng để đưa dữ liệu về khoảng [0,1]. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì đó là mục đích của scaling mà. Để các feature có cùng một thang đo, và thang đó thường là [0,1]."
+      },
+      {
+        "role": "Tutor",
+        "text": "[B] Công thức của StandardScaler liên quan đến những đại lượng nào của dữ liệu?"
+      },
+      {
+        "role": "Student",
+        "text": "Em không nhớ chính xác, nhưng nó sẽ lấy từng giá trị rồi co lại, sao cho kết quả cuối cùng nằm trong khoảng [0,1]."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Xét dữ liệu [10, 20, 120]. Trung bình là 50, độ lệch chuẩn khoảng 58. Giá trị 120 sẽ được biến đổi thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ thành một số gần 1. Giá trị 10 sẽ thành một số gần 0. Chắc chắn là vậy."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Công thức là (x - trung bình) / độ lệch chuẩn. Thử áp dụng với x = 120."
+      },
+      {
+        "role": "Student",
+        "text": "Khoan... (120 - 50) / 58 = 70 / 58. Kết quả lớn hơn 1. Chắc là do bộ dữ liệu này đặc biệt?"
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Công thức này có điều gì ngăn kết quả lớn hơn 1 hoặc nhỏ hơn 0 không?"
+      },
+      {
+        "role": "Student",
+        "text": "Nhìn vào công thức thì... không có. Vậy là nó không đảm bảo khoảng [0,1]. Em đã nhầm."
+      },
+      {
+        "role": "Tutor",
+        "text": "[D] Vậy mục tiêu của việc trừ đi trung bình và chia cho độ lệch chuẩn là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để dữ liệu mới có trung bình là 0 và độ lệch chuẩn là 1. Vậy nên dùng nó khi thuật toán cần dữ liệu có dạng phân phối chuẩn."
+      },
+      {
+        "role": "Tutor",
+        "text": "[E] Tóm lại: Bạn đã nhầm StandardScaler với MinMaxScaler. StandardScaler biến đổi dữ liệu để có trung bình 0 và độ lệch chuẩn 1, không phải để nằm trong khoảng [0,1]."
+      }
+    ]
+  },
+  {
+    "question_id": "q45",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng cây quyết định nhạy cảm với outlier. Cơ chế nào khiến nó nhạy cảm?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì outlier là giá trị cực đoan, nó sẽ làm lệch phép chia của cây. Điểm nào càng lạ thì càng ảnh hưởng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Cây quyết định chia dữ liệu dựa trên tiêu chí nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó tìm một ngưỡng để chia sao cho kết quả ở hai bên là thuần nhất nhất có thể."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử có feature là [10, 20, 30, 1000]. Ngưỡng chia tốt nhất là 25."
+      },
+      {
+        "role": "Student",
+        "text": "Vâng, chia giữa 20 và 30 là hợp lý."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu thay 1000 bằng 99999, ngưỡng 25 có còn là tốt nhất không?"
+      },
+      {
+        "role": "Student",
+        "text": "Nhưng giá trị đã thay đổi rất nhiều. Chắc chắn phải có ảnh hưởng chứ, dù nhỏ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Điểm 99999 vẫn nằm ở cùng phía của ngưỡng 25 chứ?"
+      },
+      {
+        "role": "Student",
+        "text": "...Vẫn ở cùng phía. Nhưng em thấy nó vẫn không ổn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mô hình nào bị đường thẳng của nó 'kéo' đi bởi điểm 99999 đó?"
+      },
+      {
+        "role": "Student",
+        "text": "À... là hồi quy tuyến tính. Đường thẳng sẽ bị lệch hẳn lên trên. Em hiểu rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Giờ bạn trả lời lại câu hỏi ban đầu xem sao."
+      },
+      {
+        "role": "Student",
+        "text": "Đáp án là Hồi quy tuyến tính."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Cây quyết định chỉ quan tâm đến thứ tự, nên ít bị ảnh hưởng bởi độ lớn của outlier. Hồi quy tuyến tính lại tính toán dựa trên khoảng cách, nên rất nhạy cảm."
+      }
+    ]
+  },
+  {
+    "question_id": "q46",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng mean phản ánh trung tâm tốt hơn median, tại sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì mean tính toán dựa trên tất cả các giá trị. Nó bao quát hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mean và median đo lường 'trung tâm' theo những cách nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Mean là trung bình cộng, còn median là giá trị ở giữa. Nhưng trung bình cộng mới là 'trung tâm' thực sự."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét dãy lương: [10, 12, 11, 15, 200] triệu. Mean là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Mean là 49.6 triệu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 49.6 triệu có mô tả đúng mức lương của nhóm này không?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó là trung bình của tất cả. Về mặt toán học là chính xác. Nó đã tính cả người lương 200 triệu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Median của dãy này là 12 triệu. Con số nào đại diện cho đa số hơn?"
+      },
+      {
+        "role": "Student",
+        "text": "Nhưng bỏ qua 200 triệu là mất thông tin. 49.6 vẫn đúng về mặt kỹ thuật. Median chỉ là giá trị ở giữa."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu phải điền một giá trị thiếu, bạn dùng 49.6 hay 12?"
+      },
+      {
+        "role": "Student",
+        "text": "Dùng 49.6 thì có vẻ... hơi cao. Vì 4/5 người lương dưới 15. Chắc là 12 sẽ hợp lý hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy khi có giá trị 200, mean bị ảnh hưởng thế nào so với median?"
+      },
+      {
+        "role": "Student",
+        "text": "Mean bị kéo lên rất cao, không còn đại diện cho số đông nữa. Median thì không."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Mean rất nhạy cảm với outlier, nó bị kéo về phía giá trị ngoại lai. Median thì ổn định hơn."
+      }
+    ]
+  },
+  {
+    "question_id": "q47",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải của bạn, bạn nói one-hot encoding (OHE) làm giảm số chiều dữ liệu. Tại sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì các phương pháp encoding là để xử lý dữ liệu, làm nó gọn hơn cho model học. Giảm số chiều là một cách làm gọn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, mục đích chính của encoding là giảm chiều?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Nếu không thì nó phức tạp hóa dữ liệu một cách không cần thiết. OHE phải làm dữ liệu đơn giản hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hãy xét một cột 'Thành phố' có 10 thành phố khác nhau. Sau khi dùng OHE, ta có bao nhiêu cột mới?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc chắn không thể là 10 cột được. Như vậy là làm tăng số chiều, đi ngược lại mục đích. Chắc nó sẽ nén lại thành một vài cột quan trọng thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "OHE tạo ra một cột cho mỗi giá trị duy nhất. Vậy với 10 thành phố, số cột là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Nếu theo định nghĩa đó thì là 10 cột. Nhưng em vẫn thấy nó vô lý. Chắc chắn phải có cách khác để nó không làm tăng chiều như vậy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy từ 1 cột ban đầu thành 10 cột mới. Số chiều đã tăng hay giảm?"
+      },
+      {
+        "role": "Student",
+        "text": "…Tăng. Vậy OHE thực sự làm tăng số chiều. Mục đích của nó không phải là làm gọn dữ liệu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Bây giờ, quay lại câu hỏi. Target encoding khác OHE ở điểm nào?"
+      },
+      {
+        "role": "Student",
+        "text": "OHE tạo nhiều cột nhị phân, làm tăng chiều. Còn target encoding thay thế category bằng một giá trị số duy nhất (trung bình của target). Nó không làm tăng chiều."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhận ra OHE làm tăng số chiều bằng cách tạo cột mới cho mỗi category, chứ không phải giảm chiều như bạn nghĩ ban đầu."
+      }
+    ]
+  },
+  {
+    "question_id": "q48",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói một nút dùng 'tất cả đặc trưng cùng lúc'. Điều đó có nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nghĩa là để ra quyết định tốt nhất, nó phải cân nhắc mọi thông tin có sẵn. Chẳng hạn như tuổi, thu nhập, nơi ở... tất cả cùng một lúc."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một 'quy tắc phân chia' trong cây quyết định trông như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó là một điều kiện. Ví dụ: NẾU (tuổi > 30 VÀ thu nhập > 1000) THÌ... Nó phải là một quy tắc phức hợp như vậy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử đặc trưng là 'màu sắc' (xanh, đỏ) và 'cân nặng' (số). Quy tắc của bạn sẽ là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "NẾU (màu sắc = 'xanh' VÀ cân nặng > 50). Dùng cả hai mới chính xác được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy quy tắc 'cân nặng > 50' có thể tự nó phân chia dữ liệu không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có, nhưng nó sẽ không tốt bằng việc kết hợp. Rõ ràng là thế."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu thuật toán thấy 'cân nặng > 50' là cách chia tốt nhất, nó có được phép dùng chỉ mình nó không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là có... Nhưng về lý thuyết nó nên dùng cả hai. Chắc là do dữ liệu này đặc biệt."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu nó chỉ chọn một, đó là phân chia dựa trên mấy đặc trưng?"
+      },
+      {
+        "role": "Student",
+        "text": "...Một. Nhưng đó là trường hợp cá biệt."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, tại một nút, cây quyết định tìm một quy tắc phức hợp hay tìm một quy tắc đơn lẻ tốt nhất?"
+      },
+      {
+        "role": "Student",
+        "text": "Có vẻ... nó tìm một quy tắc đơn lẻ tốt nhất từ tất cả các khả năng. Sau đó, nó mới chia tiếp ở các nút sau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn từng tin rằng mỗi nút phải dùng mọi đặc trưng. Nhưng thực tế, nó chỉ chọn một đặc trưng và một ngưỡng tốt nhất cho mỗi lần phân chia."
+      }
+    ]
+  },
+  {
+    "question_id": "q49",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ rằng chuẩn hóa dữ liệu luôn cần thiết cho mọi loại mô hình?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Đó là một bước quan trọng để đảm bảo hiệu suất tốt. Ai cũng làm thế mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục đích chính của việc chuẩn hóa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để đưa các đặc trưng về cùng một thang đo, tránh đặc trưng có giá trị lớn lấn át."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét một cây quyết định. Nó phân chia dữ liệu dựa trên tiêu chí nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó tìm một ngưỡng tối ưu cho một đặc trưng để chia, ví dụ `tuổi > 30`."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu ta chuẩn hóa 'tuổi', ngưỡng phân chia đó có còn là `> 30` không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nó sẽ là một giá trị khác, ví dụ `tuổi_chuẩn_hóa > 0.5`. Nhưng nó vẫn chia được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy thứ tự các điểm dữ liệu so với ngưỡng có thay đổi không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, thứ tự vẫn giữ nguyên. Ai lớn hơn 30 thì giá trị chuẩn hóa của họ cũng lớn hơn 0.5."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu cấu trúc cây không đổi, việc chuẩn hóa có 'cần thiết' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là... không ảnh hưởng nhiều đến kết quả. Vậy nó không thực sự cần cho mô hình cây."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy hãy thử trả lời lại câu hỏi ban đầu."
+      },
+      {
+        "role": "Student",
+        "text": "Việc chuẩn hóa thường hiệu quả cho các mô hình tuyến tính có regularization, nhưng không bắt buộc với mô hình cây."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tóm lại: bạn đã cho rằng chuẩn hóa là phổ quát, nhưng giờ nhận ra nó phụ thuộc vào cách mô hình hoạt động. Mô hình cây vốn miễn nhiễm với sự khác biệt về thang đo."
+      }
+    ]
+  },
+  {
+    "question_id": "q50",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ KNNImputer thay thế giá trị thiếu bằng một hằng số. Vậy chữ 'KNN' trong tên có ý nghĩa gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc chỉ là tên gọi thôi. Imputer là để điền giá trị thiếu, và cách đơn giản nhất là dùng một hằng số như trung bình cột."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, KNNImputer và SimpleImputer(strategy='mean') là một?"
+      },
+      {
+        "role": "Student",
+        "text": "Về cơ bản là thế. Dùng láng giềng để tính toán cho từng điểm rất phức tạp và chậm, không thực tế. Dùng hằng số hiệu quả hơn nhiều."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử có điểm A(1, ?) và B(100, ?). Hằng số bạn nói sẽ điền gì vào hai chỗ trống này?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ điền cùng một giá trị, ví dụ là trung bình của cả cột đó. Vị trí của điểm A hay B không quan trọng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu vị trí không quan trọng, tại sao tên thuật toán lại có chữ 'Nearest Neighbors' (láng giềng gần nhất)?"
+      },
+      {
+        "role": "Student",
+        "text": "…Chắc nó dùng láng giềng để tìm ra hằng số đó? Nhưng một khi đã có hằng số thì sẽ áp dụng cho tất cả. Vẫn là hằng số."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy láng giềng của điểm A(1,?) và B(100,?) có giống nhau không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, láng giềng của A sẽ gần 1, còn của B sẽ gần 100. À...vậy giá trị tính ra từ láng giềng của A và B sẽ khác nhau. Nó không phải hằng số."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy giờ bạn hãy mô tả lại cách KNNImputer hoạt động dựa trên điều đó."
+      },
+      {
+        "role": "Student",
+        "text": "Nó tìm K điểm gần nhất với điểm bị thiếu, rồi dùng các giá trị của những điểm đó để dự đoán và điền vào chỗ trống."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Lỗi sai của bạn là cho rằng hiệu quả (dùng hằng số) quan trọng hơn ý nghĩa của thuật toán. KNNImputer sử dụng thông tin cục bộ từ các 'láng giềng'."
+      }
+    ]
+  }
+]

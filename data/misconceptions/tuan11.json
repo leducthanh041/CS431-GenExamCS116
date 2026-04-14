@@ -1,0 +1,650 @@
+[
+  {
+    "question_id": "ch9_q1",
+    "concepts": [
+      "Định nghĩa tham số mô hình (parameter)",
+      "Phân biệt tham số và siêu tham số"
+    ],
+    "misconceptions": [
+      "cho rằng tham số mô hình là những cài đặt ban đầu của mô hình, vì chúng cũng là 'tham số' cần được thiết lập trước khi chạy.",
+      "tin rằng tham số mô hình chính là các chỉ số đo lường hiệu suất như accuracy, vì đó là kết quả số học quan trọng mà mô hình tạo ra.",
+      "cho rằng các bước tiền xử lý dữ liệu cũng là một loại tham số, vì chúng ảnh hưởng đến đầu vào và kết quả của mô hình."
+    ],
+    "reasoning": "Tham số mô hình (parameter) là các biến số mà mô hình tự học từ dữ liệu huấn luyện. Các phương án sai mô tả các khái niệm khác trong quy trình học máy: siêu tham số (hyperparameter), chỉ số đánh giá (metric), và tiền xử lý dữ liệu."
+  },
+  {
+    "question_id": "ch9_q2",
+    "concepts": [
+      "Ví dụ về tham số mô hình",
+      "Tham số trong mạng nơ-ron",
+      "Phân biệt tham số và siêu tham số"
+    ],
+    "misconceptions": [
+      "cho rằng số lớp hoặc số neuron là tham số mô hình vì chúng định hình cấu trúc của mạng và có vẻ như là một phần 'bên trong' mô hình.",
+      "tin rằng learning rate là một tham số mô hình vì nó được điều chỉnh trong quá trình tối ưu hóa và ảnh hưởng trực tiếp đến việc học.",
+      "cho rằng bất cứ thứ gì có thể 'tinh chỉnh' trong một mạng nơ-ron đều là tham số mô hình, không phân biệt cái nào được học, cái nào được cài đặt."
+    ],
+    "reasoning": "Trọng số và bias là các giá trị mà mô hình trực tiếp học và cập nhật qua các vòng lặp huấn luyện. Các lựa chọn khác như số lớp, số neuron và learning rate là các siêu tham số, được người dùng thiết lập trước khi quá trình học bắt đầu."
+  },
+  {
+    "question_id": "ch9_q3",
+    "concepts": [
+      "Định nghĩa siêu tham số (hyper-parameter)",
+      "Phân biệt tham số và siêu tham số"
+    ],
+    "misconceptions": [
+      "cho rằng siêu tham số và tham số mô hình là một và có thể hoán đổi cho nhau, vì chúng đều là 'tham số' của mô hình.",
+      "tin rằng kết quả dự đoán là một loại siêu tham số, vì nó là thứ cuối cùng mà mô hình tạo ra và quyết định hiệu suất.",
+      "cho rằng siêu tham số là một thứ gì đó phức tạp, chỉ xuất hiện sau khi đã đánh giá mô hình, chứ không phải là cài đặt ban đầu."
+    ],
+    "reasoning": "Siêu tham số là các cấu hình được người dùng thiết lập trước khi quá trình huấn luyện bắt đầu để kiểm soát cách mô hình học. Đáp án đúng định nghĩa chính xác điều này, trong khi các phương án sai mô tả tham số mô hình, kết quả đầu ra, hoặc một khái niệm không tồn tại."
+  },
+  {
+    "question_id": "ch9_q4",
+    "concepts": [
+      "Ví dụ về siêu tham số",
+      "Kiến trúc mạng nơ-ron",
+      "Phân biệt tham số và siêu tham số"
+    ],
+    "misconceptions": [
+      "cho rằng trọng số và bias là siêu tham số vì chúng cũng là những 'con số' cần được xác định cho mô hình.",
+      "tin rằng mọi thứ liên quan đến cấu trúc mạng (số lớp, số neuron) và quá trình học (trọng số, bias) đều là siêu tham số."
+    ],
+    "reasoning": "Số lớp và số neuron là các lựa chọn về kiến trúc mạng, được người dùng quyết định trước khi huấn luyện, do đó chúng là siêu tham số. Trọng số và bias là các tham số mô hình mà mạng tự học trong quá trình huấn luyện."
+  },
+  {
+    "question_id": "ch9_q5",
+    "concepts": [
+      "Cách thiết lập siêu tham số",
+      "Tinh chỉnh siêu tham số (hyperparameter tuning)"
+    ],
+    "misconceptions": [
+      "cho rằng siêu tham số cũng được mô hình tự học giống như tham số mô hình, vì chúng đều cần được tối ưu.",
+      "tin rằng siêu tham số chỉ có thể được thiết lập bởi các thuật toán tối ưu hóa như gradient descent, vì đó là cách mô hình học.",
+      "cho rằng việc tinh chỉnh siêu tham số chỉ được thực hiện sau khi mô hình đã chạy xong và triển khai."
+    ],
+    "reasoning": "Siêu tham số được người dùng cài đặt thủ công trước khi huấn luyện, hoặc được tìm kiếm một cách có hệ thống thông qua các quy trình tinh chỉnh như Grid Search hay Random Search. Chúng không được mô hình tự học trực tiếp từ dữ liệu như tham số mô hình."
+  },
+  {
+    "question_id": "ch9_q6",
+    "concepts": [
+      "Vị trí của việc tinh chỉnh tham số",
+      "Quy trình học máy"
+    ],
+    "misconceptions": [
+      "cho rằng việc tinh chỉnh tham số xảy ra ở giai đoạn xử lý dữ liệu thô, vì đó là lúc chuẩn bị mọi thứ.",
+      "tin rằng việc tinh chỉnh tham số chỉ diễn ra sau khi mô hình đã được triển khai và nhận phản hồi từ người dùng.",
+      "cho rằng tinh chỉnh tham số là một phần của việc triển khai mô hình chứ không phải là một phần của việc xây dựng và đánh giá nó."
+    ],
+    "reasoning": "Tinh chỉnh tham số (bao gồm cả tham số và siêu tham số) là một vòng lặp cốt lõi trong quá trình xây dựng mô hình, nơi ta huấn luyện mô hình với các bộ tham số khác nhau và đánh giá chúng để tìm ra bộ tốt nhất. Quá trình này diễn ra trước khi triển khai."
+  },
+  {
+    "question_id": "ch9_q7",
+    "concepts": [
+      "Lý do tinh chỉnh tham số",
+      "Overfitting và Underfitting",
+      "Hiệu suất mô hình"
+    ],
+    "misconceptions": [
+      "cho rằng chỉ cần tinh chỉnh siêu tham số khi mô hình bị lỗi, chứ không phải để cải thiện hiệu suất.",
+      "tin rằng việc tinh chỉnh chỉ ảnh hưởng đến độ chính xác mà không ảnh hưởng đến các yếu tố khác như thời gian hay tài nguyên huấn luyện.",
+      "cho rằng có một bộ siêu tham số 'tốt nhất' cho mọi bài toán, không cần phải tinh chỉnh cho từng bộ dữ liệu cụ thể."
+    ],
+    "reasoning": "Tinh chỉnh siêu tham số là cực kỳ quan trọng vì chúng ảnh hưởng trực tiếp đến mọi khía cạnh của mô hình: từ độ chính xác, khả năng tổng quát hóa (tránh overfitting/underfitting), đến chi phí tài nguyên và thời gian huấn luyện."
+  },
+  {
+    "question_id": "ch9_q8",
+    "concepts": [
+      "Tầm quan trọng của siêu tham số",
+      "Ảnh hưởng của siêu tham số"
+    ],
+    "misconceptions": [
+      "cho rằng siêu tham số chỉ là những cài đặt nhỏ và không có tác động đáng kể đến hiệu suất cuối cùng của mô hình.",
+      "tin rằng siêu tham số chỉ ảnh hưởng đến phần cứng (ví dụ: cần GPU mạnh hơn) chứ không thay đổi bản chất của mô hình.",
+      "cho rằng việc tinh chỉnh siêu tham số chỉ quan trọng đối với một số loại dữ liệu cụ thể như ảnh, còn các loại khác thì không cần."
+    ],
+    "reasoning": "Siêu tham số có ảnh hưởng sâu sắc đến cả hiệu suất dự đoán (độ chính xác) của mô hình và các yêu cầu về tài nguyên (thời gian, bộ nhớ) cho quá trình huấn luyện."
+  },
+  {
+    "question_id": "ch9_q9",
+    "concepts": [
+      "Khái niệm Grid Search",
+      "Cơ chế tìm kiếm vét cạn"
+    ],
+    "misconceptions": [
+      "cho rằng Grid Search tìm kiếm một cách ngẫu nhiên, vì nó cũng là một phương pháp 'tìm kiếm'.",
+      "tin rằng Grid Search sử dụng đạo hàm để tìm kiếm, vì hầu hết các phương pháp tối ưu hóa trong học máy đều dựa trên gradient.",
+      "cho rằng Grid Search chỉ thử các tham số ở gần nhau trong không gian tham số, chứ không phải quét toàn bộ lưới đã định."
+    ],
+    "reasoning": "Grid Search là một phương pháp tìm kiếm vét cạn, thử nghiệm một cách có hệ thống tất cả các tổ hợp siêu tham số được định nghĩa trong một lưới. Các phương án sai mô tả các kỹ thuật khác như Random Search hoặc Gradient Descent."
+  },
+  {
+    "question_id": "ch9_q10",
+    "concepts": [
+      "Bản chất của Grid Search",
+      "Không gian tham số"
+    ],
+    "misconceptions": [
+      "cho rằng Grid Search tìm kiếm 'tuần tự' theo một chiều duy nhất, thay vì duyệt qua một lưới đa chiều.",
+      "tin rằng Grid Search chọn các điểm ngẫu nhiên trong không gian tham số.",
+      "cho rằng Grid Search sử dụng gradient để hướng dẫn việc tìm kiếm."
+    ],
+    "reasoning": "Grid Search hoạt động bằng cách định nghĩa một 'lưới' (grid) các giá trị siêu tham số và sau đó thử nghiệm mọi tổ hợp có thể có trên lưới đó, tức là tìm kiếm toàn bộ không gian tham số đã xác định."
+  },
+  {
+    "question_id": "ch9_q11",
+    "concepts": [
+      "Ưu điểm của Grid Search",
+      "Tìm kiếm toàn diện"
+    ],
+    "misconceptions": [
+      "cho rằng Grid Search có thể học hỏi từ các lần thử trước để cải thiện các lần thử sau.",
+      "tin rằng Grid Search luôn hiệu quả và nhanh chóng, ngay cả với không gian tham số rất lớn."
+    ],
+    "reasoning": "Ưu điểm chính của Grid Search là sự đơn giản và tính toàn diện, đảm bảo không bỏ sót tổ hợp nào trong lưới đã định. Tuy nhiên, nó không kế thừa thông tin và trở nên rất kém hiệu quả khi không gian tham số lớn."
+  },
+  {
+    "question_id": "ch9_q12",
+    "concepts": [
+      "Nhược điểm của Grid Search",
+      "Chi phí tính toán",
+      "Lời nguyền chiều không gian (curse of dimensionality)"
+    ],
+    "misconceptions": [
+      "cho rằng kết quả của Grid Search không nhất quán vì có yếu tố ngẫu nhiên, trong khi thực tế nó hoàn toàn xác định.",
+      "tin rằng Grid Search rất phức tạp để cài đặt.",
+      "cho rằng Grid Search luôn nhanh hơn các phương pháp khác."
+    ],
+    "reasoning": "Các nhược điểm chính của Grid Search bao gồm chi phí tính toán tăng theo cấp số nhân với số lượng siêu tham số, việc coi tất cả các siêu tham số có tầm quan trọng như nhau, và không học hỏi từ các kết quả trước đó. Yếu tố ngẫu nhiên không phải là một khuyết điểm của Grid Search."
+  },
+  {
+    "question_id": "ch9_q13",
+    "concepts": [
+      "Hạn chế của Grid Search",
+      "Tìm kiếm độc lập"
+    ],
+    "misconceptions": [
+      "cho rằng các lần thử của Grid Search phụ thuộc vào nhau một cách ngẫu nhiên.",
+      "tin rằng Grid Search không thể áp dụng cho các mô hình phức tạp như mạng nơ-ron.",
+      "cho rằng Grid Search và cross-validation là hai kỹ thuật loại trừ lẫn nhau."
+    ],
+    "reasoning": "Grid Search kém hiệu quả vì mỗi lần thử nghiệm một tổ hợp siêu tham số là hoàn toàn độc lập với các lần thử khác. Nó không sử dụng thông tin về hiệu suất của các tổ hợp đã thử để hướng dẫn các tìm kiếm trong tương lai."
+  },
+  {
+    "question_id": "ch9_q14",
+    "concepts": [
+      "Grid Search và không gian tham số lớn",
+      "Chi phí tính toán"
+    ],
+    "misconceptions": [
+      "cho rằng khi không gian tham số lớn, Grid Search sẽ tìm cách 'thông minh' hơn để tiết kiệm chi phí.",
+      "tin rằng Grid Search luôn tìm ra tối ưu toàn cục một cách nhanh chóng, bất kể không gian lớn đến đâu.",
+      "cho rằng khi dùng Grid Search thì không cần đánh giá mô hình nữa."
+    ],
+    "reasoning": "Khi số lượng siêu tham số và các giá trị cần thử cho mỗi siêu tham số tăng lên, số lượng tổ hợp trong lưới sẽ bùng nổ theo cấp số nhân, dẫn đến chi phí tính toán cực kỳ lớn."
+  },
+  {
+    "question_id": "ch9_q15",
+    "concepts": [
+      "So sánh Grid Search và Random Search",
+      "Tìm kiếm toàn diện"
+    ],
+    "misconceptions": [
+      "cho rằng các lần thử của Grid Search có liên hệ với nhau.",
+      "tin rằng Grid Search có chi phí cố định qua số lần lặp (n_iter), nhầm lẫn với Random Search.",
+      "cho rằng Grid Search sử dụng acquisition function, nhầm lẫn với Bayesian Optimization."
+    ],
+    "reasoning": "Ưu điểm đặc trưng của Grid Search so với Random Search là nó đảm bảo tìm kiếm một cách toàn diện, vét cạn mọi tổ hợp trong lưới đã định. Ngược lại, Random Search chỉ chọn một số điểm ngẫu nhiên và có thể bỏ lỡ điểm tối ưu."
+  },
+  {
+    "question_id": "ch9_q16",
+    "concepts": [
+      "Tổng kết về Grid Search",
+      "Sự đánh đổi giữa đơn giản và chi phí"
+    ],
+    "misconceptions": [
+      "cho rằng Grid Search phức tạp hơn Bayesian Optimization.",
+      "tin rằng Grid Search luôn tốt hơn Random Search trong mọi trường hợp, kể cả khi không gian tham số rất lớn.",
+      "cho rằng Grid Search chỉ có thể được sử dụng khi có đúng 2 siêu tham số để tạo thành một 'lưới'."
+    ],
+    "reasoning": "Grid Search là một phương pháp đơn giản để hiểu và thực hiện, nhưng nhược điểm lớn của nó là chi phí tính toán tăng nhanh chóng khi số lượng siêu tham số tăng lên (lời nguyền chiều không gian)."
+  },
+  {
+    "question_id": "ch9_q17",
+    "concepts": [
+      "GridSearchCV trong scikit-learn",
+      "Áp dụng Grid Search"
+    ],
+    "misconceptions": [
+      "cho rằng khi muốn thử 'mọi tổ hợp', nên dùng phương pháp ngẫu nhiên như RandomizedSearchCV.",
+      "tin rằng PCA là một phương pháp tinh chỉnh siêu tham số, nhầm lẫn với kỹ thuật giảm chiều dữ liệu.",
+      "cho rằng EarlyStopping là một phương pháp tìm kiếm, nhầm lẫn với một kỹ thuật điều chuẩn."
+    ],
+    "reasoning": "Từ khóa 'thử mọi tổ hợp' của nhiều giá trị siêu tham số chỉ rõ ý định thực hiện một cuộc tìm kiếm vét cạn. Trong scikit-learn, lớp `GridSearchCV` được thiết kế đặc biệt cho mục đích này."
+  },
+  {
+    "question_id": "ch9_q18",
+    "concepts": [
+      "So sánh GridSearchCV và RandomizedSearchCV",
+      "Chi phí tính toán"
+    ],
+    "misconceptions": [
+      "cho rằng GridSearchCV chọn giá trị siêu tham số bằng phân phối xác suất, nhầm lẫn với cơ chế của RandomizedSearchCV.",
+      "tin rằng RandomizedSearchCV luôn kiểm tra tất cả các tổ hợp, nhầm lẫn với GridSearchCV.",
+      "cho rằng hai phương pháp luôn có cùng chi phí tính toán."
+    ],
+    "reasoning": "Chi phí tính toán của GridSearchCV phụ thuộc trực tiếp vào số lượng tổ hợp trong lưới, do đó nó tăng lên nhanh chóng khi có nhiều siêu tham số. Ngược lại, chi phí của RandomizedSearchCV được kiểm soát bởi tham số `n_iter`."
+  },
+  {
+    "question_id": "ch9_q19",
+    "concepts": [
+      "Khái niệm Random Search",
+      "Cơ chế tìm kiếm ngẫu nhiên"
+    ],
+    "misconceptions": [
+      "cho rằng Random Search cũng vét cạn toàn bộ không gian tham số, chỉ là theo thứ tự ngẫu nhiên.",
+      "tin rằng Random Search dựa trên gradient để hướng dẫn tìm kiếm.",
+      "cho rằng việc chọn 'ngẫu nhiên' của Random Search có một logic xác suất phức tạp đằng sau giống như Bayesian Optimization."
+    ],
+    "reasoning": "Ý tưởng cốt lõi của Random Search là thay vì kiểm tra một cách có hệ thống mọi điểm trên một lưới (như Grid Search), nó sẽ lấy mẫu ngẫu nhiên một số lượng hữu hạn các tổ hợp tham số từ không gian tìm kiếm."
+  },
+  {
+    "question_id": "ch9_q20",
+    "concepts": [
+      "Khi nào nên dùng Random Search",
+      "Grid Search vs Random Search"
+    ],
+    "misconceptions": [
+      "cho rằng nên dùng Random Search khi mô hình quá đơn giản, trong khi thực tế nó hữu ích cho không gian phức tạp.",
+      "tin rằng khi có nhiều dữ liệu thì nên dùng Random Search, mặc dù không có mối liên hệ trực tiếp.",
+      "cho rằng khi chỉ có một siêu tham số thì nên dùng Random Search, trong khi Grid Search sẽ hiệu quả hơn."
+    ],
+    "reasoning": "Khi không gian tham số quá lớn, việc sử dụng Grid Search để vét cạn trở nên không khả thi về mặt tính toán. Random Search trở thành một lựa chọn thay thế hiệu quả hơn vì nó có thể khám phá một vùng rộng lớn của không gian tham số với một ngân sách tính toán cố định."
+  },
+  {
+    "question_id": "ch9_q21",
+    "concepts": [
+      "Ưu điểm của Random Search",
+      "Hiệu quả trong không gian lớn"
+    ],
+    "misconceptions": [
+      "cho rằng Random Search có thể tìm kiếm một cách toàn diện, đảm bảo không bỏ sót điểm nào.",
+      "tin rằng Random Search luôn cho ra cùng một kết quả tốt nhất trong mỗi lần chạy, bỏ qua tính ngẫu nhiên của nó."
+    ],
+    "reasoning": "Ưu điểm của Random Search là sự đơn giản và hiệu quả đáng ngạc nhiên trong các không gian tham số có số chiều cao, vì nó không lãng phí các lần thử vào những chiều tham số không quan trọng. Tuy nhiên, nó không đảm bảo tính toàn diện và kết quả có thể thay đổi giữa các lần chạy."
+  },
+  {
+    "question_id": "ch9_q22",
+    "concepts": [
+      "Nhược điểm của Random Search",
+      "Bản chất ngẫu nhiên"
+    ],
+    "misconceptions": [
+      "cho rằng Random Search bắt buộc phải tìm kiếm toàn diện, nhầm lẫn với Grid Search.",
+      "tin rằng các lần thử của Random Search có liên quan đến nhau.",
+      "cho rằng Random Search luôn tìm được điểm tối ưu toàn cục."
+    ],
+    "reasoning": "Các nhược điểm chính của Random Search xuất phát từ bản chất ngẫu nhiên và độc lập của nó: kết quả không nhất quán, các lần thử không học hỏi từ nhau, và có thể bỏ lỡ điểm tối ưu nếu không gian tìm kiếm lớn và số lần thử ít."
+  },
+  {
+    "question_id": "ch9_q23",
+    "concepts": [
+      "So sánh Random Search và Grid Search",
+      "Cơ chế lấy mẫu"
+    ],
+    "misconceptions": [
+      "cho rằng Random Search cũng lấy mẫu đều trên một lưới, chỉ là theo thứ tự ngẫu nhiên.",
+      "tin rằng Random Search sử dụng acquisition function, nhầm lẫn với Bayesian Optimization.",
+      "cho rằng Random Search yêu cầu phải xây dựng một mô hình xác suất."
+    ],
+    "reasoning": "Điểm khác biệt cơ bản là Grid Search lấy mẫu các điểm một cách có hệ thống trên một lưới được xác định trước, trong khi Random Search chọn ngẫu nhiên các điểm từ phân phối xác suất trên không gian tham số."
+  },
+  {
+    "question_id": "ch9_q24",
+    "concepts": [
+      "Tính nhất quán của Random Search",
+      "Yếu tố ngẫu nhiên"
+    ],
+    "misconceptions": [
+      "cho rằng sự không nhất quán của Random Search là do các yếu tố bên trong mô hình như hàm loss (BCE) hay cấu trúc (padding).",
+      "tin rằng Random Search không nhất quán vì phải train nhiều epoch.",
+      "cho rằng có thể làm cho Random Search nhất quán mà không cần cố định 'random seed'."
+    ],
+    "reasoning": "Kết quả của Random Search (ví dụ: bộ siêu tham số tốt nhất tìm được) có thể khác nhau giữa các lần chạy vì các tổ hợp tham số được chọn là ngẫu nhiên. Để tái tạo kết quả, cần phải cố định trạng thái ngẫu nhiên (random state/seed)."
+  },
+  {
+    "question_id": "ch9_q25",
+    "concepts": [
+      "Hạn chế của Random Search",
+      "Tìm kiếm không toàn diện"
+    ],
+    "misconceptions": [
+      "cho rằng Random Search không dùng được với không gian lớn, trong khi đây lại là thế mạnh của nó so với Grid Search.",
+      "tin rằng Random Search không áp dụng được cho Mạng Nơ-ron.",
+      "cho rằng Random Search luôn tốn nhiều chi phí hơn Grid Search, điều này thường không đúng trong không gian lớn."
+    ],
+    "reasoning": "Một hạn chế rõ ràng của Random Search là nó không đảm bảo tìm kiếm một cách toàn diện. Nó chỉ lấy mẫu một số điểm, và do đó có khả năng bỏ lỡ khu vực chứa điểm tối ưu toàn cục, khác với Grid Search vốn quét hết mọi tổ hợp trên lưới."
+  },
+  {
+    "question_id": "ch9_q26",
+    "concepts": [
+      "RandomizedSearchCV trong scikit-learn",
+      "Tham số n_iter"
+    ],
+    "misconceptions": [
+      "cho rằng RandomizedSearchCV luôn kiểm tra tất cả các tổ hợp, nhầm lẫn với GridSearchCV.",
+      "tin rằng RandomizedSearchCV không thể kết hợp với cross-validation.",
+      "cho rằng RandomizedSearchCV luôn cho cùng một kết quả dù không cố định random_state, bỏ qua bản chất ngẫu nhiên của nó."
+    ],
+    "reasoning": "Trong `RandomizedSearchCV`, chi phí tính toán không phụ thuộc vào kích thước của không gian tham số mà được kiểm soát trực tiếp bởi người dùng thông qua tham số `n_iter`, tức là số lượng tổ hợp tham số sẽ được thử nghiệm."
+  },
+  {
+    "question_id": "ch9_q27",
+    "concepts": [
+      "Tổng kết về Random Search",
+      "So sánh các phương pháp tinh chỉnh"
+    ],
+    "misconceptions": [
+      "cho rằng Random Search tìm kiếm toàn diện hơn Grid Search.",
+      "tin rằng Random Search luôn chính xác hơn Bayesian Optimization.",
+      "cho rằng Random Search chỉ dùng được khi có đúng 2 siêu tham số."
+    ],
+    "reasoning": "Trong các không gian tham số có số chiều cao, Random Search thường hiệu quả hơn Grid Search vì nó không lãng phí các lần thử nghiệm trên các tham số không quan trọng, và có cơ hội khám phá một phạm vi giá trị rộng hơn cho các tham số quan trọng."
+  },
+  {
+    "question_id": "ch9_q28",
+    "concepts": [
+      "RandomizedSearchCV trong scikit-learn",
+      "Tham số n_iter"
+    ],
+    "misconceptions": [
+      "cho rằng 'cv' (cross-validation) là tham số để giới hạn số lần thử nghiệm, nhầm lẫn với số fold để đánh giá.",
+      "tin rằng 'max_depth' là một tham số của chính RandomizedSearchCV, nhầm lẫn với một siêu tham số của mô hình cây.",
+      "cho rằng random_state của dữ liệu sẽ kiểm soát số lần thử nghiệm."
+    ],
+    "reasoning": "Tham số `n_iter` trong `RandomizedSearchCV` của scikit-learn quy định chính xác số lượng tổ hợp siêu tham số sẽ được lấy mẫu ngẫu nhiên và đánh giá, do đó nó trực tiếp giới hạn số lần thử nghiệm và chi phí tính toán."
+  },
+  {
+    "question_id": "ch9_q29",
+    "concepts": [
+      "Khái niệm Bayesian Optimization",
+      "Tìm kiếm tuần tự",
+      "Hàm mục tiêu dạng hộp đen (black-box)"
+    ],
+    "misconceptions": [
+      "cho rằng Bayesian Optimization là một phương pháp vét cạn, nhầm lẫn với Grid Search.",
+      "cho rằng Bayesian Optimization chọn các điểm một cách ngẫu nhiên và hoàn toàn độc lập, nhầm lẫn với Random Search.",
+      "cho rằng Bayesian Optimization là một kỹ thuật điều chuẩn (regularization) như L1/L2, vì nó cũng giúp tìm mô hình tốt hơn."
+    ],
+    "reasoning": "Bayesian Optimization là một phương pháp tìm kiếm thông minh, hoạt động tuần tự. Nó sử dụng kết quả của các lần thử trước đó để xây dựng một mô hình đại diện (surrogate model) cho hàm mục tiêu và quyết định điểm tiếp theo cần thử nghiệm để tối đa hóa khả năng tìm thấy điểm tối ưu."
+  },
+  {
+    "question_id": "ch9_q30",
+    "concepts": [
+      "Nguyên tắc của Bayesian Optimization",
+      "Tối ưu hóa dựa trên xác suất"
+    ],
+    "misconceptions": [
+      "cho rằng Bayesian Optimization hoạt động dựa trên đạo hàm, nhầm lẫn với Gradient Descent.",
+      "tin rằng Bayesian Optimization chỉ đơn giản là tính toán khoảng cách giữa các điểm tham số.",
+      "cho rằng Bayesian Optimization là một kỹ thuật chuẩn hóa dữ liệu."
+    ],
+    "reasoning": "Bayesian Optimization hoạt động dựa trên nguyên tắc của xác suất Bayes. Nó xây dựng một phân phối xác suất (posterior distribution) của hàm mục tiêu và sử dụng nó để chọn các điểm thử nghiệm tiếp theo một cách thông minh, cân bằng giữa việc thăm dò (exploration) và khai thác (exploitation)."
+  },
+  {
+    "question_id": "ch9_q31",
+    "concepts": [
+      "Ưu điểm của Bayesian Optimization",
+      "Tìm kiếm hiệu quả"
+    ],
+    "misconceptions": [
+      "cho rằng Bayesian Optimization đơn giản hơn Grid Search và Random Search, trong khi thực tế nó phức tạp hơn về mặt lý thuyết.",
+      "tin rằng Bayesian Optimization không phù hợp với không gian tham số lớn.",
+      "cho rằng Bayesian Optimization luôn cần nhiều lần thử nghiệm hơn Random Search."
+    ],
+    "reasoning": "Ưu điểm lớn nhất của Bayesian Optimization là khả năng học hỏi từ các lần thử trước, giúp nó tìm kiếm không gian tham số một cách hiệu quả hơn, giảm số lần cần phải đánh giá hàm mục tiêu (thường tốn kém), đặc biệt hiệu quả trong không gian lớn và phức tạp."
+  },
+  {
+    "question_id": "ch9_q32",
+    "concepts": [
+      "Nhược điểm của Bayesian Optimization",
+      "Độ phức tạp",
+      "Hàm thu nhận (acquisition function)"
+    ],
+    "misconceptions": [
+      "cho rằng Bayesian Optimization không phù hợp với không gian tham số lớn, trong khi đây lại là một trong những thế mạnh của nó.",
+      "tin rằng các lần thử của Bayesian Optimization là hoàn toàn độc lập, nhầm lẫn với Random Search.",
+      "cho rằng Bayesian Optimization luôn dễ cài đặt và sử dụng."
+    ],
+    "reasoning": "Mặc dù mạnh mẽ, Bayesian Optimization cũng có nhược điểm là phức tạp hơn đáng kể so với Grid Search và Random Search. Hiệu quả của nó cũng phụ thuộc nhiều vào việc lựa chọn đúng mô hình đại diện (surrogate model) và hàm thu nhận (acquisition function)."
+  },
+  {
+    "question_id": "ch9_q33",
+    "concepts": [
+      "So sánh Bayesian Optimization với các phương pháp khác",
+      "Tính kế thừa thông tin"
+    ],
+    "misconceptions": [
+      "cho rằng Bayesian Optimization chỉ đơn giản là tốn ít thời gian hơn cho mỗi lần thử.",
+      "tin rằng các lần thử của Bayesian Optimization là độc lập, nhầm lẫn với Random Search và Grid Search.",
+      "cho rằng Bayesian Optimization cũng tìm kiếm toàn diện như Grid Search."
+    ],
+    "reasoning": "Điểm khác biệt cốt lõi của Bayesian Optimization là các lần thử có liên hệ với nhau. Kết quả của các lần thử trước được sử dụng để cập nhật một mô hình nội bộ, từ đó đưa ra quyết định 'thông minh' hơn cho lần thử tiếp theo, điều mà Grid Search và Random Search không làm được."
+  },
+  {
+    "question_id": "ch9_q34",
+    "concepts": [
+      "Hàm thu nhận (acquisition function)",
+      "Thành phần của Bayesian Optimization"
+    ],
+    "misconceptions": [
+      "cho rằng việc chọn hàm acquisition không quan trọng, chỉ cần chạy là được.",
+      "tin rằng hàm acquisition chỉ ảnh hưởng đến Grid Search, một phương pháp không sử dụng nó.",
+      "cho rằng hàm acquisition chỉ quan trọng khi dữ liệu ít."
+    ],
+    "reasoning": "Hàm thu nhận (acquisition function) là một thành phần cốt lõi của Bayesian Optimization, quyết định điểm tiếp theo cần đánh giá. Việc lựa chọn hàm thu nhận (ví dụ: Expected Improvement, Upper Confidence Bound) ảnh hưởng lớn đến sự cân bằng giữa thăm dò và khai thác, và do đó ảnh hưởng trực tiếp đến hiệu quả của quá trình tìm kiếm."
+  },
+  {
+    "question_id": "ch9_q35",
+    "concepts": [
+      "Bản chất của Bayesian Optimization",
+      "Tìm kiếm có định hướng"
+    ],
+    "misconceptions": [
+      "cho rằng các lần thử trong Bayesian Optimization là độc lập, nhầm lẫn với Random Search.",
+      "tin rằng Bayesian Optimization không sử dụng thông tin từ các lần thử trước.",
+      "cho rằng có một quy tắc cứng nhắc về số lần thử, ví dụ như luôn bằng một nửa so với Random Search."
+    ],
+    "reasoning": "Phát biểu mô tả đúng nhất về Bayesian Optimization là nó tận dụng một cách thông minh kết quả từ các lần thử trước đó để xây dựng mô hình về không gian tham số và hướng cuộc tìm kiếm đến các vùng có triển vọng hơn, giúp tìm kiếm hiệu quả hơn."
+  },
+  {
+    "question_id": "ch9_q36",
+    "concepts": [
+      "Phạm vi áp dụng của Bayesian Optimization"
+    ],
+    "misconceptions": [
+      "cho rằng Bayesian Optimization chỉ dùng được cho không gian tham số nhỏ, trong khi nó đặc biệt mạnh cho không gian lớn.",
+      "tin rằng Bayesian Optimization chỉ áp dụng được cho các mô hình tuyến tính.",
+      "cho rằng Bayesian Optimization chỉ dùng được cho dữ liệu đã gán nhãn, nhầm lẫn với các yêu cầu của bài toán supervised learning nói chung."
+    ],
+    "reasoning": "Bayesian Optimization đặc biệt hữu ích khi áp dụng cho các không gian tham số lớn, phức tạp và khi việc đánh giá mỗi điểm (huấn luyện và đánh giá mô hình) là tốn kém. Nó vượt trội hơn Grid Search và Random Search trong những trường hợp này."
+  },
+  {
+    "question_id": "ch9_q37",
+    "concepts": [
+      "Vai trò của hàm thu nhận (acquisition function)",
+      "Cơ chế của Bayesian Optimization"
+    ],
+    "misconceptions": [
+      "cho rằng acquisition function dùng để chuẩn hóa dữ liệu đầu vào.",
+      "tin rằng acquisition function là một loại hàm mất mát của mô hình chính, ví dụ như BCE.",
+      "cho rằng acquisition function là một kỹ thuật để chống overfitting."
+    ],
+    "reasoning": "Trong Bayesian Optimization, sau khi cập nhật mô hình đại diện (surrogate model), hàm thu nhận được sử dụng để đánh giá 'mức độ hứa hẹn' của tất cả các điểm chưa được thử. Điểm có giá trị hàm thu nhận cao nhất sẽ được chọn làm vị trí thử nghiệm tiếp theo."
+  },
+  {
+    "question_id": "ch9_q38",
+    "concepts": [
+      "So sánh các phương pháp tinh chỉnh",
+      "Bản chất của Bayesian Optimization"
+    ],
+    "misconceptions": [
+      "cho rằng Bayesian Optimization tìm kiếm toàn diện hơn cả Grid Search và Random Search.",
+      "tin rằng khi sử dụng Bayesian Optimization thì không cần phải đánh giá mô hình nữa.",
+      "cho rằng Bayesian Optimization là một phương pháp không có tham số nào cần chọn (trong khi chính nó cũng có các siêu tham số như việc chọn hàm acquisition)."
+    ],
+    "reasoning": "Sự khác biệt cơ bản và mạnh mẽ nhất của Bayesian Optimization là nó kết hợp lý thuyết xác suất để xây dựng mô hình về không gian tham số và kế thừa thông tin từ các lần thử trước để định hướng tìm kiếm, điều mà cả Grid Search và Random Search đều không làm."
+  },
+  {
+    "question_id": "ch9_q39",
+    "concepts": [
+      "Siêu tham số learning rate",
+      "Tối ưu hóa Gradient Descent"
+    ],
+    "misconceptions": [
+      "cho rằng learning rate quyết định số lượng epoch bắt buộc phải chạy.",
+      "tin rằng learning rate và kích thước batch (batch size) là một.",
+      "cho rằng learning rate ảnh hưởng đến số lượng lớp của mạng, nhầm lẫn với các siêu tham số về kiến trúc."
+    ],
+    "reasoning": "Learning rate (tốc độ học) là một siêu tham số quan trọng trong các thuật toán tối ưu hóa dựa trên gradient, nó kiểm soát độ lớn của các bước cập nhật trọng số. Learning rate quá lớn có thể khiến mô hình không hội tụ, trong khi quá nhỏ sẽ khiến việc học diễn ra rất chậm."
+  },
+  {
+    "question_id": "ch9_q40",
+    "concepts": [
+      "Kỹ thuật điều chuẩn (Regularization)",
+      "Ngăn chặn overfitting"
+    ],
+    "misconceptions": [
+      "cho rằng regularization có tác dụng chính là tăng tốc độ học.",
+      "tin rằng regularization hoạt động bằng cách giảm số lượng mẫu dữ liệu.",
+      "cho rằng regularization có thể làm tăng số lớp của mạng."
+    ],
+    "reasoning": "Regularization là một tập hợp các kỹ thuật (như L1, L2, Dropout) được thêm vào quá trình huấn luyện để ngăn mô hình trở nên quá phức tạp và học thuộc lòng dữ liệu huấn luyện (overfitting). Nó khuyến khích mô hình tìm ra các quy luật tổng quát hơn."
+  },
+  {
+    "question_id": "ch9_q41",
+    "concepts": [
+      "Kỹ thuật Early Stopping",
+      "Ngăn chặn overfitting"
+    ],
+    "misconceptions": [
+      "cho rằng early stopping chỉ đơn giản là khi quá trình huấn luyện kết thúc vì hết dữ liệu.",
+      "tin rằng early stopping chỉ xảy ra khi mô hình đã đạt đến độ chính xác tuyệt đối (100%), vì đó là lúc không thể 'cải thiện' hơn.",
+      "cho rằng early stopping là một quy tắc cứng nhắc, ví dụ như luôn dừng sau đúng một epoch."
+    ],
+    "reasoning": "Early stopping là một dạng của regularization. Nó hoạt động bằng cách theo dõi hiệu suất của mô hình trên một tập dữ liệu validation riêng biệt và dừng quá trình huấn luyện ngay khi hiệu suất trên tập này không còn cải thiện (hoặc bắt đầu xấu đi), nhằm tránh overfitting."
+  },
+  {
+    "question_id": "ch9_q42",
+    "concepts": [
+      "Kỹ thuật Cross-Validation",
+      "Đánh giá mô hình đáng tin cậy"
+    ],
+    "misconceptions": [
+      "cho rằng mục đích chính của cross-validation là tăng tốc độ học.",
+      "tin rằng cross-validation làm giảm kích thước mô hình.",
+      "cho rằng cross-validation có thể thay thế hoàn toàn bước huấn luyện."
+    ],
+    "reasoning": "Trong tinh chỉnh siêu tham số, cross-validation được sử dụng để cung cấp một phép đánh giá hiệu suất đáng tin cậy hơn cho một bộ siêu tham số nhất định. Bằng cách huấn luyện và đánh giá trên nhiều phần (fold) khác nhau của dữ liệu, nó giúp giảm sự phụ thuộc vào một lần chia train/validation duy nhất, từ đó giúp tìm ra bộ tham số tối ưu có khả năng tổng quát hóa tốt hơn."
+  },
+  {
+    "question_id": "ch9_q43",
+    "concepts": [
+      "Phân biệt tham số và siêu tham số",
+      "Hyperparameter tuning"
+    ],
+    "misconceptions": [
+      "cho rằng số lượng features cũng là một siêu tham số của mô hình, nhầm lẫn giữa feature engineering và hyperparameter tuning.",
+      "tin rằng mọi thứ có thể điều chỉnh trong quy trình học máy đều là siêu tham số cần tinh chỉnh, không phân biệt rõ vai trò.",
+      "cho rằng trọng số là một siêu tham số vì nó cũng cần được 'tìm'."
+    ],
+    "reasoning": "Trọng số của mỗi kết nối là tham số mô hình (model parameter), là thứ mà mô hình tự học trong quá trình huấn luyện. Hyperparameter tuning (tinh chỉnh siêu tham số) là quá trình tìm kiếm các cài đặt bên ngoài mô hình, như số neuron, số feature, hay loại hàm kích hoạt, vốn được ấn định trước khi quá trình học bắt đầu."
+  },
+  {
+    "question_id": "ch9_q44",
+    "concepts": [
+      "Ví dụ về siêu tham số",
+      "Phân biệt tham số và siêu tham số"
+    ],
+    "misconceptions": [
+      "cho rằng trọng số của từng connection là một siêu tham số, vì nó cũng là một giá trị số quan trọng trong mạng.",
+      "tin rằng chỉ có các thông số về kiến trúc (số lớp, số neuron) là siêu tham số, mà bỏ qua các thông số của quá trình huấn luyện (learning rate)."
+    ],
+    "reasoning": "Số lớp, số neuron, và learning rate đều là các siêu tham số vì chúng là các cấu hình được người dùng thiết lập trước khi quá trình huấn luyện bắt đầu. Ngược lại, trọng số là tham số mô hình, được mô hình tự động cập nhật trong quá trình học."
+  },
+  {
+    "question_id": "ch9_q45",
+    "concepts": [
+      "So sánh Grid Search, Random Search, Bayesian Optimization"
+    ],
+    "misconceptions": [
+      "cho rằng cả ba phương pháp đều kế thừa thông tin từ các lần thử trước, không nhận ra sự khác biệt cơ bản của Bayesian Optimization.",
+      "tin rằng Grid Search luôn kém hiệu quả hơn Random Search.",
+      "tin rằng Random Search cũng tìm kiếm toàn diện."
+    ],
+    "reasoning": "Các phát biểu này tóm tắt chính xác các đặc tính chính: Grid Search toàn diện nhưng đắt đỏ; Random Search đơn giản, hiệu quả trong không gian lớn nhưng không toàn diện; và Bayesian Optimization thông minh hơn bằng cách học hỏi từ các kết quả trước. Chỉ Bayesian Optimization kế thừa thông tin."
+  },
+  {
+    "question_id": "ch9_q46",
+    "concepts": [
+      "Lựa chọn phương pháp tinh chỉnh",
+      "Đặc điểm của Grid Search"
+    ],
+    "misconceptions": [
+      "cho rằng Random Search cũng tìm kiếm toàn diện.",
+      "tin rằng Bayesian Optimization là phương pháp đơn giản, dễ cài đặt.",
+      "cho rằng Early Stopping là một phương pháp tìm kiếm siêu tham số, nhầm lẫn với một kỹ thuật điều chuẩn."
+    ],
+    "reasoning": "Grid Search là phương pháp duy nhất trong ba phương pháp tìm kiếm chính đáp ứng đồng thời cả hai yêu cầu: nó đơn giản về mặt khái niệm và cài đặt, và nó đảm bảo tìm kiếm toàn diện (vét cạn) trên lưới tham số đã định."
+  },
+  {
+    "question_id": "ch9_q47",
+    "concepts": [
+      "Lựa chọn phương pháp tinh chỉnh",
+      "Đặc điểm của Random Search"
+    ],
+    "misconceptions": [
+      "cho rằng Grid Search vẫn là lựa chọn tốt khi không gian tham số rất lớn.",
+      "tin rằng Bayesian Optimization là một phương pháp đơn giản, dễ cài đặt.",
+      "cho rằng StandardScaler là một phương pháp tinh chỉnh siêu tham số, nhầm lẫn với một kỹ thuật tiền xử lý dữ liệu."
+    ],
+    "reasoning": "Khi không gian tham số rất lớn, Grid Search trở nên không khả thi. Trong tình huống này, nếu vẫn ưu tiên sự đơn giản và dễ cài đặt, Random Search là lựa chọn phù hợp nhất vì nó hiệu quả hơn Grid Search trong việc khám phá không gian lớn với cùng một ngân sách tính toán."
+  },
+  {
+    "question_id": "ch9_q48",
+    "concepts": [
+      "Lựa chọn phương pháp tinh chỉnh",
+      "Đặc điểm của Bayesian Optimization"
+    ],
+    "misconceptions": [
+      "cho rằng Grid Search và Random Search cũng tận dụng thông tin từ các lần thử trước.",
+      "tin rằng Cross-validation là một phương pháp tìm kiếm, nhầm lẫn với một kỹ thuật đánh giá."
+    ],
+    "reasoning": "Bayesian Optimization được thiết kế đặc biệt cho mục tiêu này. Nó xây dựng một mô hình xác suất về không gian tham số và sử dụng kết quả của các lần thử trước để thông minh quyết định điểm tiếp theo cần khám phá, qua đó giảm đáng kể số lần thử nghiệm cần thiết so với các phương pháp tìm kiếm 'mù'."
+  },
+  {
+    "question_id": "ch9_q49",
+    "concepts": [
+      "So sánh các phương pháp tinh chỉnh",
+      "Tìm kiếm độc lập"
+    ],
+    "misconceptions": [
+      "cho rằng chỉ có Grid Search hoặc chỉ có Random Search là không kế thừa thông tin.",
+      "tin rằng Bayesian Optimization cũng không kế thừa thông tin từ các lần thử trước."
+    ],
+    "reasoning": "Cả Grid Search và Random Search đều có đặc điểm chung là các lần thử nghiệm (đánh giá một tổ hợp siêu tham số) là hoàn toàn độc lập với nhau. Chúng không sử dụng kết quả của các lần thử trước đó để cải thiện hay định hướng cho các lần tìm kiếm tiếp theo."
+  },
+  {
+    "question_id": "ch9_q50",
+    "concepts": [
+      "So sánh GridSearchCV và RandomizedSearchCV",
+      "Chi phí tính toán và cơ chế hoạt động"
+    ],
+    "misconceptions": [
+      "tin rằng RandomizedSearchCV luôn kiểm tra toàn bộ tổ hợp tham số, nhầm lẫn với GridSearchCV.",
+      "cho rằng chi phí của GridSearchCV là cố định và không phụ thuộc vào không gian siêu tham số.",
+      "cho rằng RandomizedSearchCV không thể kiểm soát chi phí tính toán."
+    ],
+    "reasoning": "GridSearchCV thử tất cả các tổ hợp, do đó chi phí tăng theo cấp số nhân với số lượng tham số. RandomizedSearchCV chỉ thử một số lượng tổ hợp ngẫu nhiên được quy định bởi `n_iter`, cho phép kiểm soát chi phí và thường hiệu quả hơn trong không gian lớn."
+  }
+]

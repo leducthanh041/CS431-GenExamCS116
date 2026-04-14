@@ -1,0 +1,572 @@
+[
+  {
+    "question_id": "1",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng '5.5' là số thực. Điều gì trong cặp dấu nháy khiến bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì bên trong nó là số 5.5, có dấu chấm thập phân. Rõ ràng nó là một số thực."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trong Python, dấu nháy đơn dùng để làm gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để chứa một giá trị nào đó. Nhưng nếu giá trị đó là số thì nó phải là số chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nếu mình có n = 'táo', n thuộc kiểu gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là chuỗi, vì 'táo' là chữ. Nhưng '5.5' là số, nó khác biệt."
+      },
+      {
+        "role": "Tutor",
+        "text": "Python phân biệt nội dung bên trong dấu nháy để quyết định kiểu à?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là vậy... Nếu không thì làm sao nó biết được? Nhưng... đợi đã, vậy dấu nháy chỉ có một quy tắc thôi sao?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy quy tắc chung cho bất cứ thứ gì trong dấu nháy là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là nó sẽ trở thành chuỗi (string). Vậy n='5.5' là một chuỗi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Lỗi của bạn là bỏ qua vai trò của dấu nháy. Mọi thứ bên trong cặp dấu nháy đều là chuỗi."
+      }
+    ]
+  },
+  {
+    "question_id": "2",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng phép tính được thực hiện từ trái sang phải. Tại sao bạn lại chắc chắn về điều này?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì nó hợp lý mà. Giống như mình đọc một câu, cứ đọc từ trái sang phải thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy máy tính luôn xử lý mọi thứ theo thứ tự chúng được viết ra?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy, nó là một cái máy, nó chỉ làm theo trình tự thôi. Cứ tuần tự là chuẩn nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Được. Vậy thử áp dụng quy tắc 'trái-sang-phải' của bạn cho biểu thức này: `True or True and False`."
+      },
+      {
+        "role": "Student",
+        "text": "Dễ thôi. `True or True` là `True`. Sau đó `True and False` là `False`. Đáp án là `False`."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hầu hết các ngôn ngữ lập trình đều trả về `True` cho biểu thức đó. Tại sao lại có sự khác biệt?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là có trường hợp đặc biệt gì đó? Nhưng quy tắc của em vẫn có lý. Có thể máy tính sai ở ví dụ đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một quy tắc không thể lúc đúng lúc sai. Nếu quy tắc của bạn cho ra `False` và máy tính cho ra `True`, điều gì cần được xem lại?"
+      },
+      {
+        "role": "Student",
+        "text": "...Chắc là quy tắc của em có thiếu sót. Có thể không phải lúc nào cũng là từ trái sang phải."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu không phải luôn từ trái sang phải, thì cần có quy tắc gì để xác định thứ tự? Giữa `and` và `or`?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là có một toán tử được ưu tiên hơn. `and` được ưu tiên hơn `or`? Nếu vậy `True and False` là `False`, rồi `True or False` là `True`. Đúng rồi. Vậy áp dụng lại bài đầu..."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Niềm tin sai là `and` và `or` có cùng độ ưu tiên. Thực tế, `and` luôn được thực hiện trước `or`. Hãy áp dụng lại điều này vào câu hỏi ban đầu."
+      }
+    ]
+  },
+  {
+    "question_id": "3",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn giải thích rằng cộng hai list là cộng từng phần tử. Logic đó dựa trên đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì nó giống như cộng vector trong toán. Phần tử thứ nhất cộng phần tử thứ nhất, và cứ thế."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy toán tử `+` luôn có nghĩa là cộng các phần tử tương ứng?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Đó là cách logic và nhất quán nhất. Python nên hoạt động như vậy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Ok. Thử với `[1, 2] + [10, 20, 30]`. Kết quả sẽ là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ cộng hai phần tử đầu, ra `[11, 22]`. Phần tử `30` còn lại sẽ bị bỏ qua hoặc báo lỗi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tại sao Python lại được phép 'bỏ qua' dữ liệu của người dùng?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì không có gì tương ứng để cộng. Logic của tôi vẫn đúng, chỉ là trường hợp này không đủ cặp."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy hành vi của `+` thay đổi dựa vào độ dài của list sao?"
+      },
+      {
+        "role": "Student",
+        "text": "...Có vẻ không ổn định lắm. Vậy nó không phải cộng phần tử. Nó làm gì?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu `+` không cộng, nó có thể làm gì khác để kết hợp hai list?"
+      },
+      {
+        "role": "Student",
+        "text": "Có lẽ là... ghép chúng lại với nhau? Vậy `[1,2,3] + [10,9,8]` sẽ là `[1,2,3,10,9,8]`."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Phép `+` trên list là phép nối. Sai lầm của bạn là áp dụng cứng nhắc logic toán học vào một hành vi đã được định nghĩa khác trong Python."
+      }
+    ]
+  },
+  {
+    "question_id": "4",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng `i**2` là nhân với 2. Cơ sở nào cho suy luận này?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì có hai dấu `*`. Một dấu `*` là nhân, thì hai dấu `**` là nhân mạnh hơn, em nghĩ là nhân với số đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trong Python, toán tử nhân một ngôi là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là `*`. Nên `**` phải liên quan đến phép nhân, không thể khác được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Thử với `i = 3`. Theo logic của bạn, `3**2` là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Là `3 * 2`, bằng 6. Rất rõ ràng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Python chạy `3**2` lại trả về `9`. Tại sao kết quả lại khác?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là do môi trường chạy có lỗi, hoặc có một quy tắc ưu tiên nào đó. Về bản chất nó vẫn là nhân 2."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy còn `3**3` thì sao? Nó có nhân với 2 không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không. Lúc đó là `3*3 = 9`. Logic của em vẫn đúng, nó nhân với số đằng sau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Khoan. `3**2` bạn nói là `3*2`. `3**3` lại là `3*3`. Logic của bạn có nhất quán không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Chờ đã. Nếu theo cái sau thì `3**2` phải là `3*2`... Nhưng kết quả là 9. Vậy `**` không phải là nhân."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy toán tử `**` thực sự làm gì với hai con số?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó lấy số trước lũy thừa số sau. Vậy `i**2` là mũ 2. Kết quả của bài toán là `[1, 4, 9]`."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Ban đầu bạn đã bảo vệ sự nhầm lẫn giữa toán tử lũy thừa `**` và phép nhân `*`."
+      }
+    ]
+  },
+  {
+    "question_id": "5",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ Pandas hiệu quả nhất vì nó dùng DataFrame. Logic của bạn là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "DataFrame là một cái bảng, ma trận cũng là một cái bảng. Nên Pandas là tốt nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một DataFrame và một ma trận thuần túy có hoàn toàn giống nhau không?"
+      },
+      {
+        "role": "Student",
+        "text": "Gần như là vậy. Đều có hàng và cột. Đều dùng để tính toán được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Làm sao bạn biểu diễn một ma trận 3 chiều bằng DataFrame?"
+      },
+      {
+        "role": "Student",
+        "text": "Ừm... chắc là dùng một danh sách các DataFrame. Vẫn làm được mà, Pandas rất mạnh."
+      },
+      {
+        "role": "Tutor",
+        "text": "Việc đó có phải là cách 'hiệu quả nhất' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có thể không trực tiếp, nhưng sức mạnh của Pandas bù lại được. Tại sao lại không hiệu quả?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy Pandas được xây dựng trên thư viện tính toán số nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Cái đó... em không rõ lắm. Nhưng nó chạy nhanh mà. Chắc là Numpy?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy đâu là công cụ gốc cho ma trận, đâu là công cụ phân tích?"
+      },
+      {
+        "role": "Student",
+        "text": "À... Numpy là gốc, còn Pandas xây dựng trên nó để phân tích. Vậy câu trả lời phải là Numpy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Pandas dùng cho phân tích dữ liệu bảng, còn Numpy tối ưu cho tính toán số trên mảng/ma trận."
+      }
+    ]
+  },
+  {
+    "question_id": "6",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói `shape=(2,3)` và `shape=(3,2)` là như nhau. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì 2 nhân 3 và 3 nhân 2 đều bằng 6. Cả hai đều tạo ra ma trận có 6 phần tử."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trong NumPy, tham số `shape` có ý nghĩa gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó xác định hình dạng của ma trận. Nhưng ở đây hình dạng không quan trọng bằng tổng số phần tử."
+      },
+      {
+        "role": "Tutor",
+        "text": "Ok, hãy viết ra ma trận được tạo từ `shape=(3,2)`."
+      },
+      {
+        "role": "Student",
+        "text": "Thì nó là ma trận có 6 số 1. Chắc là `[[1,1,1], [1,1,1]]`."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nhưng `shape=(hàng, cột)`. Vậy `(3,2)` có mấy hàng?"
+      },
+      {
+        "role": "Student",
+        "text": "À... 3 hàng. Vậy phải là `[[1,1], [1,1], [1,1]]`. Nhưng bản chất vẫn là 6 số 1."
+      },
+      {
+        "role": "Tutor",
+        "text": "Ma trận bạn vừa viết có giống hệt ma trận đề bài không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không giống hệt, nhưng chỉ là cách sắp xếp khác thôi. Về cơ bản là một."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đề bài yêu cầu một ma trận cụ thể. Vậy cách sắp xếp có quan trọng không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Có. Vậy là `(3,2)` tạo ra ma trận sai. Em chọn lại đáp án đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Lỗi sai của bạn là cho rằng `shape=(2,3)` và `(3,2)` có thể hoán đổi vì cùng có 6 phần tử. Thực tế, thứ tự (hàng, cột) là cố định và tạo ra cấu trúc khác nhau."
+      }
+    ]
+  },
+  {
+    "question_id": "7",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ rằng NumPy vẽ được biểu đồ vì nó xử lý dữ liệu số. Logic này đúng ở điểm nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng ở chỗ là muốn vẽ thì phải có số liệu. NumPy làm việc với số liệu. Vậy nó phải vẽ được chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy chức năng chính của NumPy là tính toán hay là hiển thị?"
+      },
+      {
+        "role": "Student",
+        "text": "Là tính toán, nhưng tính toán đó là để vẽ mà. Chúng phải đi liền với nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử bạn có một mảng NumPy. Bạn sẽ dùng lệnh cụ thể nào trong NumPy để vẽ nó?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là một hàm như `numpy.draw()` hoặc `numpy.plot()`. Em không nhớ tên chính xác, nhưng chắc chắn phải có."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu mình nói rằng không có hàm nào như vậy trong NumPy thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Vô lý. Nếu nó không vẽ được, thì vai trò của nó khi xử lý dữ liệu cho biểu đồ là gì?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một thư viện chỉ có thể có một trong hai vai trò: tạo dữ liệu, hoặc vẽ dữ liệu?"
+      },
+      {
+        "role": "Student",
+        "text": "…Chắc là không. Có thể một cái chuẩn bị, một cái thực hiện."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Vậy với câu hỏi ban đầu, thư viện nào thực hiện việc vẽ?"
+      },
+      {
+        "role": "Student",
+        "text": "Là Matplotlib. Còn NumPy chỉ chuẩn bị dữ liệu số thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã tự nhận ra: NumPy xử lý số, nhưng Matplotlib mới là công cụ để vẽ."
+      }
+    ]
+  },
+  {
+    "question_id": "8",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói DataFrame là object duy nhất. Vì sao nó lại là \"duy nhất\"?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì mọi thứ trong Pandas đều xoay quanh DataFrame. Series chỉ là một cột trong đó, không phải là object riêng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một \"kiểu object\" trong lập trình nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là một thứ có thuộc tính và phương thức riêng. DataFrame có, còn Series chỉ là một phần của nó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mình có thể tạo một Series mà không cần DataFrame không?"
+      },
+      {
+        "role": "Student",
+        "text": "Được, nhưng mục đích cuối cùng vẫn là để đưa vào DataFrame thôi. Nó không đứng một mình được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Thử tạo `s = pd.Series([1, 2, 3])`. Nó có phương thức riêng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có, ví dụ `.mean()`. Nhưng đó chỉ là một phép tính trên một mảng số, không chứng tỏ nó là object độc lập."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một thứ có phương thức riêng, có phải là một object không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Có. Vậy Series cũng là một object, mặc dù nó đơn giản hơn. Em đã sai."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, các kiểu object có trong Pandas là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là cả Series và DataFrame."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm lẫn sự phổ biến với định nghĩa. Cả Series và DataFrame đều là các object độc lập, có phương thức riêng."
+      }
+    ]
+  },
+  {
+    "question_id": "9",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Mình thấy bạn cho rằng `.at` có thể lọc hàng giống `.loc`. Tại sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì cả hai đều là phương thức truy cập dữ liệu của DataFrame. Em nghĩ `.at` là cách viết khác, có thể nhanh hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Theo bạn, `.at` được thiết kế để trả về cái gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Trả về dữ liệu thỏa mãn điều kiện. Nếu nhiều hàng thỏa mãn thì trả về nhiều hàng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử DataFrame có 3 hàng. Điều kiện của bạn trả về `[True, False, True]`. `.at` sẽ lấy hàng nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ lấy hàng đầu tiên và hàng cuối cùng, tương ứng với vị trí `True`."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nhưng `.at` được tối ưu để truy cập một giá trị đơn lẻ. Làm sao nó biết phải xử lý một chuỗi?"
+      },
+      {
+        "role": "Student",
+        "text": "Có thể nó có cơ chế đặc biệt để xử lý việc này nhưng vẫn nhanh hơn. Pandas có nhiều tối ưu mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nếu muốn lấy giá trị ở hàng index 5, cột 'sex', lệnh `.at` là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là `tips_df.at[5, 'sex']`... À, nó cần nhãn hàng và nhãn cột cụ thể."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, tham số của `.at` là nhãn cụ thể hay một chuỗi điều kiện boolean?"
+      },
+      {
+        "role": "Student",
+        "text": "Là nhãn cụ thể. Nó không nhận một chuỗi boolean. Vậy nên lệnh đó không lọc được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. `.at` truy cập một giá trị đơn lẻ qua nhãn, không phải để lọc nhiều hàng bằng điều kiện. Việc đó là của `.loc`."
+      }
+    ]
+  },
+  {
+    "question_id": "10",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng Scikit-learn dùng được cho học sâu vì nó phổ biến. Sự phổ biến có phải là thước đo cho mọi tính năng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Tất nhiên rồi ạ. Nếu nó không làm được học sâu thì sao nó lại phổ biến nhất trong ngành học máy được?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, điều gì định nghĩa một mô hình là 'học sâu'?"
+      },
+      {
+        "role": "Student",
+        "text": "Là các mô hình mạng nơ-ron. Scikit-learn có mạng nơ-ron, nên nó có thể làm học sâu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tốt. Giờ hãy thử xây dựng một mạng CNN 152 lớp như ResNet-152. Bạn sẽ dùng module nào trong Scikit-learn?"
+      },
+      {
+        "role": "Student",
+        "text": "Em không chắc về module cụ thể, nhưng chắc chắn là có cách. Có thể nó nằm trong một gói mở rộng nào đó. Scikit-learn rất linh hoạt mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy còn việc huấn luyện mô hình đó trên nhiều GPU cùng lúc thì sao? Scikit-learn hỗ trợ việc này như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Em... em nghĩ là nó không hỗ trợ trực tiếp. Nhưng đó chỉ là vấn đề về tốc độ, không phải về khả năng xây dựng mô hình."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một thư viện học sâu thực thụ cần những gì mà Scikit-learn đang thiếu?"
+      },
+      {
+        "role": "Student",
+        "text": "Có lẽ là... khả năng xây dựng các kiến trúc mạng nơ-ron phức tạp một cách dễ dàng và hỗ trợ tăng tốc bằng GPU."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Vậy nhìn lại các lựa chọn, thư viện nào được thiết kế cho những việc đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là Tensorflow. Vì nó chuyên về mạng nơ-ron và tính toán trên GPU."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Bạn đã thấy rằng Scikit-learn mạnh cho ML cổ điển nhưng thiếu các công cụ chuyên dụng cho học sâu như Tensorflow. Mỗi công cụ có một thế mạnh riêng."
+      }
+    ]
+  }
+]

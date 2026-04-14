@@ -1,0 +1,627 @@
+[
+  {
+    "question_id": "ch6_q1",
+    "concepts": [
+      "Định nghĩa học không giám sát",
+      "Phân bố dữ liệu",
+      "Biểu diễn dữ liệu"
+    ],
+    "misconceptions": [
+      "cho rằng học không giám sát cũng là học một ánh xạ từ đầu vào đến đầu ra có nhãn, vì nhầm lẫn nó với nhiệm vụ của học có giám sát.",
+      "tin rằng nhiệm vụ chính của học không giám sát là sinh dữ liệu mới, vì nhầm lẫn nó với một ứng dụng cụ thể là các mô hình sinh (generative models).",
+      "cho rằng mục tiêu của học máy nói chung là chỉ cần tối ưu hóa độ chính xác trên tập huấn luyện, và áp dụng sai lầm khái niệm này cho học không giám sát."
+    ],
+    "reasoning": "Học không giám sát tập trung vào việc khám phá cấu trúc hoặc phân bố tiềm ẩn trong dữ liệu không có nhãn. Các lựa chọn khác mô tả học có giám sát, một ứng dụng cụ thể (mô hình sinh), hoặc một vấn đề (overfitting) thay vì mục tiêu chính."
+  },
+  {
+    "question_id": "ch6_q2",
+    "concepts": [
+      "Đặc điểm dữ liệu học không giám sát",
+      "Sự khác biệt với học có giám sát",
+      "Vai trò của nhãn (label)"
+    ],
+    "misconceptions": [
+      "cho rằng học không giám sát vẫn cần một biến mục tiêu y, vì nhầm lẫn với yêu cầu của học có giám sát.",
+      "tin rằng dữ liệu cho học không giám sát và có giám sát là giống hệt nhau, chỉ khác ở thuật toán áp dụng."
+    ],
+    "reasoning": "Học không giám sát được định nghĩa bởi việc thiếu vắng nhãn hoặc biến mục tiêu (y). Dữ liệu đầu vào chỉ bao gồm các đặc trưng (x). Do đó, mọi phát biểu khẳng định sự cần thiết của nhãn hoặc biến mục tiêu đều sai."
+  },
+  {
+    "question_id": "ch6_q3",
+    "concepts": [
+      "Yêu cầu về dữ liệu trong học không giám sát",
+      "Khái niệm nhãn dữ liệu"
+    ],
+    "misconceptions": [
+      "cho rằng mọi bài toán học máy đều bắt buộc phải có nhãn, vì đó là cách duy nhất để mô hình 'học'.",
+      "tin rằng học không giám sát chỉ cần đầu ra mà không cần đầu vào, một sự đảo ngược logic về luồng dữ liệu trong học máy.",
+      "cho rằng học không giám sát tương đương với việc phân loại dữ liệu thành hai nhóm 'positive' và 'negative', vì nhầm lẫn nó với bài toán phân lớp nhị phân."
+    ],
+    "reasoning": "Đặc tính cốt lõi của học không giám sát là dữ liệu không được gán nhãn từ trước. Thuật toán phải tự tìm ra cấu trúc từ dữ liệu thô. Việc yêu cầu có nhãn hay phân loại sẵn là mâu thuẫn với bản chất của nó."
+  },
+  {
+    "question_id": "ch6_q4",
+    "concepts": [
+      "Các bài toán chính của học không giám sát",
+      "Gom nhóm dữ liệu (clustering)",
+      "Giảm chiều dữ liệu (dimensionality reduction)"
+    ],
+    "misconceptions": [
+      "cho rằng hồi quy tuyến tính là một dạng học không giám sát, vì nó cũng tìm mối quan hệ trong dữ liệu.",
+      "tin rằng phân lớp nhị phân có nhãn thuộc về học không giám sát, vì không phân biệt được sự khác biệt cơ bản giữa học có giám sát và không giám sát."
+    ],
+    "reasoning": "Gom nhóm và giảm chiều là hai nhiệm vụ kinh điển của học không giám sát. Ngược lại, hồi quy và phân lớp có nhãn là các nhiệm vụ điển hình của học có giám sát vì chúng yêu cầu dữ liệu có nhãn để học."
+  },
+  {
+    "question_id": "ch6_q5",
+    "concepts": [
+      "Tầm quan trọng của phân bố dữ liệu",
+      "Ngữ cảnh của một điểm dữ liệu",
+      "Tính tương đối của giá trị"
+    ],
+    "misconceptions": [
+      "cho rằng một giá trị số như '8.8' có một ý nghĩa tuyệt đối, cố định, ví dụ như luôn là 'loại giỏi'.",
+      "tin rằng có thể đưa ra kết luận chỉ từ một điểm dữ liệu đơn lẻ mà không cần so sánh nó với phần còn lại của tập dữ liệu.",
+      "cho rằng việc xếp loại là một quy tắc cứng nhắc và không phụ thuộc vào cách các điểm số khác được phân bố."
+    ],
+    "reasoning": "Ví dụ này nhấn mạnh rằng ý nghĩa của một điểm dữ liệu (8.8) không phải là tuyệt đối mà phụ thuộc vào phân bố của toàn bộ tập dữ liệu. Không biết phân bố, không thể kết luận điểm đó là cao hay thấp so với mặt bằng chung."
+  },
+  {
+    "question_id": "ch6_q6",
+    "concepts": [
+      "Ý nghĩa của phân bố dữ liệu",
+      "Trực quan hóa dữ liệu",
+      "Tính tương đối trong phân tích dữ liệu"
+    ],
+    "misconceptions": [
+      "cho rằng việc chuẩn hóa dữ liệu là giải pháp duy nhất và bắt buộc cho mọi bài toán, thay vì là một bước tiền xử lý có thể có hoặc không.",
+      "tin rằng dữ liệu số thì không cần trực quan hóa, vì các con số đã đủ rõ ràng.",
+      "cho rằng histogram chỉ là một công cụ vẽ biểu đồ đơn giản và chỉ áp dụng được cho dữ liệu phân loại, không hiểu vai trò của nó trong việc khám phá phân bố dữ liệu liên tục."
+    ],
+    "reasoning": "Cùng một giá trị có thể mang ý nghĩa hoàn toàn khác nhau khi nằm trong các phân bố dữ liệu khác nhau (ví dụ: điểm 8.8 trong một lớp toàn 9, 10 so với trong một lớp toàn 5, 6). Đây là cốt lõi của việc phân tích dữ liệu dựa trên ngữ cảnh."
+  },
+  {
+    "question_id": "ch6_q7",
+    "concepts": [
+      "Biểu diễn dữ liệu hiệu quả",
+      "Học đặc trưng (feature learning)",
+      "Gom nhóm (clustering)"
+    ],
+    "misconceptions": [
+      "cho rằng lưu lặp lại dữ liệu là một cách biểu diễn, nhầm lẫn giữa việc tăng dung lượng lưu trữ và biểu diễn hiệu quả.",
+      "tin rằng chỉ cần lưu nhãn có sẵn là đủ, không hiểu rằng học không giám sát hoạt động trên dữ liệu không nhãn và mục tiêu là tìm ra cấu trúc mới.",
+      "cho rằng chỉ cần lưu ID của bản ghi là một cách biểu diễn dữ liệu, nhầm lẫn giữa định danh và đặc trưng."
+    ],
+    "reasoning": "Thay vì lưu các điểm dữ liệu thô riêng lẻ, ta có thể gom chúng thành các nhóm (cụm) và biểu diễn mỗi điểm bằng ID của cụm đó. Cách này giúp nén thông tin và thể hiện đặc trưng chung của nhóm."
+  },
+  {
+    "question_id": "ch6_q8",
+    "concepts": [
+      "Lợi ích của biểu diễn dữ liệu theo nhóm",
+      "Giảm chiều dữ liệu",
+      "Học đặc trưng"
+    ],
+    "misconceptions": [
+      "cho rằng việc biểu diễn dữ liệu theo nhóm phải luôn đảm bảo khôi phục được chính xác dữ liệu gốc, vì nhầm lẫn giữa giảm chiều có mất mát và không mất mát thông tin."
+    ],
+    "reasoning": "Biểu diễn dữ liệu theo nhóm (ví dụ: gán ID cụm cho mỗi điểm) là một dạng giảm chiều, giúp biểu diễn dữ liệu hiệu quả hơn và làm nổi bật đặc trưng nhóm. Tuy nhiên, quá trình này thường đi kèm với mất mát thông tin và không thể khôi phục chính xác dữ liệu gốc."
+  },
+  {
+    "question_id": "ch6_q9",
+    "concepts": [
+      "Diễn giải kết quả gom nhóm",
+      "Mã hóa cụm (cluster ID)",
+      "Sự khác biệt giữa minh họa và thực tế thuật toán"
+    ],
+    "misconceptions": [
+      "cho rằng các tên gọi như 'yếu', 'xuất sắc' là nhãn thật mà thuật toán học không giám sát tạo ra, vì không phân biệt được giữa kết quả tính toán của máy và sự diễn giải của con người.",
+      "tin rằng kết quả của học không giám sát là kết quả của học có giám sát, vì thấy có 'nhãn' được gán cho dữ liệu.",
+      "cho rằng các cụm được tìm thấy luôn có một thứ tự tuyến tính (ví dụ: yếu < trung bình < xuất sắc), trong khi thực tế chúng chỉ là các nhóm riêng biệt."
+    ],
+    "reasoning": "Thuật toán gom nhóm chỉ trả về các ID của cụm (ví dụ: 0, 1, 2). Các tên gọi mang ý nghĩa đời thường như 'yếu', 'xuất sắc' là do con người diễn giải và đặt tên cho các cụm đó để dễ hiểu, chứ không phải là kết quả trực tiếp của thuật toán."
+  },
+  {
+    "question_id": "ch6_q10",
+    "concepts": [
+      "Định nghĩa gom nhóm (clustering)",
+      "Độ tương đồng trong cụm"
+    ],
+    "misconceptions": [
+      "cho rằng gom nhóm là dự đoán một giá trị liên tục, vì nhầm lẫn nó với bài toán hồi quy.",
+      "tin rằng gom nhóm là việc tìm một đường thẳng phù hợp nhất, vì nhầm lẫn với hồi quy tuyến tính.",
+      "cho rằng gom nhóm là một phương pháp để đánh giá mô hình phân lớp, vì nhầm lẫn vai trò của các kỹ thuật khác nhau trong quy trình học máy."
+    ],
+    "reasoning": "Gom nhóm (clustering) là một bài toán học không giám sát với mục tiêu phân chia các đối tượng dữ liệu thành các cụm, sao cho các đối tượng trong cùng một cụm có độ tương đồng cao và khác biệt với các đối tượng ở cụm khác."
+  },
+  {
+    "question_id": "ch6_q11",
+    "concepts": [
+      "Nguyên lý của gom nhóm",
+      "Độ tương đồng trong cụm và khác biệt giữa các cụm"
+    ],
+    "misconceptions": [
+      "cho rằng các đối tượng trong cùng một cụm phải khác biệt hoàn toàn, một suy nghĩ trái ngược với nguyên tắc cơ bản của gom nhóm.",
+      "tin rằng các đối tượng được gom vào cùng cụm chỉ vì chúng có cùng ID, nhầm lẫn giữa định danh và đặc trưng của dữ liệu.",
+      "cho rằng các đối tượng trong cùng một cụm phải có cùng 'nhãn thật', vì áp dụng tư duy của học có giám sát vào bài toán không giám sát."
+    ],
+    "reasoning": "Mục tiêu cốt lõi của gom nhóm là tạo ra các cụm mà trong đó các thành viên có tính tương đồng cao với nhau, đồng thời các cụm khác nhau thì có tính khác biệt cao."
+  },
+  {
+    "question_id": "ch6_q12",
+    "concepts": [
+      "Các thuật toán gom nhóm phổ biến"
+    ],
+    "misconceptions": [],
+    "reasoning": "Câu hỏi này kiểm tra kiến thức về việc nhận diện tên các thuật toán gom nhóm phổ biến. K-Means, DBSCAN, Hierarchical Clustering, và GMM đều là những phương pháp gom nhóm tiêu biểu được đề cập."
+  },
+  {
+    "question_id": "ch6_q13",
+    "concepts": [
+      "Nhận diện các thuật toán gom nhóm",
+      "Phân biệt thuật toán gom nhóm và thuật toán phân lớp/hồi quy"
+    ],
+    "misconceptions": [
+      "cho rằng Linear Regression (Hồi quy tuyến tính) là thuật toán gom nhóm, vì nhầm lẫn giữa hai loại bài toán khác nhau của học máy.",
+      "tin rằng Logistic Regression (Hồi quy logistic) là thuật toán gom nhóm, vì nhầm lẫn giữa phân lớp và gom nhóm.",
+      "cho rằng Naive Bayes là thuật toán gom nhóm, vì không phân biệt được các họ thuật toán khác nhau."
+    ],
+    "reasoning": "Spectral clustering là một thuật toán gom nhóm. Các lựa chọn còn lại là các thuật toán học có giám sát (hồi quy hoặc phân lớp), không thuộc nhóm các phương pháp gom nhóm."
+  },
+  {
+    "question_id": "ch6_q14",
+    "concepts": [
+      "Lựa chọn thuật toán gom nhóm",
+      "Sự phụ thuộc vào dữ liệu và mục tiêu"
+    ],
+    "misconceptions": [
+      "cho rằng việc lựa chọn thuật toán phụ thuộc vào các yếu tố không liên quan như hình thức trình bày (màu sắc, font chữ).",
+      "tin rằng chỉ cần cấu hình phần cứng (CPU) là đủ để quyết định thuật toán, bỏ qua yếu tố quan trọng nhất là bản chất của dữ liệu và bài toán."
+    ],
+    "reasoning": "Không có thuật toán gom nhóm nào là tốt nhất trong mọi trường hợp. Việc lựa chọn phương pháp phù hợp phải dựa trên sự hiểu biết về tính chất của dữ liệu (phân bố, hình dạng, mật độ) và mục tiêu cụ thể của bài toán."
+  },
+  {
+    "question_id": "ch6_q15",
+    "concepts": [
+      "Các bước của thuật toán K-Means",
+      "Bước khởi tạo tâm cụm"
+    ],
+    "misconceptions": [
+      "cho rằng K-Means bắt đầu bằng việc ước lượng ma trận hiệp phương sai, vì nhầm lẫn với các thuật toán khác như GMM hoặc PCA.",
+      "tin rằng K-Means bắt đầu bằng việc tìm epsilon, vì nhầm lẫn với tham số của DBSCAN.",
+      "cho rằng K-Means khởi tạo bằng cách gán mọi điểm là nhiễu, vì nhầm lẫn với khái niệm trong DBSCAN."
+    ],
+    "reasoning": "Thuật toán K-Means bắt đầu bằng bước khởi tạo, trong đó K tâm cụm (centroids) được chọn một cách ngẫu nhiên (hoặc theo một chiến lược nào đó) từ không gian dữ liệu."
+  },
+  {
+    "question_id": "ch6_q16",
+    "concepts": [
+      "Các bước của thuật toán K-Means",
+      "Bước gán điểm vào cụm"
+    ],
+    "misconceptions": [
+      "cho rằng mỗi điểm được gán vào trọng tâm xa nhất, một logic hoàn toàn ngược lại với mục tiêu của thuật toán.",
+      "tin rằng các điểm được gán ngẫu nhiên vào các cụm trong mỗi vòng lặp, thay vì dựa trên khoảng cách.",
+      "cho rằng các điểm dữ liệu sẽ bị loại bỏ trong quá trình chạy thuật toán."
+    ],
+    "reasoning": "Sau khi có các tâm cụm, bước tiếp theo trong K-Means là gán mỗi điểm dữ liệu vào cụm có tâm gần nhất với nó, thường được đo bằng khoảng cách Euclid."
+  },
+  {
+    "question_id": "ch6_q17",
+    "concepts": [
+      "Điều kiện dừng của thuật toán K-Means",
+      "Sự hội tụ của thuật toán"
+    ],
+    "misconceptions": [
+      "cho rằng K-Means dừng khi không còn mẫu nào, một điều kiện vô lý vì thuật toán không xóa dữ liệu.",
+      "tin rằng thuật toán dừng khi hàm mất mát đạt một giá trị cụ thể như 1, không hiểu bản chất của hàm mất mát trong K-Means.",
+      "cho rằng K-Means sẽ biến tất cả các điểm thành nhiễu, vì nhầm lẫn với khái niệm của DBSCAN."
+    ],
+    "reasoning": "K-Means là một thuật toán lặp. Quá trình gán điểm và cập nhật lại tâm cụm sẽ được lặp đi lặp lại cho đến khi đạt được điều kiện dừng, phổ biến nhất là khi các tâm cụm không còn thay đổi vị trí giữa các vòng lặp, tức là thuật toán đã hội tụ."
+  },
+  {
+    "question_id": "ch6_q18",
+    "concepts": [
+      "Ưu điểm của K-Means",
+      "Hiệu quả tính toán",
+      "Tính đơn giản"
+    ],
+    "misconceptions": [
+      "cho rằng K-Means không cần biết trước số cụm K, vì nhầm lẫn nó với ưu điểm của DBSCAN.",
+      "tin rằng K-Means luôn xử lý tốt dữ liệu không phải dạng hình cầu, vì không nhận thức được một trong những hạn chế lớn nhất của thuật toán này."
+    ],
+    "reasoning": "K-Means được ưa chuộng vì sự đơn giản, dễ cài đặt và hiệu quả về mặt tính toán, đặc biệt với các tập dữ liệu lớn. Tuy nhiên, nó có những nhược điểm đáng kể liên quan đến việc phải chọn K và hình dạng cụm."
+  },
+  {
+    "question_id": "ch6_q19",
+    "concepts": [
+      "Nhược điểm của K-Means",
+      "Sự phụ thuộc vào tham số và khởi tạo",
+      "Hạn chế với dữ liệu phức tạp"
+    ],
+    "misconceptions": [],
+    "reasoning": "Câu hỏi này liệt kê các khuyết điểm chính và phổ biến của K-Means, bao gồm yêu cầu phải biết trước số cụm K, sự nhạy cảm với việc khởi tạo tâm cụm ban đầu, nguy cơ rơi vào cực tiểu cục bộ và khả năng xử lý kém với các cụm có hình dạng không phải hình cầu."
+  },
+  {
+    "question_id": "ch6_q20",
+    "concepts": [
+      "Đặc điểm của K-Means",
+      "Sự phụ thuộc vào khởi tạo",
+      "Phân biệt với các thuật toán khác"
+    ],
+    "misconceptions": [
+      "cho rằng K-Means không cần chọn số cụm K, vì nhầm lẫn với ưu điểm của DBSCAN.",
+      "tin rằng K-Means chỉ dùng được cho dữ liệu có nhãn, vì áp dụng sai kiến thức từ học có giám sát.",
+      "cho rằng K-Means luôn tốt hơn DBSCAN, một khẳng định quá chung chung và không đúng vì mỗi thuật toán có ưu nhược điểm riêng."
+    ],
+    "reasoning": "Một trong những đặc điểm quan trọng và cũng là nhược điểm của K-Means là kết quả cuối cùng có thể phụ thuộc vào vị trí các tâm cụm được khởi tạo ban đầu. Các lựa chọn khác mô tả sai về yêu cầu của K-Means hoặc so sánh không chính xác với thuật toán khác."
+  },
+  {
+    "question_id": "ch6_q21",
+    "concepts": [
+      "Hạn chế của K-Means",
+      "Cực tiểu cục bộ (local minima)",
+      "Sự hội tụ của thuật toán"
+    ],
+    "misconceptions": [
+      "cho rằng K-Means luôn hội tụ về cực đại toàn cục, một sự nhầm lẫn về hướng tối ưu và tính toàn cục.",
+      "tin rằng K-Means không sử dụng khoảng cách, điều này trái với nguyên tắc hoạt động cơ bản của thuật toán.",
+      "cho rằng K-Means bắt buộc cần dữ liệu danh mục, trong khi nó chủ yếu hoạt động trên dữ liệu số để tính khoảng cách."
+    ],
+    "reasoning": "K-Means sử dụng một phương pháp tối ưu dựa trên gradient descent (trong không gian các tâm cụm), do đó nó chỉ đảm bảo hội tụ về một điểm cực tiểu cục bộ, không đảm bảo tìm được giải pháp tối ưu toàn cục. Kết quả có thể không phải là cách gom cụm tốt nhất có thể."
+  },
+  {
+    "question_id": "ch6_q22",
+    "concepts": [
+      "Hạn chế của K-Means",
+      "Giả định về hình dạng cụm"
+    ],
+    "misconceptions": [
+      "cho rằng K-Means chỉ gặp vấn đề với dữ liệu có đúng 2 chiều, trong khi nó có thể hoạt động tốt hoặc tệ ở bất kỳ số chiều nào.",
+      "tin rằng K-Means hoạt động tệ với dữ liệu rất nhỏ, trong khi vấn đề chính không nằm ở kích thước.",
+      "cho rằng K-Means không hoạt động với số nguyên, một nhận định sai lầm về kiểu dữ liệu."
+    ],
+    "reasoning": "Do K-Means gán điểm vào tâm cụm gần nhất và giả định các cụm có dạng hình cầu với phương sai tương đương, nó hoạt động kém hiệu quả với các tập dữ liệu có các cụm với hình dạng phức tạp, không lồi, hoặc không phải dạng hình cầu."
+  },
+  {
+    "question_id": "ch6_q23",
+    "concepts": [
+      "Định nghĩa thuật toán DBSCAN",
+      "Gom nhóm dựa trên mật độ"
+    ],
+    "misconceptions": [
+      "cho rằng DBSCAN dựa trên nhãn lớp, vì nhầm lẫn nó với thuật toán học có giám sát.",
+      "tin rằng DBSCAN dựa trên hồi quy tuyến tính, vì nhầm lẫn với một loại bài toán hoàn toàn khác.",
+      "cho rằng DBSCAN dựa trên ma trận nhầm lẫn, vì nhầm lẫn nó với một công cụ đánh giá mô hình phân lớp."
+    ],
+    "reasoning": "DBSCAN (Density-Based Spatial Clustering of Applications with Noise) là một thuật toán gom nhóm có cơ chế hoạt động dựa trên mật độ của các điểm dữ liệu trong không gian."
+  },
+  {
+    "question_id": "ch6_q24",
+    "concepts": [
+      "Nguyên lý hoạt động của DBSCAN",
+      "Khái niệm lân cận và mật độ"
+    ],
+    "misconceptions": [
+      "cho rằng DBSCAN gom nhóm dựa trên việc các điểm có cùng giá trị đầu ra, vì nhầm lẫn với học có giám sát.",
+      "tin rằng các điểm được gom nhóm chỉ vì có cùng số chiều, một điều hiển nhiên và không mang ý nghĩa gom nhóm.",
+      "cho rằng các điểm được gom nhóm khi có tổng đặc trưng bằng nhau, một tiêu chí tùy tiện và không phải là nguyên lý của DBSCAN."
+    ],
+    "reasoning": "Ý tưởng của DBSCAN là một cụm được hình thành bởi các vùng có mật độ điểm dữ liệu cao. Các điểm được coi là thuộc cùng một cụm nếu chúng có thể 'kết nối' với nhau, tức là chúng nằm trong một 'lân cận' (được định nghĩa bởi epsilon) và khu vực đó đủ 'đông đúc' (được định nghĩa bởi minPts)."
+  },
+  {
+    "question_id": "ch6_q25",
+    "concepts": [
+      "Các tham số của DBSCAN",
+      "Bán kính lân cận (epsilon)",
+      "Số điểm tối thiểu (minPts)",
+      "Điểm nhiễu (noise)"
+    ],
+    "misconceptions": [
+      "cho rằng learning rate (tốc độ học) là một tham số của DBSCAN, vì nhầm lẫn nó với tham số của các mô hình tối ưu bằng gradient descent như mạng nơ-ron."
+    ],
+    "reasoning": "DBSCAN hoạt động dựa trên hai tham số chính: epsilon (ε) để định nghĩa bán kính của một lân cận, và minPts để định nghĩa số điểm tối thiểu cần có trong lân cận đó để một điểm được coi là điểm lõi. Khái niệm điểm nhiễu (noise) cũng là một phần quan trọng của thuật toán này."
+  },
+  {
+    "question_id": "ch6_q26",
+    "concepts": [
+      "Khái niệm điểm nhiễu trong DBSCAN",
+      "Gom nhóm dựa trên mật độ"
+    ],
+    "misconceptions": [
+      "cho rằng các điểm ở vùng mật độ thấp được gọi là centroid, vì nhầm lẫn với thuật ngữ của K-Means.",
+      "tin rằng các điểm ở vùng mật độ thấp được gọi là outcome (kết quả) hoặc feature importance (mức độ quan trọng của đặc trưng), vì nhầm lẫn với các thuật ngữ không liên quan."
+    ],
+    "reasoning": "Một trong những ưu điểm của DBSCAN là khả năng xác định các điểm ngoại lai. Các điểm không thuộc bất kỳ cụm nào (nằm trong các vùng có mật độ rất thấp) sẽ được gán nhãn là nhiễu (noise)."
+  },
+  {
+    "question_id": "ch6_q27",
+    "concepts": [
+      "Ưu điểm của DBSCAN"
+    ],
+    "misconceptions": [
+      "cho rằng DBSCAN luôn đơn giản hơn K-Means về tham số, vì không nhận ra việc chọn epsilon và minPts có thể phức tạp.",
+      "tin rằng DBSCAN luôn phù hợp với dữ liệu có mật độ biến động, vì không nhận thức được đây chính là một trong những nhược điểm của nó."
+    ],
+    "reasoning": "Ưu điểm lớn của DBSCAN là không cần phải xác định trước số lượng cụm và có thể tìm ra các cụm có hình dạng tùy ý. Nó cũng hiệu quả trong việc phát hiện nhiễu trong dữ liệu."
+  },
+  {
+    "question_id": "ch6_q28",
+    "concepts": [
+      "Nhược điểm của DBSCAN"
+    ],
+    "misconceptions": [
+      "cho rằng DBSCAN bắt buộc phải biết trước số cụm K, vì nhầm lẫn nó với nhược điểm của K-Means.",
+      "tin rằng DBSCAN không thể phát hiện nhiễu, một khẳng định hoàn toàn trái ngược với ưu điểm của nó."
+    ],
+    "reasoning": "Nhược điểm chính của DBSCAN là hiệu quả giảm sút khi các cụm trong dữ liệu có mật độ rất khác nhau. Ngoài ra, việc lựa chọn hai tham số ε và minPts một cách hợp lý không phải lúc nào cũng dễ dàng."
+  },
+  {
+    "question_id": "ch6_q29",
+    "concepts": [
+      "So sánh K-Means và DBSCAN",
+      "Yêu cầu về số lượng cụm"
+    ],
+    "misconceptions": [
+      "cho rằng DBSCAN bắt buộc phải chọn trước K, vì gán nhầm đặc điểm của K-Means cho DBSCAN.",
+      "tin rằng DBSCAN chỉ làm việc với dữ liệu có nhãn, áp dụng sai kiến thức từ học có giám sát.",
+      "cho rằng DBSCAN không dùng khoảng cách, trong khi tham số epsilon chính là định nghĩa một ngưỡng khoảng cách."
+    ],
+    "reasoning": "Một trong những khác biệt cơ bản và nổi bật nhất giữa K-Means và DBSCAN là K-Means yêu cầu người dùng phải chỉ định trước số lượng cụm (K), trong khi DBSCAN có thể tự động xác định số lượng cụm dựa trên mật độ dữ liệu."
+  },
+  {
+    "question_id": "ch6_q30",
+    "concepts": [
+      "Hạn chế của DBSCAN",
+      "Dữ liệu có mật độ biến động"
+    ],
+    "misconceptions": [
+      "cho rằng DBSCAN kém hiệu quả khi dữ liệu có nhiều điểm tập trung, trong khi đây chính là điều kiện lý tưởng cho thuật toán hoạt động.",
+      "tin rằng DBSCAN kém hiệu quả khi dữ liệu không có nhiễu, một nhận định không có cơ sở.",
+      "cho rằng số chiều dữ liệu là nguyên nhân chính làm DBSCAN kém hiệu quả, thay vì là tính chất phân bố mật độ."
+    ],
+    "reasoning": "DBSCAN sử dụng một cặp tham số (ε, minPts) duy nhất cho toàn bộ tập dữ liệu. Do đó, nếu các cụm có mật độ rất khác nhau (có cụm rất dày đặc, có cụm rất thưa thớt), một cặp tham số sẽ không thể hoạt động tốt cho tất cả các cụm."
+  },
+  {
+    "question_id": "ch6_q31",
+    "concepts": [
+      "Hạn chế của DBSCAN",
+      "Dữ liệu có mật độ biến động"
+    ],
+    "misconceptions": [
+      "cho rằng việc chọn epsilon cố định không hiệu quả khi dữ liệu đã được chuẩn hóa, trong khi chuẩn hóa thường là một bước cần thiết.",
+      "tin rằng vấn đề chỉ xảy ra khi dữ liệu có đúng 3 cụm hoặc K quá lớn, vì nhầm lẫn với các vấn đề của K-Means."
+    ],
+    "reasoning": "Việc sử dụng một giá trị epsilon cố định cho toàn bộ tập dữ liệu trở nên kém hiệu quả khi mật độ của các cụm khác nhau. Một epsilon phù hợp cho cụm dày đặc có thể khiến các điểm ở cụm thưa thớt bị coi là nhiễu, và ngược lại."
+  },
+  {
+    "question_id": "ch6_q32",
+    "concepts": [
+      "So sánh K-Means và DBSCAN",
+      "Khả năng xử lý cụm có hình dạng phức tạp"
+    ],
+    "misconceptions": [
+      "cho rằng K-Means bắt tốt hơn các cấu trúc cụm không phải hình cầu, một nhận định trái ngược với hạn chế của nó.",
+      "tin rằng cả hai thuật toán luôn cho kết quả như nhau.",
+      "cho rằng Linear Regression là một thuật toán gom nhóm, vì nhầm lẫn với bài toán hồi quy."
+    ],
+    "reasoning": "Do K-Means có giả định các cụm có dạng hình cầu, nó thường thất bại trong việc nhận diện các cụm có hình dạng phức tạp. Ngược lại, DBSCAN dựa trên mật độ nên có thể tìm ra các cụm có hình dạng bất kỳ một cách hiệu quả."
+  },
+  {
+    "question_id": "ch6_q33",
+    "concepts": [
+      "So sánh K-Means và DBSCAN",
+      "Ứng dụng cho các dạng dữ liệu cụ thể"
+    ],
+    "misconceptions": [
+      "cho rằng K-Means luôn phù hợp hơn, vì không nhận thức được hạn chế của nó đối với các cụm có hình dạng phức tạp.",
+      "tin rằng chỉ có thể dùng PCA hoặc hồi quy cho các loại dữ liệu này, vì nhầm lẫn giữa các loại bài toán học máy."
+    ],
+    "reasoning": "Với các cấu trúc dữ liệu phức tạp như vòng tròn đồng tâm hay hình cong, K-Means sẽ thất bại vì nó cố gắng phân chia không gian bằng các đường thẳng. DBSCAN, với cách tiếp cận dựa trên mật độ và kết nối, sẽ nhận dạng chính xác các cấu trúc này."
+  },
+  {
+    "question_id": "ch6_q34",
+    "concepts": [
+      "So sánh K-Means và DBSCAN",
+      "Ưu điểm của K-Means về hiệu năng"
+    ],
+    "misconceptions": [
+      "cho rằng K-Means không cần tham số, vì nhầm lẫn với ưu điểm của thuật toán khác và bỏ qua tham số K.",
+      "tin rằng K-Means luôn phát hiện được nhiễu, vì nhầm lẫn với ưu điểm của DBSCAN.",
+      "cho rằng K-Means luôn bắt được cấu trúc phi tuyến, một nhận định sai về khả năng của thuật toán."
+    ],
+    "reasoning": "Trong trường hợp dữ liệu lớn và các cụm có cấu trúc tương đối đơn giản (dạng hình cầu), ưu điểm lớn của K-Means là tốc độ và hiệu quả tính toán, làm cho nó trở thành lựa chọn ưu tiên so với các thuật toán phức tạp hơn."
+  },
+  {
+    "question_id": "ch6_q35",
+    "concepts": [
+      "Định nghĩa giảm chiều dữ liệu"
+    ],
+    "misconceptions": [
+      "cho rằng giảm chiều là tăng số chiều, một suy nghĩ hoàn toàn trái ngược.",
+      "tin rằng giảm chiều chỉ đơn giản là xóa ngẫu nhiên các dòng dữ liệu (mẫu), vì nhầm lẫn giữa giảm chiều (xóa cột/đặc trưng) và giảm kích thước mẫu.",
+      "cho rằng giảm chiều là quá trình chuyển đổi kiểu dữ liệu (số sang chữ), một định nghĩa không liên quan."
+    ],
+    "reasoning": "Giảm chiều dữ liệu là quá trình biến đổi dữ liệu từ một không gian có số chiều cao sang một không gian mới có số chiều thấp hơn, trong khi cố gắng bảo toàn những thông tin hoặc cấu trúc quan trọng của dữ liệu gốc."
+  },
+  {
+    "question_id": "ch6_q36",
+    "concepts": [
+      "Mục tiêu của giảm chiều dữ liệu",
+      "Bảo toàn thông tin"
+    ],
+    "misconceptions": [
+      "cho rằng sau khi giảm chiều, dữ liệu mới phải giống hệt dữ liệu gốc, vì không hiểu rằng quá trình này thường có mất mát thông tin.",
+      "tin rằng giảm chiều chỉ áp dụng cho dữ liệu phân loại.",
+      "cho rằng giảm chiều là một quá trình luôn không mất mát thông tin, vì nhầm lẫn giữa các kỹ thuật khác nhau (ví dụ: PCA có thể mất mát thông tin, trong khi một số phép biến đổi khác thì không)."
+    ],
+    "reasoning": "Mục tiêu của việc giảm chiều không phải là để giữ lại mọi chi tiết, mà là để tạo ra một biểu diễn ở không gian ít chiều hơn nhưng vẫn giữ được những tính chất quan trọng và có ý nghĩa nhất của dữ liệu gốc, giúp mô hình học hiệu quả hơn hoặc trực quan hóa dễ dàng hơn."
+  },
+  {
+    "question_id": "ch6_q37",
+    "concepts": [
+      "Các thuật toán giảm chiều dữ liệu",
+      "PCA và t-SNE"
+    ],
+    "misconceptions": [
+      "cho rằng Decision Tree là một thuật toán giảm chiều, mặc dù nó có thể được dùng để lựa chọn đặc trưng nhưng bản chất nó là một mô hình phân lớp/hồi quy.",
+      "tin rằng Naive Bayes là một thuật toán giảm chiều, vì nhầm lẫn nó với một thuật toán phân lớp."
+    ],
+    "reasoning": "PCA (Phân tích thành phần chính) và t-SNE (t-Distributed Stochastic Neighbor Embedding) là hai trong số các thuật toán giảm chiều dữ liệu phổ biến nhất. Các lựa chọn còn lại là các thuật toán phân lớp."
+  },
+  {
+    "question_id": "ch6_q38",
+    "concepts": [
+      "Nguyên lý của PCA",
+      "Phương sai và thông tin"
+    ],
+    "misconceptions": [
+      "cho rằng PCA loại bỏ chiều có phương sai lớn nhất, một logic hoàn toàn ngược lại vì đây là chiều chứa nhiều thông tin nhất mà PCA muốn giữ lại.",
+      "tin rằng PCA loại bỏ chiều có nhiều giá trị khác nhau nhất, vì nhầm lẫn giữa 'số lượng giá trị duy nhất' và 'phương sai'.",
+      "cho rằng PCA loại bỏ chiều dựa trên vị trí vật lý của nó trong bảng dữ liệu, thay vì dựa trên tính chất thống kê."
+    ],
+    "reasoning": "PCA hoạt động dựa trên nguyên tắc giữ lại các hướng (chiều) có sự biến động (phương sai) lớn nhất và loại bỏ các hướng có phương sai thấp. Phương sai thấp đồng nghĩa với việc dữ liệu ít thay đổi trên chiều đó, do đó chứa ít thông tin hơn."
+  },
+  {
+    "question_id": "ch6_q39",
+    "concepts": [
+      "Nguyên lý của PCA",
+      "Phương sai và độ lệch chuẩn"
+    ],
+    "misconceptions": [
+      "cho rằng cột Văn bị loại bỏ vì là dữ liệu danh mục, mặc dù nó đang được biểu diễn bằng số.",
+      "tin rằng cột bị loại bỏ vì có giá trị lớn nhất hoặc không liên quan đến một cột khác, thay vì dựa trên tính chất nội tại của chính nó (phương sai)."
+    ],
+    "reasoning": "Trong ví dụ, cột điểm Văn có tất cả các giá trị bằng nhau, dẫn đến độ lệch chuẩn (và phương sai) bằng 0. Một chiều không có sự biến động sẽ không chứa thông tin gì để phân biệt các mẫu, do đó nó là ứng viên đầu tiên bị loại bỏ trong quá trình giảm chiều."
+  },
+  {
+    "question_id": "ch6_q40",
+    "concepts": [
+      "Tác động của giảm chiều",
+      "Giảm kích thước lưu trữ"
+    ],
+    "misconceptions": [
+      "cho rằng việc xóa 1 trong 4 cột sẽ giảm một tỷ lệ phần trăm khác 25%, vì tính toán sai hoặc không hiểu về tỷ lệ."
+    ],
+    "reasoning": "Khi xóa 1 cột trong tổng số 4 cột dữ liệu, lượng dữ liệu cần lưu trữ sẽ giảm đi 1/4, tương đương với 25%. Đây là một câu hỏi kiểm tra tính toán đơn giản dựa trên ví dụ."
+  },
+  {
+    "question_id": "ch6_q41",
+    "concepts": [
+      "Giảm chiều và mất mát thông tin",
+      "Tính không thể đảo ngược của PCA"
+    ],
+    "misconceptions": [
+      "cho rằng PCA là một phép biến đổi có thể đảo ngược hoàn toàn, cho phép khôi phục dữ liệu gốc một cách chính xác.",
+      "tin rằng sau khi giảm chiều thì không thể tính toán các thông số thống kê như trung bình.",
+      "cho rằng phải tăng số chiều trở lại ngay lập tức, không hiểu mục đích của việc giảm chiều."
+    ],
+    "reasoning": "Khi giảm chiều bằng PCA bằng cách loại bỏ các thành phần chính có phương sai thấp, một lượng thông tin sẽ bị mất đi. Do đó, quá trình này thường không thể đảo ngược hoàn toàn để khôi phục lại chính xác dữ liệu gốc."
+  },
+  {
+    "question_id": "ch6_q42",
+    "concepts": [
+      "Bản chất của PCA",
+      "Phép biến đổi tuyến tính",
+      "Không gian con (subspace)"
+    ],
+    "misconceptions": [
+      "cho rằng PCA tìm một tập nhãn mới, vì nhầm lẫn nó với bài toán phân lớp hoặc gom nhóm.",
+      "tin rằng PCA tìm một hàm mất mát phi tuyến, vì nhầm lẫn nó với các mô hình phức tạp hơn.",
+      "cho rằng PCA tìm một cây quyết định, vì nhầm lẫn với một loại mô hình học máy khác."
+    ],
+    "reasoning": "PCA là một kỹ thuật tìm ra một không gian con mới có số chiều thấp hơn bằng một phép biến đổi tuyến tính (phép chiếu). Các trục của không gian mới này (các thành phần chính) là các tổ hợp tuyến tính của các trục ban đầu."
+  },
+  {
+    "question_id": "ch6_q43",
+    "concepts": [
+      "Mục tiêu của PCA",
+      "Tối đa hóa phương sai"
+    ],
+    "misconceptions": [
+      "cho rằng PCA tối thiểu hóa phương sai, một logic hoàn toàn ngược lại với mục tiêu của nó.",
+      "tin rằng PCA tối đa hóa số nhãn hoặc giảm mọi giá trị về 0, những mục tiêu không liên quan đến nguyên lý hoạt động của PCA."
+    ],
+    "reasoning": "Các chiều mới (thành phần chính) trong PCA được chọn lựa một cách có thứ tự. Thành phần chính đầu tiên là chiều mà dữ liệu khi chiếu lên đó có phương sai lớn nhất. Thành phần thứ hai tối đa hóa phương sai trong các chiều còn lại và trực giao với thành phần đầu, và cứ thế tiếp tục."
+  },
+  {
+    "question_id": "ch6_q44",
+    "concepts": [
+      "Ưu điểm của PCA"
+    ],
+    "misconceptions": [
+      "cho rằng PCA có khả năng bắt cấu trúc phi tuyến rất tốt, vì nhầm lẫn nó với các kỹ thuật như t-SNE hoặc Kernel PCA.",
+      "tin rằng PCA thường được dùng để trực quan hóa hơn t-SNE, trong khi t-SNE thường tạo ra các cụm rõ ràng hơn cho mục đích trực quan hóa."
+    ],
+    "reasoning": "Ưu điểm chính của PCA là tốc độ và hiệu quả do nó chỉ thực hiện các phép biến đổi tuyến tính đơn giản. Nó cũng có tính giải thích được vì các thành phần chính giữ lại phương sai lớn nhất của dữ liệu."
+  },
+  {
+    "question_id": "ch6_q45",
+    "concepts": [
+      "Nhược điểm của PCA"
+    ],
+    "misconceptions": [
+      "cho rằng PCA không ổn định do yếu tố ngẫu nhiên, vì nhầm lẫn nó với các thuật toán có bước khởi tạo ngẫu nhiên như K-Means hoặc t-SNE (PCA là một thuật toán tất định).",
+      "tin rằng PCA có độ phức tạp cao hơn t-SNE trong trực quan hóa, trong khi thực tế PCA nhanh hơn và đơn giản hơn về mặt tính toán."
+    ],
+    "reasoning": "Vì là một phương pháp tuyến tính, PCA gặp khó khăn trong việc nắm bắt các mối quan hệ phi tuyến phức tạp trong dữ liệu. Ngoài ra, do dựa trên phương sai, nó rất nhạy cảm với các giá trị ngoại lai (outliers), vì các điểm này có thể làm thay đổi đáng kể phương hướng của các thành phần chính."
+  },
+  {
+    "question_id": "ch6_q46",
+    "concepts": [
+      "Trường hợp sử dụng PCA",
+      "Giả định về tính tuyến tính"
+    ],
+    "misconceptions": [
+      "cho rằng PCA phù hợp với dữ liệu danh mục thuần túy, trong khi nó được thiết kế cho dữ liệu số.",
+      "tin rằng PCA phù hợp nhất cho dữ liệu có cấu trúc phi tuyến phức tạp, vì không nhận ra hạn chế của nó.",
+      "cho rằng dữ liệu cần được gán nhãn trước khi dùng PCA, vì nhầm lẫn với học có giám sát."
+    ],
+    "reasoning": "PCA hoạt động hiệu quả nhất khi các mối quan hệ quan trọng trong dữ liệu có thể được mô tả một cách tuyến tính. Nó được thiết kế để hoạt động trên dữ liệu dạng số, nơi các khái niệm về phương sai và hiệp phương sai có ý nghĩa."
+  },
+  {
+    "question_id": "ch6_q47",
+    "concepts": [
+      "Định nghĩa t-SNE",
+      "Kỹ thuật giảm chiều phi tuyến"
+    ],
+    "misconceptions": [
+      "cho rằng t-SNE là một kỹ thuật tuyến tính, vì nhầm lẫn nó với PCA.",
+      "tin rằng t-SNE chỉ dành riêng cho dữ liệu có nhãn hoặc dữ liệu 1 chiều, những hạn chế không đúng với thực tế."
+    ],
+    "reasoning": "t-SNE (t-Distributed Stochastic Neighbor Embedding) là một kỹ thuật giảm chiều phi tuyến, có khả năng nắm bắt các cấu trúc cục bộ và phi tuyến trong dữ liệu mà các phương pháp tuyến tính như PCA thường bỏ lỡ."
+  },
+  {
+    "question_id": "ch6_q48",
+    "concepts": [
+      "Ứng dụng chính của t-SNE",
+      "Trực quan hóa dữ liệu đa chiều"
+    ],
+    "misconceptions": [
+      "cho rằng t-SNE dùng để dự đoán giá trị liên tục, vì nhầm lẫn nó với bài toán hồi quy.",
+      "tin rằng mục đích chính của t-SNE là tìm số cụm tối ưu cho K-Means, mặc dù kết quả trực quan hóa của nó có thể gợi ý về số cụm, đây không phải là mục đích chính.",
+      "cho rằng t-SNE có thể thay thế hoàn toàn PCA trong mọi trường hợp, vì không nhận thức được các nhược điểm của nó (ví dụ: chi phí tính toán, khó giải thích)."
+    ],
+    "reasoning": "Mặc dù là một kỹ thuật giảm chiều, t-SNE được sử dụng phổ biến nhất cho mục đích trực quan hóa dữ liệu đa chiều. Nó rất giỏi trong việc tạo ra các biểu diễn 2D hoặc 3D mà ở đó các cụm dữ liệu được tách biệt rõ ràng, giúp con người dễ dàng quan sát cấu trúc của dữ liệu."
+  },
+  {
+    "question_id": "ch6_q49",
+    "concepts": [
+      "Nguyên lý hoạt động của t-SNE",
+      "Bảo toàn cấu trúc lân cận"
+    ],
+    "misconceptions": [
+      "cho rằng t-SNE chỉ giữ nguyên vector và đổi tên cột, một cách hiểu quá đơn giản và sai lầm.",
+      "tin rằng t-SNE hoạt động bằng cách loại bỏ các chiều có giá trị âm, một quy tắc tùy tiện và không có cơ sở.",
+      "cho rằng t-SNE tìm các trọng tâm cụm gần nhất, vì nhầm lẫn nó với K-Means."
+    ],
+    "reasoning": "Ý tưởng cốt lõi của t-SNE là cố gắng bảo toàn cấu trúc lân cận của các điểm dữ liệu. Nó xây dựng một phân phối xác suất mô tả sự tương đồng giữa các điểm trong không gian chiều cao và sau đó cố gắng tạo ra một phân phối xác suất tương tự trong không gian chiều thấp, sao cho các điểm gần nhau trong không gian gốc cũng gần nhau trong không gian mới."
+  },
+  {
+    "question_id": "ch6_q50",
+    "concepts": [
+      "So sánh t-SNE và PCA"
+    ],
+    "misconceptions": [],
+    "reasoning": "Câu hỏi này tổng hợp các đặc điểm so sánh giữa t-SNE và PCA. t-SNE vượt trội trong việc bắt cấu trúc phi tuyến và trực quan hóa cụm, nhưng đi kèm với sự không ổn định do yếu tố ngẫu nhiên và kết quả khó giải thích hơn so với PCA."
+  }
+]

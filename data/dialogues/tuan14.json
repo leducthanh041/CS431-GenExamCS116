@@ -1,0 +1,2892 @@
+[
+  {
+    "question_id": "ch11_q1",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói triển khai là để cải thiện mô hình. Việc này diễn ra như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì khi triển khai, mình sẽ thấy các lỗi sai và sửa nó. Ví dụ như giảm bớt các đặc trưng không cần thiết."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy giai đoạn huấn luyện (training) dùng để làm gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Cũng để làm mô hình tốt hơn. Nhưng triển khai là bước cuối để hoàn thiện nó, kiểu như test trong thực tế."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử mô hình đã huấn luyện xong, giờ mình triển khai nó. Độ chính xác có tự tăng lên không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không tự tăng. Nhưng khi triển khai, mình thu thập dữ liệu mới để huấn luyện lại, đó là cải thiện còn gì?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy hành động 'thu thập dữ liệu' là một phần của 'triển khai' sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Vâng, chúng đi cùng nhau chứ. Triển khai mà không thu thập dữ liệu để cải thiện thì để làm gì?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu mình chỉ đưa mô hình lên server cho người khác dùng, không thu thập gì cả. Đó có phải là triển khai không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có... nhưng như vậy thì hơi vô nghĩa. Nhưng đúng là hành động đó không làm mô hình tốt lên."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mục đích chính của việc đưa mô hình lên server đó là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để người khác có thể dùng nó, truy cập vào nó. À... vậy mục đích chính là để nó có thể được tiếp cận."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm lẫn mục đích cốt lõi của triển khai (cho phép truy cập) với một hoạt động có thể đi kèm (thu thập dữ liệu để huấn luyện lại)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q2",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng tập validation đại diện cho toàn bộ các trường hợp trong thực tế?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Nếu không thì nó đâu được gọi là tập validation. Nó phải đủ tốt để kiểm tra mô hình."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một mô hình phân loại tin tức, được huấn luyện năm 2023. Vai trò của nó là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để phân loại các tin tức mới theo các chủ đề đã học, ví dụ như 'thể thao', 'chính trị'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử có một sự kiện 'thiên nga đen' xảy ra năm 2025. Mô hình sẽ làm gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ cố gắng xếp vào danh mục gần nhất. Nếu mô hình tốt, nó sẽ tìm ra các đặc điểm quen thuộc."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu hàng nghìn người dùng tìm kiếm về sự kiện mới này thì sao? Đó có phải là phản hồi không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đó là hành vi người dùng, không phải phản hồi cho mô hình. Phản hồi phải nằm trong tập dữ liệu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hành vi tìm kiếm đó cho thấy mô hình đang thiếu sót. Thông tin này đến từ đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "…Nó đến từ thực tế. Không phải từ tập validation ban đầu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy ngoài dữ liệu tĩnh, mô hình còn có thể nhận phản hồi từ nguồn nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Từ các phản hồi trực tiếp, từ người dùng và từ các sự kiện mới trong thực tế. Em chọn 'Phản hồi trực tiếp'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã thấy rằng mô hình không thể chỉ dựa vào dữ liệu tĩnh ban đầu, nó cần phản hồi từ thế giới thực để duy trì sự chính xác."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q3",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói người dùng luôn biết có AI vì nó được quảng bá. Vì sao bạn chắc chắn vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì các công ty phải khoe công nghệ AI của họ để cạnh tranh. Không có lý do gì để giấu nó đi cả."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục đích cuối cùng của việc khoe công nghệ là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để người dùng thấy sản phẩm xịn, thông minh và họ sẽ muốn dùng. Tính năng phải rõ ràng mới dùng được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nếu một tính năng không cần người dùng 'biết' để nó hoạt động thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Vô lý. Tính năng nào mà không cần người dùng biết? Nếu có thì chắc nó không quan trọng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bộ lọc thư rác trong email của bạn thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Đó là tính năng cơ bản mà. Nhưng nó cũng là AI à? Mình không nghĩ về nó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bạn có 'nhận thức' về nó mỗi khi mở email không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không hề. Mình chỉ mặc định là hòm thư sẽ sạch. Mình không biết nó đang chạy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mô hình AI có thể tồn tại thế nào trong mắt người dùng?"
+      },
+      {
+        "role": "Student",
+        "text": "Có thể là cái mình biết rõ, được quảng cáo. Hoặc nó chỉ chạy ngầm mà mình không hề hay biết."
+      },
+      {
+        "role": "Tutor",
+        "text": "Rất tốt. Ban đầu bạn cho rằng AI luôn phải được quảng bá. Thực tế nó có thể hoàn toàn vô hình."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q4",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ vì sao code của mô hình lại là phần lớn nhất trong hệ thống?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó là 'máy học' mà. Trí tuệ của cả hệ thống nằm ở mô hình, nên code của nó phải phức tạp và lớn nhất thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một hệ thống ML hoàn chỉnh chỉ có code mô hình thôi sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Không hẳn, nhưng các phần khác chỉ là phụ trợ. Code mô hình mới là cốt lõi, chiếm phần lớn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hãy kể vài phần 'phụ trợ' trong một hệ thống gợi ý video."
+      },
+      {
+        "role": "Student",
+        "text": "Thì có giao diện người dùng, cơ sở dữ liệu... những thứ đó có sẵn hoặc đơn giản mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Code thu thập và xử lý hành vi của hàng triệu người dùng thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Đó là phần của data pipeline. Nhưng nó chỉ chuẩn bị dữ liệu thôi, không phải phần 'thông minh'."
+      },
+      {
+        "role": "Tutor",
+        "text": "So với code định nghĩa mô hình, code để giám sát và tự động huấn luyện lại thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "…Chắc là phần giám sát và tự động hóa cũng sẽ cần nhiều code. Nó phức tạp hơn tôi nghĩ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy trong một hệ thống thực tế, code mô hình chiếm tỉ trọng thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Có lẽ nó chỉ là một phần nhỏ. Các hệ thống phụ trợ, thu thập dữ liệu, giám sát... mới là phần lớn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã thấy rằng code mô hình tuy quan trọng, nhưng thường chiếm tỉ trọng rất nhỏ so với toàn bộ hệ thống xung quanh nó."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q5",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng chỉ cần một loại công nghệ là đủ. Vì sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì một thư viện máy học mạnh như TensorFlow có thể làm mọi thứ, từ xử lý dữ liệu đến huấn luyện mô hình."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mục đích chính của một thư viện máy học là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là để xây dựng và huấn luyện các mô hình AI. Nó là cốt lõi."
+      },
+      {
+        "role": "Tutor",
+        "text": "TensorFlow lấy dữ liệu từ đâu để huấn luyện nếu có 10 terabytes dữ liệu?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó có thể đọc từ các file lớn. Có thể chậm, nhưng vẫn làm được. Không cần thứ gì khác."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy vai trò của một 'nền tảng dữ liệu lớn' là gì trong trường hợp này?"
+      },
+      {
+        "role": "Student",
+        "text": "Tôi nghĩ nó là một lựa chọn khác. Thay vì dùng TensorFlow, người ta dùng nền tảng đó. Tôi vẫn cho là không cần thiết."
+      },
+      {
+        "role": "Tutor",
+        "text": "Sau khi huấn luyện xong, làm sao bạn triển khai mô hình cho hàng triệu người dùng?"
+      },
+      {
+        "role": "Student",
+        "text": "…Chạy nó trên một server mạnh. Có lẽ cần 'hạ tầng đóng gói', nhưng nó vẫn tách biệt với thư viện ML."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy có vẻ các công nghệ này giải quyết các vấn đề khác nhau trong một quy trình?"
+      },
+      {
+        "role": "Student",
+        "text": "Có lẽ... Nền tảng dữ liệu để xử lý dữ liệu lớn, thư viện ML để tính toán, và hạ tầng để triển khai."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Chúng không phải là các lựa chọn riêng rẽ mà là các thành phần bổ trợ cho nhau. Bạn hãy xem lại câu hỏi."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q6",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn giải thích server nằm ở phía local. Vì sao bạn lại nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì em có thể chạy server trên máy tính của mình mà. Nó là localhost, tức là local."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, 'local' có nghĩa là 'máy tính của lập trình viên'?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Server chạy ở đâu thì nơi đó là local của nó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu người dùng ở Mỹ truy cập website của bạn. Ai là client?"
+      },
+      {
+        "role": "Student",
+        "text": "Người dùng ở Mỹ là client."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đối với người dùng đó, server của bạn là local hay remote?"
+      },
+      {
+        "role": "Student",
+        "text": "Với họ là remote... Nhưng server vẫn đang ở local trên máy em. Logic của em không sai."
+      },
+      {
+        "role": "Tutor",
+        "text": "Kiến trúc này nhìn từ góc độ người dùng hay lập trình viên?"
+      },
+      {
+        "role": "Student",
+        "text": "… Chắc là người dùng. Vậy phía local là phía của người dùng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy trong các thành phần đó, cái nào nằm ở phía người dùng?"
+      },
+      {
+        "role": "Student",
+        "text": "Là Client."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bạn đã nhầm lẫn 'local' của người phát triển (localhost) với 'local' trong quan hệ client-server, tức là phía người dùng cuối."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q7",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói batch prediction là dự đoán thời gian thực. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì 'batch' là xử lý một lô, máy tính làm tự động nên sẽ rất nhanh, tức là thời gian thực."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, 'thời gian thực' nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là có kết quả ngay lập tức, không phải chờ đợi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một ngân hàng gom hồ sơ vay cả ngày, rồi chạy mô hình lúc nửa đêm. Đây có phải batch prediction không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng, vì nó xử lý cả một 'lô' hồ sơ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu bạn nộp hồ sơ lúc 9h sáng, việc xử lý lúc nửa đêm có phải là 'ngay lập tức' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không hẳn, nhưng đó là do quy trình của họ. Về mặt kỹ thuật, khi chạy thì nó vẫn nhanh."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy sự chờ đợi của người dùng từ 9h sáng đến nửa đêm có quan trọng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có chứ... Vậy nó không phải thời gian thực rồi. Tức là batch prediction và thời gian thực là khác nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy yếu tố cốt lõi nào phân biệt chúng?"
+      },
+      {
+        "role": "Student",
+        "text": "Là độ trễ. Thời gian thực yêu cầu phản hồi ngay, còn batch prediction thì không, nó xử lý dữ liệu đã được thu thập."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Batch prediction xử lý một tập dữ liệu lớn cùng lúc, chấp nhận độ trễ. Thời gian thực thì xử lý từng yêu cầu và phản hồi ngay. Vậy, batch prediction là gì?"
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q8",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng batch prediction là gửi mô hình cho client. Vì sao cách này lại hiệu quả?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó giảm tải cho server. Client tự chạy mô hình thì server không phải làm gì cả."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử mô hình của chúng ta nặng 2GB. Client ở đây là điện thoại."
+      },
+      {
+        "role": "Student",
+        "text": "2GB thì lớn thật, nhưng có thể nén lại. Hoặc chỉ gửi những phần cần thiết thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Kể cả khi nén còn 500MB. Mạng có ổn định để gửi cho 1 triệu người dùng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Server xịn thì lo được chứ. Với lại không phải lúc nào cũng gửi, chỉ gửi khi cập nhật."
+      },
+      {
+        "role": "Tutor",
+        "text": "Dữ liệu để dự đoán cho 1 triệu người đó nằm ở đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì trên server chứ đâu. Server sẽ gửi dữ liệu đó xuống cho client."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy server có sẵn mô hình và dữ liệu. Tại sao phải gửi cả hai cho client?"
+      },
+      {
+        "role": "Student",
+        "text": "...Để client xử lý. Nhưng đúng là nghe hơi lạ. Server tự xử lý luôn có vẻ hợp lý hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy từ 'batch' (lô) trong ngữ cảnh này có thể ám chỉ điều gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là xử lý một lô dữ liệu lớn... ngay trên server. Giờ thì mình nghĩ đáp án là chạy định kỳ trên server và lưu kết quả."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn việc gửi mô hình cho client (edge prediction) với việc xử lý dữ liệu theo lô lớn tại server (batch prediction)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q9",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng batch prediction cần 'phản hồi ngay'. 'Batch' ở đây nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là xử lý một lô dữ liệu cùng lúc. Nhưng phải thật nhanh để còn gọi là 'phản hồi ngay'."
+      },
+      {
+        "role": "Tutor",
+        "text": "'Phản hồi ngay' là trong bao lâu? Dưới một giây được không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy, như khi mình lướt web, gợi ý phải hiện ra ngay lập tức."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử một 'batch' có 1 triệu giao dịch. Thời gian xử lý là 10 phút. Có 'ngay' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nhưng đó là do batch quá lớn hoặc phần cứng yếu. Nếu GPU mạnh, có thể chỉ mất vài giây thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Ok. Vậy một giao dịch mới đến ở giây thứ nhất của batch đó, nó phải chờ bao lâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó phải chờ đến khi batch tiếp theo được xử lý. Nhưng nếu batch chạy liên tục thì gần như là tức thì rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bạn vừa nói 'chờ đến khi batch tiếp theo được xử lý'. Vậy có độ trễ không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có một chút... nhưng không đáng kể. Nó vẫn là phản hồi nhanh mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu 'có độ trễ' là đặc tính cố hữu, vậy batch prediction có phải để 'phản hồi ngay' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là không... Nếu cần phản hồi ngay thật sự thì phải xử lý từng cái một. Vậy batch là cho những thứ chấp nhận trễ được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm lẫn batch prediction, vốn có độ trễ do xử lý theo lô, với online prediction. Batch prediction khả thi khi độ trễ không phải là vấn đề."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q10",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng batch prediction giúp dữ liệu cập nhật tức thời. 'Tức thời' ở đây nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nghĩa là khi người dùng cần, kết quả đã có sẵn. Hệ thống đã tính trước rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Kết quả có sẵn đó được tính toán dựa trên dữ liệu tại thời điểm nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì tại thời điểm hệ thống chạy batch. Nhưng nó chạy liên tục nên lúc nào cũng mới."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử batch chạy lúc 3 giờ sáng. Lúc 10 giờ sáng, có một khách hàng mới. Dự đoán cho khách hàng đó có 'tức thời' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có chứ. Vì hệ thống đã tính sẵn cho các nhóm khách hàng tương tự rồi. Khách hàng mới sẽ được xếp vào nhóm và có kết quả ngay."
+      },
+      {
+        "role": "Tutor",
+        "text": "Dữ liệu của khách hàng lúc 10 giờ sáng có tồn tại trong batch chạy lúc 3 giờ sáng không?"
+      },
+      {
+        "role": "Student",
+        "text": "À... không có. Nhưng kết quả vẫn có mà. Vậy vẫn là cập nhật."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy kết quả đó là dựa trên dữ liệu mới nhất hay dữ liệu từ lần chạy trước?"
+      },
+      {
+        "role": "Student",
+        "text": "Dựa trên dữ liệu từ lần chạy trước... Vậy là nó không thực sự 'tức thời' theo nghĩa dữ liệu mới nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Vậy giờ hãy xem lại các lựa chọn. Ưu điểm thực sự của batch prediction là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó không cập nhật tức thời, nhưng nó xử lý cả một lô lớn. Chắc là để dễ thực hiện hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn giữa việc 'có sẵn kết quả' và 'kết quả được tính bằng dữ liệu mới nhất'. Batch prediction dễ thực hiện nhưng có độ trễ."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q11",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng client phải có internet cho batch prediction. Vì sao lại vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì batch là gửi cả cục dữ liệu đi xử lý mà. Không có internet sao gửi được?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Việc xử lý dữ liệu đó diễn ra ở đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Ở trên server. Client gửi dữ liệu lên server, server xử lý rồi trả kết quả về."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét một nhà máy. Dữ liệu sensor được thu thập và xử lý hàng đêm."
+      },
+      {
+        "role": "Student",
+        "text": "Thì các sensor đó phải kết nối internet để gửi dữ liệu lên server xử lý chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu cái server xử lý đó nằm ngay trong nhà máy thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Vẫn cần internet chứ. Để người quản lý từ xa có thể xem báo cáo trên điện thoại (client) của họ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Việc 'xem báo cáo' có phải là lúc 'prediction' diễn ra không?"
+      },
+      {
+        "role": "Student",
+        "text": "À không... prediction đã chạy từ đêm hôm trước rồi. Xem báo cáo là xem kết quả có sẵn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy việc client có cần internet không, có phải khuyết điểm của *quá trình prediction*?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là không. Nó là vấn đề truy cập kết quả thôi. Vậy đây không phải khuyết điểm của batch prediction."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Nhầm lẫn nằm ở việc gán yêu cầu internet của client vào quá trình batch prediction, trong khi prediction có thể chạy hoàn toàn offline trên server."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q12",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói batch prediction dùng cho phản hồi tức thì. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì 'batch' là xử lý một lô lớn. Để xử lý được lô lớn thì nó phải được tối ưu để chạy thật nhanh, nên kết quả sẽ có tức thì."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trong trường hợp này, 'phản hồi tức thì' có nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nghĩa là khi người dùng cần một dự đoán, họ phải nhận được kết quả ngay lập tức, trong vài giây."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử ngân hàng cần chấm điểm tín dụng cho 1 triệu khách hàng cuối tháng. Họ dùng batch hay real-time?"
+      },
+      {
+        "role": "Student",
+        "text": "Họ dùng batch, vì đó là một lô 1 triệu người. Nhưng quá trình chạy vẫn phải nhanh và hiệu quả chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Kết quả cho 1 triệu khách hàng đó có cần 'tức thì' cho một người dùng cụ thể không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nó chỉ cần chạy xong trong đêm. Nhưng nó vẫn phải nhanh... 'Nhanh' và 'tức thì' có lẽ khác nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy khi bạn xem Netflix và được gợi ý phim, đó là tức thì hay theo lô?"
+      },
+      {
+        "role": "Student",
+        "text": "Đó phải là tức thì, cho riêng em. À... còn việc chấm điểm tín dụng là cho tất cả mọi người, không cần ngay. Em thấy sự khác biệt rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy khi nào nên ưu tiên dùng batch prediction?"
+      },
+      {
+        "role": "Student",
+        "text": "Khi có một lượng lớn dữ liệu cần xử lý, và không có yêu cầu phải trả kết quả ngay lập tức cho từng yêu cầu đơn lẻ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn giữa tốc độ xử lý tổng thể và yêu cầu phản hồi tức thì. Batch prediction ưu tiên thông lượng, không phải độ trễ thấp."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q13",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ vì sao xử lý nhiều dữ liệu cùng lúc lại tăng độ chính xác?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó có nhiều thông tin hơn để đưa ra quyết định. Rõ ràng là vậy. Càng nhiều mẫu thì càng chính xác."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'độ chính xác' của mô hình được quyết định khi nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Lúc nó dự đoán chứ sao. Nhiều dữ liệu hơn thì dự đoán tốt hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử mình có một cái cân đã được hiệu chỉnh sai từ đầu."
+      },
+      {
+        "role": "Student",
+        "text": "Thì sao ạ? Cái cân thì liên quan gì đến mô hình AI?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu mình cân 1 quả táo, và cân 100 quả táo. Kết quả cân mỗi quả có chính xác hơn không?"
+      },
+      {
+        "role": "Student",
+        "text": "Tất nhiên là không. Cái cân đã sai thì cân bao nhiêu cũng sai. Nhưng mô hình AI phức tạp hơn, nó không phải cái cân."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mô hình đã 'huấn luyện' xong. Giống cái cân đã 'hiệu chỉnh' xong."
+      },
+      {
+        "role": "Student",
+        "text": "Vẫn khác. Có thể khi thấy nhiều mẫu cùng lúc, mô hình sẽ nhận ra 'bối cảnh' chung và tự điều chỉnh cho phù hợp."
+      },
+      {
+        "role": "Tutor",
+        "text": "Batch prediction có thay đổi trọng số đã được huấn luyện của mô hình không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Không, việc đó là của quá trình training. À... vậy nó chỉ áp dụng công thức cũ lên nhiều thứ một lúc thôi sao?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy lợi ích chính của việc 'áp dụng hàng loạt' đó là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó... nhanh hơn vì không phải chạy từng cái. Vậy là... giảm độ trễ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn việc tăng hiệu quả xử lý (giảm độ trễ) với việc cải thiện chất lượng mô hình (độ chính xác)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q14",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn cho rằng batch prediction dùng để phân loại ảnh trên trình duyệt. Tại sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó xử lý dữ liệu. Phân loại ảnh là một dạng xử lý, và làm trên trình duyệt thì tiện cho người dùng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Từ 'batch' (lô) trong 'batch prediction' gợi cho bạn điều gì về cách xử lý?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó nghĩa là xử lý một lô dữ liệu. Nhưng một lô có thể được xử lý rất nhanh, gần như tức thì."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử một hệ thống có 1 triệu người dùng cần phân loại ảnh. Nó sẽ xử lý 1 triệu yêu cầu riêng lẻ, hay gom lại?"
+      },
+      {
+        "role": "Student",
+        "text": "Nếu xử lý trên trình duyệt thì mỗi người là một yêu cầu riêng lẻ. Nhưng nó vẫn là batch vì model được 'batch' sẵn trong trình duyệt."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mục đích của việc 'gom thành lô' là gì, nếu mọi thứ đều có thể xử lý riêng lẻ và tức thì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để... quản lý cho dễ? Em không chắc, nhưng em thấy xử lý trên trình duyệt vẫn là một khả năng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hãy xét một ví dụ khác: dự báo doanh thu hàng quý cho công ty. Quá trình này diễn ra thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Họ sẽ thu thập dữ liệu của cả quý, rồi chạy mô hình một lần. À... cái này là gom lại rồi xử lý sau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, đặc điểm cốt lõi của batch prediction là gì? Và nó có giống với việc 'phân loại ảnh trực tiếp' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó là gom dữ liệu lại và xử lý theo một lịch trình, không phải tức thì. Vậy đáp án phải là 'Một dự đoán cho mỗi người dùng và có thể chạy định kỳ'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn batch prediction, vốn xử lý dữ liệu theo lô và có lịch trình, với real-time prediction, vốn cần phản hồi ngay lập tức trên trình duyệt."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q15",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong câu trả lời của bạn, vì sao bạn nghĩ model phải chạy trên client?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì 'in-service' là bên trong dịch vụ. Dịch vụ cung cấp cho người dùng thì phải chạy trên máy của họ, tức là client."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, 'service' trong 'model-in-service' ám chỉ cái gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là dịch vụ mà ứng dụng cung cấp, ví dụ app trên điện thoại. Model nằm trong app đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử model của bạn là một mô hình ngôn ngữ lớn, nặng 100GB. Client có chạy được không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đó là trường hợp đặc biệt. Với các model nhỏ gọn để nhận diện hình ảnh thì chạy trên client vẫn tốt hơn mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy kiến trúc 'model-in-service' chỉ áp dụng cho model nhỏ thôi sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Không hẳn, nhưng chạy trên client là cách tối ưu nhất để giảm tải cho server và tăng tốc độ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu bạn muốn cập nhật model hàng ngày, bạn sẽ làm gì với 1 triệu client đang dùng?"
+      },
+      {
+        "role": "Student",
+        "text": "...Việc đó sẽ rất phức tạp. Phải bắt người dùng cập nhật app liên tục. Đúng là không khả thi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy đặt model ở đâu sẽ giúp việc quản lý và cập nhật trở nên khả thi?"
+      },
+      {
+        "role": "Student",
+        "text": "Đặt trên một nơi duy nhất... là server. À, vậy 'service' ở đây là web service, và model là một phần của nó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm lẫn 'in-service' nghĩa là 'trên thiết bị người dùng'. Thực chất nó có nghĩa là model được tích hợp như một phần của dịch vụ phía máy chủ."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q16",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng web server gửi cả mô hình đến người dùng. Mục đích của việc đó là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để máy của người dùng tự xử lý. Như vậy server sẽ nhẹ tải hơn, không phải tính toán cho tất cả mọi người."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một mô hình AI có thể nặng bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc cũng vài trăm MB, hoặc vài GB. Nhưng có thể nén lại mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử mô hình sau khi nén còn 1GB. Chuyện gì xảy ra khi bạn vào trang web?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì người dùng phải tải nó về thôi. Mạng bây giờ nhanh mà, chỉ là đợi một chút."
+      },
+      {
+        "role": "Tutor",
+        "text": "Sau khi đợi tải 1GB, bạn gửi ảnh lên. Kết quả có ngay lập tức không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, máy mình còn phải giải nén và chạy mô hình. Nhưng ít nhất server không phải làm gì cả."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mô hình nào hiệu quả hơn: chờ vài phút hay chờ vài giây?"
+      },
+      {
+        "role": "Student",
+        "text": "Chờ vài giây chứ... Gửi cả mô hình đi có vẻ không thực tế cho mỗi lần dùng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy để có kết quả nhanh, thứ gì nên được gửi đi và thứ gì nên ở lại?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc chỉ nên gửi dữ liệu (ảnh, text) lên server, và nhận lại kết quả. Mô hình nên ở lại trên server."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tóm lại, trong model-in-service, web server giữ mô hình lại, nhận request, xử lý và trả về kết quả."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q17",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn lý giải rằng model-in-service không cần internet. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì 'in-service' có nghĩa là model đã nằm bên trong dịch vụ rồi. Nó chạy ngay tại chỗ, không cần kết nối mạng để gọi đi đâu cả."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, một 'dịch vụ' phía máy chủ (server-side service) bao gồm những gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó có client là người dùng và server là nơi xử lý. Nhưng ở đây model đã ở trong server, nên chúng không cần mạng để nói chuyện với nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng là model và server không cần mạng để nói chuyện với nhau. Nhưng client làm cách nào để nói chuyện với server?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì client gửi yêu cầu thôi. Vấn đề là 'ưu điểm' nằm ở chỗ model và server không cần kết nối mạng riêng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Yêu cầu đó được gửi đi như thế nào nếu không có internet?"
+      },
+      {
+        "role": "Student",
+        "text": "À... Ý mình là... client cần internet, nhưng chỉ để gọi server thôi. Nhưng đó không phải là điểm chính."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nếu client bắt buộc phải có internet, thì 'không cần internet' có phải là một ưu điểm không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là không... Vậy là toàn bộ hệ thống vẫn cần internet. Lợi thế không nằm ở đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy khi model đặt chung với server, ưu điểm thực sự là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là nó có thể chạy trên server có sẵn, không cần một máy chủ riêng cho model. Tức là 'Tận dụng hạ tầng server hiện có'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Bạn đã nhầm lẫn giữa việc không cần mạng cho giao tiếp *nội bộ* (model-server) với việc toàn bộ hệ thống không cần mạng."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q18",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "[A] Bạn nghĩ vì sao model-in-service lại không thể cập nhật được?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó đóng gói chung với web server. Đã thành một khối rồi thì làm sao thay thế model bên trong được?"
+      },
+      {
+        "role": "Tutor",
+        "text": "[B] 'Đóng gói chung' nghĩa là chúng dính chặt vĩnh viễn à?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Nó là một file thực thi hoặc một container duy nhất. Muốn thay là phải thay cả cục."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Khi bạn cập nhật một thư viện trong app điện thoại thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì phải build lại toàn bộ app và tung ra phiên bản mới. Nhưng đó là app, không phải server đang chạy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Việc 'build lại toàn bộ app' có phải là một hình thức cập nhật không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đó là cập nhật app, chứ không phải cập nhật một phần bên trong. Logic của em là không thể 'tháo' model cũ ra và 'lắp' model mới vào khi server đang chạy."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Vậy quá trình tạo ra phiên bản mới với model mới, rồi triển khai nó... có phải là 'cập nhật' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chờ đã... Tức là mình thay cả gói ứng dụng cũ bằng một gói ứng dụng mới có model mới? Về mặt kỹ thuật thì đúng là cập nhật."
+      },
+      {
+        "role": "Tutor",
+        "text": "[D] Vậy nhược điểm thực sự của việc này là gì, nếu không phải là 'không thể cập nhật'?"
+      },
+      {
+        "role": "Student",
+        "text": "Có lẽ là... việc cập nhật model đòi hỏi phải triển khai lại cả web server. Nó có thể làm gián đoạn dịch vụ và tốn tài nguyên hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "[E] Đúng vậy. Nhầm lẫn của bạn là cho rằng 'đóng gói chung' đồng nghĩa với 'không thể thay đổi', trong khi thực tế nó chỉ có nghĩa là việc cập nhật phải được thực hiện ở cấp độ toàn bộ ứng dụng."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q19",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng web server và mô hình luôn scale cùng nhau. Tại sao bạn lại nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì chúng chạy chung trên một server. Khi có nhiều người dùng, cả web server và mô hình đều phải xử lý nhiều hơn, nên chúng phải scale cùng lúc."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy web server dùng tài nguyên cho việc gì? Mô hình dùng cho việc gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Web server phục vụ các trang HTML, CSS. Mô hình thì chạy các phép toán AI. Nhưng cuối cùng chúng đều dùng chung CPU và RAM."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tưởng tượng 1000 người cùng vào xem trang 'Giới thiệu'. Mô hình có được sử dụng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không. Nhưng đó là trường hợp hiếm. Người ta vào chủ yếu là để dùng tính năng AI chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Ok. Giờ một người gửi yêu cầu rất phức tạp, mô hình chạy mất 5 phút. Lúc đó, tài nguyên của server bị chiếm dụng nhiều không?"
+      },
+      {
+        "role": "Student",
+        "text": "Rất nhiều. Nhưng đó vẫn là một người dùng, một request thôi. Lượng truy cập vẫn thấp mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy giữa 1000 người và 1 người, kịch bản nào làm server quá tải?"
+      },
+      {
+        "role": "Student",
+        "text": "...Kịch bản 1 người. Em thấy có vẻ lạ. Rõ ràng là chúng không phải lúc nào cũng đi đôi với nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Khi đã thấy chúng có thể biến đổi độc lập, bạn quay lại câu hỏi ban đầu. Vấn đề của kiến trúc này là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Vấn đề là mô hình có thể chiếm hết tài nguyên, làm sập cả phần web, dù cho lượng truy cập web không hề cao."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Sai lầm của bạn là giả định nhu cầu tài nguyên của web và mô hình luôn tỷ lệ thuận. Thực tế, một mô hình lớn có thể tiêu tốn tài nguyên đột biến và làm ảnh hưởng đến web server."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q20",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng việc triển khai service sẽ phức tạp và tốn công hơn làm thủ công. Tại sao lại vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Phải xây dựng API, duy trì server, xử lý lỗi. Rõ ràng là tốn công hơn là một người ngồi nhập liệu và tính toán."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'công việc thủ công' trong trường hợp này là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là một người nhận yêu cầu, chạy model, rồi trả kết quả. Nhanh gọn mà, cần gì service."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu có 10 yêu cầu một giờ, người đó làm được. Nếu là 10,000 yêu cầu thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì phải thuê thêm người. Nhưng chi phí xây dựng service ban đầu cũng rất lớn, có khi còn lớn hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hãy so sánh chi phí vận hành cho yêu cầu thứ 10,001 giữa hai phương pháp."
+      },
+      {
+        "role": "Student",
+        "text": "Với service thì gần như bằng 0, còn thủ công thì vẫn phải trả lương cho một người. Nhưng chi phí ban đầu..."
+      },
+      {
+        "role": "Tutor",
+        "text": "Câu hỏi là về lợi ích 'chính'. Lợi ích này thể hiện rõ nhất ở đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Ở quy mô lớn... Khi đó, việc tự động hóa giúp loại bỏ công việc lặp đi lặp lại. Tức là giảm công việc thủ công."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Nhầm lẫn của bạn là so sánh chi phí thiết lập một lần với chi phí vận hành lặp lại."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q21",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ `model-in-service` chạy trên client. Vì sao 'in-service' lại là trên client?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó được tích hợp 'in' - bên trong ứng dụng client, ví dụ như một mobile app."
+      },
+      {
+        "role": "Tutor",
+        "text": "Từ 'service' trong MLOps thường ám chỉ điều gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là một dịch vụ. Có thể là dịch vụ local trên máy client, không nhất thiết phải là server."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu 1000 người dùng app, model sẽ chạy ở đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì 1000 model chạy trên 1000 máy client. Như vậy sẽ giảm tải cho server."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu model dự đoán thời tiết nặng 5GB thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Ừm... app sẽ rất nặng. Nhưng có thể có cách tối ưu model mà. Logic của em vẫn có lý."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'in-service' có thể ám chỉ 'in' một thứ khác ngoài client không?"
+      },
+      {
+        "role": "Student",
+        "text": "... 'in' một web server? Để server xử lý rồi trả kết quả cho client?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Dựa vào đó, model-in-service khác model-as-service ở đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Model-in-service là đặt mô hình chung với web server. Còn model-as-service là một dịch vụ riêng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm 'in-service' với việc chạy trên client. Thực tế nó là 'in' trong tiến trình của web service."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q22",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng mô hình được đặt trong database. Database có chức năng chính là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để lưu trữ và truy vấn dữ liệu. Mô hình cũng chỉ là một khối dữ liệu thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy việc 'thực thi' một mô hình có nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là lấy nó ra từ database để dùng. Giống như lấy thông tin người dùng vậy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mô hình nhận ảnh, rồi trả về 'chó' hoặc 'mèo'. Cái gì đã thực hiện phép tính toán đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì chính là cái mô hình đó. Nó chứa logic để tính toán. Logic đó lưu trong database."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một database chuẩn có tự thực hiện các phép tính phức tạp như nhân ma trận không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là không... Nhưng nó có thể gọi một tiến trình khác. Miễn là nó được quản lý bởi database."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu mô hình cần GPU để chạy nhanh. Database có quản lý việc sử dụng GPU không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Không. Vậy là nó phải chạy ở chỗ khác. Database chỉ lưu trọng số thôi sao?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'Model-as-a-Service' nhấn mạnh nơi lưu trữ hay nơi thực thi?"
+      },
+      {
+        "role": "Student",
+        "text": "Là nơi thực thi. Tức là mô hình được thực thi trên một dịch vụ, một server riêng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn nơi lưu trữ trọng số (database) với nơi thực thi tính toán (server)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q23",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn giải thích được không, tại sao mỗi request lại cần huấn luyện lại mô hình từ đầu?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải huấn luyện lại thì mới cho ra kết quả chính xác cho đúng request đó chứ ạ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục đích của việc 'huấn luyện' là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là để mô hình 'học' từ dữ liệu mới. Request mới là dữ liệu mới."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hãy xét một ứng dụng chat như ChatGPT. Nó xử lý bao nhiêu request mỗi giây?"
+      },
+      {
+        "role": "Student",
+        "text": "Rất nhiều ạ, hàng triệu trên toàn thế giới."
+      },
+      {
+        "role": "Tutor",
+        "text": "Huấn luyện một mô hình lớn như vậy thường mất bao lâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc cũng phải vài ngày hoặc vài tuần... nhưng có thể họ có cách làm nhanh hơn?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy thời gian phản hồi một request sẽ là vài ngày?"
+      },
+      {
+        "role": "Student",
+        "text": "À không... vô lý ạ. Vậy nó không huấn luyện lại? Nó chỉ dùng cái đã có thôi sao?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, sự khác biệt giữa 'dùng' một mô hình và 'huấn luyện lại' nó là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Dùng là áp dụng cái đã học để tạo ra kết quả. Huấn luyện là học lại từ đầu. Vậy backend chỉ cần gọi và dùng thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm lẫn giữa việc sử dụng mô hình đã huấn luyện (inference) và quá trình huấn luyện lại (training). Mô hình được huấn luyện một lần và sau đó được gọi để phục vụ nhiều request."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q24",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn cho rằng model-as-service không có độ trễ. Cơ sở nào cho kết luận này?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó là một 'dịch vụ'. Dịch vụ được tối ưu để chạy riêng, nên nó phải nhanh và không có độ trễ chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bạn định nghĩa 'độ trễ' ở đây là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là thời gian chờ. Tách ra thành dịch vụ riêng rồi thì ứng dụng web chỉ cần gọi là có kết quả, không phải chờ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Cuộc gọi từ ứng dụng web đến dịch vụ model có cần di chuyển qua mạng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có, nhưng nó là gọi API trong cùng hệ thống, chắc chắn rất nhanh. Nhanh đến mức không thể coi là có độ trễ được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nếu model service đặt ở server Singapore, web app ở Hà Nội thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì... có độ trễ. Nhưng đó là trường hợp xấu. Thường người ta sẽ đặt gần nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Dù gần, việc gửi và nhận dữ liệu qua mạng có tốn thời gian không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có, nhưng nó không đáng kể... Chắc là mình đã sai khi nói 'không có độ trễ'. Nó có, nhưng rất nhỏ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy ưu điểm thực sự của việc tách riêng này là gì, nếu không phải là triệt tiêu độ trễ?"
+      },
+      {
+        "role": "Student",
+        "text": "Là nếu service model bị lỗi, sập thì ứng dụng web chính vẫn chạy được. Nó chỉ không gọi được chức năng đó thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Ưu điểm là sự tách biệt giúp tăng tính ổn định, không phải là loại bỏ độ trễ mạng. Luôn có một sự đánh đổi."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q25",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "[Giai đoạn A] Bạn cho rằng một dịch vụ mô hình không thể tái sử dụng. Vì sao bạn lại nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó là một 'dịch vụ'. Giống như mình gọi một dịch vụ làm một việc, xong là hết. Mỗi lần cần lại phải gọi một cái mới."
+      },
+      {
+        "role": "Tutor",
+        "text": "[Giai đoạn B] Vậy theo bạn, 'dịch vụ' có nghĩa là dùng một lần rồi bỏ?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy, trong ngữ cảnh này. Model xử lý request của em xong thì phiên làm việc đó kết thúc. Nó không được 'tái sử dụng'."
+      },
+      {
+        "role": "Tutor",
+        "text": "[Giai đoạn C] Bạn có dùng Google Search không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có, nhưng nó liên quan gì? Google là một gã khổng lồ, còn đây là một khái niệm kiến trúc."
+      },
+      {
+        "role": "Tutor",
+        "text": "Google Search có phải là một dịch vụ không?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải, là dịch vụ tìm kiếm. Nhưng nó khác."
+      },
+      {
+        "role": "Tutor",
+        "text": "Khác ở điểm nào về mặt 'tái sử dụng'?"
+      },
+      {
+        "role": "Student",
+        "text": "Sau khi em search, người khác vẫn search được. À... Chắc là em nhầm. Nhưng model-as-a-service có vẻ cụ thể hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "[Giai đoạn D] Vậy bản chất của 'dịch vụ' có phải là để nhiều người cùng dùng không? Quay lại câu hỏi, 'không thể tái sử dụng' có phải nhược điểm của model-as-a-service không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nó không phải là nhược điểm. Tái sử dụng được chính là ưu điểm của nó."
+      },
+      {
+        "role": "Tutor",
+        "text": "[Giai đoạn E] Chính xác. Bạn đã nhầm lẫn 'một lần gọi dịch vụ' với 'khả năng tái sử dụng của dịch vụ'. Tái sử dụng chính là thế mạnh của kiến trúc này."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q26",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ 'service' trong 'model-as-a-service' nghĩa là gì khi nó chạy offline?"
+      },
+      {
+        "role": "Student",
+        "text": "Là nó phục vụ cho ứng dụng trên client. Chạy offline để không cần mạng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một 'service' thường cần gì để giao tiếp với phía client?"
+      },
+      {
+        "role": "Student",
+        "text": "Cần một kết nối, nhưng nếu nó nằm sẵn trên client thì không cần nữa."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu 3 ứng dụng khác nhau trên điện thoại muốn dùng model này thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì mỗi ứng dụng cài một bản của model đó. Vẫn đảm bảo offline."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu model đó 5GB, thì 3 ứng dụng sẽ chiếm bao nhiêu dung lượng?"
+      },
+      {
+        "role": "Student",
+        "text": "Sẽ là 15GB... Hơi tốn, nhưng vẫn chạy offline được, đó mới là cái lợi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu model cần cập nhật hàng tuần, bạn sẽ làm gì với 3 bản đó?"
+      },
+      {
+        "role": "Student",
+        "text": "...Phải cập nhật cả ba. Việc này khá là rắc rối."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy có cách nào hiệu quả hơn là phải duy trì 3 bản sao không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có thể là... đặt nó ở một nơi chung và cho 3 ứng dụng cùng gọi tới. Vậy nó sẽ phù hợp để tái sử dụng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bạn đã nhầm lẫn việc chạy model offline trên client (edge prediction) với một dịch vụ tập trung. Model-as-a-service tối ưu cho việc tái sử dụng."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q27",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ KMeans là một cách triển khai. Vậy nó triển khai cái gì cho người dùng cuối?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó là một phần của cả quy trình machine learning. Nên nó phải thuộc về triển khai chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục đích cuối của việc 'triển khai mô hình' là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để mô hình có thể được dùng, đưa ra dự đoán trong thực tế."
+      },
+      {
+        "role": "Tutor",
+        "text": "Ok. Giả sử mô hình dự đoán giá nhà đã xong. Người dùng nhập diện tích, bạn trả về giá. KMeans nằm ở đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "KMeans được dùng để nhóm dữ liệu lúc huấn luyện rồi. Không có bước đó thì mô hình không đúng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng là lúc huấn luyện. Còn lúc người dùng đang yêu cầu dự đoán thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Lúc đó thì nó không chạy trực tiếp. Nhưng nó vẫn là một phần của hệ thống mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy cái gì đang trực tiếp nhận yêu cầu và trả kết quả cho người dùng?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là một cái cổng giao tiếp... một cái API nào đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nhìn vào các lựa chọn, cái nào là 'cổng giao tiếp' đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Là REST API. Nó là giao diện."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tóm lại, KMeans là thuật toán xây dựng mô hình, còn REST API là cách cung cấp mô hình đó như một dịch vụ."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q28",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng quản lý phụ thuộc không quan trọng với ML. Tại sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì ML là về mô hình và dữ liệu. Triển khai chỉ là chạy file `predict.py` thôi, không phải hệ thống phức tạp."
+      },
+      {
+        "role": "Tutor",
+        "text": "File `predict.py` đó chạy một mình hay cần thư viện nào khác?"
+      },
+      {
+        "role": "Student",
+        "text": "Tất nhiên là cần, ví dụ như Tensorflow, Pandas. Nhưng cứ `pip install` là xong, rất đơn giản."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu server triển khai có sẵn Tensorflow 1.x, còn code của bạn cần 2.x thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì mình gỡ bản cũ, cài bản mới. Việc này chỉ mất vài giây, đâu phải là vấn đề 'quản lý' gì to tát."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một ứng dụng khác trên cùng server đó đang cần bản 1.x để chạy thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Vậy thì... phải dùng môi trường ảo hoặc container. Nhưng đó là vấn đề của hạ tầng, không phải của ML."
+      },
+      {
+        "role": "Tutor",
+        "text": "Việc quyết định dùng công cụ nào để giải quyết mâu thuẫn thư viện, đó là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "À... đó chính là quản lý các thư viện phụ thuộc. Vậy là triển khai ML cũng cần nó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy với câu hỏi ban đầu, bạn sẽ chọn đáp án nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Em chọn 'Quản lý tính phụ thuộc'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Đưa mô hình ML vào hoạt động cũng là triển khai phần mềm, nên vẫn cần quản lý phụ thuộc chặt chẽ."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q29",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ rằng 'model-as-service' là dự đoán theo lô. Tại sao 'dịch vụ' lại đồng nghĩa với 'theo lô'?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì dịch vụ thường được lên lịch để chạy, xử lý một khối lượng lớn công việc một lúc cho hiệu quả. Nên nó là theo lô."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, đặc tính của dự đoán theo lô là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là thu thập dữ liệu trong một khoảng thời gian, rồi xử lý tất cả cùng một lúc, thường là vào ban đêm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu ứng dụng Grab cần dự đoán giá một chuyến đi, nó có đợi đến đêm không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nhưng đó là trường hợp đặc biệt. Hầu hết các dịch vụ cho doanh nghiệp đều chạy theo lô để tối ưu chi phí."
+      },
+      {
+        "role": "Tutor",
+        "text": "API Google Dịch có phải là một 'dịch vụ web' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng, nó là một dịch vụ. Nhưng nó đơn giản hơn. Các model phức tạp cần xử lý theo lô."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một 'dịch vụ' có thể cung cấp phản hồi ngay lập tức, đúng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Vâng... có thể. Vậy là nó không nhất thiết phải theo lô."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'model-as-service' nhấn mạnh khả năng nào của mô hình?"
+      },
+      {
+        "role": "Student",
+        "text": "Khả năng được gọi và trả về kết quả ngay lập tức thông qua một dịch vụ. Tức là thời gian thực."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Ban đầu bạn đã nhầm lẫn 'model-as-service', vốn nhấn mạnh tính tức thời qua API, với 'batch prediction' là xử lý dữ liệu theo lịch trình."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q30",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn cho rằng edge prediction chạy trên server riêng. Tại sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì 'edge' có nghĩa là nằm ở rìa, không phải ở trung tâm. Một server riêng chuyên xử lý AI chính là nằm ở rìa của hệ thống chính."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'rìa' của hệ thống mà bạn nói đến, nó ở gần người dùng hay gần trung tâm dữ liệu hơn?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó vẫn là một server, nên nó nằm trong trung tâm dữ liệu, nhưng là một server tách biệt. Nó vẫn gần trung tâm dữ liệu hơn chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hãy tưởng tượng một app camera trên điện thoại, tự động gắn tag cho ảnh mà không cần internet. Mô hình đó chạy ở đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó chạy ngay trên điện thoại. Nhưng đó là trường hợp đặc biệt, hầu hết các dịch vụ lớn đều cần server."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trường hợp đó có được gọi là 'dự đoán' (prediction) không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có, nó dự đoán nội dung của ảnh. Nhưng nó quá nhỏ, không thể so với các mô hình trên server được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy vị trí của điện thoại đó nằm ở đâu trong toàn bộ mạng lưới? Nó có phải là điểm 'biên' cuối cùng không?"
+      },
+      {
+        "role": "Student",
+        "text": "À... Nếu xét cả người dùng thì điện thoại của họ là điểm xa nhất, là 'biên' cuối cùng. Vậy 'edge' là thiết bị của người dùng?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Giờ bạn hãy xem lại câu hỏi và các đáp án. Đáp án nào mô tả đúng điều đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Là 'Mô hình chạy trực tiếp từ máy trạm / thiết bị biên'. Em đã hiểu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Lỗi sai của bạn là đã định nghĩa 'biên' (edge) là một phần của trung tâm dữ liệu, trong khi nó thực sự là thiết bị của người dùng cuối."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q31",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng mô hình nằm chung với web server. Tại sao lại vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì web server xử lý logic chính của ứng dụng, đặt mô hình ở đó để gọi cho tiện."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trong 'edge prediction', từ 'edge' (biên) có nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là điểm cuối của hệ thống, tức là server trước khi trả dữ liệu về cho client."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một chiếc điện thoại mất kết nối internet có gọi được server không?"
+      },
+      {
+        "role": "Student",
+        "text": "Tất nhiên là không. Mất mạng thì không thể gửi yêu cầu đi được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy app camera nhận diện khuôn mặt khi offline hoạt động thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc nó dùng một mô hình đơn giản hơn được cài sẵn trên máy. Nhưng đó chỉ là trường hợp đặc biệt."
+      },
+      {
+        "role": "Tutor",
+        "text": "Việc dự đoán chạy trực tiếp trên điện thoại đó có phải 'dự đoán trên thiết bị biên' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Ừm... có lẽ là phải. Vậy 'edge' không phải là server sao?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'edge prediction' thực sự thực hiện việc dự đoán ở đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Ở trên chính thiết bị client, không phải server. Vậy đáp án đúng là tải mô hình về client."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Sai lầm của bạn là đã nhầm 'edge' (thiết bị biên/client) với 'backend' (server)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q32",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ vì sao cập nhật mô hình trên edge lại dễ hơn trên server?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì mình chỉ cần đẩy bản cập nhật xuống thiết bị thôi. Giống như cập nhật app vậy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Việc 'cập nhật' một dịch vụ tập trung (server) nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là phải sửa code, deploy lại cả hệ thống lớn, phức tạp hơn nhiều."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giữa cập nhật 1 server và 1 triệu điện thoại, bên nào bạn kiểm soát được ngay lập tức?"
+      },
+      {
+        "role": "Student",
+        "text": "Vẫn là server chứ. Nhưng cập nhật cho 1 triệu thiết bị có thể diễn ra song song."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu 5% trong số 1 triệu thiết bị đó gặp lỗi khi cập nhật thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì phải xử lý. Nhưng đó là vấn đề của từng thiết bị, không phải của hệ thống."
+      },
+      {
+        "role": "Tutor",
+        "text": "So với việc sửa lỗi trên một server duy nhất thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "... Sửa trên server thì chỉ có một chỗ để sửa. Còn 50,000 thiết bị lỗi thì... phức tạp hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy yếu tố nào quyết định độ khó khi cập nhật ở quy mô lớn?"
+      },
+      {
+        "role": "Student",
+        "text": "Là khả năng quản lý, đồng bộ và xử lý lỗi trên toàn bộ các thiết bị. Vậy nên cập nhật ở edge thực ra khó hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tóm lại, bạn đã nhầm lẫn giữa việc cập nhật một thiết bị và quản lý cập nhật cho một hệ thống phân tán. 'Dễ cập nhật' không phải ưu điểm của edge prediction."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q33",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng tài nguyên máy trạm là vô hạn. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì bây giờ điện thoại, laptop đều rất mạnh. Chip mới ra liên tục, RAM 8GB là bình thường. Nên em nghĩ nó đủ sức chạy mọi mô hình."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'máy trạm' trong edge prediction chỉ gồm điện thoại và laptop mới?"
+      },
+      {
+        "role": "Student",
+        "text": "Không hẳn, nhưng đó là các thiết bị phổ biến nhất và chúng đủ mạnh."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một chiếc đồng hồ thông minh có phải 'máy trạm' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Cũng là một dạng... Nhưng sức mạnh của nó không thể so với điện thoại được. Tuy nhiên nó vẫn chạy được app mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử mô hình AI của bạn cần 1GB RAM. Đồng hồ đó có đáp ứng không?"
+      },
+      {
+        "role": "Student",
+        "text": "1GB thì chắc là không. Nhưng không phải lúc nào cũng cần mô hình lớn như vậy. Em sẽ tối ưu mô hình cho nó nhỏ lại."
+      },
+      {
+        "role": "Tutor",
+        "text": "Ok, bạn tối ưu còn 100MB. Vậy pin có phải là một loại tài nguyên không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Có. Chạy mô hình liên tục chắc chắn sẽ tốn pin."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy khi nói về khuyết điểm, ta nên dựa trên thiết bị mạnh nhất hay yếu nhất?"
+      },
+      {
+        "role": "Student",
+        "text": "...Chắc là phải tính đến cả những thiết bị yếu nhất. Vậy tài nguyên máy trạm có hạn là một khuyết điểm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Lập luận ban đầu của bạn đã bỏ qua sự đa dạng của thiết bị và các loại tài nguyên khác như pin. Khuyết điểm chính là tài nguyên hạn chế."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q34",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn viết rằng độ chính xác luôn là quan trọng nhất. Vì sao lại vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì một mô hình không chính xác thì còn giá trị gì nữa? Dự đoán sai thì hỏng hết."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy \"triển khai tại biên\" có nghĩa là gì trong trường hợp này?"
+      },
+      {
+        "role": "Student",
+        "text": "Là chạy mô hình trên các thiết bị nhỏ như camera, không phải trên server."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử có một triệu camera. Mô hình A chính xác 99.9%, mô hình B 98%. Bạn chọn A, đúng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc chắn rồi. 99.9% tốt hơn nhiều. Độ chính xác là không thể đánh đổi."
+      },
+      {
+        "role": "Tutor",
+        "text": "OK. Mô hình A cần 1GB RAM để chạy. Hầu hết camera chỉ có 512MB RAM. Bây giờ bạn chọn mô hình nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì phải nâng cấp camera chứ. Em vẫn cho rằng độ chính xác là quan trọng nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nâng cấp một triệu camera? Chi phí đó có thực tế không?"
+      },
+      {
+        "role": "Student",
+        "text": "…Chắc là không. Nhưng dùng mô hình 98% là chấp nhận rủi ro. Em vẫn thấy không ổn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một hệ thống không thể triển khai được, so với một hệ thống chạy được với độ chính xác 98%, cái nào tệ hơn?"
+      },
+      {
+        "role": "Student",
+        "text": "Một hệ thống không thể triển khai. Em đoán là vậy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy ngoài độ chính xác, yếu tố nào đã quyết định lựa chọn của bạn?"
+      },
+      {
+        "role": "Student",
+        "text": "Khả năng triển khai được trên nhiều thiết bị. Nó chính là khả năng mở rộng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Rất tốt. Lập luận ban đầu của bạn đúng ở mức lý tưởng, nhưng khi triển khai ở quy mô lớn, các ràng buộc thực tế như phần cứng và khả năng quản lý lại trở thành yếu tố quyết định."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q35",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn nói ứng dụng web là để bên thứ ba 'khai thác'. 'Khai thác' ở đây nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nghĩa là họ dùng mô hình của mình để xử lý hàng loạt dữ liệu của họ, để phục vụ cho việc kinh doanh của họ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mục đích của một bản demo là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là để cho họ thấy mô hình của mình tốt thế nào, để họ quyết định có nên 'khai thác' nó hay không."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một công ty muốn xử lý 1 triệu yêu cầu/ngày. Họ làm thế nào với ứng dụng web của bạn?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì họ có thể thuê nhân viên nhập dữ liệu vào form trên web. Hoặc họ viết một script tự động làm việc đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu bạn thay đổi một nút bấm trên giao diện web, script của họ sẽ ra sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Script của họ sẽ lỗi... Họ sẽ phải viết lại. Nhưng về lý thuyết thì vẫn làm được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy có cách nào đáng tin cậy hơn cho máy-tương-tác-với-máy không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là một API... Nó sẽ không bị ảnh hưởng bởi giao diện."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy ứng dụng web, với giao diện cho người dùng, phù hợp nhất cho việc gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó phù hợp nhất để cho người ta xem và thử... Tức là để demo tính năng cho khách hàng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Nhầm lẫn của bạn là coi ứng dụng web (cho người) là công cụ cho máy (dịch vụ API). Ứng dụng web phù hợp nhất để demo trực quan."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q36",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng web demo là để client chạy mô hình offline. Logic của bạn là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì mình đưa cho họ cái link, họ mở ra là dùng được, không cần cài đặt. Giống như chạy offline trên máy họ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mô hình AI nặng 1GB đang chạy ở đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó được tải về trình duyệt của client khi họ mở web. Nên mới có thể coi là offline."
+      },
+      {
+        "role": "Tutor",
+        "text": "Thử nghĩ nhé: điện thoại có 4GB RAM. Có chạy được mô hình 10GB trên trình duyệt không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là không... Nhưng với mô hình nhỏ thì được chứ? Vậy nó vẫn là để chạy offline trong trường hợp đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Khi bạn tải lại (F5) trang web, điều gì xảy ra với mô hình?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó... phải tải lại từ đầu? Hmm... nếu nó ở trên máy rồi thì tại sao phải tải lại từ server?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy thực sự mô hình đang chạy ở đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó phải chạy trên server... và trang web chỉ là giao diện để gửi yêu cầu và nhận kết quả. Vậy không phải offline."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu mô hình chạy trên server, vậy mục đích thực sự của web app demo là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để người khác có thể dùng thử tính năng chính mà không cần cài đặt phức tạp. Chỉ cần một cái link."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm lẫn giữa việc có giao diện trên trình duyệt và việc xử lý offline. Web demo dùng để trình diễn tính năng, không phải để chạy offline."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q37",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng Flask và FastAPI có cùng mục đích với Streamlit?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Cả ba đều dùng để tạo ứng dụng web mà. Chúng đều là web framework."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'tạo ứng dụng web' với bạn nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là xây dựng một trang web có giao diện để người dùng tương tác được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Để tạo trang có 1 slider và 1 nút bấm, với Streamlit bạn làm gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Chỉ cần gọi `st.slider()` và `st.button()` là có ngay."
+      },
+      {
+        "role": "Tutor",
+        "text": "Với Flask, bạn làm tương tự như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải viết HTML, CSS cho giao diện, rồi viết code Python để xử lý. Nó phức tạp hơn nhưng vẫn làm được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Câu hỏi là về 'công cụ để triển khai' dạng ứng dụng. Cách nào là 'công cụ có sẵn'?"
+      },
+      {
+        "role": "Student",
+        "text": "Cả hai đều là công cụ. Flask chỉ đòi hỏi nhiều kỹ năng hơn. Không có nghĩa là nó sai."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một bộ gạch và xi măng có phải là 'công cụ có sẵn' để xây nhà không?"
+      },
+      {
+        "role": "Student",
+        "text": "... Chắc là không. Nó là vật liệu. Streamlit cung cấp thành phần giao diện có sẵn, còn Flask cung cấp 'vật liệu' để tự xây."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy với câu hỏi này, đâu là công cụ có sẵn để triển khai ứng dụng web?"
+      },
+      {
+        "role": "Student",
+        "text": "Là Streamlit."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn giữa framework xây dựng backend/API (Flask) và công cụ tạo giao diện nhanh (Streamlit)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q38",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng DecisionTree là một control. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó xử lý logic chính của ứng dụng. Không có nó thì ứng dụng không có giá trị."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, một 'control' trong ứng dụng web là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là một thành phần để xây dựng ứng dụng, nó thực hiện một chức năng quan trọng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Được. Khi bạn viết `st.button('Chạy')`, người dùng thấy gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Họ thấy một cái nút bấm có chữ 'Chạy'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Khi bạn viết `model = DecisionTree()`, người dùng thấy gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Họ không thấy gì ngay. Nhưng nó chạy ngầm để ra kết quả. Nó vẫn là một phần của ứng dụng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy người dùng tương tác trực tiếp với 'model' hay với 'nút bấm'?"
+      },
+      {
+        "role": "Student",
+        "text": "Họ bấm nút, rồi model mới chạy. Nhưng nút đó gọi model, nên model cũng là một loại control phức tạp."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'control' là thứ người dùng tương tác, hay thứ chạy sau khi tương tác?"
+      },
+      {
+        "role": "Student",
+        "text": "... Là thứ người dùng tương tác trực tiếp. Cái kia là logic xử lý. Có lẽ DecisionTree không phải là control."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Control là phần giao diện người dùng thấy và tương tác. DecisionTree là thuật toán xử lý ở phía sau."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q39",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn có vẻ chắc chắn về cổng 5000/8000. Điều gì khiến nó là lựa chọn mặc định cho Streamlit?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì đó là cổng chuẩn cho web framework. Flask, FastAPI đều dùng chúng. Streamlit cũng là framework mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một cổng là \"chuẩn\" có nghĩa là tất cả các framework bắt buộc phải dùng nó không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không bắt buộc, nhưng đó là thông lệ. Ai cũng dùng vậy để dễ nhận biết. Streamlit không có lý do gì để khác biệt."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử máy bạn đang chạy Flask ở cổng 5000. Bạn khởi động Streamlit, nó sẽ chạy ở đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ báo lỗi cổng đã sử dụng. Nhưng mặc định của nó vẫn nên là 5000. Chắc phải cấu hình lại."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy \"mặc định\" là một quy ước cứng, hay chỉ là giá trị đầu tiên một công cụ thử?"
+      },
+      {
+        "role": "Student",
+        "text": "Là giá trị đầu tiên nó thử. Nhưng các framework lớn đều theo quy ước chung. Việc Streamlit dùng số khác là không hợp lý."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy có phải mỗi công cụ có thể tự chọn cổng mặc định của riêng nó không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Chắc là vậy. Thế thì phải xem tài liệu của từng cái à? Vậy trong ví dụ này, đáp án là 8501."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Lỗi sai là bạn đã giả định một quy ước chung cho tất cả. Thực tế, mỗi công cụ có cổng mặc định riêng, và của Streamlit là 8501."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q40",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói phải có mô hình trước khi cài công cụ. Vì sao trình tự đó lại logic?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì Streamlit dùng để hiển thị mô hình. Không có mô hình thì cài Streamlit để làm gì? Phải có 'nguyên liệu' trước mới nấu ăn được chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy Streamlit chỉ dùng để hiển thị thôi sao? Vai trò của nó là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó là giao diện web. Nhưng cốt lõi vẫn là mô hình hoặc database. Không có lõi sao có vỏ được?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử bạn muốn xây một ngôi nhà. Bạn mang gạch (mô hình) đến mảnh đất trống. Rồi sao nữa?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì bắt đầu xây. Nhưng phải có gạch đã. Logic của mình vẫn đúng mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bạn xây bằng gì? Dùng tay không để xếp gạch lên nhau à?"
+      },
+      {
+        "role": "Student",
+        "text": "Tất nhiên cần công cụ. Nhưng ý mình là gạch là thứ phải có trước tiên. Công cụ chỉ là thứ hỗ trợ, không phải bước đầu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy khi bắt đầu dự án trên máy tính, bạn để file mô hình ở đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Mình tạo một thư mục dự án... rồi đặt file mô hình vào đó. Rồi sau đó mới cài Streamlit để gọi nó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Việc \"tạo thư mục\" và \"cài Streamlit\" có phải là đang \"dựng giàn giáo\" không?"
+      },
+      {
+        "role": "Student",
+        "text": "... Chắc là vậy. Tức là phải tạo ra cái khung trước... rồi mới đặt mô hình vào."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy quay lại câu hỏi, bước đầu tiên để triển khai ứng dụng là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là... cài Streamlit."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn việc chuẩn bị tài nguyên (mô hình) với việc thiết lập môi trường phát triển. Phải có \"xưởng\" (Streamlit) thì mới bắt đầu \"lắp ráp\" được."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q41",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói Streamlit và Gradio dùng để triển khai API. Vậy API trả về cái gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó trả về kết quả. Ví dụ, em đưa ảnh vào, nó trả về dự đoán. Đó là một dịch vụ."
+      },
+      {
+        "role": "Tutor",
+        "text": "'Kết quả' đó có dạng một trang web với nút bấm và thanh trượt không?"
+      },
+      {
+        "role": "Student",
+        "text": "Tất nhiên rồi, Gradio và Streamlit làm được mà. Rất trực quan và tiện cho người dùng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử một ứng dụng di động muốn dùng 'dịch vụ' của bạn. Nó có đọc được trang web không?"
+      },
+      {
+        "role": "Student",
+        "text": "Sao lại không? Nó cũng kết nối internet mà. Nó chỉ cần gửi yêu cầu đến đúng địa chỉ thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một chương trình máy tính cần dữ liệu thô, hay cần các nút bấm HTML?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó cần dữ liệu. Nhưng dữ liệu được hiển thị trên trang web đó. Cứ lấy về rồi bóc tách ra là được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy bạn muốn chương trình phải 'đọc' cả trang web để tìm một con số sao?"
+      },
+      {
+        "role": "Student",
+        "text": "...Chắc là không hiệu quả lắm. Có cách nào chỉ lấy đúng con số không?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Công cụ nào trong danh sách được thiết kế để chỉ trả về dữ liệu thô?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là Flask... vì nó không tự động tạo ra giao diện người dùng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn công cụ tạo giao diện (Streamlit, Gradio) với công cụ tạo điểm cuối API chỉ trả về dữ liệu (Flask)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q42",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói API dùng để demo giao diện. Giao diện đó nằm ở đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì API chính là cái demo đó. Mình gửi cho khách hàng để họ xem."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, API và giao diện người dùng là một?"
+      },
+      {
+        "role": "Student",
+        "text": "Gần như vậy. Nó là thứ để khách hàng thấy sản phẩm hoạt động thế nào."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một ứng dụng thời tiết cung cấp API. Bạn 'thấy' API đó như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Họ gửi cho mình một đường link, mình mở ra xem thời tiết. Đó là demo."
+      },
+      {
+        "role": "Tutor",
+        "text": "Link đó mở ra một trang web hay một file chứa văn bản (text)?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là... file text. Nhưng khách hàng làm sao đọc được đống code đó?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy cái gì sẽ đọc file text đó và hiện lên cho khách hàng xem?"
+      },
+      {
+        "role": "Student",
+        "text": "Một ứng dụng khác, một giao diện... À. Vậy API là để cho ứng dụng khác dùng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. API không phải giao diện, nó cung cấp dữ liệu cho một bên khác khai thác."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q43",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng sau triển khai, cần làm mô hình huấn luyện nhanh hơn. Tại sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì thực tế dữ liệu thay đổi liên tục. Mình phải huấn luyện lại thường xuyên, nên tốc độ là quan trọng nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mô hình đã triển khai làm nhiệm vụ gì chính?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó đưa ra dự đoán cho dữ liệu mới. Nhưng để dự đoán đúng, nó phải được cập nhật, tức là huấn luyện lại."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử có một mô hình phát hiện gian lận thẻ tín dụng. Nó đang hoạt động. Một giao dịch diễn ra. Lúc đó, ưu tiên của ngân hàng là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là phát hiện giao dịch đó có gian lận không. Nhưng để làm vậy, mô hình phải 'tươi' nhất, tức là phải được huấn luyện nhanh."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy giữa hai lần huấn luyện lại, mô hình không làm gì cả?"
+      },
+      {
+        "role": "Student",
+        "text": "Không... nó vẫn chạy, nó vẫn dự đoán. Nhưng tôi nghĩ việc huấn luyện nhanh để cập nhật nó mới là cốt lõi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu mô hình hiện tại, dù 'cũ', bắt đầu cho ra 50% dự đoán sai thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì... thì phải huấn luyện lại ngay. Nhưng nếu huấn luyện quá chậm, thiệt hại sẽ lớn. Nên tốc độ huấn luyện vẫn là vấn đề."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy vấn đề gốc là tốc độ huấn luyện, hay là việc mô hình đang hoạt động sai?"
+      },
+      {
+        "role": "Student",
+        "text": "Là... việc nó hoạt động sai. Việc biết được nó đang sai có vẻ quan trọng hơn. Sau đó mới tính đến việc huấn luyện lại nhanh hay chậm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy sau khi triển khai, mối quan tâm chính là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là theo dõi xem mô hình có đang hoạt động tốt trên thực tế không, có chính xác không."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Lỗi sai của bạn là nhầm lẫn giữa giai đoạn phát triển (ưu tiên tốc độ huấn luyện) và giai đoạn vận hành (ưu tiên tính đúng đắn và hiệu quả trên thực tế)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q44",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng tập validation có thể tự mở rộng. Điều này diễn ra thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì hệ thống AI mà. Nó phải đủ thông minh để nhận biết dữ liệu mới và tự thêm vào chứ?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục đích của tập validation là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để kiểm tra độ chính xác của mô hình. Nếu nó tự cập nhật thì việc kiểm tra sẽ liên tục và tốt hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu thước đo của bạn (tập validation) liên tục thay đổi, làm sao bạn so sánh hiệu quả mô hình hôm nay với hôm qua?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì so sánh với phiên bản mới nhất của thước đo. Luôn cập nhật là tốt nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mô hình A chạy trên bộ test V1 cho kết quả 90%. Mô hình B chạy trên bộ test V2 cho kết quả 88%. Mô hình nào tốt hơn?"
+      },
+      {
+        "role": "Student",
+        "text": "Cái này... không so sánh được. Vì bộ test khác nhau. À... ra là vậy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy điều gì cần giữ cố định để đánh giá mô hình một cách công bằng?"
+      },
+      {
+        "role": "Student",
+        "text": "Tập dữ liệu đánh giá, tức là tập validation, phải cố định. Cái thay đổi là dữ liệu thực tế bên ngoài."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn giữa một tập dữ liệu tĩnh để đo lường (validation set) và luồng dữ liệu động trong thực tế. Cái thay đổi sau triển khai là phân bố của dữ liệu thực tế."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q45",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "[A] Câu hỏi nói \"biến động đột ngột\", nhưng bạn chọn \"gradual drift\". Vì sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì ảnh hưởng của đại dịch COVID đâu phải ngày một ngày hai. Nó kéo dài cả năm, nên phải là \"gradual\" - từ từ."
+      },
+      {
+        "role": "Tutor",
+        "text": "[B] Vậy theo bạn, \"gradual\" nghĩa là một sự kiện có hệ quả kéo dài?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Nếu nó chỉ xảy ra rồi hết ngay thì mới là tức thời. Còn đây nó ảnh hưởng lâu dài."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Xét thời điểm trước và ngay sau khi có lệnh giãn cách xã hội. Hành vi người dùng thay đổi thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì tăng mạnh. Nhưng nó không tăng tối đa trong một ngày, mà là cả một xu hướng tăng dần sau đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] So sánh hai ngày: ngay trước và ngay sau lệnh giãn cách. Sự thay đổi giữa hai ngày đó có phải là từ từ không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chỉ xét hai ngày thì đúng là có bước nhảy. Nhưng nhìn cả quá trình thì nó vẫn là từ từ. Logic của mình không sai."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Một công tắc đèn bật lên là thay đổi từ từ hay đột ngột?"
+      },
+      {
+        "role": "Student",
+        "text": "Là đột ngột. Ánh sáng xuất hiện ngay lập tức."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Sự kiện \"lệnh giãn cách\" giống công tắc đèn hay cái gì khác?"
+      },
+      {
+        "role": "Student",
+        "text": "... Nó giống công tắc hơn. Sự thay đổi về bản chất đã xảy ra ngay lúc đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "[D] Vậy ta nên tập trung vào điểm bắt đầu của thay đổi, hay cả quá trình hệ quả?"
+      },
+      {
+        "role": "Student",
+        "text": "Tập trung vào điểm bắt đầu... Nó là cú sốc đột ngột. Vậy phải là \"instantaneous drift\"."
+      },
+      {
+        "role": "Tutor",
+        "text": "[E] Chính xác. \"Gradual drift\" mô tả thay đổi từ từ trong bản chất. \"Instantaneous drift\" mô tả một cú sốc, dù hệ quả kéo dài."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q46",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ sở thích người dùng thay đổi là một sự kiện 'tức thời'. Vì sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì một người có thể quyết định thích một thứ mới ngay lập tức. Nó xảy ra trong một khoảnh khắc."
+      },
+      {
+        "role": "Tutor",
+        "text": "'Tức thời' có nghĩa là không có quá trình diễn ra trước đó sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Nó chỉ là một quyết định, một sự thay đổi đột ngột mà không cần báo trước."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hãy xét sở thích thời trang. Một người chỉ mặc đồ tối màu trong 5 năm."
+      },
+      {
+        "role": "Student",
+        "text": "Rồi sao ạ?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Bây giờ họ bắt đầu mua thêm vài món đồ màu sáng. Đây là tức thời hay một quá trình?"
+      },
+      {
+        "role": "Student",
+        "text": "Đó là quá trình. Nhưng quyết định thử đồ màu sáng có thể là tức thời. Có thể họ thấy một người nổi tiếng mặc đẹp và quyết định thay đổi ngay. Quyết định đó là tức thời."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy dữ liệu mua hàng của họ thay đổi trong một ngày hay nhiều tháng?"
+      },
+      {
+        "role": "Student",
+        "text": "...Chắc là trong nhiều tháng. Dữ liệu sẽ thấy họ mua đồ tối màu ít đi và đồ màu sáng tăng lên."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'dịch chuyển dữ liệu' mô tả khoảnh khắc quyết định hay quá trình thay đổi đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó mô tả quá trình thay đổi trong dữ liệu... Vậy nên nó phải là 'gradual drift'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn giữa khoảnh khắc nhận thức và quá trình thay đổi hành vi thực tế mà dữ liệu ghi lại. Sở thích dịch chuyển dần dần, không tức thời."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q47",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng thay đổi theo chu kỳ là 'tạm thời'. Vì sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì mỗi chu kỳ, như một mùa hay một ngày, đều sẽ kết thúc. Nó không kéo dài mãi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, 'tạm thời' có nghĩa là không kéo dài mãi?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng. Một sự kiện tạm thời là sự kiện có điểm bắt đầu và kết thúc rõ ràng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hãy xét thủy triều lên xuống mỗi ngày. Nó có kết thúc không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có chứ. Nước lên rồi lại xuống. Mỗi lần như vậy là một sự kiện tạm thời."
+      },
+      {
+        "role": "Tutor",
+        "text": "Ngày mai thủy triều có lặp lại giống hôm nay không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có, nhưng ngày mai là một sự kiện khác rồi. Nó là một sự kiện 'tạm thời' mới."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một website bị sập server một lần duy nhất thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Cái đó cũng là tạm thời, nhưng nó không lặp lại."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'sập server' và 'thủy triều' khác nhau ở điểm nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Một cái lặp lại có quy luật, một cái không... À..."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy yếu tố nào định nghĩa sự thay đổi 'theo chu kỳ'?"
+      },
+      {
+        "role": "Student",
+        "text": "Là tính lặp lại có quy luật, không phải là việc nó kết thúc. Vậy câu hỏi đó phải là Seasonal drift."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Bạn đã nhầm lẫn việc một chu kỳ kết thúc với khái niệm 'tạm thời'. Yếu tố quyết định của 'seasonal' là sự lặp lại có quy luật."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q48",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng một cuộc tấn công lặp lại là 'seasonal drift'. Vì sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nếu nó lặp lại theo chu kỳ, ví dụ mỗi dịp lễ, thì nó là 'theo mùa' rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, đặc điểm cốt lõi của 'seasonal' là sự lặp lại có chu kỳ?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng. Bất cứ thứ gì lặp lại theo một lịch trình đều là seasonal."
+      },
+      {
+        "role": "Tutor",
+        "text": "Doanh số bán kem tăng mỗi mùa hè. Đây là drift gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là seasonal. Vì mùa hè năm nào cũng có."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một lỗi hệ thống khiến server sập đúng 5 phút vào 12h trưa mỗi ngày. Đây là drift gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó lặp lại mỗi ngày... vậy nó cũng là seasonal. Một 'mùa' trong ngày."
+      },
+      {
+        "role": "Tutor",
+        "text": "Sự cố sập server 5 phút đó có giống với việc người ta mua kem nhiều hơn không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không... Sập server là sự cố bất thường, còn mua kem là hành vi người dùng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'seasonal' mô tả hành vi người dùng hay mô tả một sự cố bất thường?"
+      },
+      {
+        "role": "Student",
+        "text": "Mô tả hành vi... Vậy cuộc tấn công, dù lặp lại, vẫn là một sự cố bất thường. Nó chỉ là 'tạm thời'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, bạn thử trả lời lại câu hỏi ban đầu."
+      },
+      {
+        "role": "Student",
+        "text": "Nó là Temporary drift. Vì nó là một sự kiện bất thường làm dữ liệu thay đổi trong thời gian ngắn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm lẫn giữa 'lặp lại' và 'theo mùa'. 'Seasonal' gắn với chu kỳ tự nhiên (mùa, lễ), còn 'temporary' là sự kiện bất thường, dù nó có thể lặp lại."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q49",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng chỉ cần độ chính xác là đủ. Tại sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì mục tiêu của mô hình là dự đoán đúng. Độ chính xác đo lường chính xác điều đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục đích của việc giám sát là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để đảm bảo mô hình hoạt động tốt, nghĩa là độ chính xác cao."
+      },
+      {
+        "role": "Tutor",
+        "text": "Có một mô hình dự đoán bệnh, chính xác 99%. Bạn sẽ dùng nó chứ?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc chắn rồi. 99% là một con số rất cao và đáng tin cậy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu 1% sai đó là bỏ sót toàn bộ các ca bệnh thực sự thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Nhưng nó vẫn đúng trong 99% trường hợp còn lại mà. Vẫn tốt hơn là không có gì."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trong dân số, tỷ lệ bệnh là 1%. Mô hình này chỉ dự đoán 'không bệnh'. Độ chính xác của nó là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "...Là 99%. Nhưng... nó hoàn toàn vô dụng vì không tìm ra ai bị bệnh."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy chỉ dùng độ chính xác để đánh giá, có đủ để kết luận mô hình 'tốt' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, mình hiểu rồi. Cần nhiều hơn thế. Vậy theo slide, có bao nhiêu loại thông tin cần giám sát?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Bạn đã thấy chỉ tập trung vào độ chính xác có thể che giấu những lỗi nghiêm trọng. Cần có cái nhìn toàn diện hơn về nhiều loại thông tin."
+      }
+    ]
+  },
+  {
+    "question_id": "ch11_q50",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn nói phải huấn luyện lại mô hình trước khi so sánh. Để làm gì vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Để xem mô hình có tốt hơn không. Dữ liệu thay đổi, mình phải huấn luyện lại trên dữ liệu mới nhất chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục tiêu chính của việc 'giám sát' mô hình là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là để đảm bảo nó luôn hoạt động tốt nhất. Nếu không huấn luyện lại, nó sẽ lỗi thời."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử tháng này bạn huấn luyện lại, và thấy độ chính xác giảm."
+      },
+      {
+        "role": "Student",
+        "text": "Thì nghĩa là dữ liệu mới có vấn đề. Hoặc cách huấn luyện mới sai. Rõ ràng mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Làm sao bạn biết độ chính xác 'giảm' so với cái gì?"
+      },
+      {
+        "role": "Student",
+        "text": "So với mô hình cũ chứ còn gì nữa. Nhưng logic của em là phải cập nhật liên tục."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy việc bạn làm là 'giám sát' hay là 'thử nghiệm mô hình mới'?"
+      },
+      {
+        "role": "Student",
+        "text": "...Chắc là thử nghiệm. Vậy giám sát là chỉ nhìn thôi sao?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Làm sao để biết khi nào mô hình bắt đầu hoạt động kém đi?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải so sánh hiệu suất hiện tại... với một mốc hiệu suất tốt đã biết."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, một bước chính để giám sát là gì? Quay lại câu hỏi gốc."
+      },
+      {
+        "role": "Student",
+        "text": "Là... chọn một phạm vi dữ liệu tốt để làm mốc tham chiếu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn giữa việc giám sát (so sánh với một chuẩn) và việc huấn luyện lại (hành động sau khi giám sát)."
+      }
+    ]
+  }
+]

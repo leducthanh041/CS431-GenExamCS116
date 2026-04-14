@@ -1,0 +1,685 @@
+[
+  {
+    "question_id": "ch7_q1",
+    "concepts": [
+      "Định nghĩa học có giám sát",
+      "Đặc điểm của học có giám sát",
+      "Dữ liệu huấn luyện"
+    ],
+    "misconceptions": [
+      "cho rằng học có giám sát là phương pháp không cần nhãn đầu ra, vì nhầm lẫn với khái niệm học không giám sát.",
+      "tin rằng học có giám sát chỉ dùng để gom nhóm dữ liệu, vì nhầm lẫn nhiệm vụ của nó với phân cụm (clustering).",
+      "cho rằng học có giám sát là một phương pháp chỉ dành riêng cho dữ liệu ảnh, vì có thể chỉ biết đến các ứng dụng nhận dạng hình ảnh nổi tiếng."
+    ],
+    "reasoning": "Học có giám sát định nghĩa là việc học từ dữ liệu được gán nhãn (cặp đầu vào-đầu ra) để dự đoán. Các phương án sai nhầm lẫn nó với học không giám sát (không cần nhãn, gom nhóm) hoặc thu hẹp phạm vi ứng dụng một cách không chính xác."
+  },
+  {
+    "question_id": "ch7_q2",
+    "concepts": [
+      "Cấu trúc dữ liệu huấn luyện",
+      "Đặc trưng đầu vào (features)",
+      "Giá trị đầu ra (labels)"
+    ],
+    "misconceptions": [
+      "cho rằng chỉ cần đặc trưng đầu vào (x) là đủ để huấn luyện, vì không hiểu vai trò của nhãn (y) trong việc 'giám sát' quá trình học.",
+      "cho rằng chỉ cần giá trị đầu ra (y) là đủ, vì có thể nhầm lẫn với việc phân tích thống kê trên một biến duy nhất.",
+      "tin rằng dữ liệu huấn luyện bao gồm các tham số của mô hình, vì nhầm lẫn giữa dữ liệu cung cấp cho mô hình và kết quả (tham số) mà mô hình học được."
+    ],
+    "reasoning": "Dữ liệu trong học có giám sát phải bao gồm cả đặc trưng đầu vào (x) và giá trị đầu ra mong muốn (y) để mô hình có thể học được mối quan hệ giữa chúng. Cung cấp chỉ x hoặc chỉ y, hoặc các tham số của mô hình, là không đủ hoặc sai về bản chất."
+  },
+  {
+    "question_id": "ch7_q3",
+    "concepts": [
+      "Các loại bài toán học có giám sát",
+      "Phân biệt hồi quy và phân lớp",
+      "Phân biệt học có giám sát và không giám sát"
+    ],
+    "misconceptions": [
+      "cho rằng gom nhóm và giảm chiều là bài toán học có giám sát, vì nhầm lẫn chúng với các bài toán thuộc học không giám sát.",
+      "tin rằng phân cụm (clustering) là một loại bài toán học có giám sát, vì không phân biệt được 'phân cụm' (unsupervised) và 'phân lớp' (supervised).",
+      "cho rằng tìm kiếm và tối ưu là các bài toán chính của học có giám sát, vì nhầm lẫn loại bài toán học máy với các lĩnh vực rộng hơn của khoa học máy tính."
+    ],
+    "reasoning": "Hai loại bài toán chính của học có giám sát là hồi quy (dự đoán giá trị liên tục) và phân lớp (dự đoán nhãn rời rạc). Các phương án sai bao gồm các bài toán thuộc học không giám sát (gom nhóm, giảm chiều) hoặc các lĩnh vực khác."
+  },
+  {
+    "question_id": "ch7_q4",
+    "concepts": [
+      "Phân biệt hồi quy và phân lớp",
+      "Bản chất biến đầu ra",
+      "Ứng dụng của hồi quy"
+    ],
+    "misconceptions": [
+      "cho rằng dự đoán tuổi là bài toán phân lớp, vì nghĩ rằng có thể chia tuổi thành các nhóm (ví dụ: 'thanh niên', 'trung niên', 'người già') và coi đó là các 'lớp'.",
+      "tin rằng dự đoán tuổi là bài toán gom nhóm, vì nghĩ rằng mô hình sẽ 'gom' những người có tuổi gần nhau lại với nhau mà không cần biết trước tuổi của họ.",
+      "cho rằng dự đoán tuổi là bài toán giảm chiều, vì có thể liên tưởng đến việc dùng nhiều đặc trưng để ra một con số duy nhất (tuổi) và nghĩ đó là 'giảm chiều'."
+    ],
+    "reasoning": "Dự đoán tuổi là một bài toán hồi quy vì biến đầu ra (tuổi) là một giá trị số liên tục. Các lựa chọn sai nhầm lẫn với phân lớp (đầu ra là nhãn rời rạc), gom nhóm (không cần nhãn) hoặc giảm chiều (một kỹ thuật xử lý dữ liệu)."
+  },
+  {
+    "question_id": "ch7_q5",
+    "concepts": [
+      "Phân biệt hồi quy và phân lớp",
+      "Tính chất của biến đầu ra",
+      "Đặc điểm của bài toán học máy"
+    ],
+    "misconceptions": [
+      "cho rằng loại bài toán (hồi quy/phân lớp) được quyết định bởi số lượng đặc trưng đầu vào, vì có thể nghĩ rằng nhiều đặc trưng hơn sẽ làm bài toán phức tạp hơn và thay đổi bản chất của nó.",
+      "tin rằng kích thước tập huấn luyện quyết định đây là bài toán hồi quy hay phân lớp, vì nhầm lẫn giữa quy mô dữ liệu và bản chất của vấn đề cần giải quyết.",
+      "cho rằng thư viện sử dụng sẽ xác định loại bài toán, vì nghĩ rằng 'mỗi thư viện chỉ làm một việc' và không nhận ra các thư viện như scikit-learn hỗ trợ nhiều loại bài toán."
+    ],
+    "reasoning": "Sự khác biệt cốt lõi giữa hồi quy và phân lớp nằm ở tính chất của biến đầu ra: liên tục (hồi quy) hay rời rạc (phân lớp). Các yếu tố khác như số đặc trưng, kích thước dữ liệu hay thư viện chỉ là các khía cạnh kỹ thuật, không làm thay đổi bản chất bài toán."
+  },
+  {
+    "question_id": "ch7_q6",
+    "concepts": [
+      "Công thức hàm dự đoán hồi quy tuyến tính",
+      "Ký hiệu toán học trong học máy",
+      "Mối quan hệ tuyến tính"
+    ],
+    "misconceptions": [
+      "cho rằng hàm dự đoán là tổng của tham số và đầu vào (β + x), vì nhầm lẫn phép nhân với phép cộng trong một mối quan hệ tuyến tính.",
+      "tin rằng hàm dự đoán có dạng lũy thừa (x^β), vì nhầm lẫn mô hình tuyến tính với mô hình phi tuyến.",
+      "cho rằng hàm dự đoán bao gồm cả sai số ngẫu nhiên (ε), vì nhầm lẫn giữa công thức của mô hình thống kê tổng quát (bao gồm ε) và hàm dự đoán cụ thể (chỉ có phần xác định)."
+    ],
+    "reasoning": "Hàm dự đoán của hồi quy tuyến tính biểu diễn một mối quan hệ tuyến tính, trong đó giá trị dự đoán ŷ là một tổ hợp tuyến tính của các đặc trưng đầu vào x, với các hệ số là β̂. Các công thức sai thể hiện mối quan hệ phi tuyến hoặc nhầm lẫn giữa hàm dự đoán và mô hình xác suất."
+  },
+  {
+    "question_id": "ch7_q7",
+    "concepts": [
+      "Hàm độ lỗi (Loss function)",
+      "Tổng bình phương sai số (MSE)",
+      "Đánh giá mô hình hồi quy"
+    ],
+    "misconceptions": [
+      "cho rằng MAE (Sai số tuyệt đối trung bình) là hàm lỗi được nêu, vì MAE cũng là một hàm lỗi phổ biến cho hồi quy và có thể nhớ nhầm.",
+      "tin rằng Log loss được dùng cho hồi quy tuyến tính, vì nhầm lẫn với hàm lỗi thường dùng cho các bài toán phân lớp, đặc biệt là hồi quy logistic.",
+      "cho rằng Jaccard index là hàm lỗi cho hồi quy, vì nhầm lẫn một thước đo độ tương tự của tập hợp (dùng cho các bài toán khác) với hàm lỗi cho giá trị liên tục."
+    ],
+    "reasoning": "Hàm lỗi tiêu chuẩn được giới thiệu cho hồi quy tuyến tính trong nhiều tài liệu cơ bản là Tổng bình phương sai số (MSE), vì nó có các tính chất toán học thuận lợi. Các phương án khác là các thước đo/hàm lỗi cho các bài toán hoặc mục đích khác."
+  },
+  {
+    "question_id": "ch7_q8",
+    "concepts": [
+      "Phương pháp huấn luyện hồi quy tuyến tính",
+      "Normal Equation",
+      "Gradient Descent"
+    ],
+    "misconceptions": [
+      "cho rằng có thể huấn luyện Linear Regression bằng K-Means, vì nhầm lẫn một thuật toán tối ưu cho hồi quy với một thuật toán phân cụm (clustering).",
+      "tin rằng DBSCAN có thể dùng để huấn luyện hồi quy tuyến tính, vì nhầm lẫn một phương pháp tối ưu cho hồi quy với một thuật toán phân cụm dựa trên mật độ."
+    ],
+    "reasoning": "Hồi quy tuyến tính có thể được huấn luyện bằng cách giải trực tiếp (Normal Equation) hoặc bằng phương pháp tối ưu lặp (Gradient Descent). Các phương án sai (K-Means, DBSCAN) là các thuật toán phân cụm, thuộc học không giám sát và giải quyết một loại bài toán hoàn toàn khác."
+  },
+  {
+    "question_id": "ch7_q9",
+    "concepts": [
+      "Thư viện scikit-learn",
+      "Module hồi quy tuyến tính",
+      "Lập trình với học máy"
+    ],
+    "misconceptions": [
+      "cho rằng module cho hồi quy tuyến tính là KMeans, vì có thể nhớ tên một module phổ biến khác trong sklearn nhưng không đúng với bài toán hồi quy.",
+      "tin rằng module cho hồi quy tuyến tính là DBSCAN, vì nhầm lẫn tên một thuật toán phân cụm với một mô hình hồi quy.",
+      "cho rằng module cho hồi quy tuyến tính là PCA, vì nhầm lẫn tên một kỹ thuật giảm chiều dữ liệu với một mô hình hồi quy."
+    ],
+    "reasoning": "Trong thư viện scikit-learn, lớp (class) dùng để thực hiện hồi quy tuyến tính được đặt tên là `LinearRegression`. Các lựa chọn còn lại là tên của các thuật toán cho các nhiệm vụ khác như phân cụm (KMeans, DBSCAN) hoặc giảm chiều (PCA)."
+  },
+  {
+    "question_id": "ch7_q10",
+    "concepts": [
+      "Ưu điểm của hồi quy tuyến tính",
+      "Khả năng diễn giải của mô hình",
+      "Giả định của hồi quy tuyến tính"
+    ],
+    "misconceptions": [
+      "cho rằng hồi quy tuyến tính luôn hiệu quả với mọi dữ liệu phi tuyến, vì không hiểu được giới hạn của mô hình khi giả định về tính tuyến tính bị vi phạm.",
+      "tin rằng hồi quy tuyến tính không bị ảnh hưởng bởi dữ liệu nhiễu, vì không nhận ra rằng các điểm dữ liệu ngoại lai (outliers) có thể tác động mạnh đến đường hồi quy."
+    ],
+    "reasoning": "Ưu điểm chính của hồi quy tuyến tính là sự đơn giản, dễ diễn giải và hiệu quả cao khi mối quan hệ trong dữ liệu thực sự là tuyến tính. Tuy nhiên, nó hoạt động kém với dữ liệu phi tuyến và nhạy cảm với các điểm dữ liệu nhiễu (outliers)."
+  },
+  {
+    "question_id": "ch7_q11",
+    "concepts": [
+      "Khuyết điểm của hồi quy tuyến tính",
+      "Giới hạn của mô hình tuyến tính",
+      "Ảnh hưởng của nhiễu"
+    ],
+    "misconceptions": [
+      "cho rằng hồi quy tuyến tính không thể dùng cho dữ liệu số, vì nhầm lẫn hoàn toàn về bản chất của mô hình, vốn được thiết kế chính để làm việc với dữ liệu số.",
+      "tin rằng hồi quy tuyến tính luôn cần mạng neural để hoạt động, vì nhầm lẫn một mô hình thống kê cơ bản với một kiến trúc học sâu phức tạp."
+    ],
+    "reasoning": "Khuyết điểm của hồi quy tuyến tính là nó không thể mô hình hóa các mối quan hệ phi tuyến phức tạp và rất nhạy cảm với dữ liệu nhiễu (outliers). Các phương án sai đưa ra những nhận định không chính xác về điều kiện hoạt động của mô hình."
+  },
+  {
+    "question_id": "ch7_q12",
+    "concepts": [
+      "Thuộc tính của mô hình scikit-learn",
+      "Hệ số hồi quy (coef_)",
+      "Hệ số chặn (intercept_)",
+      "Shape của mảng NumPy"
+    ],
+    "misconceptions": [
+      "cho rằng `coef_` có shape (1,1), vì có thể nghĩ rằng một hệ số duy nhất sẽ được bọc trong một mảng 2D.",
+      "tin rằng `intercept_` là một mảng, vì không phân biệt được giữa một giá trị vô hướng (scalar) và một mảng một chiều chỉ có một phần tử.",
+      "cho rằng `coef_` là một số thực còn `intercept_` là một mảng, vì hoán đổi vai trò và kiểu dữ liệu của hai thuộc tính này."
+    ],
+    "reasoning": "Trong scikit-learn, khi hồi quy với một đặc trưng, `coef_` là một mảng 1D chứa một phần tử (hệ số góc), và `intercept_` là một số thực (scalar) đại diện cho hệ số chặn. Việc hiểu đúng shape của các thuộc tính này rất quan trọng khi lập trình."
+  },
+  {
+    "question_id": "ch7_q13",
+    "concepts": [
+      "Ước lượng OLS (Ordinary Least Squares)",
+      "Công thức hệ số góc (slope)",
+      "Hiệp phương sai và phương sai"
+    ],
+    "misconceptions": [
+      "cho rằng công thức tính β̂1 bị đảo ngược (tử và mẫu đổi chỗ), vì nhớ sai công thức hoặc không hiểu rằng hệ số góc liên quan đến tỷ lệ của hiệp phương sai và phương sai.",
+      "tin rằng công thức tính β̂1 thực chất là công thức của β̂0, vì nhầm lẫn giữa công thức tính hệ số góc và hệ số chặn.",
+      "cho rằng β̂1 đơn giản là tỷ lệ của tổng Y và tổng X, vì áp dụng một cách tính trung bình đơn giản không tính đến độ biến thiên và mối quan hệ giữa các điểm dữ liệu."
+    ],
+    "reasoning": "Công thức ước lượng bình phương tối thiểu (OLS) cho hệ số góc β̂1 trong hồi quy đơn biến là tỷ lệ giữa hiệp phương sai của X và Y và phương sai của X. Các công thức sai thể hiện sự nhầm lẫn về vị trí tử/mẫu, hoặc nhầm với công thức của hệ số chặn."
+  },
+  {
+    "question_id": "ch7_q14",
+    "concepts": [
+      "Ước lượng OLS (Ordinary Least Squares)",
+      "Công thức hệ số chặn (intercept)",
+      "Tính chất của đường hồi quy"
+    ],
+    "misconceptions": [
+      "cho rằng công thức tính β̂0 có thứ tự X̄ và Ȳ bị đảo ngược, vì nhớ sai công thức hoặc không nắm được cách suy ra β̂0 từ β̂1.",
+      "tin rằng công thức tính β̂0 có các thành phần bị nhân sai, vì áp dụng sai các phép toán đại số khi biến đổi công thức.",
+      "cho rằng β̂0 chỉ đơn giản là hiệu của hai giá trị trung bình, vì đơn giản hóa quá mức mối quan hệ và bỏ qua vai trò của hệ số góc β̂1."
+    ],
+    "reasoning": "Hệ số chặn β̂0 được tính toán để đảm bảo đường hồi quy đi qua điểm trung bình (X̄, Ȳ). Do đó, từ phương trình Ȳ = β̂0 + β̂1X̄, ta suy ra β̂0 = Ȳ − β̂1X̄. Các phương án sai là các biến thể không chính xác về mặt đại số."
+  },
+  {
+    "question_id": "ch7_q15",
+    "concepts": [
+      "Mối quan hệ giữa hệ số hồi quy và tương quan",
+      "Hệ số góc (slope)",
+      "Hệ số tương quan (correlation)"
+    ],
+    "misconceptions": [
+      "cho rằng dấu của hệ số góc luôn trái dấu với tương quan, vì có thể nghĩ rằng chúng có mối quan hệ nghịch đảo.",
+      "tin rằng hệ số góc luôn bằng 0, vì nhầm lẫn với trường hợp không có mối quan hệ tuyến tính nào giữa hai biến.",
+      "cho rằng hệ số góc và tương quan không liên quan đến nhau, vì không hiểu rằng cả hai đều đo lường hướng của mối quan hệ tuyến tính giữa hai biến."
+    ],
+    "reasoning": "Trong hồi quy tuyến tính đơn giản, hệ số góc (độ dốc) β̂1 và hệ số tương quan giữa X và Y luôn có cùng dấu. Cả hai đều chỉ ra hướng của mối quan hệ tuyến tính: dương (cùng tăng/giảm) hay âm (ngược chiều)."
+  },
+  {
+    "question_id": "ch7_q16",
+    "concepts": [
+      "Định nghĩa Bias",
+      "Đánh đổi Bias-Variance",
+      "Sai số mô hình"
+    ],
+    "misconceptions": [
+      "cho rằng bias là sai số giữa hai tập huấn luyện khác nhau, vì nhầm lẫn với khái niệm variance (phương sai) của mô hình.",
+      "tin rằng bias là độ lệch chuẩn của dữ liệu, vì nhầm lẫn sai số của mô hình với một đặc tính thống kê của dữ liệu đầu vào.",
+      "cho rằng bias là tỉ lệ dự đoán đúng trên tập train, vì nhầm lẫn với khái niệm độ chính xác (accuracy) của mô hình."
+    ],
+    "reasoning": "Bias (độ chệch) là sai số gây ra bởi các giả định đơn giản hóa của mô hình, thể hiện sự khác biệt giữa dự đoán trung bình của mô hình và giá trị thực tế. Các phương án khác mô tả variance, đặc tính dữ liệu, hoặc độ chính xác."
+  },
+  {
+    "question_id": "ch7_q17",
+    "concepts": [
+      "Đặc điểm của Bias cao",
+      "Hiện tượng Underfitting",
+      "Sai số hệ thống"
+    ],
+    "misconceptions": [
+      "cho rằng bias cao có nghĩa là mô hình luôn overfit, vì nhầm lẫn giữa hai khái niệm đối lập: bias cao thường dẫn đến underfit, trong khi variance cao dẫn đến overfit."
+    ],
+    "reasoning": "Bias cao cho thấy mô hình quá đơn giản, không nắm bắt được các quy luật phức tạp trong dữ liệu huấn luyện. Điều này dẫn đến các lỗi có tính hệ thống (dự đoán sai một cách nhất quán) và hiện tượng underfitting (kém hiệu quả trên cả tập huấn luyện và tập kiểm thử)."
+  },
+  {
+    "question_id": "ch7_q18",
+    "concepts": [
+      "Đặc điểm của Variance thấp",
+      "Tính tổng quát của mô hình",
+      "Độ ổn định của mô hình"
+    ],
+    "misconceptions": [
+      "cho rằng variance thấp nghĩa là mô hình không đoán tốt trên dữ liệu chưa gặp, vì nhầm lẫn với trường hợp bias cao (underfitting).",
+      "tin rằng mô hình có variance thấp thì luôn có bias cao, vì nghĩ rằng chúng luôn tỷ lệ nghịch tuyệt đối, trong khi mục tiêu là cả hai cùng thấp.",
+      "cho rằng mô hình có variance thấp bắt buộc phải là mô hình phi tuyến, vì không có mối liên hệ trực tiếp nào giữa hai khái niệm này; mô hình tuyến tính đơn giản thường có variance thấp."
+    ],
+    "reasoning": "Variance thấp có nghĩa là dự đoán của mô hình không thay đổi nhiều khi huấn luyện trên các tập dữ liệu con khác nhau. Điều này cho thấy mô hình ổn định và có khả năng tổng quát hóa tốt trên dữ liệu mới, chưa gặp."
+  },
+  {
+    "question_id": "ch7_q19",
+    "concepts": [
+      "Đánh đổi Bias-Variance",
+      "Đặc điểm của mô hình tốt",
+      "Mục tiêu của việc huấn luyện mô hình"
+    ],
+    "misconceptions": [
+      "cho rằng mô hình tốt nên có bias cao và variance thấp, vì có thể chỉ tập trung vào việc tránh overfitting (variance cao) mà chấp nhận một mô hình quá đơn giản (bias cao).",
+      "tin rằng mô hình tốt nên có bias thấp và variance cao, vì có thể chỉ tập trung vào việc khớp hoàn toàn dữ liệu huấn luyện (bias thấp) mà không quan tâm đến overfitting (variance cao).",
+      "cho rằng mô hình tốt nên có bias cao và variance cao, vì không hiểu mục tiêu của việc tối ưu mô hình là giảm cả hai loại sai số này."
+    ],
+    "reasoning": "Một mô hình lý tưởng cần cân bằng được cả hai yếu tố: có bias thấp để nắm bắt đúng quy luật của dữ liệu và có variance thấp để tổng quát hóa tốt trên dữ liệu mới. Đây là mục tiêu cốt lõi trong việc lựa chọn và tinh chỉnh mô hình."
+  },
+  {
+    "question_id": "ch7_q20",
+    "concepts": [
+      "Ảnh hưởng của độ phức tạp mô hình",
+      "Lỗi huấn luyện và lỗi kiểm thử",
+      "Hiện tượng Overfitting"
+    ],
+    "misconceptions": [
+      "cho rằng khi tăng độ phức tạp, chênh lệch giữa lỗi huấn luyện và kiểm thử sẽ nhỏ hơn, vì không nhận ra đây là dấu hiệu của overfitting, nơi mô hình học thuộc lòng tập train.",
+      "tin rằng khi tăng độ phức tạp, lỗi huấn luyện sẽ tăng lên, vì nhầm lẫn với trường hợp mô hình không đủ khả năng học. Một mô hình phức tạp hơn thường có khả năng giảm lỗi huấn luyện tốt hơn."
+    ],
+    "reasoning": "Khi tăng độ phức tạp của mô hình (thêm tham số), nó trở nên linh hoạt hơn. Điều này thường làm lỗi trên tập huấn luyện giảm xuống do mô hình có khả năng 'học thuộc' dữ liệu. Đồng thời, khoảng cách giữa lỗi huấn luyện (thấp) và lỗi kiểm thử (có thể tăng) sẽ lớn hơn, đây là dấu hiệu của overfitting."
+  },
+  {
+    "question_id": "ch7_q21",
+    "concepts": [
+      "Mô hình đa thức",
+      "Độ phức tạp mô hình và Overfitting",
+      "Lỗi huấn luyện"
+    ],
+    "misconceptions": [
+      "cho rằng mô hình đa thức bậc cao luôn có lỗi kiểm thử tốt nhất, vì không nhận ra nguy cơ overfitting, nơi mô hình hoạt động tốt trên tập train nhưng kém trên tập test.",
+      "tin rằng mô hình đa thức bậc cao 'không khớp' hơn so với mô hình bậc thấp, vì nhầm lẫn với hiện tượng underfitting. Thực tế, chúng có nguy cơ 'quá khớp' (overfit)."
+    ],
+    "reasoning": "Mô hình đa thức bậc cao có độ phức tạp lớn hơn, cho phép nó khớp với dữ liệu huấn luyện một cách chặt chẽ hơn, dẫn đến lỗi huấn luyện thấp. Tuy nhiên, chính sự linh hoạt này cũng làm tăng nguy cơ mô hình học cả nhiễu trong dữ liệu, gây ra hiện tượng quá khớp (overfitting)."
+  },
+  {
+    "question_id": "ch7_q22",
+    "concepts": [
+      "Ảnh hưởng của kích thước dữ liệu",
+      "Learning curves (Đường cong học)",
+      "Lỗi huấn luyện và lỗi kiểm thử"
+    ],
+    "misconceptions": [
+      "cho rằng khi tăng dữ liệu, chênh lệch giữa lỗi huấn luyện và kiểm thử sẽ lớn hơn, vì không hiểu rằng nhiều dữ liệu hơn giúp mô hình tổng quát hóa tốt hơn và giảm overfitting.",
+      "tin rằng khi tăng dữ liệu, lỗi huấn luyện sẽ giảm xuống, vì không nhận ra rằng với nhiều dữ liệu hơn, mô hình sẽ khó 'học thuộc' tất cả các điểm một cách hoàn hảo, nên lỗi huấn luyện có thể tăng nhẹ."
+    ],
+    "reasoning": "Khi tăng số lượng mẫu huấn luyện cho một mô hình có độ phức tạp cố định, mô hình khó có thể 'học thuộc' hết dữ liệu, do đó lỗi huấn luyện có xu hướng tăng lên hoặc ổn định. Đồng thời, vì mô hình được học trên nhiều dữ liệu đa dạng hơn, khả năng tổng quát hóa tăng lên, làm lỗi kiểm thử giảm, dẫn đến chênh lệch giữa hai lỗi này nhỏ lại."
+  },
+  {
+    "question_id": "ch7_q23",
+    "concepts": [
+      "Định nghĩa Overfitting",
+      "Nguyên nhân của Overfitting",
+      "Độ phức tạp mô hình"
+    ],
+    "misconceptions": [
+      "cho rằng overfitting xảy ra khi mô hình quá đơn giản, vì nhầm lẫn với hiện tượng underfitting.",
+      "tin rằng việc chuẩn hóa dữ liệu gây ra overfitting, vì nhầm lẫn một kỹ thuật tiền xử lý hữu ích với nguyên nhân gây ra lỗi mô hình.",
+      "cho rằng overfitting xảy ra khi mô hình chỉ có một tham số, vì nhầm lẫn với một mô hình rất đơn giản, thường dẫn đến underfitting chứ không phải overfitting."
+    ],
+    "reasoning": "Overfitting (quá khớp) xảy ra khi mô hình quá phức tạp so với lượng dữ liệu hiện có, khiến nó không chỉ học quy luật mà còn học cả nhiễu trong tập huấn luyện. Kết quả là mô hình hoạt động tốt trên tập huấn luyện nhưng kém trên dữ liệu mới."
+  },
+  {
+    "question_id": "ch7_q24",
+    "concepts": [
+      "Cách tránh Overfitting",
+      "Chính quy hóa (Regularization)",
+      "Tăng cường dữ liệu (Data augmentation)"
+    ],
+    "misconceptions": [
+      "cho rằng để tránh overfitting cần tăng số tham số của mô hình không giới hạn, vì nhầm lẫn với cách giải quyết underfitting. Tăng độ phức tạp thường làm overfitting trở nên tệ hơn.",
+      "tin rằng có thể bỏ qua dữ liệu nhiễu mà không cần đánh giá, vì không nhận ra tầm quan trọng của việc xử lý dữ liệu ngoại lai một cách cẩn thận, thay vì bỏ qua một cách tùy tiện."
+    ],
+    "reasoning": "Để chống lại overfitting, các phương pháp phổ biến bao gồm làm cho mô hình đơn giản hơn (giảm tham số, chính quy hóa) hoặc cung cấp cho nó nhiều dữ liệu huấn luyện đa dạng và chất lượng hơn để học được các quy luật tổng quát."
+  },
+  {
+    "question_id": "ch7_q25",
+    "concepts": [
+      "Định nghĩa Underfitting",
+      "Nguyên nhân của Underfitting",
+      "Độ phức tạp mô hình"
+    ],
+    "misconceptions": [
+      "cho rằng underfitting xảy ra khi mô hình quá phức tạp, vì nhầm lẫn với hiện tượng overfitting.",
+      "tin rằng việc chuẩn hóa dữ liệu sai gây ra underfitting, mặc dù có thể ảnh hưởng đến hiệu suất, nó không phải là nguyên nhân cốt lõi của underfitting.",
+      "cho rằng mô hình có quá nhiều tầng ẩn gây ra underfitting, vì nhầm lẫn với một mô hình phức tạp (nhiều tầng ẩn) thường có nguy cơ overfitting hơn."
+    ],
+    "reasoning": "Underfitting (dưới khớp) xảy ra khi mô hình quá đơn giản, không đủ năng lực để nắm bắt các quy luật cơ bản trong dữ liệu. Kết quả là mô hình hoạt động kém trên cả tập huấn luyện và tập kiểm thử."
+  },
+  {
+    "question_id": "ch7_q26",
+    "concepts": [
+      "Cách tránh Underfitting",
+      "Lựa chọn mô hình",
+      "Kỹ thuật đặc trưng (Feature engineering)"
+    ],
+    "misconceptions": [
+      "cho rằng để tránh underfitting cần giảm số tham số, vì nhầm lẫn với cách giải quyết overfitting. Giảm độ phức tạp sẽ làm underfitting nặng hơn.",
+      "tin rằng để tránh underfitting nên luôn dùng hồi quy tuyến tính đơn giản hơn, vì không nhận ra rằng hồi quy tuyến tính chính là một mô hình đơn giản, dễ bị underfitting với dữ liệu phức tạp."
+    ],
+    "reasoning": "Để khắc phục underfitting, cần tăng khả năng học của mô hình. Các cách phổ biến là sử dụng một mô hình phức tạp hơn (ví dụ: nhiều tham số hơn, mô hình phi tuyến) hoặc cung cấp thêm dữ liệu/đặc trưng để mô hình có thêm thông tin để học."
+  },
+  {
+    "question_id": "ch7_q27",
+    "concepts": [
+      "Hậu quả của Bias cao",
+      "Sai số hệ thống",
+      "Hiện tượng Underfitting"
+    ],
+    "misconceptions": [
+      "cho rằng bias cao gây ra một mô hình quá khớp (overfit), vì nhầm lẫn hoàn toàn hai khái niệm. Bias cao liên quan đến underfitting.",
+      "tin rằng bias cao luôn cho lỗi kiểm thử thấp nhất, vì nhầm lẫn. Mô hình có bias cao thường có lỗi cao trên cả tập train và test.",
+      "cho rằng bias cao không ảnh hưởng đến khả năng biểu diễn, vì không hiểu rằng bias chính là một thước đo cho sự hạn chế trong khả năng biểu diễn của mô hình."
+    ],
+    "reasoning": "Bias cao (độ chệch cao) ngụ ý rằng các giả định của mô hình quá đơn giản so với thực tế. Điều này dẫn đến việc mô hình mắc phải các lỗi mang tính hệ thống, dự đoán sai một cách nhất quán và thường gây ra hiện tượng underfitting."
+  },
+  {
+    "question_id": "ch7_q28",
+    "concepts": [
+      "Hậu quả của Variance cao",
+      "Tính tổng quát của mô hình",
+      "Hiện tượng Overfitting"
+    ],
+    "misconceptions": [
+      "cho rằng variance cao thể hiện mô hình có tính tổng quát cao, vì nhầm lẫn hoàn toàn. Variance cao là dấu hiệu của việc tổng quát hóa kém.",
+      "tin rằng mô hình có variance cao chắc chắn underfit, vì nhầm lẫn với hiện tượng overfitting. Variance cao là đặc trưng của overfitting.",
+      "cho rằng mô hình có variance cao thì luôn có bias thấp, vì nghĩ rằng chúng luôn đối lập tuyệt đối, trong khi một mô hình rất tệ có thể có cả bias và variance đều cao."
+    ],
+    "reasoning": "Variance cao cho thấy mô hình rất nhạy cảm với những thay đổi nhỏ trong dữ liệu huấn luyện. Điều này có nghĩa là mô hình đã 'học thuộc' nhiễu và chi tiết của tập train, dẫn đến việc dự đoán không ổn định và kém chính xác trên dữ liệu mới, chưa từng gặp (tổng quát hóa kém)."
+  },
+  {
+    "question_id": "ch7_q29",
+    "concepts": [
+      "Mục đích của chính quy hóa (Regularization)",
+      "Giảm thiểu Overfitting",
+      "Ràng buộc trọng số mô hình"
+    ],
+    "misconceptions": [
+      "cho rằng chính quy hóa dùng để giảm thiểu underfitting, vì nhầm lẫn mục đích của nó. Chính quy hóa làm mô hình đơn giản hơn, có thể làm tăng underfitting.",
+      "tin rằng chính quy hóa loại bỏ hoàn toàn nhu cầu tăng dữ liệu, vì quá đề cao vai trò của nó. Tăng dữ liệu và chính quy hóa là hai kỹ thuật bổ trợ cho nhau.",
+      "cho rằng chính quy hóa biến mọi mô hình thành phi tuyến, vì không hiểu bản chất của nó là thêm ràng buộc vào hàm lỗi, chứ không thay đổi cấu trúc cơ bản của mô hình."
+    ],
+    "reasoning": "Chính quy hóa là một kỹ thuật được thêm vào hàm mất mát để phạt các mô hình có trọng số lớn. Bằng cách khuyến khích các trọng số nhỏ hơn (gần 0), nó làm giảm độ phức tạp của mô hình, từ đó giúp giảm thiểu hiện tượng quá khớp (overfitting)."
+  },
+  {
+    "question_id": "ch7_q30",
+    "concepts": [
+      "Các loại chuẩn (Norm)",
+      "Chính quy hóa L1 và L2",
+      "Công thức Regularization"
+    ],
+    "misconceptions": [
+      "cho rằng chuẩn L3 (||θ||3) là một hàm chính quy hóa phổ biến, vì có thể suy luận một cách máy móc từ L1, L2 mà không biết rằng nó không được sử dụng phổ biến trong thực tế do thiếu các tính chất tốt như L1 và L2.",
+      "tin rằng chỉ cần dùng tham số θ mà không có phép toán chuẩn nào cũng là một dạng chính quy hóa, vì không hiểu rằng chính quy hóa phải là một hàm của θ để thêm vào hàm lỗi."
+    ],
+    "reasoning": "Các hàm chính quy hóa phổ biến nhất là chuẩn L1 (||θ||1, tổng các giá trị tuyệt đối của trọng số) và chuẩn L2 (||θ||2^2, tổng bình phương các trọng số). Chúng được sử dụng tương ứng trong LASSO và Ridge Regression."
+  },
+  {
+    "question_id": "ch7_q31",
+    "concepts": [
+      "LASSO Regression",
+      "Chính quy hóa L1",
+      "Các biến thể của hồi quy tuyến tính"
+    ],
+    "misconceptions": [
+      "cho rằng LASSO sử dụng chính quy hóa L2, vì nhầm lẫn với Ridge Regression.",
+      "tin rằng LASSO sử dụng cả L1 và L2, vì nhầm lẫn với Elastic Net.",
+      "cho rằng LASSO là một biến thể của KNNRegressor, vì nhầm lẫn một mô hình hồi quy tuyến tính với một mô hình dựa trên khoảng cách."
+    ],
+    "reasoning": "LASSO (Least Absolute Shrinkage and Selection Operator) Regression là một biến thể của hồi quy tuyến tính, trong đó hàm mất mát được thêm một thành phần phạt là chuẩn L1 của các trọng số. Điều này giúp giảm overfitting và thực hiện lựa chọn đặc trưng."
+  },
+  {
+    "question_id": "ch7_q32",
+    "concepts": [
+      "Lựa chọn đặc trưng (Feature Selection)",
+      "Đặc điểm của chính quy hóa L1",
+      "Tính thưa (Sparsity)"
+    ],
+    "misconceptions": [
+      "cho rằng LASSO luôn giữ nguyên mọi hệ số, vì không hiểu tác dụng chính của chính quy hóa L1 là làm một số hệ số bằng 0.",
+      "tin rằng LASSO chỉ dùng một đặc trưng duy nhất, vì hiểu sai về cách nó lựa chọn đặc trưng. Nó có thể chọn nhiều hơn một, nhưng có xu hướng chọn ít.",
+      "cho rằng LASSO luôn làm tăng số chiều dữ liệu, vì nhầm lẫn hoàn toàn. LASSO có tác dụng giảm số lượng đặc trưng hiệu dụng, không phải tăng."
+    ],
+    "reasoning": "Đặc tính của chính quy hóa L1 (sử dụng trong LASSO) là nó có khả năng đẩy các hệ số của những đặc trưng không quan trọng về chính xác bằng 0. Điều này tạo ra một mô hình 'thưa' (sparse) và có tác dụng như một phương pháp lựa chọn đặc trưng tự động."
+  },
+  {
+    "question_id": "ch7_q33",
+    "concepts": [
+      "Ridge Regression",
+      "Chính quy hóa L2",
+      "Các biến thể của hồi quy tuyến tính"
+    ],
+    "misconceptions": [
+      "cho rằng Ridge sử dụng chính quy hóa L1, vì nhầm lẫn với LASSO Regression.",
+      "tin rằng Ridge sử dụng cả L1 và L2, vì nhầm lẫn với Elastic Net.",
+      "cho rằng Ridge là một mô hình không dùng regularization, vì không hiểu rằng bản chất của nó chính là hồi quy tuyến tính cộng với regularization."
+    ],
+    "reasoning": "Ridge Regression là một biến thể của hồi quy tuyến tính, trong đó hàm mất mát được thêm một thành phần phạt là bình phương của chuẩn L2 của các trọng số. Kỹ thuật này giúp giảm thiểu overfitting bằng cách làm co các hệ số lại."
+  },
+  {
+    "question_id": "ch7_q34",
+    "concepts": [
+      "Đặc điểm của Ridge Regression",
+      "Tác dụng của chính quy hóa L2",
+      "Đa cộng tuyến"
+    ],
+    "misconceptions": [
+      "cho rằng Ridge Regression loại bỏ hoàn toàn các đặc trưng, vì nhầm lẫn với đặc tính của LASSO. Ridge chỉ đưa hệ số về gần 0 chứ không phải bằng 0.",
+      "tin rằng Ridge luôn tạo mô hình phi tuyến, vì không hiểu rằng nó vẫn là một mô hình tuyến tính, chỉ có thêm ràng buộc.",
+      "cho rằng Ridge Regression giảm chiều dữ liệu bằng PCA, vì nhầm lẫn hai kỹ thuật khác nhau cùng có thể dùng để xử lý đa cộng tuyến."
+    ],
+    "reasoning": "Khác với LASSO, chính quy hóa L2 trong Ridge Regression có xu hướng làm co các hệ số về gần 0 nhưng không đẩy chúng về chính xác bằng 0. Điều này có nghĩa là Ridge giữ lại và khai thác thông tin từ tất cả các đặc trưng, đặc biệt hữu ích khi các đặc trưng có tương quan với nhau."
+  },
+  {
+    "question_id": "ch7_q35",
+    "concepts": [
+      "Elastic Net Regression",
+      "Kết hợp chính quy hóa L1 và L2",
+      "Các biến thể của hồi quy tuyến tính"
+    ],
+    "misconceptions": [
+      "cho rằng Elastic Net chỉ dùng L1, vì nhầm lẫn với LASSO.",
+      "tin rằng Elastic Net chỉ dùng L2, vì nhầm lẫn với Ridge.",
+      "cho rằng Elastic Net là một tên khác của KNNRegressor, vì nhầm lẫn một mô hình hồi quy tuyến tính với một mô hình dựa trên khoảng cách."
+    ],
+    "reasoning": "Elastic Net là một mô hình hồi quy tuyến tính kết hợp cả hai loại chính quy hóa: L1 (từ LASSO) và L2 (từ Ridge). Nó được tạo ra để tận dụng ưu điểm của cả hai phương pháp."
+  },
+  {
+    "question_id": "ch7_q36",
+    "concepts": [
+      "Vai trò của Elastic Net",
+      "Cân bằng giữa LASSO và Ridge",
+      "Ưu điểm của mô hình kết hợp"
+    ],
+    "misconceptions": [
+      "cho rằng Elastic Net thay thế hoàn toàn mọi regularization khác, vì không hiểu rằng việc lựa chọn LASSO, Ridge, hay Elastic Net phụ thuộc vào bài toán cụ thể.",
+      "tin rằng Elastic Net luôn đưa tất cả hệ số về 0, vì hiểu sai về tác dụng của nó. Chỉ có thành phần L1 mới có xu hướng này.",
+      "cho rằng Elastic Net chỉ dùng cho dữ liệu phân loại, vì nhầm lẫn một mô hình hồi quy với bài toán phân loại."
+    ],
+    "reasoning": "Elastic Net được tạo ra để cân bằng giữa hai cách tiếp cận của LASSO và Ridge. Nó vừa có thể thực hiện lựa chọn đặc trưng (như LASSO) vừa có thể xử lý tốt các nhóm đặc trưng tương quan với nhau (như Ridge), trở thành một lựa chọn linh hoạt và mạnh mẽ."
+  },
+  {
+    "question_id": "ch7_q37",
+    "concepts": [
+      "Siêu tham số λ (alpha)",
+      "Tác động của chính quy hóa",
+      "Ridge Regression"
+    ],
+    "misconceptions": [
+      "cho rằng tăng λ sẽ làm tất cả trọng số bằng 0 ngay lập tức, vì nhầm lẫn với tác động ở mức cực lớn của LASSO; Ridge chỉ đưa trọng số về gần 0.",
+      "tin rằng tăng λ sẽ làm tất cả trọng số bằng nhau, vì không hiểu cơ chế co của Ridge, nó làm co các trọng số về phía 0 với mức độ khác nhau.",
+      "cho rằng tăng λ sẽ làm tăng số chiều dữ liệu, vì nhầm lẫn hoàn toàn về tác dụng của chính quy hóa."
+    ],
+    "reasoning": "Trong Ridge Regression, tham số λ (thường được gọi là alpha trong scikit-learn) kiểm soát độ mạnh của thành phần phạt L2. Khi tăng λ, áp lực lên việc giảm độ lớn của các trọng số càng tăng, khiến chúng bị 'co' lại và tiến gần về giá trị 0, từ đó giảm độ phức tạp của mô hình."
+  },
+  {
+    "question_id": "ch7_q38",
+    "concepts": [
+      "Hồi quy đa thức (Polynomial Regression)",
+      "Kỹ thuật đặc trưng (Feature Engineering)",
+      "Mô hình hóa quan hệ phi tuyến"
+    ],
+    "misconceptions": [
+      "cho rằng khi dùng feature engineering thì chỉ giữ lại cột x gốc, vì không hiểu mục đích của việc tạo ra đặc trưng mới là để tăng khả năng biểu diễn của mô hình.",
+      "tin rằng feature engineering là thay x bằng nhãn phân loại, vì nhầm lẫn giữa việc tạo đặc trưng số và việc mã hóa biến hạng mục.",
+      "cho rằng feature engineering là bỏ dữ liệu nhiễu, vì nhầm lẫn giữa việc tạo đặc trưng mới và một bước tiền xử lý dữ liệu khác."
+    ],
+    "reasoning": "Mặc dù mô hình hồi quy tuyến tính chỉ có thể học mối quan hệ tuyến tính, ta có thể áp dụng nó cho dữ liệu phi tuyến bằng cách tạo ra các đặc trưng mới từ đặc trưng ban đầu (ví dụ: x², x³, log(x),...). Mô hình sau đó sẽ học một mối quan hệ tuyến tính trên không gian đặc trưng mới này."
+  },
+  {
+    "question_id": "ch7_q39",
+    "concepts": [
+      "Hồi quy đa thức",
+      "Ma trận đặc trưng",
+      "Kỹ thuật đặc trưng"
+    ],
+    "misconceptions": [
+      "cho rằng ma trận đặc trưng cho hàm bậc 3 chỉ chứa [1, x], vì nhầm lẫn với mô hình tuyến tính đơn giản.",
+      "tin rằng ma trận đặc trưng chứa [x, y, z], vì nhầm lẫn việc tạo đặc trưng đa thức với việc có nhiều đặc trưng đầu vào khác nhau.",
+      "cho rằng ma trận đặc trưng cho hàm bậc 3 lại chứa các bậc cao hơn như x^4, x^5, vì không hiểu đúng định nghĩa của 'bậc 3'."
+    ],
+    "reasoning": "Để tạo một mô hình hồi quy đa thức bậc 3, ta cần biến đổi đặc trưng đầu vào x thành một tập hợp các đặc trưng mới bao gồm các lũy thừa của nó lên đến bậc 3. Cùng với hệ số chặn (đại diện bởi số 1), ma trận đặc trưng sẽ có dạng [1, x, x², x³]."
+  },
+  {
+    "question_id": "ch7_q40",
+    "concepts": [
+      "Mô hình đa thức bậc cao",
+      "Độ phức tạp và linh hoạt của mô hình",
+      "Nguy cơ Overfitting"
+    ],
+    "misconceptions": [
+      "cho rằng mô hình đa thức bậc cao luôn cho lỗi kiểm thử tốt nhất, vì không nhận ra nguy cơ overfitting, nơi mô hình hoạt động tốt trên tập train nhưng kém trên tập test."
+    ],
+    "reasoning": "Các mô hình đa thức với bậc cao hơn có nhiều tham số hơn, giúp chúng trở nên linh hoạt hơn và có khả năng khớp với dữ liệu huấn luyện một cách chặt chẽ hơn, từ đó giảm lỗi huấn luyện. Tuy nhiên, sự linh hoạt này cũng là con dao hai lưỡi, làm tăng đáng kể nguy cơ quá khớp (overfitting)."
+  },
+  {
+    "question_id": "ch7_q41",
+    "concepts": [
+      "KNN Regressor",
+      "Dự đoán dựa trên lân cận",
+      "So sánh KNN phân loại và hồi quy"
+    ],
+    "misconceptions": [
+      "cho rằng KNN Regressor lấy giá trị lớn nhất hoặc nhỏ nhất của các hàng xóm, vì nghĩ đến các quy tắc tổng hợp khác nhưng không phải là cách hoạt động tiêu chuẩn.",
+      "tin rằng KNN Regressor lấy nhãn xuất hiện nhiều nhất, vì nhầm lẫn với cơ chế hoạt động của KNN Classifier (phân loại), nơi dự đoán dựa trên 'đa số thắng'."
+    ],
+    "reasoning": "Trong bài toán hồi quy, mục tiêu là dự đoán một giá trị số. Cách tiếp cận đơn giản và phổ biến nhất của KNN Regressor là tìm k hàng xóm gần nhất của điểm dữ liệu mới và tính trung bình cộng các giá trị đầu ra của chúng để làm kết quả dự đoán."
+  },
+  {
+    "question_id": "ch7_q42",
+    "concepts": [
+      "Tính toán cơ bản",
+      "Phép tính trung bình cộng",
+      "Hoạt động của KNN Regressor"
+    ],
+    "misconceptions": [
+      "cho rằng kết quả là 40.0, vì có thể làm tròn sai hoặc tính nhẩm nhanh không chính xác.",
+      "cho rằng kết quả là 42.5, vì có thể tính sai tổng hoặc phép chia.",
+      "cho rằng kết quả là 45.0, vì có thể nhầm lẫn với một phép toán khác như lấy median của một tập dữ liệu khác hoặc chỉ nhìn vào một con số trong ba số đó."
+    ],
+    "reasoning": "Đây là một câu hỏi kiểm tra phép tính cơ bản. Trung bình cộng của ba số 35, 45, và 50 được tính bằng (35 + 45 + 50) / 3 = 130 / 3 ≈ 43.33. Phương án gần nhất là 43.3."
+  },
+  {
+    "question_id": "ch7_q43",
+    "concepts": [
+      "KNN Regressor",
+      "Trung bình trọng số (Weighted Average)",
+      "Dự đoán dựa trên khoảng cách"
+    ],
+    "misconceptions": [
+      "cho rằng KNN Regressor có thể dự đoán bằng tổng các khoảng cách, vì nhầm lẫn giữa việc sử dụng khoảng cách để tính trọng số và việc dùng chính nó làm kết quả.",
+      "tin rằng KNN Regressor dự đoán bằng hiệu của các hàng xóm, vì nghĩ đến một phép toán không hợp lý cho việc tổng hợp thông tin.",
+      "cho rằng KNN Regressor dự đoán bằng median của toàn bộ tập train, vì nhầm lẫn một mô hình cục bộ (local) với một phép thống kê toàn cục (global) rất đơn giản."
+    ],
+    "reasoning": "Ngoài cách lấy trung bình cộng đơn giản, KNN Regressor có một biến thể nâng cao là lấy trung bình trọng số. Trong đó, các hàng xóm gần hơn sẽ có trọng số cao hơn và đóng góp nhiều hơn vào kết quả dự đoán, trong khi các hàng xóm xa hơn có ảnh hưởng ít hơn."
+  },
+  {
+    "question_id": "ch7_q44",
+    "concepts": [
+      "Mạng Neural Network cho Hồi quy",
+      "Hàm kích hoạt (Activation Function)",
+      "Kiến trúc lớp đầu ra"
+    ],
+    "misconceptions": [
+      "cho rằng mạng neural cho hồi quy luôn có softmax ở lớp cuối, vì nhầm lẫn với kiến trúc cho bài toán phân loại đa lớp.",
+      "tin rằng mạng neural cho hồi quy luôn có sigmoid ở lớp cuối, vì nhầm lẫn với kiến trúc cho bài toán phân loại nhị phân hoặc khi đầu ra cần nằm trong khoảng (0, 1).",
+      "cho rằng mạng neural cho hồi quy luôn có hàm step, vì nhầm lẫn với các mô hình perceptron cổ điển hoặc các bài toán phân loại đơn giản."
+    ],
+    "reasoning": "Trong bài toán hồi quy, đầu ra của mạng neural cần là một giá trị số không bị giới hạn trong một khoảng cụ thể. Do đó, lớp cuối cùng thường không có hàm kích hoạt (hoặc có thể coi là hàm kích hoạt tuyến tính/đồng nhất) để cho phép giá trị đầu ra có thể thuộc bất kỳ đâu trên trục số thực."
+  },
+  {
+    "question_id": "ch7_q45",
+    "concepts": [
+      "Mạng Neural Network",
+      "Multi-Layer Perceptron (MLP)",
+      "Thuật ngữ học máy"
+    ],
+    "misconceptions": [
+      "cho rằng tên khác của mạng Neural Network là Random Forest, vì nhầm lẫn một kiến trúc mạng với một mô hình ensemble dựa trên cây quyết định.",
+      "tin rằng tên khác là Gaussian Mixture Model, vì nhầm lẫn với một mô hình xác suất dùng cho phân cụm.",
+      "cho rằng tên khác là Support Vector Classifier, vì nhầm lẫn với một mô hình phân loại dựa trên máy vector hỗ trợ."
+    ],
+    "reasoning": "Multi-Layer Perceptron (MLP) là một tên gọi cụ thể và cổ điển cho một loại mạng neural nhân tạo truyền thẳng, bao gồm ít nhất ba lớp: lớp vào, lớp ẩn và lớp ra. Nó thường được sử dụng như một từ đồng nghĩa với mạng neural cơ bản."
+  },
+  {
+    "question_id": "ch7_q46",
+    "concepts": [
+      "Các mô hình hồi quy",
+      "Sự tương đồng giữa mô hình phân loại và hồi quy",
+      "Các thuật toán học máy phổ biến"
+    ],
+    "misconceptions": [
+      "Học sinh có thể không chọn hết các đáp án đúng vì không nhận ra rằng tất cả các mô hình phân loại nổi tiếng này đều có phiên bản hồi quy tương ứng."
+    ],
+    "reasoning": "Nhiều thuật toán ban đầu được phát triển cho bài toán phân loại đã được điều chỉnh để giải quyết các bài toán hồi quy. Support Vector Machine có SVR, Decision Tree có Decision Tree Regressor, và các phương pháp ensemble như Random Forest và Gradient Boosting cũng có các phiên bản hồi quy tương ứng."
+  },
+  {
+    "question_id": "ch7_q47",
+    "concepts": [
+      "Phân loại các mô hình học máy",
+      "Nguồn gốc của các thuật toán",
+      "Hồi quy tuyến tính"
+    ],
+    "misconceptions": [
+      "cho rằng Support Vector Regressor không có nguồn gốc từ mô hình phân loại, vì không biết đến sự tồn tại của Support Vector Classifier (SVC).",
+      "tin rằng Decision Tree Regressor không có nguồn gốc từ mô hình phân loại, vì không liên kết nó với Decision Tree Classifier.",
+      "cho rằng Random Forest Regressor không có nguồn gốc từ mô hình phân loại, vì không liên kết nó với Random Forest Classifier."
+    ],
+    "reasoning": "Hồi quy tuyến tính là một mô hình thống kê cơ bản, không có nguồn gốc trực tiếp từ một mô hình phân loại. Ngược lại, SVR, Decision Tree Regressor và Random Forest Regressor đều là các phiên bản hồi quy được phát triển từ các đối tác phân loại nổi tiếng của chúng."
+  },
+  {
+    "question_id": "ch7_q48",
+    "concepts": [
+      "Tính chất của OLS (Ordinary Least Squares)",
+      "Đường hồi quy",
+      "Trung bình mẫu"
+    ],
+    "misconceptions": [
+      "cho rằng tổng phần dư luôn dương, vì không hiểu rằng một trong những tính chất của OLS là tổng (và trung bình) của các phần dư bằng 0.",
+      "tin rằng hiệp phương sai giữa X và phần dư luôn dương, vì không biết rằng một tính chất khác của OLS là hiệp phương sai này bằng 0.",
+      "cho rằng đường hồi quy không bao giờ đi qua trung bình mẫu, vì không nắm được một trong những tính chất hình học cơ bản và quan trọng nhất của đường hồi quy OLS."
+    ],
+    "reasoning": "Một trong những tính chất toán học cơ bản của phương pháp ước lượng bình phương tối thiểu (OLS) là đường thẳng hồi quy luôn đi qua điểm có tọa độ là trung bình của các biến, tức là điểm (X̄, Ȳ). Điều này đảm bảo đường thẳng cân bằng giữa các điểm dữ liệu."
+  },
+  {
+    "question_id": "ch7_q49",
+    "concepts": [
+      "Gradient Descent",
+      "Công thức cập nhật trọng số",
+      "Tốc độ học (Learning Rate)"
+    ],
+    "misconceptions": [
+      "cho rằng công thức cập nhật là phép cộng (β̂ + α∇L), vì không hiểu rằng gradient descent cần di chuyển ngược hướng với gradient để đi đến điểm cực tiểu.",
+      "tin rằng công thức cập nhật có dạng nhân (αβ̂ + L), vì nhầm lẫn với một dạng công thức hoàn toàn khác không liên quan đến gradient descent.",
+      "cho rằng công thức cập nhật là phép chia (β̂ / α), vì nghĩ đến một quy tắc cập nhật không đúng về mặt toán học cho bài toán tối ưu này."
+    ],
+    "reasoning": "Thuật toán Gradient Descent hoạt động bằng cách cập nhật các tham số (β̂) theo hướng ngược lại với hướng của gradient (∇L) của hàm mất mát. Do đó, công thức cập nhật có dạng trừ: tham số mới bằng tham số cũ trừ đi một phần nhỏ (quyết định bởi tốc độ học α) của gradient."
+  },
+  {
+    "question_id": "ch7_q50",
+    "concepts": [
+      "Tổng hợp về Regularization",
+      "So sánh LASSO, Ridge, Elastic Net",
+      "Hồi quy tuyến tính có điều chuẩn"
+    ],
+    "misconceptions": [
+      "Học sinh có thể không chọn hết các đáp án đúng vì chỉ nhớ được đặc điểm của một hoặc hai mô hình, hoặc không nhận ra rằng cả ba đều là các biến thể của hồi quy tuyến tính có regularization."
+    ],
+    "reasoning": "Câu hỏi này tổng hợp lại các kiến thức chính về ba phương pháp hồi quy có chính quy hóa phổ biến: LASSO (L1, chọn đặc trưng), Ridge (L2, co hệ số, khai thác hết đặc trưng), và Elastic Net (kết hợp L1 và L2). Cả ba đều là các biến thể của hồi quy tuyến tính được thiết kế để cải thiện hiệu suất và giảm overfitting."
+  }
+]

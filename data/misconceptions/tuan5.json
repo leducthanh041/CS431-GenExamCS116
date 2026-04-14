@@ -1,0 +1,700 @@
+[
+  {
+    "question_id": "ch5_q1",
+    "concepts": [
+      "Mục đích của việc đánh giá mô hình",
+      "Xác thực mô hình",
+      "So sánh và cải thiện mô hình"
+    ],
+    "misconceptions": [
+      "cho rằng chỉ cần một trong các lý do là đủ, không nhận ra rằng tất cả các lựa chọn đều là những mục đích quan trọng và liên quan đến nhau của việc đánh giá mô hình.",
+      "tin rằng việc đánh giá chỉ để chọn ra mô hình tốt nhất, mà không thấy được vai trò của nó trong việc phát hiện overfitting hay định hướng cải tiến."
+    ],
+    "reasoning": "Đánh giá mô hình là một bước toàn diện bao gồm việc xác thực khả năng tổng quát hóa, so sánh hiệu suất, đảm bảo độ tin cậy và tìm hướng cải thiện. Tất cả các lựa chọn đều là những khía cạnh quan trọng của quá trình này."
+  },
+  {
+    "question_id": "ch5_q2",
+    "concepts": [
+      "Hiện tượng quá khớp (overfitting)",
+      "Lỗi trên tập huấn luyện (training error)",
+      "Lỗi trên tập kiểm thử (testing error)"
+    ],
+    "misconceptions": [
+      "cho rằng quá khớp có nghĩa là mô hình hoạt động tốt trên mọi dữ liệu, vì vậy cả lỗi huấn luyện và kiểm thử đều phải thấp.",
+      "tin rằng một mô hình có thể hoạt động kém trên dữ liệu đã thấy (lỗi huấn luyện cao) nhưng lại hoạt động tốt trên dữ liệu mới chưa từng thấy (lỗi kiểm thử thấp).",
+      "cho rằng 'quá khớp' (overfitting) là một trạng thái lỗi rất tệ nên mọi chỉ số lỗi của nó đều phải cao, nhầm lẫn với hiện tượng chưa khớp (underfitting)."
+    ],
+    "reasoning": "Quá khớp (overfitting) là tình trạng mô hình học quá tốt trên tập huấn luyện (lỗi huấn luyện thấp) nhưng không tổng quát hóa được trên dữ liệu mới (lỗi kiểm thử cao). Các phương án khác mô tả một mô hình lý tưởng, mô hình chưa khớp, hoặc một kịch bản gần như không thể xảy ra."
+  },
+  {
+    "question_id": "ch5_q3",
+    "concepts": [
+      "Phân biệt bài toán hồi quy và phân lớp",
+      "Biến kết quả (output variable)",
+      "Bản chất của đầu ra mô hình"
+    ],
+    "misconceptions": [
+      "cho rằng loại bài toán được quyết định bởi dữ liệu đầu vào, như số lượng mẫu hay số lượng đặc trưng.",
+      "tin rằng kích thước tập huấn luyện có thể thay đổi bản chất của bài toán từ hồi quy sang phân lớp hoặc ngược lại.",
+      "cho rằng chỉ cần nhìn vào dữ liệu mà không cần quan tâm đến mục tiêu dự đoán (biến kết quả) là có thể xác định được loại bài toán."
+    ],
+    "reasoning": "Bản chất của một bài toán học máy được xác định bởi mục tiêu dự đoán, tức là biến kết quả (output). Hồi quy dự đoán một giá trị liên tục, trong khi phân lớp dự đoán một nhãn rời rạc. Các yếu tố như số lượng mẫu hay đặc trưng không quyết định loại bài toán."
+  },
+  {
+    "question_id": "ch5_q4",
+    "concepts": [
+      "Ứng dụng của bài toán hồi quy",
+      "Dự đoán giá trị số liên tục",
+      "Phân biệt hồi quy và phân lớp"
+    ],
+    "misconceptions": [
+      "cho rằng 'tuổi' là một loại 'lớp' (như lớp 1 tuổi, lớp 2 tuổi), nên đây là bài toán phân lớp.",
+      "tin rằng phân cụm có thể dùng để dự đoán một giá trị cụ thể như tuổi, nhầm lẫn giữa việc nhóm và việc dự đoán.",
+      "cho rằng việc dự đoán tuổi giống như việc giảm chiều dữ liệu vì nó cố gắng tìm ra một con số duy nhất từ nhiều đặc trưng."
+    ],
+    "reasoning": "Dự đoán 'tuổi' là dự đoán một giá trị số liên tục (ví dụ: 25.5 tuổi), đây là đặc trưng của bài toán hồi quy. Phân lớp dự đoán nhãn rời rạc (ví dụ: 'già', 'trẻ'), trong khi phân cụm và giảm chiều dữ liệu là các loại bài toán học không giám sát."
+  },
+  {
+    "question_id": "ch5_q5",
+    "concepts": [
+      "Tầm quan trọng của việc xác định đúng bài toán",
+      "Lựa chọn hàm mục tiêu",
+      "Lựa chọn độ đo đánh giá"
+    ],
+    "misconceptions": [
+      "cho rằng việc tăng kích thước tập train luôn là giải pháp cho mọi vấn đề, và nó liên quan trực tiếp đến việc xác định loại bài toán.",
+      "tin rằng hàm mục tiêu và độ đo đánh giá là như nhau cho mọi loại bài toán học máy.",
+      "cho rằng việc phân biệt bài toán chỉ là lý thuyết, không ảnh hưởng đến các bước thực hành như chọn hàm mục tiêu hay độ đo."
+    ],
+    "reasoning": "Việc xác định đúng loại bài toán (hồi quy hay phân lớp) là bước nền tảng, quyết định việc lựa chọn hàm mục tiêu để huấn luyện và độ đo để đánh giá mô hình cho phù hợp, từ đó đảm bảo kết quả khách quan. Việc tăng dữ liệu không phải lúc nào cũng là giải pháp và không liên quan đến việc xác định loại bài toán."
+  },
+  {
+    "question_id": "ch5_q6",
+    "concepts": [
+      "Đặc tính của biến đầu ra trong bài toán phân lớp",
+      "Phép toán so sánh trên nhãn (label)",
+      "Bản chất của dữ liệu định danh (categorical data)"
+    ],
+    "misconceptions": [
+      "cho rằng có thể so sánh hơn/kém giữa các lớp, ví dụ 'chó' > 'mèo', vì gán nhãn cho chúng bằng số (ví dụ: chó=1, mèo=0).",
+      "tin rằng các phép so sánh >= hoặc <= có thể áp dụng được cho các nhãn phân lớp, nhầm lẫn với các giá trị có thứ tự (ordinal).",
+      "cho rằng mọi phép so sánh đều có thể thực hiện được trên các nhãn, không nhận ra sự khác biệt giữa giá trị số và nhãn định danh."
+    ],
+    "reasoning": "Trong bài toán phân lớp, đầu ra là các nhãn (lớp) không có thứ tự. Do đó, ta chỉ có thể so sánh xem hai nhãn có bằng nhau (=) hay khác nhau (!=) hay không, chứ không thể so sánh hơn/kém (>, <)."
+  },
+  {
+    "question_id": "ch5_q7",
+    "concepts": [
+      "Công thức Mean Squared Error (MSE)",
+      "Độ đo lỗi cho bài toán hồi quy",
+      "Sai số bình phương trung bình"
+    ],
+    "misconceptions": [
+      "cho rằng công thức của MSE dùng giá trị tuyệt đối, nhầm lẫn với MAE (Mean Absolute Error).",
+      "tin rằng công thức của MSE có phép khai căn, nhầm lẫn với RMSE (Root Mean Squared Error).",
+      "cho rằng R-squared là một dạng biến thể của MSE và có công thức tương tự, nhầm lẫn về mặt ký hiệu."
+    ],
+    "reasoning": "Mean Squared Error (MSE) được định nghĩa là trung bình của bình phương các sai số. Công thức đúng là tổng các bình phương của hiệu số giữa giá trị thực tế (y_i) và giá trị dự đoán (yhat_i), sau đó chia cho số lượng mẫu (n)."
+  },
+  {
+    "question_id": "ch5_q8",
+    "concepts": [
+      "Định nghĩa Mean Absolute Error (MAE)",
+      "Sai số tuyệt đối trung bình",
+      "Độ đo lỗi cho bài toán hồi quy"
+    ],
+    "misconceptions": [
+      "cho rằng MAE đo trung bình bình phương sai số, nhầm lẫn với MSE.",
+      "tin rằng MAE là căn bậc hai của trung bình bình phương sai số, nhầm lẫn với RMSE.",
+      "cho rằng MAE đo tỉ lệ dự đoán đúng, nhầm lẫn với Accuracy trong bài toán phân lớp."
+    ],
+    "reasoning": "Mean Absolute Error (MAE) theo đúng tên gọi của nó, đo lường giá trị trung bình của sai số tuyệt đối (khoảng cách không có dấu) giữa giá trị thực tế và giá trị dự đoán. Các lựa chọn khác mô tả MSE, RMSE và Accuracy."
+  },
+  {
+    "question_id": "ch5_q9",
+    "concepts": [
+      "Định nghĩa Root Mean Squared Error (RMSE)",
+      "Mối quan hệ giữa RMSE và MSE",
+      "Độ đo lỗi cho bài toán hồi quy"
+    ],
+    "misconceptions": [
+      "cho rằng RMSE là giá trị tuyệt đối của MSE, vì MSE luôn dương nên không cần lấy giá trị tuyệt đối.",
+      "tin rằng RMSE là bình phương của MAE, nhầm lẫn mối quan hệ giữa các độ đo lỗi.",
+      "cho rằng có một mối quan hệ toán học đơn giản như phép chia giữa MAE và MSE để ra RMSE."
+    ],
+    "reasoning": "Root Mean Squared Error (RMSE) được tính bằng cách lấy căn bậc hai của Mean Squared Error (MSE). Điều này giúp đưa đơn vị của độ đo lỗi về cùng đơn vị với biến mục tiêu."
+  },
+  {
+    "question_id": "ch5_q10",
+    "concepts": [
+      "Các độ đo đánh giá cho bài toán hồi quy",
+      "Phân biệt độ đo hồi quy và phân lớp",
+      "MAE, MSE, RMSE"
+    ],
+    "misconceptions": [
+      "cho rằng Accuracy (độ chính xác) cũng là một độ đo phù hợp cho bài toán hồi quy, vì tên của nó nghe có vẻ tổng quát.",
+      "tin rằng trong hồi quy, dự đoán gần đúng cũng có thể tính là 'đúng' và dùng Accuracy để đếm, không hiểu rằng Accuracy chỉ dành cho các dự đoán nhãn rời rạc."
+    ],
+    "reasoning": "MAE, MSE, và RMSE là các độ đo phổ biến cho bài toán hồi quy vì chúng đo lường độ lớn của sai số giữa giá trị dự đoán liên tục và giá trị thực tế. Accuracy là độ đo cho bài toán phân lớp, dùng để đếm số lần dự đoán đúng nhãn."
+  },
+  {
+    "question_id": "ch5_q11",
+    "concepts": [
+      "Diễn giải giá trị của độ đo lỗi",
+      "Đánh giá mô hình hồi quy",
+      "MAE, MSE, RMSE"
+    ],
+    "misconceptions": [
+      "cho rằng các độ đo hiệu suất luôn phải càng lớn càng tốt, giống như 'điểm số'.",
+      "tin rằng giá trị của độ đo lỗi phải đạt một ngưỡng cụ thể như 1 hoặc 100 để được coi là tốt.",
+      "cho rằng giá trị lỗi lớn hơn có nghĩa là mô hình 'học' được nhiều hơn, nên tốt hơn."
+    ],
+    "reasoning": "MAE, MSE, và RMSE đều là các độ đo lỗi, tức là chúng đo lường khoảng cách giữa dự đoán và thực tế. Do đó, một mô hình tốt hơn sẽ có sai số nhỏ hơn, dẫn đến giá trị của các độ đo này càng gần 0 càng tốt."
+  },
+  {
+    "question_id": "ch5_q12",
+    "concepts": [
+      "Công thức Relative Absolute Error (RAE)",
+      "Sai số tương đối",
+      "Giá trị trung bình của nhãn thực (ybar)"
+    ],
+    "misconceptions": [
+      "cho rằng mẫu số của RAE là tổng sai số tuyệt đối của mô hình, nhầm lẫn với tử số.",
+      "tin rằng mẫu số của RAE sử dụng sai số bình phương, nhầm lẫn với RSE (Relative Squared Error).",
+      "cho rằng RAE không cần so sánh với một baseline, mà chỉ cần tính sai số của mô hình."
+    ],
+    "reasoning": "Relative Absolute Error (RAE) so sánh tổng sai số tuyệt đối của mô hình (tử số) với tổng sai số tuyệt đối của một mô hình baseline đơn giản (mẫu số). Mô hình baseline này luôn dự đoán giá trị trung bình của tất cả các nhãn thực tế (ybar)."
+  },
+  {
+    "question_id": "ch5_q13",
+    "concepts": [
+      "Công thức Relative Squared Error (RSE)",
+      "Sai số bình phương tương đối",
+      "Giá trị trung bình của nhãn thực (ybar)"
+    ],
+    "misconceptions": [
+      "cho rằng mẫu số của RSE sử dụng sai số tuyệt đối, nhầm lẫn với RAE.",
+      "tin rằng mẫu số của RSE là tổng sai số bình phương của mô hình, nhầm lẫn với tử số.",
+      "cho rằng ký hiệu yhat và ybar là như nhau, dẫn đến việc chọn sai công thức."
+    ],
+    "reasoning": "Tương tự RAE, Relative Squared Error (RSE) so sánh tổng sai số bình phương của mô hình (tử số) với tổng sai số bình phương của một mô hình baseline đơn giản (mẫu số). Mô hình baseline này cũng dự đoán giá trị trung bình (ybar), do đó mẫu số là tổng bình phương sai khác giữa giá trị thực và giá trị trung bình."
+  },
+  {
+    "question_id": "ch5_q14",
+    "concepts": [
+      "Đặc tính của độ đo MSE",
+      "Ảnh hưởng của phép toán bình phương lên lỗi",
+      "So sánh MAE và MSE"
+    ],
+    "misconceptions": [
+      "cho rằng MAE và MSE phạt lỗi lớn như nhau vì chúng đều là các dạng 'sai số trung bình'.",
+      "tin rằng Jaccard index và Recall cũng có thể được dùng để đo 'bình phương sai số' vì chúng cũng là các độ đo hiệu suất mô hình.",
+      "cho rằng bất kỳ độ đo nào cũng có thể được áp dụng cho bài toán hồi quy, không phân biệt với bài toán phân lớp."
+    ],
+    "reasoning": "MSE, bằng cách bình phương sai số trước khi lấy trung bình, sẽ khuếch đại tác động của các lỗi lớn, do đó 'phạt' chúng nặng hơn. MAE chỉ lấy giá trị tuyệt đối nên không có đặc tính này, trong khi Jaccard index và Recall là các độ đo cho bài toán phân lớp."
+  },
+  {
+    "question_id": "ch5_q15",
+    "concepts": [
+      "Đơn vị của các độ đo lỗi",
+      "So sánh đơn vị của MSE và RMSE",
+      "Diễn giải kết quả mô hình hồi quy"
+    ],
+    "misconceptions": [
+      "cho rằng MSE có cùng đơn vị với biến đầu ra, vì nó là độ đo phổ biến, không để ý rằng đơn vị đã bị bình phương.",
+      "tin rằng các độ đo tương đối như RSE và RAE luôn có đơn vị, không nhận ra chúng là các tỉ lệ nên không có đơn vị.",
+      "cho rằng mọi độ đo lỗi đều không có đơn vị vì chúng chỉ là các con số thể hiện hiệu suất."
+    ],
+    "reasoning": "MSE có đơn vị là bình phương của đơn vị biến đầu ra (ví dụ: (đồng)^2). RMSE lấy căn bậc hai của MSE, do đó đưa đơn vị trở về cùng đơn vị với biến đầu ra (ví dụ: đồng), giúp dễ diễn giải hơn. RSE và RAE là các tỷ lệ nên không có đơn vị."
+  },
+  {
+    "question_id": "ch5_q16",
+    "concepts": [
+      "Bản chất của độ đo đánh giá",
+      "Mối liên hệ giữa độ đo và hàm độ lỗi",
+      "Tính thực tiễn của việc đánh giá"
+    ],
+    "misconceptions": [
+      "cho rằng các độ đo đánh giá và hàm độ lỗi trong học máy là các công thức toán học thuần túy, hoàn toàn khách quan và không có sự thiên lệch.",
+      "tin rằng không thể có sự thiên lệch trong cách tính trung bình.",
+      "cho rằng hàm độ lỗi và độ đo đánh giá là hai khái niệm hoàn toàn độc lập và không liên quan đến nhau."
+    ],
+    "reasoning": "Các độ đo và hàm lỗi không phải lúc nào cũng hoàn toàn khách quan; chúng có thể mang tính thiên lệch và cần được lựa chọn dựa trên bối cảnh thực tiễn (ví dụ: thiệt hại kinh tế). Trong nhiều trường hợp, hàm lỗi được chọn chính là một biến thể của độ đo đánh giá mong muốn."
+  },
+  {
+    "question_id": "ch5_q17",
+    "concepts": [
+      "Quy trình đánh giá mô hình",
+      "Sử dụng mô hình đã huấn luyện để dự đoán",
+      "So sánh giá trị thực tế và giá trị dự đoán"
+    ],
+    "misconceptions": [
+      "cho rằng có thể đánh giá một mô hình mà không cần huấn luyện nó trước.",
+      "tin rằng việc đánh giá là so sánh dữ liệu huấn luyện với chính nó, không cần đến giá trị dự đoán.",
+      "cho rằng việc đánh giá chỉ được thực hiện trên tập huấn luyện (train) và không bao giờ sử dụng tập kiểm thử (test)."
+    ],
+    "reasoning": "Quy trình đánh giá chuẩn là sử dụng một mô hình đã được huấn luyện để tạo ra các dự đoán trên một tập dữ liệu (thường là tập test hoặc validation). Sau đó, các độ đo đánh giá được tính toán bằng cách so sánh các giá trị dự đoán này với các giá trị thực tế tương ứng."
+  },
+  {
+    "question_id": "ch5_q18",
+    "concepts": [
+      "Hàm độ lỗi cho bài toán phân lớp",
+      "Log loss (Cross-Entropy)",
+      "Phân biệt hàm lỗi cho hồi quy và phân lớp"
+    ],
+    "misconceptions": [
+      "cho rằng MSE, MAE, hoặc RMSE có thể được dùng làm hàm độ lỗi cho bài toán phân lớp, vì chúng đều là các 'hàm độ lỗi'.",
+      "tin rằng mọi bài toán phân lớp đều tối ưu hóa trực tiếp độ chính xác (accuracy), không biết rằng accuracy không khả vi và khó tối ưu.",
+      "cho rằng các hàm lỗi có thể dùng lẫn lộn giữa các loại bài toán."
+    ],
+    "reasoning": "Trong khi MSE, MAE, RMSE là các hàm lỗi phổ biến cho hồi quy, Log loss (hay Cross-Entropy) là hàm lỗi tiêu chuẩn cho các bài toán phân lớp. Nó phạt mô hình dựa trên độ sai lệch của xác suất dự đoán so với nhãn thực tế."
+  },
+  {
+    "question_id": "ch5_q19",
+    "concepts": [
+      "Hàm Log loss",
+      "Đầu vào của hàm lỗi phân lớp",
+      "Xác suất dự đoán (predicted probability)"
+    ],
+    "misconceptions": [
+      "cho rằng Log loss tính toán trực tiếp trên các nhãn dự đoán cứng (0 hoặc 1), không nhận ra rằng nó cần đầu vào là một giá trị liên tục.",
+      "tin rằng Log loss sử dụng giá trị trung bình của nhãn hoặc một loại khoảng cách hình học như Euclid.",
+      "cho rằng để tính lỗi, chỉ cần biết mô hình dự đoán 'đúng' hay 'sai' là đủ, không cần biết mức độ tự tin (xác suất) của dự đoán đó."
+    ],
+    "reasoning": "Log loss được thiết kế để hoạt động với đầu ra dạng xác suất của mô hình. Nó đo lường mức độ 'ngạc nhiên' của mô hình khi thấy nhãn thực tế, và sẽ phạt rất nặng nếu mô hình dự đoán một xác suất thấp cho lớp đúng."
+  },
+  {
+    "question_id": "ch5_q20",
+    "concepts": [
+      "Diễn giải giá trị Log loss",
+      "Đánh giá mô hình phân lớp",
+      "Tối ưu hóa hàm lỗi"
+    ],
+    "misconceptions": [
+      "cho rằng mọi độ đo hiệu suất đều nên càng lớn càng tốt.",
+      "tin rằng giá trị tối ưu của Log loss là 1, nhầm lẫn với các độ đo như Accuracy hoặc F1-score.",
+      "cho rằng giá trị Log loss không phụ thuộc vào xác suất dự đoán, chỉ phụ thuộc vào nhãn đúng/sai."
+    ],
+    "reasoning": "Log loss là một hàm lỗi (loss function), vì vậy mục tiêu là tối thiểu hóa nó. Một mô hình hoàn hảo sẽ dự đoán xác suất là 1 cho lớp đúng, khi đó log(1) = 0. Do đó, giá trị Log loss càng gần 0 thì mô hình càng tốt."
+  },
+  {
+    "question_id": "ch5_q21",
+    "concepts": [
+      "Độ đo đánh giá cho bài toán phân lớp",
+      "Jaccard index",
+      "Phân biệt hàm lỗi và độ đo đánh giá"
+    ],
+    "misconceptions": [
+      "cho rằng MSE, RMSE, RSE có thể dùng để đánh giá bài toán phân lớp, không phân biệt được độ đo cho hồi quy và phân lớp.",
+      "tin rằng sau khi dùng Log loss làm hàm lỗi, ta cũng phải dùng chính nó làm độ đo đánh giá để báo cáo, không biết rằng có thể dùng các độ đo khác dễ diễn giải hơn.",
+      "cho rằng các độ đo hồi quy vẫn áp dụng được cho phân lớp nếu ta coi các lớp là các số 0, 1, 2,..."
+    ],
+    "reasoning": "Sau khi giới thiệu Log loss làm hàm lỗi để huấn luyện, slide chuyển sang các độ đo đánh giá trực quan hơn cho bài toán phân lớp như Jaccard index. MSE, RMSE, RSE là các độ đo dành cho bài toán hồi quy."
+  },
+  {
+    "question_id": "ch5_q22",
+    "concepts": [
+      "Công thức Jaccard index",
+      "Độ đo dựa trên tập hợp",
+      "Phần giao và phần hợp của các tập hợp"
+    ],
+    "misconceptions": [
+      "cho rằng Jaccard index là công thức của Precision (TP / (TP + FP)).",
+      "tin rằng Jaccard index là công thức của Recall (TP / (TP + FN)).",
+      "cho rằng Jaccard index là công thức của Accuracy."
+    ],
+    "reasoning": "Jaccard index, hay Intersection over Union (IoU), được định nghĩa là tỉ lệ giữa độ lớn của phần giao (intersection) và độ lớn của phần hợp (union) của hai tập hợp. Trong bối cảnh này, đó là tập các nhãn thực tế (Y) và tập các nhãn dự đoán (Yhat)."
+  },
+  {
+    "question_id": "ch5_q23",
+    "concepts": [
+      "Diễn giải công thức Jaccard index",
+      "Nguyên lý bù trừ trong tập hợp",
+      "Miền giá trị của Jaccard index"
+    ],
+    "misconceptions": [
+      "cho rằng Jaccard index có thể âm, không nhận ra rằng nó là tỷ lệ của hai số không âm (kích thước tập hợp).",
+      "tin rằng mẫu số |Y ∪ Yhat| được tính bằng |Y| + |Yhat|, quên trừ đi phần giao nhau đã được đếm hai lần.",
+      "cho rằng Y và Yhat là các giá trị đơn lẻ, không hiểu chúng đại diện cho các tập hợp các nhãn."
+    ],
+    "reasoning": "Công thức Jaccard index so sánh tập giá trị thực tế (Y) và tập giá trị dự đoán (Yhat). Theo nguyên lý bù trừ, kích thước của phần hợp |Y ∪ Yhat| bằng |Y| + |Yhat| - |Y ∩ Yhat|. Vì là tỉ lệ của kích thước các tập hợp, Jaccard index luôn nằm trong khoảng [0, 1]."
+  },
+  {
+    "question_id": "ch5_q24",
+    "concepts": [
+      "Công thức của Precision",
+      "Định nghĩa True Positive (TP) và False Positive (FP)",
+      "Độ đo đánh giá phân lớp"
+    ],
+    "misconceptions": [
+      "cho rằng Precision có công thức giống Recall, nhầm lẫn giữa False Positive và False Negative.",
+      "tin rằng Precision là công thức của Accuracy, không phân biệt được các thành phần của ma trận nhầm lẫn.",
+      "cho rằng Precision là công thức của F1-score, nhầm lẫn giữa các độ đo cơ bản và độ đo tổng hợp."
+    ],
+    "reasoning": "Precision đo lường độ chính xác trong số các dự đoán là 'Dương' (Positive). Nó được tính bằng cách lấy số lượng dự đoán 'Dương' chính xác (True Positives) chia cho tổng số các dự đoán được mô hình gán nhãn 'Dương' (True Positives + False Positives)."
+  },
+  {
+    "question_id": "ch5_q25",
+    "concepts": [
+      "Công thức của Recall (Sensitivity)",
+      "Định nghĩa True Positive (TP) và False Negative (FN)",
+      "Độ đo đánh giá phân lớp"
+    ],
+    "misconceptions": [
+      "cho rằng Recall có công thức giống Precision, nhầm lẫn mẫu số giữa (TP + FP) và (TP + FN).",
+      "tin rằng Recall đo độ chính xác của lớp 'Âm' (Negative), nhầm lẫn với Specificity (TN / (TN + FP)).",
+      "cho rằng Recall là công thức của Accuracy, không phân biệt được các thành phần khác nhau của ma trận nhầm lẫn."
+    ],
+    "reasoning": "Recall (hay Độ nhạy) đo lường khả năng của mô hình trong việc tìm ra tất cả các trường hợp 'Dương' (Positive) thực tế. Nó được tính bằng cách lấy số lượng dự đoán 'Dương' chính xác (True Positives) chia cho tổng số các trường hợp thực sự là 'Dương' (True Positives + False Negatives)."
+  },
+  {
+    "question_id": "ch5_q26",
+    "concepts": [
+      "Công thức F1-score",
+      "Trung bình điều hòa (harmonic mean)",
+      "Cân bằng giữa Precision và Recall"
+    ],
+    "misconceptions": [
+      "cho rằng F1-score là trung bình cộng của Precision và Recall, không biết rằng nó là trung bình điều hòa.",
+      "tin rằng chỉ cần cộng hoặc chia Precision và Recall là có thể tạo ra một độ đo kết hợp.",
+      "cho rằng F1-score chỉ đơn giản là phép nhân của Precision và Recall."
+    ],
+    "reasoning": "F1-score là trung bình điều hòa của Precision và Recall, được tính bằng công thức 2 * (Precision * Recall) / (Precision + Recall). Việc sử dụng trung bình điều hòa giúp F1-score có giá trị cao chỉ khi cả Precision và Recall đều cao, và nó phạt nặng nếu một trong hai chỉ số quá thấp."
+  },
+  {
+    "question_id": "ch5_q27",
+    "concepts": [
+      "Độ đo cho bài toán phân loại nhị phân",
+      "Phân biệt độ đo phân lớp và hồi quy",
+      "Accuracy, Precision, F1-score"
+    ],
+    "misconceptions": [
+      "cho rằng Mean Squared Error (MSE) có thể được sử dụng để đánh giá bài toán phân loại, không phân biệt được bối cảnh sử dụng của các độ đo.",
+      "tin rằng chỉ có Accuracy là đủ để đánh giá phân loại nhị phân mà không cần đến Precision hay F1-score.",
+      "cho rằng mọi độ đo lỗi đều có thể áp dụng cho mọi loại bài toán."
+    ],
+    "reasoning": "Accuracy, Precision, và F1-score là các độ đo tiêu chuẩn để đánh giá hiệu suất của mô hình trong bài toán phân loại nhị phân. Mean Squared Error (MSE) là độ đo dành cho bài toán hồi quy, đo lường sai số của các giá trị dự đoán liên tục."
+  },
+  {
+    "question_id": "ch5_q28",
+    "concepts": [
+      "Ma trận nhầm lẫn (Confusion Matrix)",
+      "Phân loại đa lớp (multi-class classification)",
+      "Ứng dụng của ma trận nhầm lẫn"
+    ],
+    "misconceptions": [
+      "cho rằng ma trận nhầm lẫn chỉ có thể là 2x2, nên chỉ dùng được cho bài toán nhị phân.",
+      "tin rằng ma trận nhầm lẫn chỉ hoạt động tốt khi dữ liệu cân bằng.",
+      "cho rằng ma trận nhầm lẫn là một phần của một thuật toán cụ thể như logistic regression, chứ không phải là một công cụ đánh giá chung."
+    ],
+    "reasoning": "Ma trận nhầm lẫn là một công cụ đánh giá tổng quát, có thể sử dụng cho cả bài toán phân loại nhị phân (kích thước 2x2) và đa lớp (kích thước NxN, với N là số lớp). Nó cung cấp một cái nhìn chi tiết về các loại lỗi mà mô hình mắc phải, bất kể dữ liệu có cân bằng hay không."
+  },
+  {
+    "question_id": "ch5_q29",
+    "concepts": [
+      "Tính toán Precision từ ma trận nhầm lẫn",
+      "Áp dụng công thức Precision",
+      "Xác định TP, FP"
+    ],
+    "misconceptions": [
+      "cho rằng Precision được tính bằng TP / (TP + FN), nhầm lẫn với công thức của Recall.",
+      "tin rằng Precision được tính bằng (TP + TN) / (TP+TN+FP+FN), nhầm lẫn với công thức của Accuracy.",
+      "cho rằng các giá trị trong ma trận nhầm lẫn có thể được sử dụng lẫn lộn, ví dụ lấy FP cộng với FN."
+    ],
+    "reasoning": "Precision được tính bằng công thức TP / (TP + FP). Với TP=6 và FP=1, ta có Precision = 6 / (6 + 1) ≈ 0.8571. Các lựa chọn sai là kết quả của việc áp dụng sai công thức, ví dụ như tính Recall hoặc Accuracy."
+  },
+  {
+    "question_id": "ch5_q30",
+    "concepts": [
+      "Tính toán Recall từ ma trận nhầm lẫn",
+      "Áp dụng công thức Recall",
+      "Xác định TP, FN"
+    ],
+    "misconceptions": [
+      "cho rằng Recall được tính bằng TP / (TP + FP), nhầm lẫn với công thức của Precision.",
+      "tin rằng Recall được tính bằng (TP + TN) / (TP+TN+FP+FN), nhầm lẫn với công thức của Accuracy.",
+      "cho rằng chỉ cần biết TP là có thể suy ra Recall, không cần quan tâm đến FN."
+    ],
+    "reasoning": "Recall được tính bằng công thức TP / (TP + FN). Với TP=6 và FN=9, ta có Recall = 6 / (6 + 9) = 6 / 15 = 0.40. Các lựa chọn sai là kết quả của việc áp dụng sai công thức, ví dụ như tính Precision hoặc Accuracy."
+  },
+  {
+    "question_id": "ch5_q31",
+    "concepts": [
+      "Tính toán Accuracy từ ma trận nhầm lẫn",
+      "Áp dụng công thức Accuracy",
+      "Xác định TP, TN, FP, FN"
+    ],
+    "misconceptions": [
+      "cho rằng Accuracy chỉ tính trên các dự đoán đúng của một lớp, ví dụ chỉ dùng TP.",
+      "tin rằng Accuracy là trung bình của Precision và Recall.",
+      "cho rằng Accuracy chỉ đơn giản là tổng các dự đoán đúng (TP + TN), quên chia cho tổng số mẫu."
+    ],
+    "reasoning": "Accuracy được tính bằng công thức (TP + TN) / (TP + TN + FP + FN). Với TP=6, TN=24, FP=1, FN=9, ta có tổng số mẫu là 6+24+1+9 = 40. Accuracy = (6 + 24) / 40 = 30 / 40 = 0.75."
+  },
+  {
+    "question_id": "ch5_q32",
+    "concepts": [
+      "Tính toán F1-score từ ma trận nhầm lẫn",
+      "Kết hợp Precision và Recall",
+      "Trung bình điều hòa"
+    ],
+    "misconceptions": [
+      "cho rằng F1-score chính là giá trị của Precision hoặc Recall, nếu một trong hai giá trị đó xuất hiện trong các lựa chọn.",
+      "tin rằng F1-score là giá trị của Accuracy.",
+      "cho rằng F1-score là trung bình cộng của Precision và Recall, thay vì trung bình điều hòa."
+    ],
+    "reasoning": "F1-score được tính từ Precision và Recall. Từ các câu trước, Precision ≈ 0.8571 và Recall = 0.40. Áp dụng công thức F1 = 2 * (P * R) / (P + R), ta có F1 = 2 * (0.8571 * 0.40) / (0.8571 + 0.40) ≈ 0.5455."
+  },
+  {
+    "question_id": "ch5_q33",
+    "concepts": [
+      "Ảnh hưởng của False Positive (FP)",
+      "Mối quan hệ giữa FP và Precision",
+      "Diễn giải các độ đo phân lớp"
+    ],
+    "misconceptions": [
+      "cho rằng False Positive ảnh hưởng đến Recall, không phân biệt được FP và FN.",
+      "tin rằng các lỗi (FP, FN) ảnh hưởng đến các độ đo hồi quy như MAE, RMSE.",
+      "cho rằng FP ảnh hưởng đến mọi độ đo phân lớp theo cách như nhau."
+    ],
+    "reasoning": "False Positive (FP) là thành phần nằm trong mẫu số của công thức tính Precision (P = TP / (TP + FP)). Do đó, khi số lượng FP tăng lên, mẫu số sẽ tăng, làm cho giá trị Precision giảm xuống. Recall không bị ảnh hưởng trực tiếp bởi FP."
+  },
+  {
+    "question_id": "ch5_q34",
+    "concepts": [
+      "Ảnh hưởng của False Negative (FN)",
+      "Mối quan hệ giữa FN và Recall",
+      "Diễn giải các độ đo phân lớp"
+    ],
+    "misconceptions": [
+      "cho rằng False Negative ảnh hưởng đến Precision, không phân biệt được FN và FP.",
+      "tin rằng các lỗi (FN, FP) ảnh hưởng đến các độ đo hồi quy như MSE.",
+      "cho rằng False Negative ảnh hưởng trực tiếp đến Jaccard index trong công thức dựa trên TP/FP/FN/TN."
+    ],
+    "reasoning": "False Negative (FN) là thành phần nằm trong mẫu số của công thức tính Recall (R = TP / (TP + FN)). Do đó, khi số lượng FN tăng lên, mẫu số sẽ tăng, làm cho giá trị Recall giảm xuống. Precision không bị ảnh hưởng trực tiếp bởi FN."
+  },
+  {
+    "question_id": "ch5_q35",
+    "concepts": [
+      "Lựa chọn độ đo đánh giá theo bối cảnh",
+      "Bài toán phát hiện gian lận",
+      "Đánh đổi giữa Precision và Recall"
+    ],
+    "misconceptions": [
+      "cho rằng Accuracy luôn là độ đo tốt nhất cho mọi bài toán, vì nó đo 'độ chính xác' chung.",
+      "tin rằng các độ đo hồi quy như MSE/RMSE có thể áp dụng cho bài toán phát hiện gian lận (một bài toán phân lớp).",
+      "cho rằng trong mọi trường hợp, việc bỏ sót một trường hợp gian lận (FN cao, Recall thấp) cũng tệ như việc kết tội nhầm một người trong sạch (FP cao, Precision thấp)."
+    ],
+    "reasoning": "Trong bối cảnh phát hiện gian lận để xử lý, việc kết tội nhầm một sinh viên trong sạch (False Positive) gây ra hậu quả rất nghiêm trọng. Do đó, cần ưu tiên giảm thiểu FP, tức là tối đa hóa Precision. Mục tiêu là đảm bảo rằng mỗi trường hợp bị gắn cờ 'gian lận' đều phải có độ chắc chắn rất cao."
+  },
+  {
+    "question_id": "ch5_q36",
+    "concepts": [
+      "Quy trình đánh giá không hợp lệ",
+      "Rò rỉ dữ liệu (data leakage)",
+      "Đánh giá khách quan"
+    ],
+    "misconceptions": [
+      "cho rằng không thể tính được accuracy khi tập test là một phần của tập train.",
+      "tin rằng quy trình này làm cho việc huấn luyện mô hình trở nên bất khả thi.",
+      "cho rằng vấn đề này chỉ xảy ra với bài toán phân lớp, còn hồi quy thì không sao."
+    ],
+    "reasoning": "Khi mô hình được đánh giá trên dữ liệu mà nó đã thấy trong quá trình huấn luyện, kết quả sẽ cực kỳ lạc quan một cách giả tạo và không phản ánh được hiệu suất thực tế trên dữ liệu mới. Đây là một dạng rò rỉ dữ liệu, làm cho việc đánh giá trở nên không khách quan."
+  },
+  {
+    "question_id": "ch5_q37",
+    "concepts": [
+      "Hạn chế của độ chính xác trên tập huấn luyện",
+      "Hiện tượng quá khớp (overfitting)",
+      "Tính tổng quát hóa của mô hình"
+    ],
+    "misconceptions": [
+      "cho rằng độ chính xác cao trên tập train luôn là một dấu hiệu tốt và đảm bảo mô hình sẽ hoạt động tốt trên thực tế.",
+      "tin rằng một mô hình có độ chính xác cao trên tập train chắc chắn đã học được các quy luật tổng quát của dữ liệu.",
+      "cho rằng overfitting chỉ xảy ra khi độ chính xác trên tập train thấp."
+    ],
+    "reasoning": "Độ chính xác cao trên tập huấn luyện không phải lúc nào cũng tốt. Nó có thể là dấu hiệu của overfitting, tức là mô hình đã 'học thuộc' cả dữ liệu và nhiễu trong tập train, dẫn đến việc không thể tổng quát hóa tốt cho dữ liệu mới và không phản ánh đúng hiệu quả thực tế."
+  },
+  {
+    "question_id": "ch5_q38",
+    "concepts": [
+      "Đánh giá ngoài mẫu (out-of-sample evaluation)",
+      "Tính tổng quát hóa",
+      "Hiệu quả thực tế của mô hình"
+    ],
+    "misconceptions": [
+      "cho rằng độ chính xác ngoài mẫu cũng chỉ phản ánh mức độ khớp trên tập train.",
+      "tin rằng đánh giá ngoài mẫu là một cách để đo lường khả năng ghi nhớ dữ liệu train của mô hình.",
+      "cho rằng hiệu suất ngoài mẫu phụ thuộc vào số lượng tham số mô hình hơn là khả năng tổng quát hóa."
+    ],
+    "reasoning": "Độ chính xác trên tập dữ liệu ngoài mẫu (dữ liệu mà mô hình chưa từng thấy trong quá trình huấn luyện) là thước đo đáng tin cậy nhất về khả năng tổng quát hóa và hiệu quả của mô hình khi được triển khai trong thực tế."
+  },
+  {
+    "question_id": "ch5_q39",
+    "concepts": [
+      "Phương pháp Train-Test split",
+      "Ưu điểm của Train-Test split",
+      "Chi phí tính toán trong đánh giá"
+    ],
+    "misconceptions": [
+      "cho rằng Train-Test split có thể đánh giá toàn diện hơn K-Fold Cross Validation, nhầm lẫn về bản chất của hai phương pháp.",
+      "tin rằng Train-Test split là phương pháp phức tạp và tốn kém nhất.",
+      "cho rằng Train-Test split không phù hợp với dữ liệu lớn."
+    ],
+    "reasoning": "Train-Test split là một phương pháp đánh giá đơn giản, dễ thực hiện và ít tốn kém chi phí tính toán vì chỉ cần huấn luyện mô hình một lần. Nó đặc biệt phù hợp khi tập dữ liệu đủ lớn để việc chia nhỏ không làm ảnh hưởng nhiều đến chất lượng huấn luyện."
+  },
+  {
+    "question_id": "ch5_q40",
+    "concepts": [
+      "Khuyết điểm của Train-Test split",
+      "Tính khách quan của đánh giá",
+      "Sự phụ thuộc vào cách chia dữ liệu"
+    ],
+    "misconceptions": [
+      "cho rằng Train-Test split không thể áp dụng cho tập dữ liệu lớn.",
+      "tin rằng Train-Test split luôn phải huấn luyện mô hình nhiều lần hơn K-Fold, hoàn toàn ngược lại với thực tế.",
+      "cho rằng 'tốn thêm thời gian' là do quá trình tính toán phức tạp, thay vì chỉ là một bước chia dữ liệu."
+    ],
+    "reasoning": "Khuyết điểm chính của Train-Test split là kết quả đánh giá có thể phụ thuộc nhiều vào 'may rủi' của một lần chia dữ liệu duy nhất, làm cho nó kém khách quan hơn so với K-Fold. Ngoài ra, nó vẫn tốn thêm thời gian và tài nguyên so với việc chỉ huấn luyện và đánh giá trên tập train."
+  },
+  {
+    "question_id": "ch5_q41",
+    "concepts": [
+      "Phương pháp K-Fold cross validation",
+      "Ưu điểm của K-Fold",
+      "Đánh giá trên dữ liệu ít"
+    ],
+    "misconceptions": [
+      "cho rằng K-Fold luôn có chi phí tính toán thấp, không nhận ra rằng nó phải huấn luyện mô hình K lần.",
+      "tin rằng K-Fold không phù hợp với dữ liệu ít, trong khi đây lại là một trong những thế mạnh của nó.",
+      "cho rằng K-Fold là một phương pháp huấn luyện, không phải là một quy trình đánh giá."
+    ],
+    "reasoning": "K-Fold cross-validation cung cấp một đánh giá toàn diện và đáng tin cậy hơn về khả năng tổng quát hóa của mô hình bằng cách huấn luyện và kiểm thử trên nhiều phần khác nhau của dữ liệu. Nó đặc biệt hữu ích khi tập dữ liệu có kích thước nhỏ, hoặc khi mô hình huấn luyện nhanh chóng."
+  },
+  {
+    "question_id": "ch5_q42",
+    "concepts": [
+      "Khuyết điểm của K-Fold cross validation",
+      "Chi phí tính toán",
+      "Đánh đổi giữa độ tin cậy và chi phí"
+    ],
+    "misconceptions": [
+      "cho rằng khuyết điểm của K-Fold là đánh giá không khách quan, nhầm lẫn với ưu điểm của nó.",
+      "tin rằng K-Fold không phù hợp với dữ liệu ít, trong khi đây là trường hợp sử dụng chính của nó.",
+      "cho rằng K-Fold không thể dùng cho bài toán phân lớp."
+    ],
+    "reasoning": "Khuyết điểm lớn nhất của K-Fold cross-validation là chi phí tính toán cao. Vì quy trình này yêu cầu phải huấn luyện và đánh giá mô hình K lần, nó sẽ rất tốn thời gian và tài nguyên nếu K lớn hoặc nếu mô hình cần nhiều thời gian để huấn luyện."
+  },
+  {
+    "question_id": "ch5_q43",
+    "concepts": [
+      "Tính toán kết quả K-Fold",
+      "Lấy trung bình kết quả đánh giá",
+      "Diễn giải kết quả cross-validation"
+    ],
+    "misconceptions": [
+      "cho rằng kết quả cuối cùng là kết quả của một fold cụ thể, ví dụ fold tốt nhất hoặc tệ nhất.",
+      "tin rằng cần phải thực hiện một phép tính phức tạp hơn là chỉ lấy trung bình cộng.",
+      "cho rằng các giá trị 80, 82, 86 không liên quan và chỉ cần chọn một số ngẫu nhiên."
+    ],
+    "reasoning": "Kết quả cuối cùng của K-Fold cross-validation thường được báo cáo bằng cách lấy giá trị trung bình của các độ đo đánh giá qua K fold. Trong ví dụ, các độ chính xác là 80%, 82%, 84% và 86%, vậy trung bình là (80+82+84+86)/4 = 83% (lưu ý: có thể có một giá trị bị đọc nhầm trên slide, nhưng logic là lấy trung bình)."
+  },
+  {
+    "question_id": "ch5_q44",
+    "concepts": [
+      "Mục đích của cross-validation",
+      "Đánh giá ngoài mẫu",
+      "Tổng quát hóa mô hình"
+    ],
+    "misconceptions": [
+      "cho rằng cross-validation là một kỹ thuật để huấn luyện mô hình nhanh hơn.",
+      "tin rằng cross-validation là một phương pháp để giảm số lượng đặc trưng.",
+      "cho rằng cross-validation thay thế hoàn toàn train-test split, không nhận ra chúng có thể được sử dụng kết hợp (ví dụ: cross-validation trên tập train để tinh chỉnh tham số)."
+    ],
+    "reasoning": "Mục đích cốt lõi của cross-validation là để có được một ước lượng đáng tin cậy và ổn định hơn về cách mô hình sẽ hoạt động trên dữ liệu mới (ngoài mẫu). Nó thực hiện điều này bằng cách lặp lại quy trình huấn luyện và kiểm thử trên các phần khác nhau của dữ liệu."
+  },
+  {
+    "question_id": "ch5_q45",
+    "concepts": [
+      "Lợi ích của cross-validation",
+      "Ước lượng sự biến thiên của mô hình",
+      "Đo lường hiệu suất tổng quát"
+    ],
+    "misconceptions": [
+      "cho rằng cross-validation giúp huấn luyện mô hình nhanh hơn, trong khi thực tế nó làm tăng thời gian huấn luyện.",
+      "tin rằng cross-validation có thể tự động giảm sự phức tạp của mô hình, nhầm lẫn giữa việc đánh giá và việc điều chỉnh mô hình.",
+      "cho rằng cross-validation chỉ cho ra một con số duy nhất, không thấy được khả năng ước lượng sự biến thiên (độ lệch chuẩn) của hiệu suất."
+    ],
+    "reasoning": "Bằng cách huấn luyện và đánh giá mô hình nhiều lần trên các tập con khác nhau, kiểm định chéo không chỉ cung cấp một ước lượng tổng quát hơn về hiệu suất (thông qua giá trị trung bình) mà còn cho phép ước lượng sự ổn định của mô hình (thông qua độ lệch chuẩn của các kết quả)."
+  },
+  {
+    "question_id": "ch5_q46",
+    "concepts": [
+      "Hoạt động của hàm cross_validate",
+      "Quy trình K-Fold",
+      "Lập trình với scikit-learn"
+    ],
+    "misconceptions": [
+      "cho rằng khi gọi `cross_validate` với `cv=5`, mô hình chỉ được huấn luyện một lần duy nhất trên toàn bộ dữ liệu.",
+      "tin rằng các tập kiểm thử trong cross-validation có thể chồng lấn lên nhau.",
+      "cho rằng `cross_validate` chỉ là một cách viết khác của `train_test_split`."
+    ],
+    "reasoning": "Khi thực hiện K-Fold cross-validation (ở đây K=5), dữ liệu được chia thành 5 phần (folds). Quy trình sẽ lặp lại 5 lần, mỗi lần sử dụng 1 fold làm tập kiểm thử và 4 folds còn lại làm tập huấn luyện. Do đó, mô hình sẽ được huấn luyện (fit) 5 lần trên các tập huấn luyện khác nhau để có được đánh giá tổng quát."
+  },
+  {
+    "question_id": "ch5_q47",
+    "concepts": [
+      "Quy trình đánh giá 'Test là một phần của Train'",
+      "Ưu điểm (giả) của phương pháp sai",
+      "Tính đơn giản và tốc độ"
+    ],
+    "misconceptions": [
+      "cho rằng phương pháp này có thể đánh giá toàn diện hơn K-Fold.",
+      "tin rằng phương pháp này phù hợp cho dữ liệu ít hơn là train-test split, không nhận ra sự thiếu khách quan của nó.",
+      "cho rằng 'đơn giản' và 'nhanh' là những ưu điểm đủ để bù đắp cho sự sai lệch của kết quả."
+    ],
+    "reasoning": "Mặc dù là một phương pháp đánh giá sai lầm và không khách quan, việc sử dụng chính tập train để làm tập test có 'ưu điểm' là rất đơn giản (không cần chia dữ liệu) và nhanh chóng (không cần bước dự đoán riêng biệt). Tuy nhiên, những ưu điểm này không có giá trị vì kết quả đánh giá là vô nghĩa."
+  },
+  {
+    "question_id": "ch5_q48",
+    "concepts": [
+      "Khuyết điểm của quy trình 'Test là một phần của Train'",
+      "Đánh giá không khách quan",
+      "Thiếu tính tổng quát hóa"
+    ],
+    "misconceptions": [
+      "cho rằng khuyết điểm của phương pháp này là chi phí tính toán cao, trong khi thực tế nó rất nhanh.",
+      "tin rằng phương pháp này yêu cầu phải có tập dữ liệu lớn.",
+      "cho rằng vấn đề chỉ là 'không khách quan' một chút, không nhận ra rằng kết quả là hoàn toàn không đáng tin cậy."
+    ],
+    "reasoning": "Khuyết điểm chí mạng của việc đánh giá trên dữ liệu huấn luyện là kết quả thu được hoàn toàn không khách quan. Nó chỉ đo lường khả năng 'học thuộc' của mô hình, không hề cho biết khả năng tổng quát hóa trên dữ liệu mới, do đó không có giá trị để đánh giá hiệu quả thực tế."
+  },
+  {
+    "question_id": "ch5_q49",
+    "concepts": [
+      "Lựa chọn quy trình đánh giá",
+      "Đánh giá trên dữ liệu lớn",
+      "Sử dụng Train-Test split"
+    ],
+    "misconceptions": [
+      "cho rằng K-Fold Cross Validation luôn là phương pháp tốt nhất trong mọi trường hợp, kể cả với dữ liệu rất lớn.",
+      "tin rằng khi dữ liệu lớn, ta có thể bỏ qua bước đánh giá hoặc đánh giá ngay trên tập train.",
+      "cho rằng không cần tách dữ liệu khi tập dữ liệu đã đủ lớn."
+    ],
+    "reasoning": "Khi tập dữ liệu đủ lớn, phương pháp Train-Test split trở nên hiệu quả. Một lần chia duy nhất vẫn tạo ra một tập test đủ lớn và đại diện, trong khi tránh được chi phí tính toán cao của K-Fold Cross Validation. Đánh giá ngay trên tập train là một lỗi nghiêm trọng."
+  },
+  {
+    "question_id": "ch5_q50",
+    "concepts": [
+      "Lựa chọn quy trình đánh giá",
+      "Đánh giá trên dữ liệu ít",
+      "Sử dụng K-Fold Cross Validation"
+    ],
+    "misconceptions": [
+      "cho rằng khi dữ liệu ít, ta nên đánh giá ngay trên tập train để tận dụng tối đa dữ liệu.",
+      "tin rằng khi dữ liệu ít thì không cần quan tâm đến độ đo đánh giá nữa.",
+      "cho rằng chỉ cần dùng Accuracy trên tập train là đủ, một phương pháp đánh giá sai lầm."
+    ],
+    "reasoning": "Khi tập dữ liệu ít, K-Fold Cross Validation là lựa chọn ưu tiên. Nó cho phép tận dụng mọi điểm dữ liệu cho cả việc huấn luyện và kiểm thử, mang lại một ước lượng hiệu suất đáng tin cậy và ổn định hơn so với một lần chia train-test duy nhất, vốn có thể rất nhạy cảm với cách chia ngẫu nhiên."
+  }
+]

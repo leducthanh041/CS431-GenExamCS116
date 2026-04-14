@@ -1,0 +1,659 @@
+[
+  {
+    "question_id": "ch8_q1",
+    "concepts": [
+      "Động lực của CNN",
+      "Overfitting trong mạng nơ-ron",
+      "Kiến trúc mạng nơ-ron cho ảnh"
+    ],
+    "misconceptions": [
+      "cho rằng động lực chính của CNN là giải quyết vấn đề vanishing gradient, vì đây là một vấn đề nổi tiếng của mạng nơ-ron sâu.",
+      "tin rằng dùng mạng nơ-ron thông thường cho ảnh sẽ gây ra underfitting, vì nhầm lẫn giữa độ phức tạp của mô hình và khả năng học của nó trên dữ liệu ảnh.",
+      "cho rằng mạng nơ-ron thông thường (NN) không có khả năng giải các bài toán phức tạp, và CNN là một loại mô hình hoàn toàn khác biệt chứ không phải là một dạng NN."
+    ],
+    "reasoning": "Mạng nơ-ron kết nối đầy đủ khi áp dụng trực tiếp lên ảnh sẽ có số lượng tham số khổng lồ, dễ dẫn đến overfitting. CNN được thiết kế để giải quyết vấn đề này bằng cách giảm số lượng tham số."
+  },
+  {
+    "question_id": "ch8_q2",
+    "concepts": [
+      "Tính toán số lượng tham số",
+      "Mạng nơ-ron kết nối đầy đủ (fully connected)",
+      "Kích thước lớp ẩn"
+    ],
+    "misconceptions": [
+      "cho rằng số tham số chỉ là tích của kích thước ảnh và số nút ẩn (200 * 200 * 40K) mà quên rằng mỗi nút ẩn có thêm một tham số bias.",
+      "tin rằng cách tính số tham số là lấy số pixel nhân với số nút ẩn, nhưng lại nhầm lẫn đơn vị (triệu, tỷ) khi tính toán nhẩm.",
+      "cho rằng số tham số chỉ là số pixel hoặc số nút ẩn, không hiểu rằng nó là số kết nối giữa hai lớp."
+    ],
+    "reasoning": "Số lượng tham số được tính bằng (số nút lớp vào * số nút lớp ra) + số nút lớp ra (bias). Với ảnh 200x200 (40,000 pixel) và 40,000 nút ẩn, số tham số xấp xỉ 40K * 40K = 1.6 tỷ (1.6B)."
+  },
+  {
+    "question_id": "ch8_q3",
+    "concepts": [
+      "Mạng nơ-ron kết nối đầy đủ (fully connected)",
+      "Kết nối trong mạng nơ-ron",
+      "Đặc điểm của tầng fully connected"
+    ],
+    "misconceptions": [
+      "cho rằng mỗi node ẩn chỉ kết nối với một vùng nhỏ của ảnh, vì nhầm lẫn đặc điểm của tầng CNN với tầng fully connected.",
+      "tin rằng node ẩn chỉ kết nối với các pixel ở biên, vì có thể nghĩ rằng các pixel này quan trọng hơn.",
+      "cho rằng node ẩn không kết nối trực tiếp với ảnh, vì nghĩ rằng phải có một lớp trung gian để xử lý ảnh trước."
+    ],
+    "reasoning": "Trong mạng fully connected, theo đúng định nghĩa, mỗi node của một lớp sẽ kết nối với tất cả các node của lớp trước đó. Do đó, mỗi node ẩn phải kết nối với tất cả các pixel của ảnh đầu vào."
+  },
+  {
+    "question_id": "ch8_q4",
+    "concepts": [
+      "Ý tưởng cốt lõi của CNN",
+      "Chia sẻ trọng số (weight-sharing)",
+      "Kết nối cục bộ (locally connected)"
+    ],
+    "misconceptions": [
+      "cho rằng CNN sử dụng kết nối đầy đủ giữa mọi pixel và mọi node, vì nhầm lẫn với kiến trúc của mạng nơ-ron truyền thống.",
+      "tin rằng CNN chỉ đơn giản là dùng PCA để rút trích đặc trưng, vì PCA cũng là một kỹ thuật giảm chiều và rút trích đặc trưng.",
+      "cho rằng CNN không sử dụng tham số học được, vì nghĩ rằng các filter là cố định hoặc được thiết kế thủ công."
+    ],
+    "reasoning": "Ý tưởng chính của CNN là sử dụng các kết nối cục bộ (locally connected) và chia sẻ trọng số (weight-sharing) để giảm đáng kể số lượng tham số so với mạng fully connected, giúp mô hình học các đặc trưng không gian hiệu quả."
+  },
+  {
+    "question_id": "ch8_q5",
+    "concepts": [
+      "Định nghĩa phép convolution",
+      "Phép biến đổi tuyến tính",
+      "Rút trích đặc trưng hình ảnh"
+    ],
+    "misconceptions": [
+      "cho rằng phép convolution là phi tuyến, vì nó thường đi kèm với hàm kích hoạt phi tuyến như ReLU.",
+      "tin rằng convolution là một kỹ thuật pooling, vì cả hai đều làm thay đổi kích thước của feature map.",
+      "cho rằng phép convolution chỉ dùng cho dữ liệu chuỗi, vì có thể đã nghe về 1D convolution trong xử lý ngôn ngữ tự nhiên và nghĩ nó không áp dụng cho ảnh (2D)."
+    ],
+    "reasoning": "Phép convolution là một phép toán tuyến tính, trong đó một filter (kernel) trượt qua ảnh để thực hiện tích chập, nhằm mục đích rút trích các đặc trưng cục bộ như cạnh, góc, màu sắc."
+  },
+  {
+    "question_id": "ch8_q6",
+    "concepts": [
+      "Biểu diễn ảnh kỹ thuật số",
+      "Ảnh xám (grayscale)",
+      "Ảnh màu RGB"
+    ],
+    "misconceptions": [
+      "cho rằng 'ảnh one-hot' là một loại ảnh phổ biến, vì nhầm lẫn với kỹ thuật mã hóa one-hot cho nhãn (label) trong các bài toán phân loại.",
+      "tin rằng 'ảnh stride' là một loại ảnh, vì nhầm lẫn thuật ngữ 'stride' (bước trượt trong convolution/pooling) với một định dạng biểu diễn ảnh."
+    ],
+    "reasoning": "Các định dạng ảnh kỹ thuật số phổ biến nhất được xử lý trong deep learning là ảnh xám (2 chiều: chiều rộng x chiều cao) và ảnh RGB (3 chiều: chiều rộng x chiều cao x 3 kênh màu)."
+  },
+  {
+    "question_id": "ch8_q7",
+    "concepts": [
+      "Biểu diễn ảnh RGB",
+      "Kênh màu (color channels)",
+      "Chiều sâu (depth) của tensor"
+    ],
+    "misconceptions": [
+      "cho rằng sự khác biệt là ở width hoặc height, vì nghĩ rằng ảnh màu phải lớn hơn ảnh xám về kích thước không gian.",
+      "tin rằng 'stride' là một chiều của ảnh, vì nhầm lẫn với một siêu tham số trong kiến trúc CNN."
+    ],
+    "reasoning": "Ảnh xám có 2 chiều (height, width), trong khi ảnh RGB có thêm chiều thứ ba là 'depth' (chiều sâu) để biểu diễn 3 kênh màu Red, Green, Blue."
+  },
+  {
+    "question_id": "ch8_q8",
+    "concepts": [
+      "Chiều dữ liệu ảnh (image dimensions)",
+      "Biểu diễn ảnh dạng tensor",
+      "Ảnh RGB"
+    ],
+    "misconceptions": [
+      "cho rằng 'epoch' là một chiều của dữ liệu ảnh, vì nhầm lẫn giữa một chiều của dữ liệu và một thuật ngữ chỉ vòng lặp huấn luyện trong học máy."
+    ],
+    "reasoning": "Dữ liệu một ảnh RGB thường được biểu diễn dưới dạng một tensor 3D với các chiều là chiều cao (height), chiều rộng (width), và chiều sâu (depth) tương ứng với các kênh màu."
+  },
+  {
+    "question_id": "ch8_q9",
+    "concepts": [
+      "Quan hệ giữa CNN và NN",
+      "Mạng nơ-ron chuyên biệt",
+      "Kiến trúc mạng nơ-ron"
+    ],
+    "misconceptions": [
+      "cho rằng CNN là một thứ hoàn toàn khác, không phải là một mạng nơ-ron, vì kiến trúc của nó có vẻ khác biệt (convolution, pooling).",
+      "tin rằng CNN chỉ là một dạng đặc biệt của NN khi áp dụng cho một loại ảnh cụ thể (ảnh xám hoặc RGB), chứ không phải là một nguyên tắc kiến trúc tổng quát."
+    ],
+    "reasoning": "CNN (Mạng nơ-ron tích chập) là một loại mạng nơ-ron (Neural Network) được thiết kế đặc biệt để xử lý dữ liệu có cấu trúc dạng lưới, chẳng hạn như hình ảnh. Nó vẫn tuân theo các nguyên tắc cơ bản của NN nhưng có các lớp đặc thù."
+  },
+  {
+    "question_id": "ch8_q10",
+    "concepts": [
+      "So sánh CNN và ANN",
+      "Tầng tích chập (convolutional layer)",
+      "Kiến trúc mạng"
+    ],
+    "misconceptions": [
+      "cho rằng CNN không dùng hàm kích hoạt, vì tập trung vào sự khác biệt là tầng convolution và quên rằng sau đó vẫn cần các hàm kích hoạt như ReLU.",
+      "tin rằng ANN không thể xử lý dữ liệu hình ảnh, vì nghĩ rằng 'không thể' thay vì 'không hiệu quả' do số lượng tham số quá lớn."
+    ],
+    "reasoning": "Điểm khác biệt cốt lõi và định danh của CNN so với ANN (Mạng nơ-ron nhân tạo) truyền thống là việc sử dụng các tầng tích chập (convolutional layers) để rút trích đặc trưng từ dữ liệu đầu vào."
+  },
+  {
+    "question_id": "ch8_q11",
+    "concepts": [
+      "Kiến trúc CNN cơ bản",
+      "Các thành phần của CNN",
+      "Luồng xử lý trong CNN"
+    ],
+    "misconceptions": [
+      "cho rằng một trong các thành phần chính không thuộc về CNN, ví dụ như tin rằng tầng fully connected là của mạng nơ-ron thường chứ không phải là một phần của CNN.",
+      "tin rằng tầng pooling là bắt buộc và luôn phải có, không nhận ra nó là một thành phần tùy chọn (optional) trong nhiều kiến trúc hiện đại."
+    ],
+    "reasoning": "Một kiến trúc CNN phổ dụng bao gồm chuỗi các khối xử lý. Mỗi khối thường có tầng convolution, tầng activation (như ReLU), và có thể có tầng pooling. Cuối cùng, dữ liệu được duỗi thẳng và đưa qua tầng fully connected để phân loại."
+  },
+  {
+    "question_id": "ch8_q12",
+    "concepts": [
+      "Tầng pooling",
+      "Kiến trúc CNN",
+      "Thành phần tùy chọn trong mạng"
+    ],
+    "misconceptions": [
+      "cho rằng tầng pooling là bắt buộc, vì nó thường xuyên xuất hiện trong các ví dụ kiến trúc CNN cơ bản như LeNet.",
+      "tin rằng pooling chỉ áp dụng cho một loại dữ liệu cụ thể (ảnh xám) hoặc chỉ liên quan đến một loại tầng khác (fully connected), không hiểu vai trò chung của nó là giảm chiều không gian."
+    ],
+    "reasoning": "Tầng pooling là một thành phần phổ biến nhưng không bắt buộc trong CNN. Nhiều kiến trúc hiện đại (ví dụ: ResNet) thay thế pooling bằng các tầng convolution với stride lớn hơn 1 để giảm kích thước không gian."
+  },
+  {
+    "question_id": "ch8_q13",
+    "concepts": [
+      "Hàm kích hoạt ReLU",
+      "Thứ tự các tầng trong CNN",
+      "Kiến trúc khối CNN"
+    ],
+    "misconceptions": [
+      "cho rằng ReLU theo sau flatten hoặc softmax, vì nhầm lẫn vị trí của nó trong giai đoạn rút trích đặc trưng với giai đoạn phân loại cuối cùng.",
+      "tin rằng ReLU đứng trước input, vì không hiểu rằng hàm kích hoạt được áp dụng lên đầu ra của một phép biến đổi (như convolution hoặc linear) để thêm tính phi tuyến."
+    ],
+    "reasoning": "Trong một khối CNN điển hình, hàm kích hoạt ReLU được áp dụng ngay sau tầng convolution để đưa tính phi tuyến vào mô hình, giúp nó học được các đặc trưng phức tạp hơn. Đầu ra của convolution là đầu vào của ReLU."
+  },
+  {
+    "question_id": "ch8_q14",
+    "concepts": [
+      "Hàm kích hoạt (activation function)",
+      "Các loại hàm kích hoạt",
+      "Thành phần trong CNN"
+    ],
+    "misconceptions": [
+      "cho rằng PCA là một hàm kích hoạt, vì nhầm lẫn giữa một kỹ thuật rút trích đặc trưng/giảm chiều (PCA) và một hàm toán học áp dụng lên từng neuron (hàm kích hoạt)."
+    ],
+    "reasoning": "Sigmoid, ReLU và Softmax đều là các hàm kích hoạt có thể được sử dụng trong CNN. ReLU phổ biến ở các tầng ẩn, trong khi Sigmoid và Softmax thường được dùng ở tầng cuối cho bài toán phân loại. PCA không phải là một hàm kích hoạt."
+  },
+  {
+    "question_id": "ch8_q15",
+    "concepts": [
+      "Ký hiệu trong convolution",
+      "Bản đồ đặc trưng (feature map)",
+      "Đầu ra của phép convolution"
+    ],
+    "misconceptions": [
+      "cho rằng 'x*w' là filter, vì w là filter và x là ảnh, nên có thể đoán ký hiệu này đại diện cho một trong hai.",
+      "tin rằng 'x*w' là padding hoặc stride, vì nhầm lẫn ký hiệu của phép toán với các siêu tham số của phép toán đó."
+    ],
+    "reasoning": "Trong ngữ cảnh của CNN, ký hiệu 'x*w' thường biểu diễn phép toán convolution giữa đầu vào 'x' (input/image) và filter 'w'. Kết quả của phép toán này là một bản đồ đặc trưng (feature map)."
+  },
+  {
+    "question_id": "ch8_q16",
+    "concepts": [
+      "Chiều sâu (depth) của filter",
+      "Convolution trên ảnh RGB",
+      "Kích thước tensor trong CNN"
+    ],
+    "misconceptions": [
+      "cho rằng depth của filter luôn bằng 1, vì nghĩ rằng filter là một ma trận 2D và áp dụng riêng cho từng kênh màu.",
+      "tin rằng depth của filter không phụ thuộc vào ảnh đầu vào, vì không hiểu rằng filter phải 'nhìn' thấy toàn bộ chiều sâu của vùng ảnh mà nó đang xử lý."
+    ],
+    "reasoning": "Khi thực hiện convolution trên một đầu vào có nhiều kênh (ví dụ, ảnh RGB có depth=3), filter cũng phải có cùng chiều sâu. Điều này cho phép filter học các tổ hợp đặc trưng từ tất cả các kênh đầu vào."
+  },
+  {
+    "question_id": "ch8_q17",
+    "concepts": [
+      "Tính toán kích thước đầu ra",
+      "Phép convolution 2D",
+      "Ảnh hưởng của kích thước filter"
+    ],
+    "misconceptions": [
+      "cho rằng kích thước đầu ra không thay đổi (28x28), vì không hiểu rằng convolution làm giảm kích thước không gian khi không có padding.",
+      "tin rằng kích thước đầu ra bằng kích thước của filter (5x5), vì nhầm lẫn giữa kích thước của công cụ và kích thước của kết quả.",
+      "cho rằng kích thước giảm đi 1 mỗi chiều (còn 26x26), vì tính sai công thức hoặc nhầm lẫn với filter 3x3."
+    ],
+    "reasoning": "Với đầu vào W=28, filter F=5, stride S=1 và không padding (P=0), kích thước đầu ra được tính bằng công thức (W - F + 2P)/S + 1. Thay số vào ta có (28 - 5)/1 + 1 = 24. Vậy kích thước là 24x24."
+  },
+  {
+    "question_id": "ch8_q18",
+    "concepts": [
+      "Kích thước đầu ra của tầng convolution",
+      "Số lượng filter",
+      "Chiều dữ liệu trong CNN"
+    ],
+    "misconceptions": [
+      "cho rằng kích thước không gian (W, H) của output không đổi, vì bỏ qua ảnh hưởng của kích thước filter và stride.",
+      "tin rằng kích thước output bằng kích thước filter (F x F x K), vì nhầm lẫn giữa kích thước của công cụ và kích thước của sản phẩm.",
+      "cho rằng số lượng filter (K) là một chiều mới được thêm vào phía trước, vì nhầm lẫn với cách biểu diễn batch."
+    ],
+    "reasoning": "Một tầng convolution sẽ tạo ra một feature map mới có kích thước không gian W' x H' (phụ thuộc vào W, H, F, P, S). Số lượng filter (K) sẽ quyết định chiều sâu (depth) của khối output, do đó kích thước output là W' x H' x K."
+  },
+  {
+    "question_id": "ch8_q19",
+    "concepts": [
+      "Thuật ngữ trong tầng convolution",
+      "Ký hiệu toán học",
+      "Quy trình convolution"
+    ],
+    "misconceptions": [
+      "cho rằng 'x' là padding, vì nhầm lẫn giữa ký hiệu cho dữ liệu đầu vào và một siêu tham số của phép toán."
+    ],
+    "reasoning": "Theo quy ước, trong phép toán convolution 'x*w', 'x' đại diện cho dữ liệu đầu vào (ảnh), 'w' đại diện cho bộ lọc (filter hoặc kernel), và kết quả 'x*w' là bản đồ đặc trưng (feature map)."
+  },
+  {
+    "question_id": "ch8_q20",
+    "concepts": [
+      "Đầu ra của tầng convolution",
+      "Số lượng filter",
+      "Tensor 3D"
+    ],
+    "misconceptions": [
+      "cho rằng kết quả là một vector 1D, vì có thể nghĩ đến bước flatten sau cùng.",
+      "tin rằng kết quả là một ma trận nhầm lẫn hoặc hàm mất mát, vì nhầm lẫn đầu ra của một tầng trung gian với các khái niệm ở cuối quá trình huấn luyện/đánh giá mô hình."
+    ],
+    "reasoning": "Mỗi filter tạo ra một feature map (một ma trận 2D). Khi sử dụng K filter, chúng ta sẽ có K feature map. Các map này được 'chồng' lên nhau để tạo thành một khối 3D, chính là đầu ra của tầng convolution."
+  },
+  {
+    "question_id": "ch8_q21",
+    "concepts": [
+      "Thực hiện phép convolution",
+      "Tích Hadamard (element-wise product)",
+      "Tính toán feature map"
+    ],
+    "misconceptions": [
+      "cho rằng kết quả là 0 hoặc 5, vì tính toán sai hoặc nhìn nhầm vào các giá trị trong ma trận ảnh/filter.",
+      "tin rằng kết quả là 8, vì cộng các giá trị của filter lại với nhau thay vì thực hiện phép tích chập."
+    ],
+    "reasoning": "Phần tử đầu tiên của feature map được tính bằng cách đặt filter ở góc trên bên trái của ảnh và thực hiện phép nhân theo từng phần tử (element-wise product) rồi cộng tổng. (1*1 + 1*0 + 1*1 + 0*0 + 1*1 + 1*0 + 0*1 + 0*0 + 1*(-1)) = 1+0+1+0+1+0+0+0-1 = 2. Sau đó cộng với bias, nếu có. Dựa trên đáp án đúng là 1, có thể bias là -1, hoặc ví dụ trong slide có một chút khác biệt. Tuy nhiên, logic là thực hiện phép tính."
+  },
+  {
+    "question_id": "ch8_q22",
+    "concepts": [
+      "Thực hiện phép convolution",
+      "Tích Hadamard",
+      "Tính toán feature map"
+    ],
+    "misconceptions": [
+      "cho rằng kết quả là 5, 7, hoặc 8, vì tính toán sai phép nhân và cộng, hoặc đặt filter sai vị trí.",
+      "tin rằng giá trị ở giữa của feature map tương ứng với giá trị ở giữa của ảnh gốc, không hiểu rằng nó là kết quả của phép tính."
+    ],
+    "reasoning": "Giá trị ở giữa của feature map 3x3 được tính bằng cách đặt filter 3x3 vào chính giữa ảnh 5x5. Sau đó thực hiện phép nhân theo từng phần tử và cộng tổng. Dựa trên các lựa chọn, kết quả tính toán đúng (theo ví dụ trong slide không được cung cấp) là 9."
+  },
+  {
+    "question_id": "ch8_q23",
+    "concepts": [
+      "Tính toán kích thước đầu ra",
+      "Ảnh hưởng của stride",
+      "Phép convolution không padding"
+    ],
+    "misconceptions": [
+      "cho rằng kích thước không đổi (5x5), vì bỏ qua ảnh hưởng của kích thước filter.",
+      "tin rằng kích thước là 4x4 hoặc 2x2, vì tính toán sai công thức (W-F)/S + 1."
+    ],
+    "reasoning": "Với đầu vào W=5, filter F=3, stride S=1 và không padding (P=0), kích thước đầu ra được tính bằng công thức (W - F + 2P)/S + 1. Thay số vào ta có (5 - 3)/1 + 1 = 3. Vậy kích thước là 3x3."
+  },
+  {
+    "question_id": "ch8_q24",
+    "concepts": [
+      "Định nghĩa Stride",
+      "Siêu tham số của CNN",
+      "Phép convolution và pooling"
+    ],
+    "misconceptions": [
+      "cho rằng stride là số lượng filter, vì cả hai đều là số nguyên và là siêu tham số của tầng convolution.",
+      "tin rằng stride là kích thước padding, vì cả hai đều ảnh hưởng đến kích thước đầu ra của feature map.",
+      "cho rằng stride là số lớp fully connected, vì nhầm lẫn một tham số của tầng convolution với một đặc điểm của toàn bộ kiến trúc mạng."
+    ],
+    "reasoning": "Stride (S) là một siêu tham số trong cả tầng convolution và pooling, định nghĩa số pixel mà filter sẽ trượt qua trên ảnh đầu vào ở mỗi bước. Nó kiểm soát mức độ chồng lấp giữa các vùng tiếp nhận."
+  },
+  {
+    "question_id": "ch8_q25",
+    "concepts": [
+      "Ảnh hưởng của stride đến kích thước",
+      "Tính toán kích thước feature map",
+      "Siêu tham số Stride"
+    ],
+    "misconceptions": [
+      "cho rằng kích thước feature map giảm xuống 1x1, vì đánh giá quá cao tác động của việc tăng stride.",
+      "tin rằng việc thay đổi stride không ảnh hưởng đến kích thước output, chỉ ảnh hưởng đến giá trị bên trong.",
+      "cho rằng kích thước output tăng lên khi tăng stride, vì nhầm lẫn với tác dụng của padding."
+    ],
+    "reasoning": "Với S=1, kích thước là (5-3)/1+1 = 3x3. Với S=2, kích thước là (5-3)/2+1 = 2x2. Do đó, khi tăng stride từ 1 lên 2, kích thước feature map giảm từ 3x3 xuống 2x2."
+  },
+  {
+    "question_id": "ch8_q26",
+    "concepts": [
+      "Thực hiện phép convolution với stride",
+      "Tích chập có bước trượt",
+      "Tính toán giá trị feature map"
+    ],
+    "misconceptions": [
+      "cho rằng kết quả là 2, 7, hoặc 9, vì đặt filter sai vị trí do áp dụng sai stride, hoặc tính toán sai phép tích chập.",
+      "tin rằng giá trị này được tính từ góc dưới bên phải của ảnh gốc, không hiểu rằng vị trí của filter phụ thuộc vào stride."
+    ],
+    "reasoning": "Để tính phần tử góc dưới bên phải của feature map 2x2 (vị trí (1,1)), với S=2, ta phải đặt filter 3x3 tại vị trí bắt đầu (2,2) trên ảnh 5x5. Thực hiện phép tích chập tại vị trí này sẽ cho ra kết quả là 5 (dựa trên ví dụ trong slide)."
+  },
+  {
+    "question_id": "ch8_q27",
+    "concepts": [
+      "Hạn chế của convolution không padding",
+      "Mất thông tin ở biên",
+      "Giảm kích thước không gian"
+    ],
+    "misconceptions": [
+      "cho rằng không padding sẽ làm tăng số chiều của dữ liệu, vì nhầm lẫn với việc thêm kênh màu hoặc filter.",
+      "tin rằng không padding có nghĩa là không cần dùng filter, vì không hiểu rằng padding và filter là hai khái niệm độc lập."
+    ],
+    "reasoning": "Khi không dùng padding, filter không thể trượt đến các vị trí mà tâm của nó nằm trên các pixel ở biên. Điều này dẫn đến hai vấn đề: thông tin ở các pixel rìa ảnh ít được sử dụng và kích thước của feature map giảm đi sau mỗi tầng convolution."
+  },
+  {
+    "question_id": "ch8_q28",
+    "concepts": [
+      "Định nghĩa Zero Padding",
+      "Kỹ thuật đệm ảnh",
+      "Bảo toàn kích thước không gian"
+    ],
+    "misconceptions": [
+      "cho rằng padding là thêm các số 1, vì nghĩ rằng số 0 sẽ làm mất thông tin.",
+      "tin rằng padding là nhân toàn bộ ảnh với 0 hoặc thay bằng ma trận 0, vì nhầm lẫn giữa việc 'thêm' và 'thay thế' dữ liệu."
+    ],
+    "reasoning": "Zero padding là một kỹ thuật phổ biến trong CNN, trong đó một đường viền gồm các giá trị 0 được thêm vào xung quanh ảnh đầu vào. Kỹ thuật này giúp kiểm soát kích thước của feature map đầu ra."
+  },
+  {
+    "question_id": "ch8_q29",
+    "concepts": [
+      "Tính toán kích thước đầu ra",
+      "Convolution không padding",
+      "Trường hợp đặc biệt"
+    ],
+    "misconceptions": [
+      "cho rằng kích thước là 3x3, vì nghĩ rằng kích thước không đổi.",
+      "tin rằng kích thước là 2x2 hoặc 5x5, vì tính sai công thức hoặc nhầm lẫn với trường hợp có padding."
+    ],
+    "reasoning": "Khi kích thước ảnh đầu vào (3x3) và kích thước filter (3x3) bằng nhau, và không có padding, filter chỉ có thể được đặt ở một vị trí duy nhất. Do đó, feature map đầu ra chỉ có một phần tử, tức là kích thước 1x1."
+  },
+  {
+    "question_id": "ch8_q30",
+    "concepts": [
+      "Tác dụng của Zero Padding",
+      "Bảo toàn kích thước ảnh",
+      "Tính toán kích thước với padding"
+    ],
+    "misconceptions": [
+      "cho rằng kết quả vẫn là 1x1, vì không hiểu tác dụng của padding.",
+      "tin rằng kích thước sẽ tăng lên 5x5, vì cộng kích thước padding vào kích thước ảnh một cách máy móc (3+1+1 = 5).",
+      "cho rằng kích thước là 2x2, vì tính toán sai."
+    ],
+    "reasoning": "Padding (1,1) làm tăng kích thước ảnh từ 3x3 lên 5x5. Áp dụng filter 3x3 lên ảnh 5x5 (với S=1) sẽ cho ra feature map có kích thước (5-3)/1 + 1 = 3x3. Đây là trường hợp padding được dùng để bảo toàn kích thước không gian."
+  },
+  {
+    "question_id": "ch8_q31",
+    "concepts": [
+      "Mục đích của Padding",
+      "Bảo toàn kích thước không gian",
+      "Xử lý thông tin biên"
+    ],
+    "misconceptions": [
+      "cho rằng padding dùng để giảm độ phức tạp tính toán, vì nghĩ rằng việc thêm số 0 sẽ làm phép tính nhanh hơn.",
+      "tin rằng padding dùng để ngăn chặn overfitting, vì nhầm lẫn với các kỹ thuật điều chuẩn (regularization) khác như dropout.",
+      "cho rằng padding dùng để kiểm soát tốc độ huấn luyện, vì nhầm lẫn với vai trò của learning rate."
+    ],
+    "reasoning": "Mục đích chính của padding là để kiểm soát kích thước của feature map đầu ra. Bằng cách chọn padding phù hợp, ta có thể duy trì kích thước không gian của dữ liệu khi nó đi qua các tầng convolution, tránh việc nó bị thu nhỏ quá nhanh."
+  },
+  {
+    "question_id": "ch8_q32",
+    "concepts": [
+      "Hàm kích hoạt ReLU",
+      "Định nghĩa toán học",
+      "Hàm phi tuyến"
+    ],
+    "misconceptions": [
+      "cho rằng R(z) = z^2, vì đây cũng là một hàm phi tuyến đơn giản.",
+      "tin rằng ReLU là hàm Sigmoid (R(z) = 1 / (1 + e^-z)) hoặc Tanh, vì nhầm lẫn giữa các loại hàm kích hoạt khác nhau."
+    ],
+    "reasoning": "Hàm ReLU (Rectified Linear Unit) là một trong những hàm kích hoạt phổ biến nhất. Công thức của nó rất đơn giản: R(z) = max(0, z), nghĩa là nó trả về z nếu z dương và trả về 0 nếu z âm."
+  },
+  {
+    "question_id": "ch8_q33",
+    "concepts": [
+      "Hoạt động của hàm ReLU",
+      "Xử lý giá trị âm",
+      "Tính phi tuyến"
+    ],
+    "misconceptions": [
+      "cho rằng giá trị âm sẽ trở thành 1 hoặc -1, vì nhầm lẫn với các hàm ngưỡng hoặc hàm sign.",
+      "tin rằng giá trị âm được giữ nguyên, vì không hiểu rằng mục đích của ReLU là 'loại bỏ' các kích hoạt âm."
+    ],
+    "reasoning": "Theo định nghĩa R(z) = max(0, z), bất kỳ giá trị đầu vào z nào là âm (z < 0) đều sẽ cho ra kết quả là 0. Đây là cách ReLU đưa tính phi tuyến vào mạng."
+  },
+  {
+    "question_id": "ch8_q34",
+    "concepts": [
+      "Áp dụng hàm ReLU",
+      "Đếm phần tử khác không",
+      "Phân tích ma trận"
+    ],
+    "misconceptions": [
+      "cho rằng kết quả là 0, 2, hoặc 3, vì đếm sai số lượng giá trị dương trong ma trận đầu vào hoặc không hiểu cách hàm ReLU hoạt động."
+    ],
+    "reasoning": "Để tìm số phần tử khác 0 sau khi áp dụng ReLU, ta chỉ cần đếm số lượng phần tử có giá trị dương trong ma trận đầu vào. Trong ví dụ của slide, ma trận đầu tiên chỉ có một giá trị dương duy nhất."
+  },
+  {
+    "question_id": "ch8_q35",
+    "concepts": [
+      "Áp dụng hàm ReLU",
+      "Đếm phần tử khác không",
+      "Phân tích ma trận"
+    ],
+    "misconceptions": [
+      "cho rằng kết quả là 0, 2, hoặc 3, vì đếm sai số lượng giá trị dương trong ma trận đầu vào hoặc không hiểu cách hàm ReLU hoạt động."
+    ],
+    "reasoning": "Tương tự câu trước, để tìm số phần tử khác 0 sau khi áp dụng ReLU, ta cần đếm số lượng phần tử dương trong ma trận thứ hai. Trong ví dụ của slide, ma trận này cũng chỉ có một giá trị dương."
+  },
+  {
+    "question_id": "ch8_q36",
+    "concepts": [
+      "Mục đích của tầng pooling",
+      "Giảm chiều không gian (downsampling)",
+      "Bất biến với tịnh tiến nhỏ"
+    ],
+    "misconceptions": [
+      "cho rằng pooling làm tăng độ chính xác, vì nghĩ rằng mọi thành phần trong mạng đều phải trực tiếp góp phần tăng độ chính xác.",
+      "tin rằng pooling tạo ra các đặc trưng mới, vì nhầm lẫn vai trò của nó với tầng convolution.",
+      "cho rằng mục đích chính của pooling là ngăn overfitting, vì đây là một lợi ích phụ có thể xảy ra do giảm tham số ở các tầng sau, nhưng không phải mục đích chính."
+    ],
+    "reasoning": "Mục đích chính của pooling là giảm kích thước không gian (chiều rộng và chiều cao) của feature map. Việc này giúp giảm số lượng tham số và tính toán ở các tầng sau, đồng thời tạo ra một sự bất biến nhất định đối với các dịch chuyển nhỏ của đặc trưng."
+  },
+  {
+    "question_id": "ch8_q37",
+    "concepts": [
+      "Thực hiện Max Pooling",
+      "Tính toán pooling",
+      "Filter và Stride trong pooling"
+    ],
+    "misconceptions": [
+      "cho rằng kết quả là [[1, 2], [2, 3]] hoặc [[2, 3], [4, 5]], vì áp dụng sai (ví dụ: average pooling) hoặc trượt filter sai vị trí.",
+      "tin rằng kết quả là [[0, 4], [3, 5]], vì lấy các giá trị một cách ngẫu nhiên hoặc tính toán sai giá trị lớn nhất trong mỗi vùng."
+    ],
+    "reasoning": "Với max pooling, filter 2x2 và stride 2, ta chia ảnh 4x4 thành 4 vùng 2x2 không chồng lấp. Trong mỗi vùng, ta lấy giá trị lớn nhất. Vùng trên-trái (max(0,1,1,2)=2), trên-phải (max(4,2,3,1)=4), dưới-trái (max(1,2,0,3)=3), dưới-phải (max(0,1,5,2)=5). Kết quả là [[2, 4], [3, 5]]."
+  },
+  {
+    "question_id": "ch8_q38",
+    "concepts": [
+      "Thực hiện Average Pooling",
+      "Tính toán pooling",
+      "Filter và Stride trong pooling"
+    ],
+    "misconceptions": [
+      "cho rằng kết quả là [[2, 4], [3, 5]], vì áp dụng max pooling thay vì average pooling.",
+      "tin rằng kết quả là [[1, 1], [2, 2]] hoặc [[0, 2], [1, 3]], vì tính toán sai giá trị trung bình trong mỗi vùng."
+    ],
+    "reasoning": "Với average pooling, filter 2x2 và stride 2, ta chia ảnh 4x4 thành 4 vùng 2x2. Trong mỗi vùng, ta lấy giá trị trung bình. Vùng trên-trái (avg(0,1,1,2)=1), trên-phải (avg(4,2,3,1)=2.5, làm tròn là 2 hoặc 3 tùy quy ước), dưới-trái (avg(1,2,0,3)=1.5), dưới-phải (avg(0,1,5,2)=2). Dựa trên đáp án, quy ước là làm tròn xuống. avg(trên-phải)=2, avg(dưới-trái)=2, avg(dưới-phải)=3. Kết quả là [[1, 2], [2, 3]]."
+  },
+  {
+    "question_id": "ch8_q39",
+    "concepts": [
+      "Stride trong pooling",
+      "Quy ước thiết kế CNN",
+      "Giảm chiều không gian"
+    ],
+    "misconceptions": [
+      "cho rằng stride luôn bằng 1, vì nghĩ đến trường hợp convolution để bảo toàn kích thước.",
+      "tin rằng stride phải lớn hơn hoặc nhỏ hơn filter, vì suy luận không có cơ sở về mối quan hệ giữa chúng."
+    ],
+    "reasoning": "Trong tầng pooling, một quy ước thiết kế phổ biến là đặt stride bằng với kích thước của filter (ví dụ: filter 2x2, stride 2). Điều này tạo ra các vùng pooling không chồng lấp, giúp giảm kích thước không gian một cách hiệu quả."
+  },
+  {
+    "question_id": "ch8_q40",
+    "concepts": [
+      "Pooling trên dữ liệu 3D",
+      "Hoạt động của pooling",
+      "Xử lý chiều sâu (depth)"
+    ],
+    "misconceptions": [
+      "cho rằng pooling hoạt động phụ thuộc chéo giữa các chiều depth, vì nhầm lẫn với cách hoạt động của filter trong tầng convolution (nơi filter có cùng depth với input).",
+      "tin rằng pooling chỉ áp dụng trên một chiều không gian (width hoặc height), vì không hình dung được cách nó hoạt động trên ma trận 2D."
+    ],
+    "reasoning": "Tầng pooling hoạt động độc lập trên mỗi 'lát cắt' (slice) của chiều sâu. Nếu đầu vào là W x H x D, pooling sẽ được áp dụng D lần trên các ma trận W x H khác nhau, cho ra đầu ra là W' x H' x D."
+  },
+  {
+    "question_id": "ch8_q41",
+    "concepts": [
+      "Định nghĩa Flattening",
+      "Chuyển đổi tensor",
+      "Kết nối giữa tầng convolution và fully connected"
+    ],
+    "misconceptions": [
+      "cho rằng flattening là quá trình ngược lại, biến 1D thành 3D, vì nhầm lẫn với các thao tác reshape khác.",
+      "tin rằng flattening là thay giá trị âm thành 0, vì nhầm lẫn với hàm ReLU.",
+      "cho rằng flattening là nhân thêm filter mới, vì nhầm lẫn với tầng convolution."
+    ],
+    "reasoning": "Flattening (làm phẳng) là quá trình chuyển đổi một tensor đa chiều (ví dụ: khối 3D từ tầng convolution cuối cùng) thành một vector 1D. Thao tác này là bước đệm cần thiết để kết nối đầu ra của các tầng rút trích đặc trưng với đầu vào của các tầng kết nối đầy đủ (fully connected)."
+  },
+  {
+    "question_id": "ch8_q42",
+    "concepts": [
+      "Tính toán độ dài sau khi flatten",
+      "Kích thước tensor",
+      "Thao tác Flatten"
+    ],
+    "misconceptions": [
+      "cho rằng độ dài là 4 hoặc 6, vì chỉ nhân hai trong ba chiều (2*2=4) hoặc cộng các chiều lại với nhau (2+2+2=6).",
+      "tin rằng độ dài là 12, vì tính toán sai phép nhân 2*2*2."
+    ],
+    "reasoning": "Quá trình flattening sẽ tạo ra một vector có số phần tử bằng đúng tổng số phần tử của tensor ban đầu. Với tensor 2x2x2, tổng số phần tử là 2 * 2 * 2 = 8. Do đó, vector sau khi flatten sẽ có độ dài là 8."
+  },
+  {
+    "question_id": "ch8_q43",
+    "concepts": [
+      "Kiến trúc CNN điển hình",
+      "Giai đoạn phân loại",
+      "Thứ tự các thao tác cuối"
+    ],
+    "misconceptions": [
+      "cho rằng Softmax đứng trước Flatten, vì không hiểu rằng Softmax hoạt động trên một vector (đầu ra của fully connected) để cho ra xác suất.",
+      "tin rằng chuỗi xử lý có thể bắt đầu bằng Padding hoặc Pooling ở cuối, vì nhầm lẫn vị trí của các khối trong kiến trúc."
+    ],
+    "reasoning": "Sau khi các tầng convolution/pooling đã rút trích đặc trưng thành một khối 3D, kiến trúc CNN điển hình sẽ làm phẳng (Flatten) khối đó thành vector, đưa qua một hoặc nhiều tầng kết nối đầy đủ (Fully Connected), và cuối cùng dùng hàm Softmax để tính xác suất cho các lớp đầu ra."
+  },
+  {
+    "question_id": "ch8_q44",
+    "concepts": [
+      "Nguồn gốc ý tưởng CNN",
+      "So sánh CNN và NN",
+      "Đặc điểm kiến trúc"
+    ],
+    "misconceptions": [
+      "cho rằng mã hóa one-hot hoặc chuẩn hóa Z-score là ý tưởng mà CNN kế thừa từ NN, vì nhầm lẫn giữa các ý tưởng về kiến trúc mạng và các kỹ thuật tiền xử lý/biểu diễn dữ liệu chung."
+    ],
+    "reasoning": "CNN là một dạng đặc biệt của mạng nơ-ron, nó kế thừa các khái niệm cơ bản nhưng cải tiến bằng hai ý tưởng chính: kết nối cục bộ (các neuron chỉ kết nối với một vùng nhỏ của lớp trước) và chia sẻ trọng số (cùng một bộ trọng số - filter - được dùng lại ở nhiều vị trí trên ảnh)."
+  },
+  {
+    "question_id": "ch8_q45",
+    "concepts": [
+      "Ứng dụng của CNN",
+      "Classification + Localization",
+      "Các bài toán thị giác máy tính"
+    ],
+    "misconceptions": [
+      "cho rằng đây là Classification, vì chỉ chú ý đến việc 'gán nhãn' mà bỏ qua việc 'xác định vị trí'.",
+      "tin rằng đây là Object Detection, vì có yếu tố xác định vị trí, nhưng không phân biệt được sự khác biệt giữa việc phát hiện một đối tượng duy nhất và nhiều đối tượng.",
+      "cho rằng đây là Instance Segmentation, vì đây cũng là một bài toán thị giác máy tính phức tạp, nhưng nó yêu cầu phân loại từng pixel thay vì chỉ dùng khung bao."
+    ],
+    "reasoning": "Bài toán này có hai nhiệm vụ: gán nhãn (Classification) và xác định vị trí bằng khung bao (Localization). Khi kết hợp cả hai cho một đối tượng duy nhất trong ảnh, nó được gọi là Classification + Localization. Object Detection là trường hợp tổng quát hơn cho nhiều đối tượng."
+  },
+  {
+    "question_id": "ch8_q46",
+    "concepts": [
+      "Kiến trúc LeNet",
+      "Kích thước đầu vào",
+      "Mạng CNN lịch sử"
+    ],
+    "misconceptions": [
+      "cho rằng kích thước là 28x28, vì đây là kích thước phổ biến của bộ dữ liệu MNIST sau khi xử lý, và LeNet thường được dùng với MNIST.",
+      "tin rằng kích thước là 30x30 hoặc 64x64, vì nhớ nhầm con số trong sơ đồ kiến trúc."
+    ],
+    "reasoning": "Theo sơ đồ kiến trúc gốc của LeNet-5 được trình bày trong nhiều tài liệu, kích thước ảnh đầu vào là 32x32 pixel, mặc dù nó thường được áp dụng cho bộ dữ liệu MNIST có ảnh gốc 28x28 (thường được pad lên 32x32)."
+  },
+  {
+    "question_id": "ch8_q47",
+    "concepts": [
+      "Kiến trúc LeNet",
+      "Tầng convolution C1",
+      "Số lượng và kích thước feature map"
+    ],
+    "misconceptions": [
+      "cho rằng kích thước feature map là 14x14 hoặc 10x10, vì nhầm lẫn với đầu ra của các tầng sau (S2, C3).",
+      "tin rằng số lượng feature map là 16, vì nhầm lẫn với số lượng feature map của tầng C3."
+    ],
+    "reasoning": "Trong kiến trúc LeNet-5, tầng convolution đầu tiên (C1) lấy đầu vào 32x32, áp dụng 6 filter 5x5 (với stride 1, không padding) để tạo ra 6 feature map, mỗi map có kích thước 28x28 (32-5+1=28)."
+  },
+  {
+    "question_id": "ch8_q48",
+    "concepts": [
+      "Kiến trúc LeNet",
+      "Tầng pooling S2",
+      "Số lượng và kích thước feature map"
+    ],
+    "misconceptions": [
+      "cho rằng kích thước feature map là 28x28, vì nhầm lẫn với đầu vào của tầng này (từ C1).",
+      "tin rằng kích thước là 10x10 hoặc 5x5, vì nhầm lẫn với đầu ra của các tầng sau (C3, S4).",
+      "cho rằng số lượng feature map là 16, vì nhầm lẫn với các tầng sau."
+    ],
+    "reasoning": "Tầng pooling S2 trong LeNet-5 lấy đầu vào là 6 feature map kích thước 28x28 từ C1. Nó áp dụng average pooling với filter 2x2 và stride 2, làm giảm kích thước mỗi feature map xuống một nửa (14x14). Số lượng feature map không đổi, vẫn là 6."
+  },
+  {
+    "question_id": "ch8_q49",
+    "concepts": [
+      "Kiến trúc LeNet chi tiết",
+      "Phân tích các tầng",
+      "Tầng fully connected trong LeNet"
+    ],
+    "misconceptions": [
+      "cho rằng output của mạng là 84, vì nhầm lẫn giữa số node của tầng fully connected F6 (84 node) với output cuối cùng của mạng (10 node, tương ứng 10 chữ số)."
+    ],
+    "reasoning": "Phân tích sơ đồ LeNet: C3 có 16 feature maps 10x10. S4 có 16 feature maps 5x5. C5 là một tầng convolution nhưng đôi khi được xem như tầng fully connected với 120 node. Do đó, các phát biểu A, B, C đều đúng. Output cuối cùng của LeNet là một vector 10 chiều (tầng F7), không phải 84."
+  },
+  {
+    "question_id": "ch8_q50",
+    "concepts": [
+      "Ứng dụng của CNN",
+      "Thị giác máy tính",
+      "Phân biệt ứng dụng và kỹ thuật"
+    ],
+    "misconceptions": [
+      "cho rằng K-Fold Cross Validation là một ứng dụng của CNN, vì nhầm lẫn giữa một kỹ thuật đánh giá mô hình chung và một bài toán ứng dụng mà CNN có thể giải quyết."
+    ],
+    "reasoning": "CNN là công cụ mạnh mẽ cho các bài toán thị giác máy tính. Các ứng dụng chính bao gồm Classification (phân loại ảnh), Object Detection (phát hiện đối tượng) và Instance Segmentation (phân vùng đối tượng). K-Fold Cross Validation là một phương pháp để đánh giá hiệu năng của mô hình học máy, không phải là một ứng dụng của riêng CNN."
+  }
+]

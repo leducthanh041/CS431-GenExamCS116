@@ -1,0 +1,646 @@
+[
+  {
+    "question_id": "ch4_q1",
+    "concepts": [
+      "Phát hiện dữ liệu thiếu trong pandas",
+      "Chức năng của các hàm xử lý dữ liệu"
+    ],
+    "misconceptions": [
+      "cho rằng `dropna()` dùng để kiểm tra dữ liệu thiếu, vì nó cũng liên quan trực tiếp đến việc xử lý giá trị 'NA'.",
+      "tin rằng `fillna()` dùng để kiểm tra dữ liệu thiếu, vì nó là một bước phổ biến trong quy trình xử lý dữ liệu thiếu.",
+      "cho rằng tất cả các hàm liên quan đến dữ liệu thiếu (như `dropna`, `fillna`) đều có chức năng kiểm tra, mà không phân biệt giữa việc 'phát hiện' và 'xử lý'.",
+      "tin rằng hàm `replace()` có thể dùng để kiểm tra dữ liệu thiếu, vì nó cũng là một hàm để thay đổi giá trị trong bảng."
+    ],
+    "reasoning": "Hàm `isnull()` và `isna()` được thiết kế chuyên để kiểm tra và trả về một đối tượng boolean chỉ ra vị trí các giá trị thiếu. Các hàm còn lại như `dropna()`, `fillna()` là để xử lý (xóa, điền) dữ liệu thiếu, không phải để phát hiện."
+  },
+  {
+    "question_id": "ch4_q2",
+    "concepts": [
+      "Phương pháp xử lý dữ liệu thiếu",
+      "Thứ tự các bước tiền xử lý dữ liệu"
+    ],
+    "misconceptions": [
+      "cho rằng phải luôn mã hóa one-hot trước khi xử lý dữ liệu thiếu, vì mã hóa là một bước làm sạch dữ liệu phổ biến.",
+      "tin rằng thứ tự của các bước tiền xử lý dữ liệu không quan trọng, nên có thể hoán đổi việc xử lý dữ liệu thiếu và mã hóa."
+    ],
+    "reasoning": "Các cách tiếp cận chính để xử lý dữ liệu thiếu bao gồm loại bỏ, thay thế và sử dụng mô hình. Việc xử lý dữ liệu thiếu thường phải được thực hiện trước khi mã hóa (như one-hot), vì mã hóa trước có thể làm phức tạp hóa vấn đề hoặc tạo ra các cột không mong muốn."
+  },
+  {
+    "question_id": "ch4_q3",
+    "concepts": [
+      "Thay thế dữ liệu thiếu bằng KNN",
+      "So sánh các phương pháp thay thế dữ liệu",
+      "Độ phức tạp tính toán"
+    ],
+    "misconceptions": [
+      "cho rằng KNN thay thế dữ liệu thiếu bằng một hằng số, vì nhầm lẫn nó với phương pháp điền giá trị hằng số đơn giản.",
+      "tin rằng KNN chỉ áp dụng được cho dữ liệu phân loại vì khái niệm 'láng giềng' nghe có vẻ liên quan đến việc phân nhóm.",
+      "cho rằng KNN luôn có chi phí tính toán thấp vì ý tưởng của nó dễ hiểu, mà không nhận ra chi phí của việc tìm kiếm các láng giềng trong không gian lớn."
+    ],
+    "reasoning": "Phương pháp KNN để thay thế dữ liệu thiếu hoạt động bằng cách tìm K láng giềng gần nhất và dùng giá trị của chúng (ví dụ: trung bình) để điền vào. Nó phức tạp và tốn chi phí tính toán hơn các phương pháp đơn biến, và có thể áp dụng cho cả dữ liệu số và phân loại."
+  },
+  {
+    "question_id": "ch4_q4",
+    "concepts": [
+      "Thuật toán phát hiện ngoại lệ tự động",
+      "Phân biệt biến đổi dữ liệu và phát hiện ngoại lệ"
+    ],
+    "misconceptions": [
+      "cho rằng Standardization (Z-score scaling) là một phương pháp tự động phát hiện ngoại lệ, vì Z-score có thể được dùng như một ngưỡng để xác định ngoại lệ.",
+      "tin rằng bất kỳ kỹ thuật nào có thể giúp xác định độ lệch của điểm dữ liệu, như Z-score, đều được coi là một thuật toán phát hiện ngoại lệ tự động, mà không phân biệt giữa một phép đo và một thuật toán hoàn chỉnh."
+    ],
+    "reasoning": "Local Outlier Factor, Isolation Forest, và One-class SVM là các thuật toán phức tạp được thiết kế chuyên cho việc tự động phát hiện ngoại lệ. Standardization là một kỹ thuật biến đổi dữ liệu; dù Z-score có thể dùng để phát hiện ngoại lệ theo ngưỡng, bản thân nó không phải là một thuật toán phát hiện tự động như các phương án kia."
+  },
+  {
+    "question_id": "ch4_q5",
+    "concepts": [
+      "Phát hiện ngoại lệ bằng IQR",
+      "Phân phối dữ liệu (Gaussian và không Gaussian)",
+      "Lựa chọn phương pháp thống kê phù hợp"
+    ],
+    "misconceptions": [
+      "cho rằng phương pháp IQR phù hợp nhất với dữ liệu có phân phối Gaussian, vì nhầm lẫn nó với phương pháp Z-score.",
+      "tin rằng tất cả các phương pháp thống kê để tìm ngoại lệ đều hoạt động tốt nhất trên phân phối chuẩn.",
+      "cho rằng việc sử dụng IQR bị giới hạn bởi số lượng cột hoặc các phép biến đổi trước đó như one-hot encoding."
+    ],
+    "reasoning": "Phương pháp IQR (Interquartile Range) không dựa trên giả định về phân phối của dữ liệu, do đó nó rất mạnh mẽ và phù hợp với dữ liệu có phân phối không phải Gaussian hoặc bị lệch. Đối với dữ liệu phân phối Gaussian, phương pháp dựa trên Z-score thường phổ biến hơn."
+  },
+  {
+    "question_id": "ch4_q6",
+    "concepts": [
+      "Tạo đặc trưng từ kiến thức miền",
+      "Phép toán trên đặc trưng"
+    ],
+    "misconceptions": [
+      "cho rằng để tạo đặc trưng mới từ hai đặc trưng có sẵn, chỉ cần thực hiện một phép toán đơn giản như cộng hoặc trừ.",
+      "tin rằng không cần kiến thức miền (vật lý) để tạo đặc trưng, và có thể thử ngẫu nhiên các phép toán."
+    ],
+    "reasoning": "Câu hỏi yêu cầu áp dụng kiến thức vật lý cơ bản, trong đó công thức tính quãng đường là vận tốc nhân với thời gian. Việc lựa chọn phép toán chính xác là cốt lõi của việc tạo đặc trưng có ý nghĩa."
+  },
+  {
+    "question_id": "ch4_q7",
+    "concepts": [
+      "Biến đổi dữ liệu dạng số",
+      "Phân biệt biến đổi số và danh mục"
+    ],
+    "misconceptions": [
+      "cho rằng One-hot encoding là một phép biến đổi cho dữ liệu dạng số, vì nó tạo ra các cột có giá trị 0 và 1.",
+      "tin rằng mọi kỹ thuật tiền xử lý có thể áp dụng cho mọi loại dữ liệu, không phân biệt số và danh mục."
+    ],
+    "reasoning": "Min-Max scaling, Standardization và Robust Scaler là các kỹ thuật biến đổi áp dụng cho dữ liệu dạng số. One-hot encoding được thiết kế riêng để biến đổi dữ liệu dạng danh mục (categorical) thành dạng số mà mô hình có thể hiểu được."
+  },
+  {
+    "question_id": "ch4_q8",
+    "concepts": [
+      "Chuẩn hóa Min-Max (Min-Max scaling)",
+      "Khoảng giá trị của phép biến đổi"
+    ],
+    "misconceptions": [
+      "cho rằng chuẩn hóa Min-Max đưa giá trị về khoảng [-1, 1], vì nhầm lẫn với các phương pháp chuẩn hóa khác hoặc các hàm kích hoạt trong mạng nơ-ron.",
+      "tin rằng tất cả các phương pháp chuẩn hóa đều đưa dữ liệu về cùng một khoảng giá trị tiêu chuẩn, ví dụ [-1, 1].",
+      "cho rằng khoảng giá trị của phép chuẩn hóa có thể là một khoảng bất kỳ như [1, 10]."
+    ],
+    "reasoning": "Công thức chuẩn của Min-Max scaling được thiết kế để co giãn dải giá trị của một đặc trưng về khoảng [0, 1]. Các khoảng giá trị khác như [-1, 1] thường là kết quả của các kỹ thuật biến đổi khác."
+  },
+  {
+    "question_id": "ch4_q9",
+    "concepts": [
+      "Biến đổi dữ liệu dạng danh mục",
+      "Phân biệt biến đổi số và danh mục"
+    ],
+    "misconceptions": [
+      "cho rằng Robust Scaler là phép biến đổi cho dữ liệu danh mục, vì không nhớ rõ chức năng của nó và chỉ đoán nó là một kỹ thuật tiền xử lý.",
+      "tin rằng một kỹ thuật biến đổi có thể áp dụng cho cả dữ liệu số và dữ liệu danh mục."
+    ],
+    "reasoning": "One-hot, Ordinal, và Label encoding là các kỹ thuật phổ biến để biến đổi dữ liệu dạng danh mục thành dạng số. Robust Scaler là một phương pháp chuẩn hóa cho dữ liệu dạng số, đặc biệt hiệu quả với dữ liệu có ngoại lệ."
+  },
+  {
+    "question_id": "ch4_q10",
+    "concepts": [
+      "Chọn lựa đặc trưng kiểu Embedded",
+      "Phân biệt chọn lựa đặc trưng và giảm chiều dữ liệu"
+    ],
+    "misconceptions": [
+      "cho rằng PCA là một phương pháp chọn lựa đặc trưng kiểu Embedded, vì nó cũng giúp giảm số lượng đặc trưng đầu vào cho mô hình.",
+      "tin rằng bất kỳ phương pháp nào làm giảm số chiều của dữ liệu đều là một dạng của chọn lựa đặc trưng, mà không phân biệt giữa việc 'chọn' các đặc trưng gốc và 'tạo' các đặc trưng mới."
+    ],
+    "reasoning": "Các phương pháp Embedded như LASSO, Ridge, Elastic Net thực hiện việc chọn lựa đặc trưng ngay trong quá trình huấn luyện mô hình. PCA là một kỹ thuật giảm chiều dữ liệu, nó tạo ra các đặc trưng mới (thành phần chính) từ các đặc trưng cũ, chứ không phải chọn ra một tập con từ các đặc trưng ban đầu."
+  },
+  {
+    "question_id": "ch4_q11",
+    "concepts": [
+      "Kỹ thuật xử lý dữ liệu thiếu",
+      "Tạo đặc trưng từ thông tin thiếu"
+    ],
+    "misconceptions": [
+      "cho rằng khi gặp dữ liệu thiếu thì phải luôn xóa bỏ, hoặc là xóa dòng, hoặc là xóa cả tập dữ liệu.",
+      "tin rằng chỉ có thể giữ lại các cột dữ liệu không bị thiếu.",
+      "cho rằng phải chuẩn hóa dữ liệu trước khi xử lý dữ liệu thiếu."
+    ],
+    "reasoning": "Một kỹ thuật xử lý dữ liệu thiếu là coi việc thiếu dữ liệu là một thông tin có giá trị và tạo ra một cột mới (biến chỉ thị) để ghi nhận thông tin đó. Các phương án khác đưa ra các cách tiếp cận cực đoan (xóa hết) hoặc sai quy trình (chuẩn hóa trước)."
+  },
+  {
+    "question_id": "ch4_q12",
+    "concepts": [
+      "Thay thế đặc trưng đơn biến",
+      "Phân loại các phương pháp thay thế dữ liệu"
+    ],
+    "misconceptions": [
+      "cho rằng PCA, ICA, UMAP là các phương pháp thay thế đơn biến, vì chúng đều là kỹ thuật xử lý đặc trưng.",
+      "tin rằng One-hot encoding là một cách thay thế dữ liệu thiếu.",
+      "cho rằng Forward selection là một phương pháp thay thế dữ liệu thiếu, vì nhầm lẫn với các kỹ thuật chọn lựa đặc trưng."
+    ],
+    "reasoning": "Thay thế đơn biến (univariate imputation) là phương pháp điền giá trị thiếu của một cột chỉ dựa trên thông tin của chính cột đó, ví dụ như dùng giá trị trung bình (mean), trung vị (median), hoặc yếu vị (mode). Các phương án khác là kỹ thuật giảm chiều, mã hóa, hoặc chọn lọc đặc trưng."
+  },
+  {
+    "question_id": "ch4_q13",
+    "concepts": [
+      "Thay thế dữ liệu thiếu bằng hằng số",
+      "Ưu và nhược điểm của phương pháp thay thế"
+    ],
+    "misconceptions": [
+      "cho rằng thay thế bằng hằng số là phức tạp, vì nghĩ rằng việc chọn hằng số đòi hỏi phân tích sâu.",
+      "tin rằng phương pháp đơn giản thì không thể áp dụng cho biến phân loại.",
+      "cho rằng phương pháp này chỉ áp dụng được cho một loại dữ liệu cụ thể như ảnh."
+    ],
+    "reasoning": "Thay thế bằng hằng số là một phương pháp rất đơn giản để thực hiện, nhưng nhược điểm chính là giá trị hằng số được chọn (ví dụ: 0, -1, 999) thường không phản ánh đúng bản chất của dữ liệu và có thể làm sai lệch phân phối của biến."
+  },
+  {
+    "question_id": "ch4_q14",
+    "concepts": [
+      "Nội suy tuyến tính (Linear Interpolation)",
+      "Giả định của mô hình/phương pháp"
+    ],
+    "misconceptions": [
+      "cho rằng nội suy tuyến tính yêu cầu các biến phải độc lập với nhau.",
+      "tin rằng các phương pháp thống kê luôn yêu cầu dữ liệu phải có phân phối chuẩn.",
+      "cho rằng nội suy tuyến tính chỉ áp dụng được cho dữ liệu phân loại."
+    ],
+    "reasoning": "Nội suy tuyến tính hoạt động bằng cách vẽ một đường thẳng giữa hai điểm dữ liệu đã biết và ước tính giá trị thiếu nằm trên đường thẳng đó. Do đó, giả định cốt lõi của nó là có một mối quan hệ tuyến tính cục bộ giữa các điểm dữ liệu."
+  },
+  {
+    "question_id": "ch4_q15",
+    "concepts": [
+      "Thay thế dữ liệu thiếu bằng hồi quy",
+      "Nhược điểm của mô hình (đa cộng tuyến, quá khớp)"
+    ],
+    "misconceptions": [
+      "cho rằng phương pháp hồi quy không thể sử dụng các biến khác để dự đoán, vì nhầm lẫn với thay thế đơn biến.",
+      "tin rằng một phương pháp phức tạp hơn thì luôn cho độ chính xác thấp hơn, hoặc ngược lại.",
+      "cho rằng hồi quy chỉ dùng được cho chuỗi thời gian."
+    ],
+    "reasoning": "Khi dùng mô hình hồi quy để dự đoán giá trị thiếu, nếu các biến độc lập (dùng để dự đoán) có tương quan cao với nhau, mô hình có thể bị ảnh hưởng bởi đa cộng tuyến và trở nên không ổn định, dẫn đến quá khớp (overfitting)."
+  },
+  {
+    "question_id": "ch4_q16",
+    "concepts": [
+      "Thay thế dữ liệu thiếu dựa trên mô hình",
+      "Đánh đổi giữa độ chính xác và chi phí"
+    ],
+    "misconceptions": [
+      "cho rằng phương pháp dựa trên mô hình là đơn giản và rẻ nhất.",
+      "tin rằng đã gọi là 'thay thế dữ liệu thiếu' thì không thể dùng mô hình máy học.",
+      "cho rằng các phương pháp phức tạp chỉ áp dụng được cho một loại dữ liệu như văn bản."
+    ],
+    "reasoning": "Sử dụng một mô hình máy học để dự đoán các giá trị thiếu có thể cho độ chính xác cao, nhưng điều này đi kèm với sự phức tạp trong việc xây dựng, huấn luyện mô hình và chi phí tính toán cao hơn so với các phương pháp đơn giản."
+  },
+  {
+    "question_id": "ch4_q17",
+    "concepts": [
+      "Các cách tiếp cận phát hiện ngoại lệ",
+      "Phân biệt phát hiện ngoại lệ và xử lý dữ liệu thiếu"
+    ],
+    "misconceptions": [
+      "cho rằng K-Nearest Neighbors imputation là một cách phát hiện ngoại lệ, vì nhầm lẫn giữa việc dùng KNN để điền dữ liệu thiếu và việc dùng KNN để phát hiện ngoại lệ (như trong LOF).",
+      "tin rằng One-hot encoding là một cách tiếp cận để phát hiện ngoại lệ, vì nó là một kỹ thuật tiền xử lý dữ liệu."
+    ],
+    "reasoning": "Các cách tiếp cận chính để phát hiện ngoại lệ bao gồm dùng các phương pháp thống kê (như Z-score, IQR) và các thuật toán tự động (như Isolation Forest, LOF). KNN imputation và One-hot encoding là các kỹ thuật xử lý dữ liệu thiếu và biến đổi đặc trưng, không phải để phát hiện ngoại lệ."
+  },
+  {
+    "question_id": "ch4_q18",
+    "concepts": [
+      "Phân loại các thuật toán tiền xử lý",
+      "Thuật toán EllipticEnvelope"
+    ],
+    "misconceptions": [
+      "cho rằng EllipticEnvelope là một kỹ thuật biến đổi đặc trưng, vì tên của nó nghe có vẻ liên quan đến hình học/biến đổi.",
+      "tin rằng EllipticEnvelope dùng để biến đổi dữ liệu danh mục.",
+      "cho rằng EllipticEnvelope là một phương pháp chọn lựa đặc trưng."
+    ],
+    "reasoning": "EllipticEnvelope là một thuật toán được thiết kế để phát hiện các giá trị ngoại lệ trong dữ liệu có phân phối Gaussian, bằng cách giả định dữ liệu tuân theo một hình elip. Do đó, nó được xếp vào nhóm tự động phát hiện ngoại lệ."
+  },
+  {
+    "question_id": "ch4_q19",
+    "concepts": [
+      "Phát hiện ngoại lệ bằng Z-score",
+      "Giả định về phân phối dữ liệu"
+    ],
+    "misconceptions": [
+      "cho rằng phương pháp dựa trên trung bình và độ lệch chuẩn hoạt động tốt trên mọi loại phân phối, kể cả phân phối không phải Gaussian.",
+      "tin rằng các phương pháp thống kê có thể áp dụng cho dữ liệu phân loại mà không cần biến đổi.",
+      "cho rằng việc áp dụng phương pháp này cần một bước tiền xử lý cụ thể như target encoding."
+    ],
+    "reasoning": "Phương pháp xác định ngoại lệ dựa trên giá trị trung bình và độ lệch chuẩn (ví dụ, Z-score) có giả định nền tảng rằng dữ liệu tuân theo phân phối Gaussian (phân phối chuẩn) hoặc gần giống Gaussian. Nếu dữ liệu bị lệch nhiều, các giá trị này sẽ không còn ý nghĩa và phương pháp sẽ không hiệu quả."
+  },
+  {
+    "question_id": "ch4_q20",
+    "concepts": [
+      "Các phương pháp xử lý dữ liệu ngoại lệ",
+      "Phân biệt xử lý ngoại lệ và biến đổi dữ liệu"
+    ],
+    "misconceptions": [
+      "cho rằng Min-Max scaling là một cách xử lý dữ liệu ngoại lệ, vì nó làm thay đổi giá trị của dữ liệu.",
+      "tin rằng khi đã phát hiện ngoại lệ thì chỉ có một cách xử lý duy nhất là loại bỏ chúng."
+    ],
+    "reasoning": "Sau khi phát hiện, dữ liệu ngoại lệ có thể được xử lý bằng nhiều cách: loại bỏ các điểm dữ liệu đó, thay thế chúng bằng một giá trị hợp lý hơn (thay thế đơn giản), hoặc dùng một mô hình để dự đoán giá trị thay thế. Min-Max scaling là một kỹ thuật chuẩn hóa, không phải xử lý ngoại lệ."
+  },
+  {
+    "question_id": "ch4_q21",
+    "concepts": [
+      "Công cụ tự động làm sạch dữ liệu",
+      "Thư viện CleanLab"
+    ],
+    "misconceptions": [
+      "cho rằng CleanLab là một công cụ vẽ biểu đồ, vì nhầm lẫn với các thư viện trực quan hóa.",
+      "tin rằng CleanLab chỉ dùng để mã hóa one-hot, vì nó là một công cụ tiền xử lý.",
+      "cho rằng CleanLab chỉ là một cách khác để thay thế dữ liệu thiếu bằng giá trị trung bình."
+    ],
+    "reasoning": "CleanLab là một thư viện Python tiên tiến, chuyên dùng để tự động tìm các vấn đề trong tập dữ liệu, đặc biệt là lỗi nhãn (label errors) và các điểm dữ liệu bất thường (Out-of-distribution - OOD), giúp cải thiện chất lượng dữ liệu huấn luyện."
+  },
+  {
+    "question_id": "ch4_q22",
+    "concepts": [
+      "Thao tác với chỉ mục (index) trong pandas",
+      "Hàm `set_index`"
+    ],
+    "misconceptions": [
+      "cho rằng `set_index` dùng để xóa chỉ mục, vì thấy từ 'set' và nghĩ là đặt lại về trạng thái không có gì.",
+      "tin rằng `set_index` dùng để thay đổi kiểu dữ liệu, vì nó tác động đến cấu trúc của bảng.",
+      "cho rằng `set_index` dùng để loại bỏ dòng trùng lặp, vì nó làm thay đổi chỉ mục của các dòng."
+    ],
+    "reasoning": "Lệnh `set_index('column', inplace=True)` trong pandas có chức năng lấy một cột hiện có trong DataFrame và đặt nó làm chỉ mục mới của DataFrame, thay thế cho chỉ mục số mặc định."
+  },
+  {
+    "question_id": "ch4_q23",
+    "concepts": [
+      "Thao tác với chỉ mục (index) trong pandas",
+      "Hàm `reset_index`"
+    ],
+    "misconceptions": [
+      "cho rằng `reset_index` dùng để đổi tên cột.",
+      "tin rằng `reset_index` là một lệnh để thay thế giá trị thiếu, vì 'reset' nghe giống như việc đặt lại giá trị.",
+      "cho rằng `reset_index` luôn tạo ra một cột mới từ chỉ mục cũ, mà không biết về tham số `drop=True`."
+    ],
+    "reasoning": "Lệnh `reset_index(drop=True)` thực hiện hai việc: khôi phục chỉ mục của DataFrame về dạng số mặc định (0, 1, 2,...) và loại bỏ hoàn toàn chỉ mục cũ thay vì biến nó thành một cột mới trong DataFrame."
+  },
+  {
+    "question_id": "ch4_q24",
+    "concepts": [
+      "Ép kiểu dữ liệu trong pandas",
+      "Hàm `astype`"
+    ],
+    "misconceptions": [
+      "cho rằng `astype(int)` dùng để đổi tên cột thành 'int'.",
+      "tin rằng `astype(int)` sẽ tạo một cột mới tên là 'int'.",
+      "cho rằng `astype(int)` là một lệnh để lọc và xóa các dòng không phải là số."
+    ],
+    "reasoning": "Phương thức `.astype(int)` trong pandas được sử dụng để chuyển đổi (ép kiểu) kiểu dữ liệu của một cột (Series) hoặc toàn bộ DataFrame sang kiểu số nguyên (integer). Nó không đổi tên hay tạo cột mới."
+  },
+  {
+    "question_id": "ch4_q25",
+    "concepts": [
+      "Sửa dữ liệu không nhất quán",
+      "Hàm `replace`"
+    ],
+    "misconceptions": [
+      "cho rằng `replace` là một phương pháp chuẩn hóa Z-score.",
+      "tin rằng `replace` dùng để tạo chỉ mục mới, vì nó thay đổi nội dung của bảng.",
+      "cho rằng `replace` là một phương pháp chọn lọc đặc trưng."
+    ],
+    "reasoning": "Hàm `.replace(old, new)` rất hữu ích để tìm và thay thế các giá trị cụ thể trong một cột, thường được dùng để sửa các lỗi nhập liệu hoặc các giá trị không nhất quán (ví dụ: 'HCM', 'hcm', 'Ho Chi Minh' đều được đưa về một dạng chuẩn)."
+  },
+  {
+    "question_id": "ch4_q26",
+    "concepts": [
+      "Loại bỏ dòng trùng lặp",
+      "Hàm `drop_duplicates`"
+    ],
+    "misconceptions": [
+      "cho rằng `drop_duplicates()` dùng để loại bỏ các cột thiếu dữ liệu, vì nhầm lẫn với `dropna()`.",
+      "tin rằng `drop_duplicates()` dùng để tạo cột one-hot.",
+      "cho rằng `drop_duplicates()` có chức năng sắp xếp lại chỉ mục."
+    ],
+    "reasoning": "`drop_duplicates()` là hàm chuyên dụng trong pandas để xác định và loại bỏ các dòng có dữ liệu hoàn toàn giống hệt nhau, chỉ giữ lại một bản ghi duy nhất."
+  },
+  {
+    "question_id": "ch4_q27",
+    "concepts": [
+      "Xóa cột trong pandas",
+      "Hàm `drop` và tham số `axis`"
+    ],
+    "misconceptions": [
+      "cho rằng lệnh `drop` chỉ dùng để xóa dòng, vì không để ý đến tham số `axis=1`.",
+      "tin rằng `drop` là một hàm để đếm giá trị.",
+      "cho rằng `drop` là một hàm biến đổi dữ liệu như lấy log."
+    ],
+    "reasoning": "Lệnh `data.drop(columns=[...], axis=1)` được dùng để loại bỏ một hoặc nhiều cột khỏi DataFrame. Tham số `axis=1` chỉ định rằng thao tác `drop` được thực hiện trên trục cột, không phải trục dòng (`axis=0`)."
+  },
+  {
+    "question_id": "ch4_q28",
+    "concepts": [
+      "Lọc dữ liệu theo điều kiện",
+      "Boolean indexing trong pandas"
+    ],
+    "misconceptions": [
+      "cho rằng cú pháp `data[...]` dùng để đổi kiểu dữ liệu.",
+      "tin rằng cú pháp này dùng để tạo biến phân cụm, vì nó 'chọn' ra một nhóm dữ liệu.",
+      "cho rằng đây là một cách thực hiện PCA."
+    ],
+    "reasoning": "Biểu thức `data[data['column'] == 'abc']` là một ví dụ của 'boolean indexing'. Nó tạo ra một chuỗi boolean (True/False) dựa trên điều kiện và dùng chuỗi đó để lọc, chỉ giữ lại những dòng trong `data` mà điều kiện là True."
+  },
+  {
+    "question_id": "ch4_q29",
+    "concepts": [
+      "Tạo đặc trưng bằng tần suất",
+      "Đọc hiểu và phân tích ví dụ"
+    ],
+    "misconceptions": [
+      "cho rằng chỉ cần đếm số lần xuất hiện của màu đỏ trong một cột nào đó.",
+      "tin rằng giá trị đếm phải là duy nhất, ví dụ 1 hoặc 2, mà không thực sự đếm từ dữ liệu (giả định) trong slide.",
+      "cho rằng câu hỏi đang hỏi về một thứ khác ngoài việc đếm đơn giản."
+    ],
+    "reasoning": "Câu hỏi yêu cầu thực hiện một phép đếm đơn giản dựa trên một ví dụ cụ thể được trình bày trong slide. Để trả lời đúng, người học cần tham chiếu đến dữ liệu trong ví dụ đó và đếm số lần màu 'Red' xuất hiện."
+  },
+  {
+    "question_id": "ch4_q30",
+    "concepts": [
+      "Tạo đặc trưng từ nhiều cột",
+      "Phép toán logic (OR)"
+    ],
+    "misconceptions": [
+      "cho rằng `use_vehicle` bằng 1 chỉ khi tất cả các phương tiện đều được sử dụng, tương đương với phép toán AND.",
+      "tin rằng `use_vehicle` chỉ phụ thuộc vào một loại phương tiện cụ thể, ví dụ Bus.",
+      "cho rằng phải có ít nhất hai loại phương tiện được sử dụng thì `use_vehicle` mới bằng 1."
+    ],
+    "reasoning": "Câu hỏi mô tả việc tạo một đặc trưng tổng hợp `use_vehicle`. Đặc trưng này nhận giá trị 1 nếu một người sử dụng 'bất kỳ' phương tiện nào (Bus, Car, HOẶC Motorbike). Điều này tương ứng với phép toán logic OR, tức là chỉ cần ít nhất một trong các cột bằng 1."
+  },
+  {
+    "question_id": "ch4_q31",
+    "concepts": [
+      "Phân rã đặc trưng chuỗi có cấu trúc",
+      "Feature extraction từ chuỗi"
+    ],
+    "misconceptions": [
+      "cho rằng các đặc trưng chuỗi phức tạp nên được xóa bỏ vì khó xử lý.",
+      "tin rằng cách duy nhất để xử lý chuỗi là đổi nó sang một số thực duy nhất.",
+      "cho rằng đặc trưng chuỗi chỉ có thể được xử lý bằng one-hot encoding."
+    ],
+    "reasoning": "Một chuỗi dữ liệu, mặc dù phức tạp, nhưng nếu có cấu trúc nội tại (ví dụ: mã số sinh viên, mã sản phẩm), thì có thể được phân rã thành nhiều đặc trưng con có ý nghĩa hơn, thay vì loại bỏ hoặc biến đổi một cách đơn giản."
+  },
+  {
+    "question_id": "ch4_q32",
+    "concepts": [
+      "Phân rã đặc trưng chuỗi có cấu trúc",
+      "Đọc hiểu và phân tích ví dụ"
+    ],
+    "misconceptions": [
+      "cho rằng các con số trong chuỗi được diễn giải theo một cách khác, ví dụ đọc sai năm hoặc mã khoa.",
+      "tin rằng không thể có một quy tắc cố định để diễn giải chuỗi này.",
+      "cho rằng các con số trong chuỗi được ghép nối một cách tùy tiện."
+    ],
+    "reasoning": "Câu hỏi này kiểm tra khả năng áp dụng một quy tắc phân rã (được giả định trong slide) vào một chuỗi cụ thể. Đáp án đúng là kết quả của việc áp dụng chính xác quy tắc đó để trích xuất các thông tin thành phần từ chuỗi '0612450'."
+  },
+  {
+    "question_id": "ch4_q33",
+    "concepts": [
+      "Tổng hợp đặc trưng",
+      "Tạo đặc trưng tương tác"
+    ],
+    "misconceptions": [
+      "cho rằng đặc trưng mới chỉ có thể được tạo từ một đặc trưng duy nhất.",
+      "tin rằng `Make_Type` là tên của một cột có sẵn chứ không phải được tạo ra.",
+      "cho rằng đặc trưng này được tạo ra từ một phương pháp không liên quan như K-Means."
+    ],
+    "reasoning": "Ví dụ này minh họa việc tạo một đặc trưng tương tác (interaction feature) bằng cách kết hợp thông tin từ nhiều đặc trưng thành phần (`Make` và `Type`). Điều này giúp mô hình nắm bắt được mối quan hệ kết hợp giữa chúng."
+  },
+  {
+    "question_id": "ch4_q34",
+    "concepts": [
+      "Tổng hợp dữ liệu theo nhóm",
+      "Hàm `groupby` trong pandas"
+    ],
+    "misconceptions": [
+      "cho rằng có thể tổng hợp thông tin bằng các hàm xử lý dữ liệu khác như `replace` hoặc `isnull`.",
+      "tin rằng `drop_duplicates` có thể dùng để tổng hợp dữ liệu theo nhóm, vì nó cũng làm giảm số lượng dòng.",
+      "cho rằng không có hàm chuyên dụng để thực hiện việc này."
+    ],
+    "reasoning": "Để tổng hợp thông tin trên nhiều dòng dữ liệu dựa trên một tiêu chí nhóm nào đó (ví dụ: tính lương trung bình theo thành phố), phương pháp phổ biến và hiệu quả nhất trong pandas là sử dụng hàm `groupby()` kết hợp với các hàm tổng hợp (aggregation) như `mean`, `max`, `min`, `sum`."
+  },
+  {
+    "question_id": "ch4_q35",
+    "concepts": [
+      "Tổng hợp dữ liệu theo nhóm",
+      "Đọc hiểu và tính toán từ ví dụ"
+    ],
+    "misconceptions": [
+      "cho rằng chỉ cần lấy một giá trị lương bất kỳ của HCM.",
+      "tin rằng phải tính trung bình của tất cả các giá trị lương mà không phân biệt thành phố.",
+      "cho rằng phép tính trung bình được thực hiện sai (ví dụ cộng sai, chia sai)."
+    ],
+    "reasoning": "Câu hỏi yêu cầu thực hiện một phép tính cụ thể: lọc ra tất cả các dòng có thành phố là 'HCM', lấy giá trị lương của chúng và tính trung bình cộng. Điều này kiểm tra khả năng áp dụng logic `groupby` và `mean` vào một tập dữ liệu nhỏ."
+  },
+  {
+    "question_id": "ch4_q36",
+    "concepts": [
+      "Tạo đặc trưng từ phân cụm",
+      "Sử dụng kết quả của mô hình không giám sát"
+    ],
+    "misconceptions": [
+      "cho rằng đặc trưng cụm được tạo ra từ việc chuẩn hóa dữ liệu.",
+      "tin rằng đặc trưng cụm là kết quả của việc mã hóa one-hot.",
+      "cho rằng đặc trưng cụm là một cách để loại bỏ dữ liệu thiếu."
+    ],
+    "reasoning": "Đặc trưng cụm (cluster feature) được tạo ra bằng cách áp dụng một thuật toán phân cụm (như K-Means) lên dữ liệu, sau đó gán nhãn của cụm mà mỗi điểm dữ liệu thuộc về làm một đặc trưng mới. Điều này giúp mô hình hóa các nhóm tự nhiên trong dữ liệu."
+  },
+  {
+    "question_id": "ch4_q37",
+    "concepts": [
+      "Giảm chiều dữ liệu bằng PCA",
+      "Đọc hiểu và phân tích ví dụ"
+    ],
+    "misconceptions": [
+      "cho rằng PCA luôn giảm dữ liệu xuống chỉ còn 1 thành phần chính.",
+      "tin rằng số thành phần chính sau khi giảm chiều phải bằng số thành phần ban đầu.",
+      "cho rằng số lượng thành phần chính có thể được chọn tùy ý mà không cần xem xét ví dụ cụ thể."
+    ],
+    "reasoning": "Câu hỏi này kiểm tra khả năng quan sát và trích xuất thông tin từ một ví dụ trực quan (biểu đồ hoặc kết quả) về PCA trong slide. Đáp án đúng là số lượng thành phần chính được chọn để biểu diễn dữ liệu trong ví dụ đó."
+  },
+  {
+    "question_id": "ch4_q38",
+    "concepts": [
+      "Lý do cần biến đổi đặc trưng",
+      "Yêu cầu đầu vào của mô hình"
+    ],
+    "misconceptions": [
+      "cho rằng biến đổi đặc trưng luôn làm giảm số lượng dòng dữ liệu, vì nhầm lẫn với việc loại bỏ dữ liệu.",
+      "tin rằng biến đổi đặc trưng chỉ là một bước tùy chọn và không ảnh hưởng nhiều đến kết quả.",
+      "cho rằng mọi mô hình đều có thể xử lý mọi loại dữ liệu thô."
+    ],
+    "reasoning": "Biến đổi đặc trưng là một bước quan trọng vì nhiều mô hình yêu cầu đầu vào phải là dạng số, có phân phối hoặc tỉ lệ nhất định. Một phép biến đổi phù hợp có thể giúp mô hình hội tụ nhanh hơn và đạt độ chính xác cao hơn."
+  },
+  {
+    "question_id": "ch4_q39",
+    "concepts": [
+      "Biến đổi dữ liệu để giảm ảnh hưởng của nhiễu",
+      "Log Transform và Robust Scaler"
+    ],
+    "misconceptions": [
+      "cho rằng One-hot encoding giúp giảm ảnh hưởng của nhiễu, vì nó là một kỹ thuật biến đổi.",
+      "tin rằng các phương pháp chọn lọc đặc trưng như Forward selection cũng có chức năng giảm nhiễu của giá trị.",
+      "cho rằng PCA và ICA là các phép biến đổi để xử lý nhiễu, vì chúng cũng làm thay đổi dữ liệu."
+    ],
+    "reasoning": "Log Transform giúp giảm độ lệch của dữ liệu và 'nén' các giá trị lớn, trong khi Robust Scaler chuẩn hóa dữ liệu dựa trên tứ phân vị, làm cho nó ít bị ảnh hưởng bởi các giá trị ngoại lệ (nhiễu). Cả hai đều là kỹ thuật hiệu quả để xử lý dữ liệu có nhiễu."
+  },
+  {
+    "question_id": "ch4_q40",
+    "concepts": [
+      "Biến đổi Binning",
+      "Rời rạc hóa biến liên tục"
+    ],
+    "misconceptions": [
+      "cho rằng binning làm tăng số lượng dòng dữ liệu.",
+      "tin rằng binning là một phương pháp tìm ngoại lệ như IQR.",
+      "cho rằng binning được dùng để thay thế dữ liệu thiếu."
+    ],
+    "reasoning": "Binning (hay rời rạc hóa) là quá trình chia một biến liên tục thành các khoảng (bin) hoặc nhóm nhỏ hơn. Mục đích là để biến đổi một biến số thành một biến danh mục, giúp mô hình nắm bắt các mối quan hệ phi tuyến hoặc làm giảm ảnh hưởng của các giá trị nhiễu nhỏ."
+  },
+  {
+    "question_id": "ch4_q41",
+    "concepts": [
+      "Biến đổi Log (Log Transform)",
+      "Quy tắc toán học của logarit"
+    ],
+    "misconceptions": [
+      "cho rằng lấy log của một biểu thức thì chỉ cần thêm 'log' vào từng thành phần.",
+      "tin rằng không thể áp dụng log cho biểu thức có phép nhân và lũy thừa.",
+      "cho rằng các quy tắc logarit có thể áp dụng một cách tùy tiện."
+    ],
+    "reasoning": "Câu hỏi kiểm tra việc áp dụng đúng các quy tắc của logarit vào một biểu thức toán học. Cụ thể, log(a*b) = log(a) + log(b) và log(exp(x)) = x. Áp dụng các quy tắc này vào Y = b * exp(a*X) sẽ cho kết quả log(Y) = log(b) + a*X."
+  },
+  {
+    "question_id": "ch4_q42",
+    "concepts": [
+      "Các phép biến đổi dữ liệu dạng số",
+      "Phân biệt biến đổi số và danh mục"
+    ],
+    "misconceptions": [
+      "cho rằng One-hot encoding là một phép biến đổi cho dữ liệu dạng số, vì nó tạo ra các cột số 0 và 1.",
+      "tin rằng mọi kỹ thuật biến đổi đều có thể áp dụng cho dữ liệu số."
+    ],
+    "reasoning": "Min-Max scaling, Log Transform và Robust Scaler đều là các phép biến đổi được áp dụng trên dữ liệu dạng số để thay đổi phân phối hoặc tỉ lệ của chúng. One-hot encoding là kỹ thuật dành riêng cho dữ liệu dạng danh mục."
+  },
+  {
+    "question_id": "ch4_q43",
+    "concepts": [
+      "Chuẩn hóa Standardization (Z-score)",
+      "Công thức của các phép biến đổi"
+    ],
+    "misconceptions": [
+      "cho rằng công thức của Z-score là công thức của Min-Max scaling.",
+      "tin rằng công thức của Z-score là công thức của Robust Scaler.",
+      "cho rằng công thức của Z-score là công thức của Log Transform."
+    ],
+    "reasoning": "Câu hỏi kiểm tra việc nhận dạng công thức toán học chính xác của phép chuẩn hóa Z-score. Công thức này là z = (x - μ) / σ, trong đó x là giá trị gốc, μ là trung bình và σ là độ lệch chuẩn. Các phương án khác là công thức của Min-Max, Robust Scaler và Log Transform."
+  },
+  {
+    "question_id": "ch4_q44",
+    "concepts": [
+      "Phân loại các phép biến đổi đặc trưng",
+      "Biến đổi dữ liệu danh mục"
+    ],
+    "misconceptions": [
+      "cho rằng Robust Scaler có thể dùng cho dữ liệu danh mục, vì không nhớ rõ nó là kỹ thuật cho dữ liệu số.",
+      "tin rằng các tên gọi như 'One-hot', 'Ordinal', 'Robust' đều là các loại mã hóa danh mục.",
+      "cho rằng mọi kỹ thuật scaler đều áp dụng được cho mọi loại dữ liệu."
+    ],
+    "reasoning": "One-hot, Ordinal, và Target Encoding là các kỹ thuật dùng để biến đổi dữ liệu dạng danh mục. Robust Scaler là một phương pháp chuẩn hóa dành cho dữ liệu dạng số, giúp xử lý ảnh hưởng của các giá trị ngoại lệ."
+  },
+  {
+    "question_id": "ch4_q45",
+    "concepts": [
+      "Lợi ích của việc chọn lựa đặc trưng",
+      "Overfitting và hiệu quả tính toán"
+    ],
+    "misconceptions": [
+      "cho rằng chọn lựa đặc trưng luôn làm tăng số chiều của dữ liệu, vì nhầm lẫn với việc tạo đặc trưng.",
+      "tin rằng càng nhiều đặc trưng thì mô hình càng tốt, nên không cần chọn lựa.",
+      "cho rằng chọn lựa đặc trưng chỉ ảnh hưởng đến thời gian huấn luyện mà không ảnh hưởng đến độ chính xác."
+    ],
+    "reasoning": "Chọn lựa đặc trưng giúp loại bỏ các đặc trưng không liên quan hoặc dư thừa, từ đó làm mô hình đơn giản hơn, giảm nguy cơ quá khớp (overfitting), giảm thời gian huấn luyện và có thể tăng độ chính xác bằng cách giảm nhiễu."
+  },
+  {
+    "question_id": "ch4_q46",
+    "concepts": [
+      "Phương pháp chọn đặc trưng kiểu Filter",
+      "Phân biệt các kiểu chọn đặc trưng (Filter, Wrapper)"
+    ],
+    "misconceptions": [
+      "cho rằng Forward Selection là phương pháp Filter, vì nó cũng là một cách chọn đặc trưng.",
+      "tin rằng tất cả các phương pháp chọn đặc trưng đều hoạt động theo cùng một cách, không phân biệt Filter, Wrapper, Embedded.",
+      "cho rằng các phương pháp Filter cần một mô hình máy học để đánh giá."
+    ],
+    "reasoning": "Các phương pháp Filter đánh giá và chọn lựa đặc trưng dựa trên các đặc tính thống kê của dữ liệu (như tương quan, phương sai, thông tin tương hỗ) mà không cần huấn luyện một mô hình nào. Forward Selection là một phương pháp Wrapper vì nó sử dụng hiệu suất của một mô hình cụ thể để chọn đặc trưng."
+  },
+  {
+    "question_id": "ch4_q47",
+    "concepts": [
+      "Phương pháp chọn đặc trưng kiểu Wrapper",
+      "Phân biệt Wrapper và các kỹ thuật khác"
+    ],
+    "misconceptions": [
+      "cho rằng Standardization là một phương pháp Wrapper, vì nó cũng là một bước trong pipeline máy học.",
+      "tin rằng các phương pháp Wrapper không cần đến mô hình máy học.",
+      "cho rằng tất cả các phương pháp chọn đặc trưng tự động đều là Wrapper."
+    ],
+    "reasoning": "Các phương pháp Wrapper sử dụng một mô hình máy học cụ thể để đánh giá chất lượng của một tập con các đặc trưng. Forward Selection, Backward Elimination, và RFE đều là các ví dụ kinh điển, chúng 'bao bọc' một mô hình để tìm ra tập đặc trưng tốt nhất. Standardization là một kỹ thuật biến đổi dữ liệu."
+  },
+  {
+    "question_id": "ch4_q48",
+    "concepts": [
+      "Phương pháp chọn đặc trưng kiểu Embedded",
+      "Phân biệt Embedded và giảm chiều dữ liệu"
+    ],
+    "misconceptions": [
+      "cho rằng PCA là một phương pháp Embedded, vì nó cũng làm thay đổi tập đặc trưng.",
+      "tin rằng bất kỳ mô hình nào có thể cho biết tầm quan trọng của đặc trưng đều là Embedded.",
+      "cho rằng PCA là một kỹ thuật chọn lọc đặc trưng thay vì tạo đặc trưng mới."
+    ],
+    "reasoning": "Các phương pháp Embedded tích hợp việc chọn lựa đặc trưng vào quá trình huấn luyện mô hình, ví dụ như LASSO, Ridge, và các mô hình cây như Random Forest. PCA không chọn lựa từ các đặc trưng gốc mà tạo ra các đặc trưng mới hoàn toàn (các thành phần chính), do đó nó thuộc nhóm giảm chiều dữ liệu."
+  },
+  {
+    "question_id": "ch4_q49",
+    "concepts": [
+      "Phương pháp giảm chiều dữ liệu",
+      "Phân biệt giảm chiều và mã hóa"
+    ],
+    "misconceptions": [
+      "cho rằng Label encoding là một phương pháp giảm chiều dữ liệu, vì nó biến đổi một cột văn bản thành một cột số.",
+      "tin rằng giảm chiều dữ liệu và chọn lọc đặc trưng là hoàn toàn giống nhau.",
+      "cho rằng tất cả các phương pháp biến đổi đặc trưng đều là giảm chiều dữ liệu."
+    ],
+    "reasoning": "PCA, ICA, t-SNE, và UMAP là các kỹ thuật giảm chiều dữ liệu, chúng tạo ra một biểu diễn mới của dữ liệu với số chiều thấp hơn trong khi cố gắng bảo toàn cấu trúc hoặc thông tin quan trọng. Label encoding chỉ là một cách mã hóa biến danh mục, không làm giảm số chiều của tập dữ liệu."
+  },
+  {
+    "question_id": "ch4_q50",
+    "concepts": [
+      "Công cụ hỗ trợ chọn lựa đặc trưng",
+      "Giải thích mô hình (Model Explainability)"
+    ],
+    "misconceptions": [
+      "cho rằng Matplotlib là một công cụ chọn lựa đặc trưng, vì nó có thể vẽ biểu đồ về tầm quan trọng của đặc trưng.",
+      "tin rằng các công cụ này tự động chọn đặc trưng mà không cần sự can thiệp của người dùng.",
+      "cho rằng chỉ có một công cụ duy nhất để thực hiện việc này."
+    ],
+    "reasoning": "LOFO, SHAP, và ELI5 là các thư viện Python mạnh mẽ giúp đánh giá tầm quan trọng của từng đặc trưng đối với dự đoán của mô hình, qua đó hỗ trợ quá trình chọn lựa đặc trưng. Matplotlib là một thư viện trực quan hóa, nó có thể được dùng để hiển thị kết quả từ các công cụ trên, nhưng bản thân nó không phải là công cụ chọn lựa đặc trưng."
+  }
+]

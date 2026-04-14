@@ -1,0 +1,142 @@
+[
+  {
+    "question_id": "1",
+    "concepts": [
+      "Kiểu dữ liệu trong Python",
+      "Biểu diễn chuỗi (string)",
+      "Phân biệt kiểu dữ liệu dựa trên cú pháp"
+    ],
+    "misconceptions": [
+      "cho rằng '5.5' là số thực (Float) vì nó có chứa dấu chấm thập phân, bỏ qua sự tồn tại của cặp dấu nháy.",
+      "tin rằng Python có thể 'nhìn' vào nội dung bên trong cặp dấu nháy và tự động xác định kiểu dữ liệu là số.",
+      "cho rằng bất kỳ ký tự nào có hình thức giống số thì sẽ được máy tính hiểu là kiểu số (Integer hoặc Float)."
+    ],
+    "reasoning": "Trong Python, bất kỳ giá trị nào được đặt trong dấu nháy đơn ('') hoặc nháy kép (\"\") đều được coi là một chuỗi (string). Do đó, '5.5' là một chuỗi, không phải là một số thực."
+  },
+  {
+    "question_id": "2",
+    "concepts": [
+      "Toán tử logic trong Python (and, or)",
+      "Thứ tự ưu tiên của toán tử",
+      "Biểu thức luận lý (Boolean expression)"
+    ],
+    "misconceptions": [
+      "cho rằng các toán tử `and` và `or` có cùng độ ưu tiên và được thực hiện tuần tự từ trái sang phải.",
+      "tin rằng toán tử `or` được ưu tiên thực hiện trước toán tử `and`.",
+      "cho rằng khi vế đầu tiên của biểu thức `and` trả về `False`, toàn bộ biểu thức sẽ ngay lập tức trả về `False` mà không xét đến vế `or` phía sau."
+    ],
+    "reasoning": "Biểu thức được tính toán theo thứ tự ưu tiên: các phép so sánh trước, sau đó là `and`, và cuối cùng là `or`. Biểu thức `(False and False)` được tính trước và cho kết quả `False`, sau đó `False or True` cho kết quả cuối cùng là `True`."
+  },
+  {
+    "question_id": "3",
+    "concepts": [
+      "Phép cộng (nối) list trong Python",
+      "List concatenation"
+    ],
+    "misconceptions": [
+      "cho rằng phép cộng hai list sẽ thực hiện phép cộng trên từng phần tử tương ứng, giống như cộng vector trong toán học.",
+      "tin rằng phép cộng hai list sẽ là cộng phần tử đầu của list thứ nhất với phần tử cuối của list thứ hai và tiếp tục tương tự.",
+      "cho rằng kết quả của việc cộng hai list sẽ là một list mới với các phần tử được tự động sắp xếp theo thứ tự."
+    ],
+    "reasoning": "Trong Python, toán tử `+` khi áp dụng cho hai list sẽ thực hiện phép nối (concatenation), tức là các phần tử của list thứ hai sẽ được thêm vào cuối của list thứ nhất để tạo thành một list mới."
+  },
+  {
+    "question_id": "4",
+    "concepts": [
+      "List comprehension trong Python",
+      "Toán tử lũy thừa (**)",
+      "Định nghĩa và sử dụng hàm"
+    ],
+    "misconceptions": [
+      "cho rằng toán tử `**2` có nghĩa là nhân với 2, thay vì tính lũy thừa bậc 2.",
+      "tin rằng hàm sẽ chỉ trả về list ban đầu mà không thực hiện bất kỳ phép tính nào bên trong.",
+      "cho rằng hàm sẽ tính tổng của các phần tử trong list đầu vào, thay vì thực hiện phép tính trên từng phần tử."
+    ],
+    "reasoning": "Hàm này sử dụng list comprehension. Vòng lặp `for i in x` duyệt qua từng phần tử của list đầu vào, và `i**2` tính bình phương của phần tử đó, tạo ra một list mới chứa các kết quả bình phương."
+  },
+  {
+    "question_id": "5",
+    "concepts": [
+      "Chức năng của các thư viện khoa học dữ liệu Python",
+      "Tính toán mảng và ma trận",
+      "Thư viện NumPy"
+    ],
+    "misconceptions": [
+      "cho rằng Pandas là thư viện cho tính toán ma trận hiệu quả nhất vì nó làm việc với dữ liệu dạng bảng (DataFrame).",
+      "tin rằng Scikit-learn là lựa chọn tốt nhất vì các thuật toán học máy của nó hoạt động dựa trên ma trận.",
+      "cho rằng Matplotlib dùng để tính toán ma trận vì nó thường được dùng để hiển thị kết quả từ các ma trận dữ liệu."
+    ],
+    "reasoning": "NumPy là thư viện nền tảng cho tính toán khoa học trong Python, được tối ưu hóa đặc biệt cho các phép toán trên mảng và ma trận đa chiều. Các thư viện khác như Pandas hay Scikit-learn đều được xây dựng dựa trên NumPy cho các tác vụ tính toán số."
+  },
+  {
+    "question_id": "6",
+    "concepts": [
+      "Khởi tạo mảng NumPy",
+      "Tham số shape trong NumPy",
+      "Quy ước (hàng, cột) của shape"
+    ],
+    "misconceptions": [
+      "cho rằng `shape=(2,3)` và `shape=(3,2)` là như nhau vì chúng đều tạo ra một ma trận có tổng cộng 6 phần tử.",
+      "tin rằng thứ tự của các chiều (hàng, cột) trong tham số `shape` có thể hoán đổi cho nhau mà không làm thay đổi kết quả ma trận.",
+      "cho rằng chỉ có một cách duy nhất để tạo ra một mảng, ví dụ chỉ có thể dùng `np.ones` để tạo mảng chứa toàn số 1."
+    ],
+    "reasoning": "Tham số `shape` trong NumPy tuân theo quy ước `(số hàng, số cột)`. Ma trận yêu cầu có 2 hàng và 3 cột, tương ứng `shape=(2,3)`. Câu lệnh sử dụng `shape=(3,2)` sẽ tạo ra một ma trận 3 hàng và 2 cột, khác với yêu cầu."
+  },
+  {
+    "question_id": "7",
+    "concepts": [
+      "Trực quan hóa dữ liệu",
+      "Chức năng của thư viện Matplotlib",
+      "Hệ sinh thái khoa học dữ liệu Python"
+    ],
+    "misconceptions": [
+      "cho rằng NumPy có thể vẽ biểu đồ vì nó xử lý dữ liệu số được dùng để vẽ.",
+      "tin rằng Scikit-learn có thể trực quan hóa dữ liệu vì nó là một thư viện khoa học dữ liệu.",
+      "cho rằng Tensorflow là thư viện trực quan hóa, có thể do nhầm lẫn với TensorBoard (một công cụ trực quan hóa riêng đi kèm Tensorflow)."
+    ],
+    "reasoning": "Matplotlib là thư viện chuyên dụng và phổ biến nhất trong Python cho mục đích trực quan hóa dữ liệu, cho phép tạo ra nhiều loại biểu đồ. Các thư viện khác tập trung vào các nhiệm vụ khác như tính toán số (NumPy) hay học máy (Scikit-learn, Tensorflow)."
+  },
+  {
+    "question_id": "8",
+    "concepts": [
+      "Cấu trúc dữ liệu trong Pandas",
+      "Pandas Series",
+      "Pandas DataFrame"
+    ],
+    "misconceptions": [
+      "cho rằng Pandas chỉ có một kiểu object chính là DataFrame vì nó là kiểu được sử dụng phổ biến nhất.",
+      "tin rằng Series chỉ là một khái niệm phụ hoặc là một phần của DataFrame, chứ không phải là một kiểu object độc lập.",
+      "cho rằng DataFrame là object duy nhất của Pandas vì nó có thể chứa nhiều cột, bao hàm cả Series."
+    ],
+    "reasoning": "Pandas có hai cấu trúc dữ liệu cốt lõi và là hai kiểu object chính: Series (đại diện cho dữ liệu một chiều, như một cột) và DataFrame (đại diện cho dữ liệu hai chiều, như một bảng tính)."
+  },
+  {
+    "question_id": "9",
+    "concepts": [
+      "Lọc dữ liệu trong Pandas",
+      "Boolean indexing",
+      "Phương thức `.at` và `.loc`",
+      "Phương thức `.query`"
+    ],
+    "misconceptions": [
+      "cho rằng phương thức `.at` có thể được dùng để lọc nhiều hàng dựa trên một điều kiện boolean, tương tự như `.loc`.",
+      "tin rằng cú pháp `df['sex'] == 'Female'` chỉ là một biểu thức so sánh và không thể dùng trực tiếp để lọc DataFrame.",
+      "cho rằng phương thức `.query()` chỉ dùng cho các câu lệnh phức tạp và không thể dùng cho điều kiện đơn giản như so sánh bằng."
+    ],
+    "reasoning": "Phương thức `.at` được thiết kế để truy cập nhanh một giá trị duy nhất thông qua nhãn của hàng và cột, không hỗ trợ lọc hàng loạt dựa trên một điều kiện boolean. Các phương thức khác như boolean indexing (`df[...]`), `.loc`, và `.query()` mới được dùng cho mục đích này."
+  },
+  {
+    "question_id": "10",
+    "concepts": [
+      "Thư viện học sâu (Deep Learning)",
+      "Thư viện Tensorflow",
+      "Phân biệt học máy truyền thống và học sâu"
+    ],
+    "misconceptions": [
+      "cho rằng Scikit-learn có thể dùng để xây dựng các mô hình học sâu hiệu quả vì nó là thư viện học máy rất phổ biến.",
+      "tin rằng Pandas có thể xây dựng mô hình học sâu vì nó là bước đầu tiên trong quá trình xử lý dữ liệu cho mô hình.",
+      "cho rằng Matplotlib là thư viện học sâu vì nó dùng để hiển thị kết quả của mô hình."
+    ],
+    "reasoning": "Tensorflow là một nền tảng toàn diện được xây dựng chuyên cho học máy, đặc biệt mạnh mẽ trong việc xây dựng, huấn luyện và triển khai các mạng nơ-ron sâu. Scikit-learn chủ yếu tập trung vào các thuật toán học máy truyền thống, không phải học sâu."
+  }
+]

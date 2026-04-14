@@ -298,21 +298,51 @@ def run_indexing():
                 traceback.print_exc()
 
     # ─── Index video transcripts ────────────────────────────────────
-    transcript_dir = Config.INPUT_DIR / "video_transcript"
-    if transcript_dir.exists():
-        print(f"\n📂 Indexing transcripts from: {transcript_dir}")
-        for chapter_id in SLIDE_NAME_MAP:
-            chapter_num = chapter_id.lstrip("ch0")
-            chapter_glob = chapter_id.lstrip("ch")  
+    transcript_metadata_file = Config.DATA_DIR / "transcript_metadata_generated.jsonl"
+    if transcript_metadata_file.exists():
+        print(f"\n📂 Indexing transcripts from: {transcript_metadata_file}")
+        try:
+            with open(transcript_metadata_file, "r", encoding="utf-8") as f:
+                transcript_chunks = []
+                for line in f:
+                    if not line.strip():
+                        continue
+                    data = json.loads(line)
+                    chapter_id = data.get("chapter_id", "unknown")
+                    orig_id = data.get("chunk_id", 0)
+                    chunk_id = f"cs116_{chapter_id}_transcript_m{int(orig_id):04d}"
+                    
+                    topics_list = []
+                    if data.get("topic"):
+                        topics_list.append(data.get("topic"))
+                    if data.get("keywords") and isinstance(data.get("keywords"), list):
+                        topics_list.extend(data.get("keywords"))
+                        
+                    # Lấy text đã được tinh chế bởi LLM (retrieval_text) nếu có
+                    text_content = data.get("retrieval_text", data.get("text", ""))
+                    
+                    chunk = {
+                        "chunk_id": chunk_id,
+                        "course_id": data.get("course_id", "CS116"),
+                        "chapter_id": chapter_id,
+                        "chapter_title": data.get("chapter_title", ""),
+                        "topics": topics_list,
+                        "source_type": "video_transcript",
+                        "source_file": data.get("source_file", ""),
+                        "page_number": orig_id, # Lưu lại ID gốc vào page_number
+                        "section_title": data.get("subtopic", ""),
+                        "text": text_content,
+                        "embedding_ready": True,
+                    }
+                    transcript_chunks.append(chunk)
 
-            for txt_file in sorted(transcript_dir.glob(f"{chapter_glob}.*.txt")):
-                print(f"  📝 {chapter_id}: {txt_file.name}")
-                try:
-                    chunks = extract_transcript(str(txt_file), chapter_id)
-                    all_chunks.extend(chunks)
-                    print(f"     → {len(chunks)} transcript chunks")
-                except Exception as e:
-                    print(f"  ❌ Error: {e}")
+                all_chunks.extend(transcript_chunks)
+                print(f"     → {len(transcript_chunks)} transcript chunks (From Metadata)")
+        except Exception as e:
+            print(f"  ❌ Error reading transcript metadata: {e}")
+            traceback.print_exc()
+    else:
+        print(f"\n📂 Transcript metadata file not found at: {transcript_metadata_file}")
 
     # ─── Deduplicate ───────────────────────────────────────────────
     seen = set()

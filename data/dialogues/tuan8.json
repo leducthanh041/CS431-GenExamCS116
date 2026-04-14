@@ -1,0 +1,2940 @@
+[
+  {
+    "question_id": "ch7b_q1",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng Logistic Regression dự đoán giá trị liên tục vì tên nó có chữ 'Regression'?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Giống như Linear Regression, cứ là 'Regression' thì phải dự đoán một con số."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, mục đích của một mô hình 'Regression' là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là dự đoán một giá trị số liên tục, như giá nhà hay nhiệt độ. Đó là định nghĩa rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hàm sigmoid trong Logistic Regression trả về giá trị gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó trả về một con số. Thì đó chính là giá trị liên tục còn gì."
+      },
+      {
+        "role": "Tutor",
+        "text": "Khoảng giá trị của con số đó là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Em không nhớ chính xác, nhưng nó vẫn là số. Logic của em vẫn đúng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Khoảng đó là từ 0 đến 1. Vậy nó có dự đoán được giá nhà là 2 tỷ không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Không. Nhưng nó vẫn là một số liên tục. Có thể nó không dự đoán giá nhà, nhưng nó vẫn là hồi quy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một giá trị từ 0 đến 1 thường đại diện cho điều gì trong thống kê?"
+      },
+      {
+        "role": "Student",
+        "text": "Một xác suất... Để quyết định xem nó thuộc lớp nào."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy kết quả cuối cùng mà bài toán yêu cầu là xác suất, hay là cái lớp?"
+      },
+      {
+        "role": "Student",
+        "text": "Là cái lớp. Ví dụ y=0 hoặc y=1."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy là, dù tên có 'Regression', mục tiêu của nó là phân lớp. Nó dùng xác suất làm bước trung gian."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q2",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng hàm dự đoán là ŷ = β̂x. Vậy ŷ có thể nhận những giá trị nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó có thể nhận giá trị thực bất kỳ. Vì Logistic Regression là một dạng của mô hình tuyến tính tổng quát."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mô hình này dùng để giải quyết bài toán gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Bài toán phân loại nhị phân. Nhưng bản chất nó vẫn là tuyến tính."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu mô hình của bạn dự đoán ŷ = 150. Điều này có nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nghĩa là khả năng rất cao thuộc về lớp 1. Điểm số càng cao thì càng chắc chắn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục tiêu cuối cùng là dự đoán xác suất, đúng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng, nhưng điểm số tuyến tính đó thể hiện mức độ chắc chắn rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một xác suất có thể có giá trị là 150 không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Không, xác suất chỉ từ 0 đến 1. Nhưng β̂x là điểm số, không phải xác suất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy làm sao để biến 'điểm số' bất kỳ đó thành xác suất trong khoảng [0, 1]?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là cần một hàm nào đó... À, hàm sigmoid. Vậy ŷ phải là σ(β̂x)."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Lỗi sai của bạn là nhầm lẫn phần tính toán tuyến tính `β̂x` với dự đoán cuối cùng `ŷ`, vốn phải là một xác suất."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q3",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ tại sao MSE lại phù hợp với Logistic Regression?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì tên nó là 'Logistic Regression'. Đã là regression thì phải dùng được MSE chứ ạ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy Logistic Regression dự đoán ra kết quả gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó dự đoán một xác suất, từ 0 đến 1, để mình phân lớp."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử nhãn đúng là 1. Dự đoán là 0.1 và 0.01, MSE thay đổi ra sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Lỗi là (1-0.1)^2=0.81 và (1-0.01)^2=0.98. Lỗi tăng lên, vẫn hợp lý mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hàm lỗi nên trừng phạt dự đoán sai rất nặng. Theo bạn, mức tăng đó đã đủ 'nặng' chưa?"
+      },
+      {
+        "role": "Student",
+        "text": "Em thấy nó cũng tăng mà. Sai càng nhiều lỗi càng lớn, thế là được rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đạo hàm của MSE theo dự đoán p gần bằng 0 thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Đạo hàm của (1-p)^2 là -2(1-p). Khi p gần 0, đạo hàm gần bằng -2. Nó không tăng vọt... Có vẻ nó không phạt đủ mạnh khi mô hình sai hoàn toàn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy hàm lỗi cho bài toán phân lớp cần đặc tính gì khi dự đoán rất sai?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó cần tạo ra lỗi rất lớn, hoặc gradient rất lớn, để mô hình học nhanh hơn. Vậy có lẽ hàm lỗi nên liên quan đến logarit."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. MSE không phạt đủ nặng các dự đoán sai trong phân lớp. BCE dùng logarit để tạo ra lỗi vô hạn khi dự đoán sai hoàn toàn, giúp mô hình học tốt hơn."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q4",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng biên quyết định là nơi xác suất bằng 1. Vì sao lại là 1?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì đó là lúc mô hình chắc chắn 100% về lớp đó. Biên là phải ở giới hạn cao nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'biên quyết định' dùng để làm gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để phân định khu vực của một lớp. Nếu xác suất bằng 1, nó hoàn toàn thuộc về lớp đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu P=1 là của lớp 1, nó phân định lớp 1 với cái gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Với phần còn lại, tức là những điểm không phải lớp 1. P=1 là điểm cực đoan nhất, là biên giới cuối cùng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Điểm nào mà mô hình 'phân vân' nhất giữa hai lớp?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là P=0.5. Nhưng điều đó không liên quan. Biên là nơi chắc chắn, không phải nơi phân vân."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một đường ranh giới có phải là nơi phân chia hai vùng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng. Vậy P=1 là ranh giới của vùng 'chắc chắn là lớp 1'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy điểm có P=0.51 và P=0.49 thuộc cùng một vùng à?"
+      },
+      {
+        "role": "Student",
+        "text": "Không... P=0.51 là lớp 1, P=0.49 là lớp 0. À... vậy điểm thay đổi là 0.5."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy đường phân chia hai quyết định khác nhau ứng với xác suất nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó phải ứng với P=0.5. Khi đó, biểu thức β̂x phải bằng 0 để e^0=1, và mẫu số là 2."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Biên quyết định là nơi mô hình 'phân vân' nhất (P=0.5), tương ứng β̂x = 0, chứ không phải nơi chắc chắn nhất (P=1)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q5",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn viết rằng khi β̂x > 0, giá trị dự đoán là 0. Tại sao bạn chắc chắn về điều này?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì đó là quy ước. Bất đẳng thức dương thì cho ra lớp 0, âm thì cho ra lớp 1. Em học như vậy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Được. Vậy đường phân chia hai lớp nằm ở đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó nằm ở chỗ β̂x = 0. Đó là ranh giới."
+      },
+      {
+        "role": "Tutor",
+        "text": "Theo quy ước của bạn, nếu β̂x = 100, dự đoán là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là 0, vì 100 > 0. Rất rõ ràng mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy β̂x = -100 thì dự đoán là 1. Đúng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Đó là logic của nó."
+      },
+      {
+        "role": "Tutor",
+        "text": "β̂x liên quan đến xác suất dự đoán P(y=1) thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó là đầu vào của hàm sigmoid. Nhưng... β̂x = 100 cho xác suất P(y=1) rất cao, gần 1. Sao lại dự đoán là 0 được? Mâu thuẫn quá."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Vậy khi β̂x > 0, P(y=1) sẽ thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "P(y=1) sẽ lớn hơn 0.5. Vậy thì... dự đoán phải là y=1. Em đã đảo ngược nó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng rồi. Bạn đã nhầm lẫn hướng của bất đẳng thức. β̂x > 0 làm cho xác suất P(y=1) > 0.5, do đó mô hình sẽ dự đoán là lớp 1."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q6",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng khi β̂x < 0, dự đoán là y=1. Logic của bạn là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì đường ranh giới là β̂x = 0. Một bên là lớp 0, thì bên còn lại phải là lớp 1. Nên miền < 0 phải là của lớp 1."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trong logistic regression, β̂x được dùng để tính gì tiếp theo?"
+      },
+      {
+        "role": "Student",
+        "text": "Để tính xác suất P(y=1|x). Nhưng kết quả cuối cùng vẫn là phân loại thôi, nên miền < 0 vẫn là của lớp 1."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy khi β̂x = -10, xác suất P(y=1|x) sẽ lớn hay nhỏ?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ rất nhỏ, gần bằng 0. Nhưng... điều đó không có nghĩa là nó thuộc lớp 0. Miền đó vẫn là miền của lớp 1, chỉ là mô hình dự đoán sai thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mô hình dự đoán dựa trên xác suất. Xác suất gần 0 thì dự đoán là lớp nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nếu P(y=1) gần 0, thì dự đoán là y=0. Nhưng trong hình, miền đó rõ ràng được tách ra cho một lớp riêng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy miền có β̂x < 0 cho ra xác suất P(y=1) rất nhỏ. Lớp dự đoán sẽ là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Okay... Nếu xác suất P(y=1) nhỏ, thì dự đoán phải là y=0. Có vẻ mình đã nhìn ngược vấn đề."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Giờ bạn trả lời lại câu hỏi ban đầu nhé."
+      },
+      {
+        "role": "Student",
+        "text": "Miền β̂x < 0 tương ứng với y=0."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tóm lại, bạn đã nhầm lẫn giữa vị trí không gian của miền và ý nghĩa toán học của nó. Dấu âm của β̂x làm giảm xác suất P(y=1), dẫn đến dự đoán là y=0."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q7",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lý giải, bạn nói mô hình nền tảng có thể giải quyết bài toán phức tạp. Tại sao bạn lại nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó là nền tảng. Giống như móng nhà, nó phải đủ tốt để xây những thứ phức tạp hơn lên trên."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một mô hình 'đơn giản' và một mô hình 'nền tảng' có phải là một không?"
+      },
+      {
+        "role": "Student",
+        "text": "Em nghĩ trong trường hợp này là có. Nó đơn giản nhưng vì là cốt lõi nên nó phải mạnh."
+      },
+      {
+        "role": "Tutor",
+        "text": "Ranh giới quyết định của Logistic Regression có hình dạng gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là một đường thẳng, hoặc một mặt phẳng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu nhóm 'có' ở giữa và nhóm 'không' bao quanh thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Một đường thẳng không thể tách chúng ra được. Nhưng đó chỉ là trường hợp đặc biệt thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nếu một bài toán phức tạp có ranh giới không phải đường thẳng, mô hình có hoạt động tốt không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là không... Vậy là nó không thể xử lý mọi bài toán phức tạp."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy ưu điểm thực sự của nó là gì, nếu không phải là xử lý sự phức tạp?"
+      },
+      {
+        "role": "Student",
+        "text": "Có lẽ... ưu điểm của nó chính là sự đơn giản như bạn nói."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Logistic Regression là nền tảng vì nó đơn giản và dễ hiểu, không phải vì nó giải quyết được các bài toán phức tạp. Ưu điểm của nó chính là sự đơn giản, dễ cài đặt."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q8",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn nói Logistic Regression không dùng cho phân loại nhị phân. Vì sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó là hồi quy (regression) mà. Tên nó đã nói thế. Nó chỉ xử lý các bài toán đơn giản, không phải là công cụ chính cho phân loại."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mục đích của hàm sigmoid ở cuối mô hình là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để đưa output về một khoảng giá trị nhất định, từ 0 đến 1. Nhưng đó chỉ là một bước xử lý số liệu thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một output từ 0 đến 1 có thể dùng để biểu diễn điều gì trong bài toán hai lớp?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó có thể là xác suất. Nhưng nếu dữ liệu không phân tách tuyến tính, nó sẽ cho kết quả sai. Nên nó không phải là mô hình phân loại đáng tin cậy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Việc nó hoạt động không tốt với dữ liệu phức tạp có làm thay đổi mục đích thiết kế của nó không?"
+      },
+      {
+        "role": "Student",
+        "text": "… Có lẽ là không. Nhưng nếu không dùng được trong thực tế thì mục đích đó có ý nghĩa gì?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, mục đích cốt lõi của nó là gì, bất kể hạn chế của nó?"
+      },
+      {
+        "role": "Student",
+        "text": "Là dự đoán xác suất cho một trong hai lớp. Tức là… nó dùng cho phân loại nhị phân."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Mục đích của nó là phân loại nhị phân. Việc không xử lý được dữ liệu phức tạp chính là khuyết điểm của nó, không phải là bằng chứng nó không phải mô hình phân loại."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q9",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn nói biên quyết định có dạng cong vì dùng hàm sigmoid. Tại sao hàm sigmoid lại tạo ra biên cong?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì bản thân hàm sigmoid là một đường cong hình chữ S. Mô hình dùng nó để quyết định, nên biên quyết định phải cong theo."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy biên quyết định là đường mà ở đó xác suất P(y=1) bằng bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Là 0.5, điểm chính giữa của sự phân vân."
+      },
+      {
+        "role": "Tutor",
+        "text": "Để đầu ra của hàm sigmoid là 0.5, thì đầu vào của nó phải bằng mấy?"
+      },
+      {
+        "role": "Student",
+        "text": "Đầu vào z phải bằng 0."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trong Logistic Regression, z được tính như thế nào từ các đặc trưng x1, x2?"
+      },
+      {
+        "role": "Student",
+        "text": "z = w1*x1 + w2*x2 + b. Nhưng đó chỉ là phần tuyến tính, hàm sigmoid mới là phần quyết định."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy phương trình của biên quyết định là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là z = 0, tức là w1*x1 + w2*x2 + b = 0. Nhưng tôi vẫn nghĩ hình dạng tổng thể phải cong do hàm sigmoid."
+      },
+      {
+        "role": "Tutor",
+        "text": "Phương trình w1*x1 + w2*x2 + b = 0 mô tả một đường thẳng hay đường cong?"
+      },
+      {
+        "role": "Student",
+        "text": "...Nó là phương trình của một đường thẳng. Vậy là hình dạng sigmoid không ảnh hưởng đến hình dạng biên quyết định?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy dựa trên điều đó, bạn hãy trả lời lại câu hỏi ban đầu."
+      },
+      {
+        "role": "Student",
+        "text": "Biên quyết định... là sự kết hợp tuyến tính của các đặc trưng. Nó là một đường thẳng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm lẫn vai trò của hàm sigmoid (chuyển đổi thành xác suất) với hình dạng của chính biên quyết định (vốn được xác định bởi phương trình tuyến tính z=0)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q10",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng cross-validation là nội dung chính thứ hai. Vì sao nó phải là nội dung chính?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó cực kỳ quan trọng. Học xong mô hình mà không biết cách đánh giá thì học làm gì?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Một 'nội dung chính' của bài học nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là một phần lớn, một chủ đề cốt lõi. Cross-validation là cốt lõi của việc đánh giá mô hình."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'đánh giá mô hình' và 'xây dựng mô hình' là một hay hai chủ đề?"
+      },
+      {
+        "role": "Student",
+        "text": "Là hai chủ đề. Nhưng chúng liên quan chặt chẽ. Đánh giá là bước bắt buộc sau khi xây dựng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trong sách dạy nấu ăn, 'kỹ thuật dùng dao' có phải chương chính không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, đó là kỹ năng. Nhưng so sánh này không đúng, cross-validation phức tạp và quan trọng hơn nhiều."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy kỹ thuật đó có thể là một mục nhỏ trong chương 'Làm bò bít tết' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có thể... À... tức là nó là công cụ trong một chủ đề lớn hơn? Vậy cross-validation có thể là công cụ?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu vậy, trong các lựa chọn, đâu là một chủ đề lớn tương đương 'Logistic Regression'?"
+      },
+      {
+        "role": "Student",
+        "text": "'Mô hình với dữ liệu có quan hệ phi tuyến'. Nó cũng là một loại mô hình. Em hiểu rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn một kỹ thuật quan trọng với một chủ đề chính trong cấu trúc bài giảng."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q11",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng KNN dùng xác suất hậu nghiệm. Cơ sở của lập luận này là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì nó phải tính toán xem một điểm mới thuộc về lớp nào có khả năng cao hơn. Đó chính là xác suất hậu nghiệm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy để tính xác suất hậu nghiệm, mô hình cần những thông tin gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Cần xác suất tiên nghiệm P(y) và bằng chứng P(X|y), giống như trong Naive Bayes."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trong thuật toán KNN, bước nào là bước tính P(y) và P(X|y)?"
+      },
+      {
+        "role": "Student",
+        "text": "Có thể nó không tính trực tiếp, nhưng việc đếm số láng giềng thuộc mỗi lớp cũng là một cách ước lượng xác suất đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu K=5, có 3 láng giềng lớp A, 2 lớp B. Xác suất là 3/5. Đúng chứ?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Xác suất thuộc lớp A là 60%."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nếu K=1 và láng giềng gần nhất thuộc lớp A. Xác suất là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Là 100%. Rõ ràng mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một điểm dữ liệu duy nhất có đủ để kết luận xác suất là 100% không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Có lẽ không. Nó chỉ đơn giản là lấy nhãn của điểm đó thôi, chứ không phải một phép tính xác suất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy quy tắc cốt lõi của KNN là gì, nếu không phải tính xác suất?"
+      },
+      {
+        "role": "Student",
+        "text": "Là tìm các điểm gần nhất và quyết định dựa trên nhãn của chúng. Vậy đáp án là 'Nhãn của K đặc trưng có khoảng cách gần nhất'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn cơ chế 'bỏ phiếu theo đa số' của KNN với việc 'tính toán xác suất' dựa trên phân phối của Naive Bayes."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q12",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói K trong KNN là một tham số. Vậy nó quyết định điều gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó quyết định độ phức tạp của mô hình. Thay đổi K, kết quả thay đổi. Rõ ràng là một tham số rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, 'tham số của mô hình' là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là một giá trị trong mô hình mà mình có thể điều chỉnh để thay đổi kết quả."
+      },
+      {
+        "role": "Tutor",
+        "text": "Với mô hình Hồi quy tuyến tính, tham số của nó là các hệ số w. Mô hình tìm ra w như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó học từ dữ liệu training."
+      },
+      {
+        "role": "Tutor",
+        "text": "Thế mô hình KNN 'học' giá trị của K như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó không học. Mình chọn K. Nhưng nó vẫn là tham số vì nó ảnh hưởng đến mô hình."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'w' và 'K' cùng là tham số, dù một cái được 'học' và một cái được 'chọn'?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng. Miễn là nó quan trọng và ảnh hưởng đến model thì nó là tham số."
+      },
+      {
+        "role": "Tutor",
+        "text": "Sau khi huấn luyện, Hồi quy tuyến tính cần gì để dự đoán?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó cần các hệ số w."
+      },
+      {
+        "role": "Tutor",
+        "text": "Còn KNN, sau khi 'huấn luyện', nó cần gì để dự đoán?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó cần... toàn bộ dữ liệu training. K cũng cần, nhưng bản thân mô hình là dữ liệu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy sự khác biệt giữa 'thứ được học để tóm tắt dữ liệu' và 'thứ được chọn để điều khiển' là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Thứ được học là tham số mô hình. Thứ được chọn là siêu tham số. Vậy K là siêu tham số."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. K là siêu tham số do người dùng đặt. Mô hình KNN không học tham số từ dữ liệu, nên nó là mô hình phi tham số."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q13",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn cho rằng đáp án là 'cam' hoặc 'hồng'. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì điểm màu hồng là điểm gần nhất với điểm mới. Nên nhãn của nó phải là hồng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đề bài cho K=3. Con số '3' này có ý nghĩa gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là một tham số của thuật toán. Nhưng khoảng cách vẫn là quan trọng nhất chứ?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Hãy liệt kê ba điểm gần nhất với điểm mới."
+      },
+      {
+        "role": "Student",
+        "text": "Là một điểm hồng và hai điểm đen. Nhưng điểm hồng gần hơn hẳn hai điểm đen kia."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu đề bài đổi thành K=1, kết quả là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là 'hồng'. Đấy, nó chứng tỏ điểm gần nhất quyết định tất cả."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy tại sao thuật toán không có tên là 'Nearest Neighbor', mà là 'K-Nearest Neighbors'?"
+      },
+      {
+        "role": "Student",
+        "text": "… Chắc là chữ 'K' cũng có vai trò. Có lẽ là phải xem xét cả K điểm đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy với K=3 và ba điểm (hồng, đen, đen), ta nên quyết định nhãn thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nếu phải xét cả ba, thì có hai phiếu cho 'đen' và một cho 'hồng'. Vậy... đáp án là 'đen'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Lỗi sai của bạn là chỉ tập trung vào điểm gần nhất, bỏ qua vai trò của K là lấy số đông từ K điểm lân cận."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q14",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói KNN có thể học trọng số. Quá trình 'học' trọng số đó diễn ra khi nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì khi mình huấn luyện mô hình trên tập dữ liệu train. Nó sẽ tìm ra các trọng số phù hợp."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mô hình KNN 'huấn luyện' cụ thể là làm gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó xem xét dữ liệu và điều chỉnh các trọng số bên trong để tối ưu cho việc dự đoán sau này. Mô hình nào chả vậy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử mô hình đã 'học' xong. Thêm một điểm dữ liệu mới vào tập train, các trọng số đã học có thay đổi không?"
+      },
+      {
+        "role": "Student",
+        "text": "Tất nhiên là có. Thêm dữ liệu mới thì phải học lại để cập nhật trọng số chứ. Đó là lý do cần re-train mô hình."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy với KNN, khi thêm điểm mới vào tập train, bạn có cần chạy lại một quá trình tối ưu nào không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không... chỉ cần thêm điểm đó vào bộ nhớ thôi. Nhưng lúc dự đoán nó vẫn phải dùng trọng số chứ?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Trọng số bạn nói đến được tính toán khi nào? Trước hay sau khi có điểm cần dự đoán?"
+      },
+      {
+        "role": "Student",
+        "text": "Sau khi có điểm cần dự đoán... nó tính khoảng cách... À, vậy nó không phải là trọng số học được từ trước."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, sự khác biệt cốt lõi giữa 'học' tham số và 'tính' giá trị lúc dự đoán là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "'Học' là tạo ra một bộ tham số cố định sau khi huấn luyện. Còn KNN chỉ tính toán tạm thời dựa trên từng điểm dữ liệu mới. Vì vậy nó không có trọng số đã học trước."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm việc tính toán động tại thời điểm dự đoán với việc học một bộ trọng số cố định. KNN không học trọng số, nên thay thế nó bằng một mô hình có học trọng số là không phù hợp với mô tả 'phi tham số'."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q15",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ rằng KNN dùng hàm sigmoid. Vậy hàm sigmoid này nhận đầu vào là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó nhận đầu vào là kết quả tính toán từ các điểm dữ liệu, để chuyển thành xác suất 0-1."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy trong KNN, 'kết quả tính toán' đó cụ thể là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là một loại điểm số (score) nào đó. Các mô hình phân loại thường có một hàm tính score rồi đưa qua sigmoid."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử có 5 lân cận: 3 Xanh, 2 Đỏ. 'Score' ở đây là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Score có thể là 3/5 = 0.6 cho lớp Xanh. Rồi sigmoid(0.6) sẽ cho ra xác suất cuối cùng. Vẫn hợp lý mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Quyết định là 'Xanh' có cần đến kết quả của sigmoid(0.6) không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không... nhưng nó chuẩn hóa kết quả. Nếu không có sigmoid thì làm sao gọi là mô hình hoàn chỉnh được?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu 5 lân cận đều là 'Xanh'. Quyết định là gì? Sigmoid có cần thiết không?"
+      },
+      {
+        "role": "Student",
+        "text": "Quyết định là Xanh. Chắc là... không cần. Vì đã quá rõ ràng rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy yếu tố nào quyết định kết quả, số lượng lân cận hay hàm sigmoid?"
+      },
+      {
+        "role": "Student",
+        "text": "Là số lượng lân cận... Vậy điểm cốt lõi là việc bỏ phiếu theo khoảng cách."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm cơ chế bỏ phiếu của KNN với việc dùng sigmoid trong Logistic Regression. Cốt lõi của KNN là quyết định dựa trên số đông của các lân cận gần nhất."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q16",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ MLP dùng centroid. Vì sao một mạng nơ-ron cần đến centroid?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì để phân loại, nó cần tìm điểm trung tâm cho mỗi lớp, giống như K-Means tìm tâm cho cụm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Centroid trong K-Means được tính như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Là trung bình cộng của tất cả các điểm trong một cụm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét dữ liệu hai lớp là hai vòng tròn đồng tâm. Centroid của chúng ở đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Chúng... sẽ trùng nhau ở tâm của hai vòng tròn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy centroid có giúp phân biệt hai lớp này không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nhưng có thể MLP dùng nhiều centroid cho một lớp để tạo thành đường cong?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu vậy, cơ chế nào quyết định vị trí và số lượng các 'centroid' đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Em không chắc... nó không còn đơn giản là trung bình cộng nữa."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Vậy thứ gì giúp MLP tạo ra ranh giới phi tuyến phức tạp?"
+      },
+      {
+        "role": "Student",
+        "text": "Có phải là... các lớp ẩn không? Chúng xử lý và biến đổi dữ liệu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Lớp ẩn cho phép MLP học các ranh giới phức tạp, không phải centroid. Bạn đã nhầm cơ chế của thuật toán gom nhóm cho thuật toán phân lớp."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q17",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng vai trò của hidden layer là chuẩn hóa dữ liệu. Vì sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì chuẩn hóa giúp ổn định quá trình học, nên hidden layer phải làm việc đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chuẩn hóa dữ liệu là gì, theo bạn?"
+      },
+      {
+        "role": "Student",
+        "text": "Là đưa các giá trị về một khoảng chung, ví dụ từ 0 tới 1."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử dữ liệu đầu vào đã được chuẩn hóa rồi. Mạng có cần hidden layer nữa không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có chứ. Để tiếp tục chuẩn hóa các giá trị được tính toán ở mỗi lớp."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy bạn nói vai trò của nó chỉ là lặp lại việc tiền xử lý?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy, nó đảm bảo dữ liệu luôn 'chuẩn' trong toàn bộ mạng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một mạng không có hidden layer, chỉ input và output. Nó học được gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Chỉ các mối quan hệ tuyến tính đơn giản. Không hiệu quả."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy thêm hidden layer chỉ để chuẩn hóa, không thêm khả năng học thứ gì mới?"
+      },
+      {
+        "role": "Student",
+        "text": "...Có lẽ nó cũng phải học thêm gì đó phức tạp hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'thứ phức tạp hơn' đó là gì, nếu không phải là chuẩn hóa?"
+      },
+      {
+        "role": "Student",
+        "text": "Là các đặc trưng, các biểu diễn dữ liệu ở mức độ cao hơn... để lớp output ra quyết định."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tốt. Bạn đã nhầm vai trò học đặc trưng của hidden layer với bước chuẩn hóa dữ liệu ở tiền xử lý."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q18",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng hidden layer nằm sau output. Vậy output được tính từ đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì output được tính từ input. Dữ liệu vào, mạng xử lý, rồi ra output."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu output đã có, hidden layer xử lý nó để làm gì tiếp?"
+      },
+      {
+        "role": "Student",
+        "text": "Để tinh chỉnh, hoặc kiểm tra lại kết quả. Giống như một bước xác nhận cuối."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy kết quả cuối cùng là output của hidden layer đúng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng. Nó là kết quả sau khi đã được xác nhận lại."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy cái 'output' ban đầu có phải là kết quả cuối cùng không?"
+      },
+      {
+        "role": "Student",
+        "text": "…Nó là kết quả thô. Còn cái sau mới là kết quả tinh. Nhưng cả hai đều là output."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một mạng nơ-ron có thể có hai lớp output nối tiếp nhau sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Em không chắc... Nghe hơi lạ. Vậy lớp tính toán nằm giữa input và kết quả cuối cùng là gì?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Giờ bạn hãy áp dụng quy tắc đó và trả lời lại câu hỏi ban đầu."
+      },
+      {
+        "role": "Student",
+        "text": "Nó nằm giữa input và output. Vì nó phải tính toán từ input để tạo ra output."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Bạn đã nhầm lẫn vì cho rằng có một bước xử lý sau output, nhưng thực chất hidden layer chính là phần tính toán cốt lõi nằm giữa."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q19",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng cây quyết định chỉ dùng cho dữ liệu số. Vì sao lại vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó phải so sánh lớn hơn, nhỏ hơn để chia nhánh. Chỉ có số mới so sánh được như vậy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy dữ liệu như 'Màu sắc' hay 'Giới tính' thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải chuyển thành số. Ví dụ, 'Nam' là 0, 'Nữ' là 1. Không thì máy tính không hiểu được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu có 100 màu sắc khác nhau, bạn gán số thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì gán từ 0 đến 99. Vẫn là số thôi. Cây sẽ tìm ngưỡng cắt, ví dụ < 50."
+      },
+      {
+        "role": "Tutor",
+        "text": "Ngưỡng cắt < 50 có ý nghĩa gì với các màu sắc đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó có nghĩa là các màu được gán số từ 0 đến 49 sẽ đi một nhánh. Đây vẫn là một cách chia hợp lệ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu gán 'Đỏ'=1, 'Xanh'=50, 'Vàng'=99. Cây có thể tách riêng nhóm 'Xanh' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Nếu dùng so sánh lớn/nhỏ thì... không. Nó chỉ chia được thành hai khoảng. À..."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy ngoài so sánh `>` hay `<`, cây có thể chia theo cách nào khác không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có lẽ là... nó có thể hỏi 'Màu sắc có bằng Xanh không?'. Như vậy thì được. Vậy nó xử lý được cả dữ liệu phân loại."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Cây quyết định chia nhánh bằng cách đặt câu hỏi. Với số là `> <`, với phân loại là `==`."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q20",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn nói mỗi nút là một nhãn đầu ra. Vì sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì mục đích của cây là để phân loại, nên mỗi bước phải đi đến một nhãn nào đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, nút lá và nút trong (internal node) là một?"
+      },
+      {
+        "role": "Student",
+        "text": "Về cơ bản là vậy. Cả hai đều là một phần của việc quyết định nhãn cuối cùng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét một cây dự đoán thời tiết. Nút gốc là 'Độ ẩm > 70%'. Đây là nhãn gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó không phải là nhãn trực tiếp, nhưng nó là điều kiện để ra nhãn. Nó vẫn liên quan đến nhãn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nó LÀ nhãn, hay nó ĐƯA RA quyết định để tới nhãn?"
+      },
+      {
+        "role": "Student",
+        "text": "… Nó đưa ra quyết định. Nhưng nó vẫn là một phần của quy trình ra nhãn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nút nào mới thực sự chứa nhãn cuối cùng, như 'Chơi' hoặc 'Không chơi'?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là nút ở cuối cùng, nút lá."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy vai trò của nút trong và nút lá có giống nhau không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không. Nút trong để hỏi, nút lá để kết luận. Vậy nút trong là thuộc tính."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm lẫn vai trò của nút trong (đặt câu hỏi về thuộc tính) với nút lá (đưa ra nhãn/kết quả)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q21",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng mỗi nhánh chứa toàn bộ tập huấn luyện. Vì sao lại vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì cây cần xem xét tất cả dữ liệu ở mỗi bước để đưa ra quyết định chính xác nhất. Nếu loại bỏ dữ liệu, nó sẽ mất thông tin."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mục đích của việc chia nhánh là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để áp dụng các điều kiện khác nhau lên cùng một bộ dữ liệu. Mỗi nhánh là một con đường suy luận khác nhau thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu nhánh nào cũng chứa toàn bộ dữ liệu, làm sao cây đi đến quyết định cuối cùng?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ tiếp tục chia cho đến khi không thể chia được nữa. Nhưng dữ liệu gốc vẫn ở đó để tham khảo."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu dữ liệu ở hai nhánh lá khác nhau đều giống hệt, làm sao một nhánh dự đoán 'Có', nhánh kia dự đoán 'Không'?"
+      },
+      {
+        "role": "Student",
+        "text": "Hmm... Chắc là do... các điều kiện dẫn đến nhánh đó khác nhau? Logic đó quyết định kết quả."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một điểm dữ liệu có thể đi theo cả hai nhánh 'Có' và 'Không' cùng lúc không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nó chỉ đi theo một nhánh thỏa mãn điều kiện. À... vậy là dữ liệu ở các nhánh phải khác nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, khi đi từ nút cha xuống một nhánh con, tập dữ liệu thay đổi thế nào? Bạn thử trả lời lại câu hỏi ban đầu."
+      },
+      {
+        "role": "Student",
+        "text": "Mỗi nhánh sẽ tương ứng với một trong số các khả năng của thuộc tính đó. Dữ liệu được chia nhỏ ra."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Sai lầm của bạn là nghĩ dữ liệu được giữ nguyên. Thực tế, mỗi nhánh chỉ chứa một phần dữ liệu thỏa mãn điều kiện của nó."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q22",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ nút lá cần chứa tất cả các đặc trưng. Vì sao lại cần tất cả?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì phải có đủ thông tin mới quyết định được chứ? Thiếu một đặc trưng là quyết định sai ngay."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy vai trò của các nút trong (internal nodes) là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để rẽ nhánh. Nhưng cuối cùng vẫn phải tổng hợp hết thông tin ở lá. Đó là nơi chốt hạ mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét cây quyết định \"Có đi bơi không?\". Nhánh \"Trời không mưa\" dẫn thẳng đến lá \"Đi bơi\"."
+      },
+      {
+        "role": "Student",
+        "text": "Đúng, thì đó là một quy tắc."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nút lá \"Đi bơi\" đó có chứa đặc trưng \"nhiệt độ\" không?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải chứa chứ. Chỉ là điều kiện \"Trời không mưa\" đủ mạnh nên không cần xét tới nó thôi. Nhưng nó phải có ở đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu nó \"chứa\" nhưng \"không dùng\", vậy vai trò của việc chứa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để... để đảm bảo tính toàn vẹn của dữ liệu. Logic của mình là nó phải có mặt ở đó. Mình vẫn thấy vậy hợp lý hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một con đường từ gốc đến lá đã lọc các mẫu. Đến lá, cần thêm đặc trưng hay chỉ cần kết luận?"
+      },
+      {
+        "role": "Student",
+        "text": "...Chắc là chỉ cần kết luận. Vì các điều kiện đã được kiểm tra hết trên đường đi rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy quay lại câu hỏi. Mỗi nút lá trong Decision Tree làm gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó... đưa ra quyết định phân loại cuối cùng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm vì cho rằng nút lá cần chứa mọi thông tin, trong khi nó chỉ là điểm kết luận cho một nhánh điều kiện cụ thể. Các nút trong mới dùng đặc trưng để chia dữ liệu."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q23",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng Weather = Cloudy thì quyết định là 'No'. Vì sao lại vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì trong cây quyết định, còn phải xét thêm các yếu tố khác như Wind hoặc Humidity nữa."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một nhánh không thể dẫn thẳng đến kết quả cuối cùng sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Không thể. Nếu chỉ xét Weather thì quá sơ sài. Quyết định phải dựa trên nhiều thông tin."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử mọi mẫu dữ liệu có 'Weather=Cloudy' đều cho kết quả 'Yes' thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Đó là giả sử thôi. Trong thực tế phải phức tạp hơn. Em nghĩ cây quyết định phải xét hết."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục tiêu của cây là gì? Dùng hết thuộc tính hay phân loại chính xác nhất?"
+      },
+      {
+        "role": "Student",
+        "text": "Là phân loại chính xác... À, nếu một thuộc tính đã đủ để phân loại chính xác thì nó sẽ dừng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy bạn hãy nhìn lại cây quyết định. Nhánh 'Cloudy' dẫn tới đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó dẫn thẳng đến 'Yes'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bạn đã nhầm khi cho rằng cây phải đi hết các nhánh. Thực tế, cây dừng lại ngay khi có quyết định chắc chắn."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q24",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn nói quyết định là 'Yes'. Bạn đã đi theo nhánh nào trong cây vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Em đi từ Weather = Sunny, rồi đến Humidity = High thì ra Yes thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trong cây quyết định đó, nút sau 'Weather = Sunny' là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là nút 'Humidity'. Đúng rồi mà, em đi đúng hướng rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Ok. Từ nút 'Humidity', có những nhánh nào đi ra?"
+      },
+      {
+        "role": "Student",
+        "text": "Có nhánh 'High' và 'Normal'. Em đi theo nhánh 'High' và kết quả là 'Yes'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hãy nhìn lại cây. Nhánh 'Humidity = High' có thực sự dẫn đến lá 'Yes' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Em chắc chắn mà. Sunny, High Humidity... chơi được chứ. Phải là Yes."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nhánh 'Humidity = Normal' dẫn đến đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "...Để em xem... Nhánh 'Normal' dẫn đến 'Yes'. Khoan đã... vậy nhánh 'High' dẫn đến 'No'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy quy tắc là phải đi theo đúng nhánh mà cây chỉ định, đúng không? Bây giờ bạn thử lại xem."
+      },
+      {
+        "role": "Student",
+        "text": "Weather = Sunny, tới Humidity. Humidity = High, đi theo nhánh 'High', kết quả là 'No'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng rồi. Lỗi sai của bạn là đã nhớ nhầm kết quả ở lá, thay vì đọc chính xác đường đi trên cây."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q25",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ rằng cần dùng tất cả thuộc tính, đúng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Dữ liệu gốc có các cột đó, nên phải xét hết mới chính xác được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy quy tắc của cây quyết định là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là một luồng các câu hỏi để phân loại. Nhưng nó được xây từ tất cả dữ liệu, nên bỏ qua thuộc tính là sai."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hãy đi theo cây. Nút đầu tiên là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là 'Weather'. Và chúng ta đi theo nhánh 'Sunny'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Sau 'Sunny', cây hỏi về thuộc tính gì tiếp theo?"
+      },
+      {
+        "role": "Student",
+        "text": "Hỏi về 'Humidity'. Nhưng nếu ngày hôm đó nhiệt độ rất cao thì sao? Cây phải xét chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trên nhánh bạn vừa đi, có nút 'Temperature' nào không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không có. Nhưng điều đó không có nghĩa là nó không quan trọng. Em nghĩ cây này bị thiếu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, để ra quyết định, ta đi theo các nhánh không có thật à?"
+      },
+      {
+        "role": "Student",
+        "text": "...Không. Ta phải đi theo nhánh có trên cây. Với Humidity = Normal, kết quả là 'Yes'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy giờ hãy trả lời lại câu hỏi ban đầu."
+      },
+      {
+        "role": "Student",
+        "text": "Với Weather = Sunny và Humidity = Normal, quyết định là 'Yes'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Lỗi sai của bạn là giả định phải dùng mọi thuộc tính, thay vì chỉ đi theo con đường mà các điều kiện cho phép."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q26",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn nói 'Yes'. Bạn dựa vào đâu để kết luận khi Weather=Rainy thì quyết định là 'Yes'?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nhánh Rainy thường là 'Yes'. Em nhớ là trong ví dụ, cứ trời mưa là vẫn chơi được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Theo cây quyết định, sau nút 'Weather=Rainy', ta xét tiếp yếu tố nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Ta xét đến 'Wind'. Nhưng nó chỉ là trường hợp phụ thôi, thường thì Rainy đã đủ để quyết định."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu 'Wind' là yếu tố phụ, vậy tại sao người ta lại đặt nó vào cây?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc để cho đầy đủ các trường hợp. Nhưng em nghĩ logic chính là Weather=Rainy thì Yes, trừ khi có gì đó rất đặc biệt."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bài toán cho 'Wind = Strong'. Hãy đi theo đúng đường đó trên cây. Kết quả là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nếu đi đúng đường: Weather=Rainy, rồi Wind=Strong... thì kết quả là 'No'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, để có câu trả lời, ta chỉ nhìn nút đầu tiên hay phải đi hết nhánh?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải đi hết một nhánh hoàn chỉnh từ gốc đến lá."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Lỗi của bạn là ghi nhớ một phần của quy tắc ('Rainy') mà bỏ qua điều kiện tiếp theo ('Wind'), dẫn đến kết luận sai."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q27",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng quyết định là 'No'. Vì sao trời mưa lại chắc chắn dẫn đến 'No'?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì trời mưa ai lại đi chơi cầu lông? Em nhớ là nhánh 'Rainy' sẽ đi đến 'No'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trong cây quyết định, ta đi theo từng nhánh đúng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Và em chắc chắn nhánh 'Rainy' sẽ cho kết quả là không chơi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nhánh 'Rainy' dẫn thẳng đến kết quả 'No', hay đến một node kiểm tra khác?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là đến một node khác, nhưng cuối cùng cũng phải là 'No' thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Node khác đó là node nào trong ví dụ?"
+      },
+      {
+        "role": "Student",
+        "text": "Là node 'Wind'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Với 'Wind = Weak', ta đi nhánh nào từ node 'Wind'?"
+      },
+      {
+        "role": "Student",
+        "text": "... nhánh 'Weak'. Nhánh đó dẫn đến 'Yes'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy quy tắc cho trường hợp này là gì? Trả lời lại câu hỏi ban đầu xem."
+      },
+      {
+        "role": "Student",
+        "text": "Quyết định là 'Yes'. Em đã bỏ qua node 'Wind' và đoán kết quả."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Lỗi của bạn là giả định 'Rainy' luôn dẫn đến 'No' mà không đi hết đường đi trên cây."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q28",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Mình thấy bạn chọn RMSE. Vì sao bạn nghĩ nó là tiêu chí để xây dựng cây?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì RMSE đo lường lỗi. Cây quyết định tốt nhất phải là cây có lỗi thấp nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "RMSE đo lỗi giữa giá trị nào và giá trị nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Giữa giá trị dự đoán và giá trị thực tế. Cái này là cơ bản mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trong bài toán phân loại, giá trị thực tế là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là các nhãn, ví dụ 'Chó' hoặc 'Mèo'. Nhưng mình có thể mã hóa chúng thành số."
+      },
+      {
+        "role": "Tutor",
+        "text": "Ok, 'Chó' = 0, 'Mèo' = 1. Nếu có thêm 'Lợn' thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì 'Lợn' = 2. Sau đó mình có thể dùng RMSE trên các số 0, 1, 2."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy lỗi giữa dự đoán 'Chó'(0) và thực tế 'Lợn'(2) gấp đôi lỗi với 'Mèo'(1)?"
+      },
+      {
+        "role": "Student",
+        "text": "Ừm... theo tính toán thì là vậy, nhưng nghe không đúng lắm. Chúng chỉ là các loài vật khác nhau thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu khoảng cách số học không có ý nghĩa, ta cần đo lường điều gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Đo độ 'thuần' của một nút. Ví dụ một nút toàn 'Chó'. Vậy phải là Information Gain. Giờ thì mình hiểu rồi, đáp án là Information Gain."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã sai khi áp dụng RMSE, vốn đo khoảng cách số học, vào bài toán phân loại nhãn, nơi khoảng cách đó không có ý nghĩa."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q29",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng entropy đo số lượng đặc trưng. Tại sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì càng nhiều đặc trưng thì dữ liệu càng phức tạp, nên entropy phải cao hơn. Nó là một thước đo độ phức tạp mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy công thức entropy có sử dụng số lượng đặc trưng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không trực tiếp, nhưng rõ ràng nhiều đặc trưng làm dữ liệu rối hơn, nên phải ảnh hưởng chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét hai tập dữ liệu. Tập A: 10 đặc trưng, 50 'Có', 50 'Không'. Tập B: 1 đặc trưng, 50 'Có', 50 'Không'. Entropy tập nào cao hơn?"
+      },
+      {
+        "role": "Student",
+        "text": "Tập A phải cao hơn. Nó có 10 đặc trưng, phức tạp hơn nhiều. Tập B quá đơn giản."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tính toán entropy của một tập hợp chỉ phụ thuộc vào tỷ lệ các nhãn. Tỷ lệ nhãn ở hai tập A và B có khác nhau không?"
+      },
+      {
+        "role": "Student",
+        "text": "… Tỷ lệ thì không khác nhau. Nhưng thực tế tập A nhiều thông tin hơn mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bây giờ xét tập C: 10 đặc trưng, 100 điểm đều là 'Có'. Entropy của tập C là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Nếu tất cả đều là 'Có' thì nó hoàn toàn 'tinh khiết'. Entropy sẽ bằng 0… dù nó có 10 đặc trưng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy entropy phụ thuộc vào số đặc trưng hay sự phân bố của các nhãn?"
+      },
+      {
+        "role": "Student",
+        "text": "Hóa ra nó phụ thuộc vào sự phân bố nhãn. Càng đa dạng, khó đoán thì entropy càng cao, bất kể có bao nhiêu đặc trưng. Vậy đáp án đúng là mức độ đa dạng của các loại đối tượng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm độ phức tạp do số chiều với độ 'hỗn loạn' của các nhãn. Entropy chỉ đo lường sự đa dạng của nhãn trong một tập hợp."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q30",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn viết Gain = Entropy(con) - Entropy(cha). Vì sao bạn nghĩ đây là công thức đúng?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì 'gain' nghĩa là phần tăng thêm. Mình lấy trạng thái sau (con) trừ đi trạng thái trước (cha) để ra phần chênh lệch."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục tiêu của việc phân chia node là tăng hay giảm entropy?"
+      },
+      {
+        "role": "Student",
+        "text": "Là giảm entropy, để các node con 'sạch' hơn node cha."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử có một split hoàn hảo. Entropy của node con sẽ là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Là 0. Vì nó hoàn toàn 'sạch', không còn hỗn loạn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Với công thức của bạn, Information Gain lúc đó là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Sẽ là 0 - Entropy(cha). Nó sẽ là một số âm. Nhưng giá trị âm đó vẫn cho thấy sự thay đổi lớn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'gain' (lợi ích) lại là một số âm sao?"
+      },
+      {
+        "role": "Student",
+        "text": "...Cũng lạ. Một cách chia tốt lại cho ra 'lợi ích' âm. Vậy nếu một cách chia khác cho ra gain -0.1 và một cách cho -0.5, thì cách nào tốt hơn?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy để số gain lớn ứng với split tốt, ta nên tính thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải lấy cái lớn trừ cái nhỏ. Lấy Entropy(cha) trừ đi Entropy(con). Khi đó split tốt sẽ cho gain dương."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Lỗi sai của bạn là áp dụng phép trừ ngược, dẫn đến 'gain' bị âm cho trường hợp tốt nhất. Công thức đúng phải là Entropy(Parent) - E[Entropy(children)]."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q31",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Chào bạn. Bạn cho rằng giảm entropy nhiều hơn sẽ làm giảm Information Gain. Vì sao 'giảm' lại phải tương ứng với giá trị 'thấp hơn'?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì về mặt ngôn ngữ nó là vậy mà. Giảm nhiều thì kết quả phải thấp chứ. Không thể nào 'giảm' mà lại cho ra một thứ 'cao hơn' được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Information Gain được tính toán dựa trên những đại lượng nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó được tính từ entropy. Cụ thể là entropy của tập cha và các tập con sau khi chia."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử entropy của tập cha là 1.0. Phép chia A làm entropy các con còn 0.2. Lượng entropy đã giảm là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Là 1.0 trừ 0.2, bằng 0.8."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một phép chia B khác làm entropy các con là 0.7. Lượng giảm là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Là 0.3. Rõ ràng phép chia A làm giảm entropy nhiều hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Vậy 'lượng entropy giảm được' đó có tên gọi là gì trong thuật toán?"
+      },
+      {
+        "role": "Student",
+        "text": "Chờ đã... Lấy entropy cha trừ entropy con... đó là công thức của Information Gain. Vậy lượng giảm đó chính là IG."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy khi một phép chia làm 'giảm entropy nhiều hơn', thì giá trị Information Gain sẽ thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ cao hơn. Vậy câu hỏi ban đầu, đáp án phải là Information Gain cao hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Lỗi sai của bạn là diễn giải máy móc từ 'giảm'. Information Gain chính là thước đo cho 'lượng entropy giảm được'."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q32",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn cho rằng một nút có thể chia dựa trên tất cả các đặc trưng cùng lúc. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nếu chỉ dùng một đặc trưng thì quá đơn giản, không thể nắm bắt được các mối quan hệ phức tạp. Mô hình sẽ không chính xác."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục đích của việc chia một nút là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là để làm cho các nhóm con trở nên 'thuần khiết' hơn. Phân loại cho đúng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử có 2 đặc trưng: 'thu nhập' và 'tuổi'. Phép chia 'dùng cả hai' sẽ trông thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ tìm ra một quy tắc, ví dụ như 'thu nhập > 50 triệu VÀ tuổi < 30'. Nó phải kết hợp chúng chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Điều kiện bạn vừa nêu là một phép toán AND. Vậy một nút có thể thực hiện phép toán đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải vậy chứ. Nếu không thì làm sao nó mạnh được? Các ví dụ trên mạng vẽ các vùng quyết định hình chữ nhật, đó chẳng phải là sự kết hợp sao?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Một hình chữ nhật được tạo ra bởi mấy đường thẳng?"
+      },
+      {
+        "role": "Student",
+        "text": "Bốn đường. Hoặc ít nhất là hai, một ngang một dọc."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một đường thẳng đứng, ví dụ x=a, là phép chia theo đặc trưng nào?"
+      },
+      {
+        "role": "Student",
+        "text": "...Theo đặc trưng trên trục x. Vậy là một đặc trưng. Nhưng vẫn không hợp lý."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một nút có thể tạo ra cả đường ngang và dọc cùng lúc không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không... có lẽ mỗi nút chỉ tạo ra một đường thôi. Tức là nó chỉ chia theo một đặc trưng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, một nút phân chia trong Decision Tree thực hiện điều gì? Áp dụng lại vào câu hỏi ban đầu."
+      },
+      {
+        "role": "Student",
+        "text": "Nó phân làm hai nhánh dựa trên một đặc trưng duy nhất tại một thời điểm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn khả năng của toàn bộ cái cây (tạo ra các vùng phức tạp bằng nhiều lần chia) với khả năng của một nút đơn lẻ (chỉ thực hiện một lần chia đơn giản)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q33",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng cây quyết định luôn ổn định. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó hoạt động dựa trên các quy tắc nếu-thì rõ ràng. Một khi quy tắc đã được đặt, thay đổi nhỏ khó mà ảnh hưởng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy những quy tắc đó được tạo ra từ đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Từ dữ liệu. Thuật toán tìm cách chia dữ liệu tốt nhất để ra quyết định."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử ta thêm chỉ một điểm dữ liệu mới. Điểm này rất gần một điểm cũ."
+      },
+      {
+        "role": "Student",
+        "text": "Thì có sao đâu? Chỉ một điểm không thể làm thay đổi cả một hệ thống quy tắc được xây dựng từ hàng ngàn điểm khác."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy thuật toán sẽ bỏ qua điểm mới để giữ sự ổn định à?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nó vẫn phải tính toán lại. Nhưng kết quả cuối cùng chắc cũng không khác mấy. Cấu trúc cây chính sẽ vẫn vậy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu điểm mới đó làm cho một cách chia khác trở nên 'tốt hơn' thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "...Thì thuật toán sẽ chọn cách chia mới. Chắc là nó sẽ thay đổi một nhánh nhỏ ở dưới cùng thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu sự thay đổi đó xảy ra ngay tại gốc cây thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "À... Nếu vậy thì toàn bộ cấu trúc cây bên dưới sẽ thay đổi theo. Vậy nó không ổn định như em nghĩ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy đặc điểm đó là ưu điểm hay nhược điểm? Giờ hãy chọn lại đáp án."
+      },
+      {
+        "role": "Student",
+        "text": "Đó là nhược điểm. Ưu điểm phải là khả năng giải thích mô hình nhờ trực quan hóa."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã cho rằng cây quyết định ổn định, nhưng thực tế nó rất nhạy cảm với những thay đổi nhỏ trong dữ liệu."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q34",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn cho rằng cắt tỉa cây gây ra overfitting. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì cắt tỉa là loại bỏ đi các quy tắc, các nhánh. Mất thông tin thì cây sẽ yếu đi, dự đoán sai nhiều hơn, tức là overfitting."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, overfitting có nghĩa là 'dự đoán sai nhiều'?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Khi một mô hình không còn hoạt động tốt, nó đang bị overfitting."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét một cây học thuộc lòng mọi điểm trong tập huấn luyện. Độ chính xác trên tập này là 100%. Cây này có tốt không?"
+      },
+      {
+        "role": "Student",
+        "text": "Tốt chứ, 100% là hoàn hảo rồi. Cắt tỉa sẽ làm giảm con số này, chứng tỏ cắt tỉa là có hại."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu dùng cây 'hoàn hảo' đó trên dữ liệu mới chưa từng thấy. Bạn đoán kết quả sẽ thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là sẽ không được 100% nữa, nhưng vẫn sẽ cao. Nó đã học rất kỹ rồi mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Việc 'học thuộc lòng' khác gì với 'học quy luật chung'?"
+      },
+      {
+        "role": "Student",
+        "text": "Học thuộc lòng là nhớ cả nhiễu, còn học quy luật chung là bỏ qua nhiễu... Khoan đã... vậy cây học thuộc lòng đang bị overfitting."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy để chống lại việc học thuộc lòng đó, chúng ta nên làm gì với cái cây?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải làm nó đơn giản hơn... bằng cách cắt tỉa bớt các nhánh học nhiễu. Vậy ra cắt tỉa là để chống overfitting."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Ban đầu bạn nhầm lẫn overfitting là 'hiệu suất thấp nói chung'. Thực tế, overfitting là khi mô hình quá phức tạp, học thuộc cả nhiễu trong dữ liệu huấn luyện, dẫn đến dự đoán kém trên dữ liệu mới. Cắt tỉa giúp giải quyết vấn đề này."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q35",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng Decision Tree không ổn định vì cần gradient descent. Tại sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì mô hình nào muốn tối ưu mà không dùng gradient descent chứ? Nó là phương pháp chuẩn rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Gradient descent giúp tối ưu hóa cái gì trong một mô hình?"
+      },
+      {
+        "role": "Student",
+        "text": "Để giảm loss function, tìm ra bộ tham số tốt nhất cho mô hình."
+      },
+      {
+        "role": "Tutor",
+        "text": "Loss function đó cần có tính chất gì để dùng được gradient descent?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải liên tục và có thể lấy đạo hàm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Việc 'chọn feature X thay vì Y' để chia cây, có thể lấy đạo hàm được không?"
+      },
+      {
+        "role": "Student",
+        "text": "Hmm... không. Nhưng chắc chắn phải có một biến thể nào đó của gradient descent cho việc này."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hay là cây chỉ đơn giản thử tất cả các cách chia rồi chọn cách tốt nhất?"
+      },
+      {
+        "role": "Student",
+        "text": "Nếu vậy thì nó không phải 'descent'. Nó chỉ là tìm kiếm thôi... Vậy sự bất ổn định không phải từ đây."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nếu nó không đến từ gradient descent, nó có thể đến từ đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Có lẽ từ chính việc 'chọn cách tốt nhất' đó. Nếu dữ liệu thay đổi một chút, 'cách tốt nhất' có thể thay đổi hoàn toàn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Lỗi sai là gán sự bất ổn định cho gradient descent, một thứ Decision Tree không dùng. Sự bất ổn định đến từ bản chất tham lam (greedy) của nó: một thay đổi nhỏ trong dữ liệu có thể dẫn đến một chuỗi lựa chọn phân chia hoàn toàn khác."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q36",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ Logistic Regression giúp ổn định cây quyết định bằng cách nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó là một mô hình khác, mình dùng nó để kiểm tra lại kết quả của cây."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, kỹ thuật 'ensemble' nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là kết hợp nhiều mô hình để cho kết quả tốt hơn. Cây quyết định và Logistic Regression là hai mô hình."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu ta có 100 cây quyết định hơi khác nhau, đó là ensemble phải không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng, đó là một trường hợp. Nhưng kết hợp hai loại khác nhau cũng là ensemble chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một cây và một Logistic Regression giải quyết 'tính không ổn định' của cây ra sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Nếu cây sai, có thể Logistic Regression sẽ đúng. Nó bù trừ cho nhau. Nhưng... không chắc nó làm cây ổn định hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy phương pháp nào tập trung vào việc tạo ra nhiều cây để giảm sự bất ổn định?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là phương pháp dùng nhiều cây... như là Random Forest?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy thử trả lời lại câu hỏi ban đầu."
+      },
+      {
+        "role": "Student",
+        "text": "Để xử lý tính không ổn định của cây quyết định, có thể dùng kỹ thuật ensemble với Random Forest."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Nhầm lẫn của bạn là cho rằng ensemble là kết hợp các mô hình bất kỳ. Thực chất, ensemble như Random Forest tạo ra nhiều biến thể của cùng một loại mô hình (cây quyết định) để giảm phương sai."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q37",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng tìm cây tối ưu là đơn giản. Vì sao thuật toán trông có vẻ trực tiếp?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì nó chỉ là một chuỗi các bước. Cứ theo thuật toán, tính information gain, chọn thuộc tính tốt nhất, rồi lặp lại. Rất rõ ràng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Ok, thuật toán chọn thuộc tính có gain cao nhất. Sau khi chọn xong, nó có bao giờ quay lại thay đổi quyết định đó không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không. Nó sẽ đi tiếp xuống các nhánh con để xử lý. Đó là cách nó hoạt động."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy làm sao bạn chắc lựa chọn 'tốt nhất' ở bước 1 sẽ dẫn đến cây 'tối ưu' chung cuộc?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì đó là bản chất của thuật toán. Nó được thiết kế để luôn chọn cái tốt nhất tại mỗi thời điểm. Nên kết quả cuối cùng phải tốt chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử có 20 thuộc tính. Có bao nhiêu cây khác nhau có thể được tạo ra?"
+      },
+      {
+        "role": "Student",
+        "text": "Em không biết chính xác, nhưng chắc chắn là một con số khổng lồ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Để chắc chắn tìm được cây 'tối ưu nhất', ta phải làm gì với 'con số khổng lồ' đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là... phải so sánh tất cả chúng? Nhưng không ai làm vậy. Thuật toán đã làm việc đó cho mình rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Thuật toán có thực sự so sánh tất cả chúng không, hay chỉ đi theo một con đường duy nhất?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó chỉ đi một đường... À. Vậy là nó không xét hết. Việc này phức tạp hơn em nghĩ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy việc tìm cây tối ưu thực sự nên được mô tả như thế nào? Quay lại câu hỏi ban đầu."
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ tốn nhiều chi phí tính toán, vì phải xét quá nhiều khả năng. Heuristic không đảm bảo tối ưu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn việc thực hiện một thuật toán tham lam (trông đơn giản) với việc giải bài toán tìm cây tối ưu thực sự (rất phức tạp)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q38",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Chào bạn, mình thấy bạn cho rằng cây quyết định ưu tiên đặc trưng có ít giá trị. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Vì nó đơn giản hơn. Một đặc trưng có quá nhiều giá trị sẽ làm cây phức tạp và khó tổng quát hoá."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục tiêu của thuật toán khi chọn một đặc trưng để chia nhánh là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là để làm cho các nhóm con sau khi chia trở nên 'thuần khiết' nhất có thể về nhãn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét 2 đặc trưng: 'Giới tính' (2 giá trị) và 'ID giao dịch' (mỗi giao dịch 1 ID). Đặc trưng nào tạo ra các nhóm con thuần khiết hơn?"
+      },
+      {
+        "role": "Student",
+        "text": "Tất nhiên là 'ID giao dịch'. Mỗi ID là một nhóm, thuần khiết 100%. Nhưng đó là một ví dụ cực đoan và vô nghĩa."
+      },
+      {
+        "role": "Tutor",
+        "text": "Thuật toán có 'biết' nó vô nghĩa không, hay chỉ tính toán dựa trên độ thuần khiết?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó chỉ tính toán thôi... Nhưng rõ ràng là ưu tiên một đặc trưng như 'ID' là sai. Logic của em vẫn hợp lý hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy dựa trên cách tính của thuật toán, nó sẽ ưu tiên đặc trưng nào trong hai cái đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ ưu tiên 'ID giao dịch'... vì nó cho độ thuần khiết tuyệt đối. Em thấy vấn đề rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy quy luật chung là gì? Cây quyết định có xu hướng bias về đặc trưng nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó bias về các đặc trưng có nhiều giá trị, vì chúng dễ dàng chia dữ liệu thành các tập con thuần khiết, dù có thể không mang ý nghĩa."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Lỗi sai của bạn là nghĩ thuật toán ưu tiên sự 'đơn giản', nhưng thực tế nó chỉ tối ưu một cách tham lam chỉ số toán học (như Information Gain)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q39",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn viết nút gốc có thể là 'Age'. Vì sao bạn lại nghĩ 'Age' là một lựa chọn tốt?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì tuổi tác ảnh hưởng rất lớn đến khả năng sống sót. Nó rõ ràng là một yếu tố quan trọng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục tiêu của một phép chia trong cây quyết định là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là để phân tách dữ liệu dựa trên đặc trưng quan trọng nhất, để dự đoán kết quả."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử có một phép chia tạo ra hai nhóm: nhóm A (100% sống) và nhóm B (100% chết). Phép chia đó có tốt không?"
+      },
+      {
+        "role": "Student",
+        "text": "Rất tốt. Đó là phép chia hoàn hảo."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bây giờ, so sánh hai phép chia: 1. Theo 'Sex'. 2. Theo 'Age < 18'. Phép nào tạo ra nhóm con 'thuần' hơn?"
+      },
+      {
+        "role": "Student",
+        "text": "Chia theo 'Sex' sẽ tạo ra nhóm nữ có tỉ lệ sống cao, nhóm nam có tỉ lệ sống thấp. Nhưng 'Age' vẫn quan trọng hơn, trẻ em được ưu tiên mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy giữa nhóm 'nữ' và nhóm 'trẻ em', nhóm nào có tỷ lệ sống đồng nhất hơn?"
+      },
+      {
+        "role": "Student",
+        "text": "Nhóm 'nữ' có vẻ đồng nhất hơn... Vì có cả bé trai và bé gái. Nhưng 'Age' là một khoảng, nó linh hoạt hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy tiêu chí của cây là 'linh hoạt' hay là 'tạo ra nhóm thuần nhất' ở mỗi bước?"
+      },
+      {
+        "role": "Student",
+        "text": "Là tạo ra nhóm thuần nhất... Vậy nó sẽ chọn 'Sex' vì phép chia đó hiệu quả hơn ngay từ đầu. Đáp án là Sex ≤ 0.5."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Nút gốc được chọn dựa trên đặc trưng giúp giảm sự không chắc chắn (impurity) nhiều nhất, chứ không phải đặc trưng 'quan trọng' theo cảm tính."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q40",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng cây bên phải đơn giản hơn. Căn cứ vào đâu bạn nói vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Nhìn vào là thấy mà. Nó ít nhánh rườm rà hơn, đường đi tới kết quả có vẻ thẳng hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Thế nào là một cây 'đơn giản' trong mô hình học máy?"
+      },
+      {
+        "role": "Student",
+        "text": "Là cây có ít quy tắc, ít phép so sánh hơn. Cây bên phải nhìn thoáng hơn hẳn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy bạn thử đếm tổng số phép chia (nút quyết định) ở mỗi cây xem."
+      },
+      {
+        "role": "Student",
+        "text": "Cây trái có 3 phép chia. Cây phải... cũng có nhiều nút mà, nhưng em thấy nó vẫn gọn hơn. Chắc do cách sắp xếp."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hãy đếm cụ thể số phép chia ở cây bên phải. Bỏ qua các nút lá."
+      },
+      {
+        "role": "Student",
+        "text": "Để em đếm lại... 1, 2, 3, 4, 5... Ồ, nó có 5 phép chia. Nhiều hơn thật. Nhưng đường đi đến 'Survived=0' ngắn hơn mà?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Đường đi dài nhất từ gốc đến lá của mỗi cây là bao nhiêu tầng?"
+      },
+      {
+        "role": "Student",
+        "text": "Cây trái dài nhất là 3 tầng. Cây phải... có đường dài tới 4 tầng. Vậy là nó sâu hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một cây sâu hơn và nhiều phép chia hơn thì phức tạp hơn hay đơn giản hơn?"
+      },
+      {
+        "role": "Student",
+        "text": "Phức tạp hơn. Vậy là cây bên phải sâu hơn và có nhiều phép chia hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Ban đầu bạn nhầm lẫn vì nhìn vào một nhánh ngắn và cảm giác trực quan, nhưng độ phức tạp của cây được đo bằng độ sâu và số phép chia."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q41",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn đã loại một số mô hình. Vì sao bạn nghĩ chúng không được liệt kê trong slide?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì đây là câu hỏi trắc nghiệm mà. Phải có phương án nhiễu chứ, không thể nào tất cả đều đúng được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bạn đang giả định rằng một câu hỏi hay thì phải có đáp án sai. Đúng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đương nhiên rồi. Mục đích của câu hỏi là kiểm tra kiến thức, xem ai biết mô hình nào là mô hình phân lớp thực sự."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy cụm từ 'Theo slide' có vai trò gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Chỉ để giới hạn phạm vi kiến thức trong bài giảng thôi. Nhưng quy tắc chung vẫn phải được áp dụng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử câu hỏi là 'Theo slide, các từ nào được viết hoa?' Bạn sẽ tìm từ được viết hoa, hay từ có ý nghĩa quan trọng?"
+      },
+      {
+        "role": "Student",
+        "text": "Tất nhiên là tìm từ được viết hoa rồi, câu này khác mà. Câu hỏi của mình là về kiến thức chuyên môn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy bạn đang trả lời câu hỏi nào: 'kể tên các mô hình có trong slide' hay 'kể tên các mô hình phân lớp bạn biết'?"
+      },
+      {
+        "role": "Student",
+        "text": "… Chắc là câu hỏi đầu tiên. Lấy thông tin từ slide."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy quy tắc để chọn đáp án đúng cho câu này là gì? Hãy thử áp dụng lại quy tắc đó."
+      },
+      {
+        "role": "Student",
+        "text": "Quy tắc là... chỉ cần mô hình đó có tên trong slide thì chọn. Vậy có thể tất cả đáp án đều đúng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Lỗi sai ban đầu của bạn là áp dụng giả định cá nhân về cách một câu hỏi nên được thiết kế, thay vì đọc và tuân thủ yêu cầu của đề bài."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q42",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng Linear Regression có thể dùng cho phân lớp. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Được chứ. Mình chỉ cần đặt một ngưỡng, ví dụ 0.5. Nếu kết quả lớn hơn 0.5 là lớp 1, nhỏ hơn là lớp 0."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mô hình phân lớp dự đoán ra kết quả gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì dự đoán ra nhãn của lớp, như 0 hoặc 1."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu Linear Regression dự đoán ra giá trị 1.7, đó là lớp nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Vẫn là lớp 1 thôi, vì nó lớn hơn ngưỡng 0.5 mà. Thậm chí còn chắc chắn hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử có 3 lớp (A, B, C). Ngưỡng 0.5 của bạn còn hoạt động không?"
+      },
+      {
+        "role": "Student",
+        "text": "Ừm... Lúc đó sẽ khó hơn... Chắc là phải dùng nhiều ngưỡng. Nhưng về bản chất vẫn là phân lớp được."
+      },
+      {
+        "role": "Tutor",
+        "text": "SVM hay Random Forest giải bài toán 3 lớp đó như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Chúng sẽ trực tiếp trả về nhãn A, B, hoặc C. Không cần ngưỡng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy đâu là khác biệt cốt lõi giữa chúng và Linear Regression?"
+      },
+      {
+        "role": "Student",
+        "text": "À... Linear Regression trả về một số liên tục, còn các mô hình kia trả về nhãn rời rạc. Vậy nó không phải mô hình phân lớp."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Lỗi sai của bạn là nghĩ có thể dùng ngưỡng cho hồi quy để phân lớp. Cách đó không tổng quát và sai bản chất. Linear Regression là mô hình hồi quy."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q43",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ rằng LinearRegression là một mô hình boosting. Tại sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó là một mô hình cơ bản. Boosting xây dựng từ các mô hình yếu, nên LinearRegression là một lựa chọn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Câu hỏi yêu cầu tìm một 'boosting classifier'. Từ 'classifier' có ý nghĩa gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là mô hình phân loại. LinearRegression vẫn phân loại được. Mình chỉ cần đặt một ngưỡng, ví dụ > 0.5 là lớp 1, còn lại là lớp 0."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu LinearRegression dự đoán kết quả là 5.0 hoặc -2.0 thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Vẫn theo ngưỡng đó. 5.0 là lớp 1, -2.0 là lớp 0. Hoàn toàn hợp lý mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mô hình boosting tiếp theo sửa lỗi của mô hình trước. Lỗi được tính thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó so sánh dự đoán sai với nhãn đúng. Ví dụ dự đoán 0 nhưng nhãn là 1."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy làm sao để tính 'lỗi' giữa dự đoán '5.0' và nhãn đúng là '0'?"
+      },
+      {
+        "role": "Student",
+        "text": "...Chà, nó không phải là một phép so sánh trực tiếp. Có lẽ cách dùng ngưỡng của mình có vấn đề."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một mô hình cơ sở cho boosting classifier cần có đặc tính gì? Hãy xem lại các lựa chọn."
+      },
+      {
+        "role": "Student",
+        "text": "Nó phải là một mô hình phân loại thực sự. Vậy thì phải là CatBoost Classifier."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Lỗi sai của bạn là cố gắng biến một mô hình hồi quy (LinearRegression) thành phân loại. Boosting classifier cần các mô hình phân loại làm nền tảng."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q44",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng Logistic Regression là phi tham số. Điều gì khiến bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó đơn giản, không có nhiều lớp và nút như mạng neural. Nó không có nhiều tham số."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một mô hình 'tham số' được định nghĩa thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Là một mô hình có rất nhiều tham số, phải phức tạp kìa. Logistic Regression rõ ràng không phức tạp."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét một bài toán có 2 đặc trưng. Mô hình LR học bao nhiêu tham số?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó học 2 trọng số cho 2 đặc trưng và 1 hệ số chặn (bias). Là 3."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu dữ liệu có 100 đặc trưng thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì 101 tham số. Nhưng nó vẫn ít. KNN phải lưu trữ toàn bộ dữ liệu, còn tốn kém hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Số 101 tham số đó có thay đổi nếu bạn tăng gấp đôi lượng dữ liệu không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nó vẫn là 101. À... Còn KNN thì phải lưu thêm dữ liệu... Tôi nghĩ mình đã hiểu sai."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, sự khác biệt cốt lõi giữa chúng là gì, liên quan đến 'tham số'?"
+      },
+      {
+        "role": "Student",
+        "text": "Mô hình tham số có một số lượng tham số cố định, không phụ thuộc vào lượng dữ liệu. Còn phi tham số thì độ phức tạp tăng theo dữ liệu. Vậy KNN mới là phi tham số."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Sai lầm của bạn là đánh đồng 'ít tham số' với 'phi tham số'. Logistic Regression là mô hình tham số vì số tham số của nó được xác định trước khi xem dữ liệu."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q45",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng Decision Tree có hidden layer. Ý tưởng của bạn về lớp ẩn đó là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Em nghĩ các node trong cây quyết định hoạt động như một lớp ẩn. Chúng chia dữ liệu và tạo ra các quy tắc phức tạp."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, một 'hidden layer' được định nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là một lớp trung gian, xử lý thông tin trước khi ra quyết định cuối cùng. Các node trong cây rõ ràng làm việc đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hãy xem xét một điểm dữ liệu. Nó đi qua cây quyết định như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó đi từ gốc, theo các nhánh dựa trên các điều kiện if-then cho đến khi đến một node lá."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trong đường đi đó, một node có tương tác với các node cùng tầng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không. Nó chỉ đi theo một con đường duy nhất thôi. Nhưng cả tập hợp các node tạo nên sự phức tạp mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Ngược lại, các nơ-ron trong một hidden layer thực sự thì sao? Chúng có tương tác không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Có lẽ là có, chúng được kết nối với nhau. Vậy cây quyết định không có hidden layer. Thế thì mô hình nào có?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, sự khác biệt cốt lõi là gì? Dựa vào đó, hãy xem lại các lựa chọn."
+      },
+      {
+        "role": "Student",
+        "text": "Sự khác biệt là các đơn vị tính toán có kết nối và hoạt động đồng thời. Vậy chỉ có MLPClassifier mới có cấu trúc đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Lầm tưởng của bạn là đánh đồng 'sự phức tạp' của mô hình với 'việc có hidden layer'. Thực tế, hidden layer là một cấu trúc cụ thể nơi các nơ-ron tính toán song song, khác với logic if-then tuần tự của cây quyết định."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q46",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ Logistic Regression tạo ra quyết định phân cấp như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó tính toán xác suất, nếu trên 0.5 thì là lớp 1, dưới thì là lớp 0. Đó chẳng phải là một dạng phân cấp quyết định sao?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Cấu trúc 'phân cấp' trong câu hỏi có 'nút' và 'nhánh'. Logistic Regression có những thứ đó không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có chứ. 'Nút' là bước so sánh với 0.5, còn 'nhánh' là kết quả 'lớp 1' hoặc 'lớp 0'. Rõ ràng là phân cấp."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, nó chỉ có một 'nút' và hai 'nhánh' duy nhất?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng. Nó đơn giản nhưng vẫn là phân cấp. Mô hình không nhất thiết phải phức tạp mới là phân cấp."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một cây quyết định có thể có bao nhiêu cấp độ 'nút' và 'nhánh'?"
+      },
+      {
+        "role": "Student",
+        "text": "Nhiều chứ, có thể rất nhiều. Nhưng điều đó không phủ nhận Logistic Regression là một dạng đơn giản."
+      },
+      {
+        "role": "Tutor",
+        "text": "Câu hỏi mô tả một cấu trúc có thể có nhiều cấp. Mô hình của bạn chỉ có một. Có mâu thuẫn không?"
+      },
+      {
+        "role": "Student",
+        "text": "… Chắc là có. Logic của em chỉ đúng với trường hợp một cấp. Vậy mô hình có nhiều cấp mới là đáp án đúng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, áp dụng quy tắc đó, mô hình nào khớp với mô tả trong câu hỏi?"
+      },
+      {
+        "role": "Student",
+        "text": "Là Decision Tree. Nó có thể có nhiều nút và nhánh."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Sai lầm của bạn là đánh đồng mọi phép rẽ nhánh là 'cấu trúc phân cấp' phức tạp được mô tả, trong khi Logistic Regression chỉ có một điểm quyết định duy nhất."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q47",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng thêm dữ liệu thì lỗi huấn luyện luôn giảm. Bạn chắc chắn về từ 'luôn' chứ?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc chắn ạ. Càng nhiều dữ liệu, mô hình càng có nhiều thông tin để học, nên nó phải càng chính xác hơn, lỗi càng giảm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'lỗi huấn luyện bằng 0' có nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nghĩa là mô hình đã học thuộc lòng, dự đoán hoàn hảo mọi điểm trong tập huấn luyện. Đó là mục tiêu cuối cùng mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Ok. Giả sử mô hình đã học thuộc 10 điểm, lỗi bằng 0. Giờ mình thêm điểm thứ 11 rất khác biệt thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì mô hình sẽ cập nhật để học cả điểm thứ 11. Nó sẽ thông minh hơn, nên lỗi chung vẫn phải giảm chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Để khớp hoàn hảo với điểm 11, mô hình có thể phải thay đổi, làm nó không còn khớp hoàn hảo với 10 điểm cũ nữa không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, một mô hình đủ phức tạp sẽ tìm ra cách khớp tất cả. Thêm dữ liệu không thể làm nó tệ đi được. Đó là logic cơ bản."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy giữa việc giữ lỗi bằng 0 trên 10 điểm và có một lỗi khác 0 trên 11 điểm, cái nào có lỗi huấn luyện tổng thể thấp hơn?"
+      },
+      {
+        "role": "Student",
+        "text": "... Chắc là cái đầu tiên. Vậy là... khi thêm điểm mới, lỗi có thể tăng lên từ 0 thành một số dương."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy bạn hãy phát biểu lại quy luật về lỗi huấn luyện khi tăng dữ liệu."
+      },
+      {
+        "role": "Student",
+        "text": "Khi tăng số lượng mẫu huấn luyện, lỗi huấn luyện có thể tăng nhẹ vì mô hình khó học thuộc lòng một tập dữ liệu lớn và đa dạng hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã sai khi tin rằng thêm dữ liệu luôn làm giảm lỗi huấn luyện. Thực tế, nó có thể làm tăng lỗi huấn luyện vì mô hình không thể 'học thuộc' một tập lớn dễ dàng như một tập nhỏ."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q48",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ vì sao lỗi huấn luyện luôn giảm khi ta tăng lượng dữ liệu?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì càng nhiều dữ liệu, mô hình học được càng nhiều, nên nó phải càng ngày càng khớp với dữ liệu huấn luyện chứ. Lỗi phải giảm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Theo logic đó, lỗi huấn luyện có thể giảm xuống bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Lý tưởng nhất là về 0. Nếu mô hình đủ tốt và dữ liệu đủ nhiều, nó sẽ học được hết."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hãy xét một mô hình đơn giản. Một đường thẳng. Với 2 điểm, nó có thể đi qua cả hai không?"
+      },
+      {
+        "role": "Student",
+        "text": "Được. Lỗi huấn luyện lúc đó bằng 0."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bây giờ thêm 1000 điểm không thẳng hàng. Đường thẳng đó còn khớp hoàn hảo được không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nhưng mô hình sẽ tự điều chỉnh để tìm đường thẳng tốt nhất cho 1000 điểm đó. Lỗi vẫn sẽ rất thấp."
+      },
+      {
+        "role": "Tutor",
+        "text": "Việc khớp hoàn hảo 1000 điểm đó có dễ bằng việc khớp 2 điểm không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Khó hơn nhiều. Mô hình phải hy sinh vài điểm để tối ưu cho toàn bộ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, khi dữ liệu tăng, việc đạt được lỗi huấn luyện bằng 0 trở nên khó hơn. Điều đó nói gì về lỗi huấn luyện?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó có thể sẽ không giảm nữa, thậm chí... tăng lên so với lúc chỉ có vài mẫu. Vậy lỗi huấn luyện không phải lúc nào cũng giảm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Ban đầu bạn tin lỗi huấn luyện luôn giảm. Giờ ta thấy khi dữ liệu tăng, mô hình khó khớp hoàn hảo hơn, nên lỗi huấn luyện có thể tăng hoặc đi ngang."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q49",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng Decision Tree cũng dựa trên 'điểm gần nhất'. Theo bạn, 'gần' trong cây quyết định nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là các điểm cùng rơi vào một nút lá. Chúng được nhóm lại với nhau, nên chúng gần nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'gần nhau' có nghĩa là cùng một nút lá?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Cây chia không gian ra, những điểm trong cùng một vùng (lá) thì gần nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét hai điểm A và B, rất sát nhau trong không gian. Nhưng một đặc trưng khiến A đi nhánh trái, B đi nhánh phải. Chúng có 'gần' theo logic của cây không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, vì chúng bị cây tách ra. Quy tắc của cây đã xác định chúng không đủ 'gần' để ở chung một lá."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy tiêu chí 'gần' của cây là khoảng cách hay bộ quy tắc if-else?"
+      },
+      {
+        "role": "Student",
+        "text": "Là quy tắc if-else... nhưng kết quả cuối cùng vẫn là nhóm các điểm 'gần' nhau lại mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một điểm mới sẽ được gán nhãn theo K điểm gần nhất về khoảng cách, hay theo các quy tắc if-else đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Theo các quy tắc if-else... Vậy có lẽ nó không phải là 'điểm gần nhất' theo kiểu khoảng cách."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mô hình nào trong các lựa chọn dùng chính xác 'nhãn của K điểm gần nhất' về khoảng cách?"
+      },
+      {
+        "role": "Student",
+        "text": "Là KNNClassifier."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Lỗi sai là nhầm lẫn 'gần' trong cấu trúc cây (cùng lá, theo quy tắc) với 'gần' về khoảng cách hình học trong không gian đặc trưng, vốn là cốt lõi của KNN."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7b_q50",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói Decision Tree cũng phù hợp. Đặc điểm nào của nó khiến bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó đơn giản, dễ cài đặt. Một cái cây quyết định thì có gì phức tạp đâu? Chắc chắn nó khớp mô tả."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mô tả còn nói “khó xử lý dữ liệu phức tạp” và “nhạy với nhiễu”."
+      },
+      {
+        "role": "Student",
+        "text": "Đúng rồi. Một cây đơn lẻ thì sao xử lý dữ liệu phức tạp được, dễ bị overfitting, nên nó nhạy với nhiễu. Hoàn toàn khớp."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử có một điểm dữ liệu nhiễu duy nhất. Decision Tree thay đổi thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó có thể tạo thêm một nhánh mới chỉ để phân loại đúng điểm nhiễu đó. Nên nó mới nhạy cảm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Còn Logistic Regression thì sao? Nó xử lý điểm nhiễu đó thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó chỉ là một đường thẳng, nó sẽ bị lệch đi một chút nhưng không thể tạo nhánh mới được. Nhưng Decision Tree vẫn nhạy hơn chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Decision Tree có thể tạo ra một đường biên giới phức tạp không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có chứ, đó là bản chất của nó. Nó có thể bẻ cong đường biên giới để bao quanh dữ liệu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nó có thực sự khớp với vế “khó xử lý dữ liệu phức tạp” không?"
+      },
+      {
+        "role": "Student",
+        "text": "…Chắc là không. Nó có thể xử lý dữ liệu phức tạp, còn Logistic Regression thì không. Vậy mô hình nào khớp với toàn bộ mô tả?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bây giờ bạn hãy thử trả lời lại câu hỏi ban đầu."
+      },
+      {
+        "role": "Student",
+        "text": "Là Logistic Regression. Vì nó vừa đơn giản, nhưng lại khó xử lý dữ liệu phức tạp (phi tuyến) và nhạy với nhiễu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm lẫn giữa khả năng xử lý dữ liệu phi tuyến của Decision Tree và mô tả “khó xử lý dữ liệu phức tạp”. Logistic Regression mới khớp với tất cả các tiêu chí."
+      }
+    ]
+  }
+]

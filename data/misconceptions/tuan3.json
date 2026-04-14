@@ -1,0 +1,653 @@
+[
+  {
+    "question_id": "p3_q1",
+    "concepts": [
+      "Vai trò của Pipeline trong Machine Learning",
+      "Kết hợp bộ biến đổi và mô hình dự đoán",
+      "Hàm make_pipeline của scikit-learn"
+    ],
+    "misconceptions": [
+      "cho rằng Pipeline được dùng để thử nghiệm nhiều mô hình khác nhau cùng một lúc, vì tên gọi 'pipeline' gợi ý một quy trình tự động phức tạp.",
+      "tin rằng Pipeline bao gồm cả các công cụ phân tích dữ liệu khám phá (EDA) như vẽ biểu đồ, vì EDA cũng là một bước trong quy trình tổng thể.",
+      "cho rằng bản thân Pipeline là một công cụ thực hiện kiểm định chéo, vì hai khái niệm này thường được sử dụng kết hợp với nhau."
+    ],
+    "reasoning": "Hàm make_pipeline và Pipeline được thiết kế để kết nối tuần tự các bộ biến đổi dữ liệu và một mô hình dự đoán thành một quy trình duy nhất. Các phương án khác mô tả các nhiệm vụ riêng biệt trong ML như so sánh mô hình, EDA, hoặc kiểm định chéo, vốn không phải là chức năng cốt lõi của Pipeline."
+  },
+  {
+    "question_id": "p3_q2",
+    "concepts": [
+      "Định nghĩa Machine Learning Pipeline",
+      "Tự động hóa quy trình học máy"
+    ],
+    "misconceptions": [
+      "cho rằng Pipeline chỉ là một kỹ thuật cụ thể như giảm chiều dữ liệu, thay vì là một quy trình tổng thể.",
+      "tin rằng Pipeline là một loại mô hình học máy, tương tự như hồi quy tuyến tính hay cây quyết định.",
+      "cho rằng Pipeline chỉ là một thuật toán, nhầm lẫn giữa quy trình và một bước trong quy trình."
+    ],
+    "reasoning": "Machine Learning Pipeline là một quy trình tổng thể, tự động hóa các bước từ xây dựng đến quản lý mô hình. Các phương án sai thu hẹp định nghĩa của Pipeline thành một kỹ thuật, một loại mô hình, hoặc một thuật toán cụ thể."
+  },
+  {
+    "question_id": "p3_q3",
+    "concepts": [
+      "Các bước trong Machine Learning Pipeline",
+      "Phân biệt giữa xây dựng và sử dụng mô hình"
+    ],
+    "misconceptions": [
+      "cho rằng việc sử dụng mô hình để dự đoán là một phần của pipeline xây dựng mô hình, thay vì là kết quả cuối cùng của pipeline đó.",
+      "tin rằng thu thập dữ liệu không thuộc pipeline, vì cho rằng pipeline chỉ bắt đầu khi đã có dữ liệu.",
+      "cho rằng tiền xử lý dữ liệu là một bước tùy chọn, không phải là một phần cốt lõi của pipeline điển hình."
+    ],
+    "reasoning": "Một pipeline ML điển hình bao gồm các bước để xây dựng và huấn luyện mô hình, như thu thập, tiền xử lý dữ liệu và chọn mô hình. Việc sử dụng mô hình để dự đoán là bước diễn ra sau khi pipeline đã được xây dựng và triển khai, không phải là một bước trong chính pipeline xây dựng đó."
+  },
+  {
+    "question_id": "p3_q4",
+    "concepts": [
+      "Lợi ích của Machine Learning Pipeline",
+      "Khả năng giải thích của mô hình"
+    ],
+    "misconceptions": [
+      "cho rằng Pipeline tự động làm cho mô hình trở nên dễ giải thích hơn, vì nó giúp tổ chức các bước xử lý một cách logic và rõ ràng.",
+      "tin rằng Pipeline không thực sự giúp tự động hóa vì người dùng vẫn phải tự viết code cho từng bước trong đó.",
+      "cho rằng khả năng tái tạo không phải là lợi ích chính của Pipeline, vì việc này phụ thuộc vào các yếu-tố nhỏ hơn như 'random_state'."
+    ],
+    "reasoning": "Pipeline giúp tự động hóa quy trình, tăng hiệu quả và đảm bảo khả năng tái tạo kết quả. Tuy nhiên, nó không trực tiếp làm tăng khả năng giải thích của bản thân mô hình; một mô hình phức tạp vẫn sẽ khó giải thích ngay cả khi được đặt trong một Pipeline."
+  },
+  {
+    "question_id": "p3_q5",
+    "concepts": [
+      "Quy trình đánh giá mô hình",
+      "Vòng lặp trong phát triển mô hình ML"
+    ],
+    "misconceptions": [
+      "cho rằng quy trình phát triển mô hình là một đường thẳng, cứ đi tiếp mà không cần quay lại các bước trước.",
+      "tin rằng nếu mô hình không tốt thì nên triển khai luôn để xem phản hồi thực tế, bỏ qua việc cải thiện.",
+      "cho rằng có thể bỏ qua bước kiểm định nếu kết quả không tốt, vì nghĩ rằng bước đó không quan trọng bằng các bước khác."
+    ],
+    "reasoning": "Khi đánh giá mô hình cho kết quả không tốt, quy trình chuẩn là phải quay lại các bước trước đó (như tiền xử lý, chọn đặc trưng, hoặc chọn mô hình khác) để cải thiện. Việc tiếp tục hoặc triển khai một mô hình yếu là phi logic và tốn kém."
+  },
+  {
+    "question_id": "p3_q6",
+    "concepts": [
+      "Định nghĩa Phân tích dữ liệu khám phá (EDA)",
+      "Mục tiêu của EDA"
+    ],
+    "misconceptions": [
+      "cho rằng EDA là một thuật toán dự đoán, nhầm lẫn giữa việc khám phá và việc xây dựng mô hình.",
+      "tin rằng EDA chỉ đơn thuần là việc làm sạch dữ liệu, bỏ qua khía cạnh 'khám phá' và 'hiểu' dữ liệu.",
+      "cho rằng EDA chỉ là việc vẽ biểu đồ, thu hẹp phạm vi của nó vào chỉ một phương pháp là trực quan hóa."
+    ],
+    "reasoning": "EDA là quá trình phân tích sơ bộ để hiểu dữ liệu một cách toàn diện, bao gồm cả đặc điểm, xu hướng và mối quan hệ. Nó không phải là một thuật toán dự đoán, cũng không chỉ giới hạn ở việc làm sạch hay trực quan hóa dữ liệu."
+  },
+  {
+    "question_id": "p3_q7",
+    "concepts": [
+      "Các bước trong Phân tích dữ liệu khám phá (EDA)",
+      "Phân biệt giữa EDA và huấn luyện mô hình"
+    ],
+    "misconceptions": [
+      "cho rằng huấn luyện mô hình là một phần của EDA, vì cả hai đều nằm trong một dự án machine learning lớn.",
+      "tin rằng thu thập dữ liệu không phải là một phần của EDA, vì nghĩ rằng EDA chỉ bắt đầu khi đã có sẵn dữ liệu.",
+      "cho rằng việc đặt câu hỏi về dữ liệu là không cần thiết, chỉ cần áp dụng các kỹ thuật có sẵn là đủ."
+    ],
+    "reasoning": "EDA là giai đoạn diễn ra TRƯỚC khi huấn luyện mô hình, nhằm mục đích hiểu và chuẩn bị dữ liệu. Huấn luyện mô hình là một bước riêng biệt, sử dụng kết quả của EDA. Các bước như thu thập, đặt câu hỏi, và mô tả dữ liệu là cốt lõi của EDA."
+  },
+  {
+    "question_id": "p3_q8",
+    "concepts": [
+      "Công cụ trực quan hóa trong EDA",
+      "Phân biệt giữa trực quan hóa và tiền xử lý"
+    ],
+    "misconceptions": [
+      "cho rằng One-hot encoding là một công cụ trực quan, vì nó là một kỹ thuật xử lý dữ liệu ở giai đoạn đầu, tương tự như các bước trong EDA.",
+      "tin rằng mọi kỹ thuật được áp dụng trong giai đoạn chuẩn bị dữ liệu đều có thể coi là công cụ 'trực quan'.",
+      "cho rằng mục đích của One-hot encoding là để 'nhìn' hoặc 'hiểu' dữ liệu phân loại, nhầm lẫn nó với các biểu đồ như biểu đồ cột."
+    ],
+    "reasoning": "Histogram, box plot, và ma trận tương quan là các công cụ đồ họa để trực quan hóa dữ liệu trong EDA. One-hot encoding là một kỹ thuật tiền xử lý để biến đổi dữ liệu, không phải là một công cụ trực quan."
+  },
+  {
+    "question_id": "p3_q9",
+    "concepts": [
+      "Tác động của EDA đến hiệu suất mô hình",
+      "Vai trò của việc hiểu dữ liệu"
+    ],
+    "misconceptions": [
+      "cho rằng chỉ cần hiểu dữ liệu là đủ, không cần các bước khác.",
+      "tin rằng chỉ cần xác định vấn đề trong dữ liệu là đủ, không cần các bước khác.",
+      "cho rằng chỉ cần chọn đúng thuật toán là đủ, không cần các bước khác."
+    ],
+    "reasoning": "EDA cải thiện hiệu suất mô hình một cách toàn diện: giúp hiểu rõ dữ liệu, từ đó xác định được các vấn đề tiềm ẩn và đưa ra lựa chọn thuật toán, kỹ thuật phù hợp. Tất cả các phương án đều là lợi ích của EDA và chúng bổ trợ lẫn nhau."
+  },
+  {
+    "question_id": "p3_q10",
+    "concepts": [
+      "Xử lý các vấn đề dữ liệu trong EDA",
+      "Các phương pháp xử lý dữ liệu lỗi"
+    ],
+    "misconceptions": [
+      "cho rằng khi phát hiện vấn đề dữ liệu thì phải triển khai mô hình ngay để xem ảnh hưởng.",
+      "tin rằng phải bỏ qua hoàn toàn dữ liệu có vấn đề, vì nghĩ rằng không có cách nào để sửa chữa hoặc sử dụng chúng.",
+      "cho rằng chỉ cần vẽ thêm biểu đồ là đủ để xử lý vấn đề, nhầm lẫn giữa việc phát hiện và việc giải quyết vấn đề."
+    ],
+    "reasoning": "Sau khi EDA phát hiện các vấn đề như dữ liệu thiếu, nhiễu, hướng xử lý phổ biến là áp dụng các kỹ thuật như xóa, điền khuyết, hoặc giữ nguyên tùy vào ngữ cảnh. Các lựa chọn khác như bỏ qua hoặc chỉ vẽ biểu đồ là không đầy đủ hoặc sai lầm."
+  },
+  {
+    "question_id": "p3_q11",
+    "concepts": [
+      "Định nghĩa Machine Learning Pipeline",
+      "Cấu trúc tuần tự của Pipeline"
+    ],
+    "misconceptions": [
+      "cho rằng Pipeline chỉ là một kỹ thuật để xử lý dữ liệu thiếu, nhầm lẫn với các phương pháp như điền khuyết.",
+      "tin rằng Pipeline là một loại biểu đồ, vì nó mô tả một 'quy trình' nên có thể bị nhầm với một sơ đồ quy trình.",
+      "cho rằng Pipeline là một độ đo đánh giá mô hình, nhầm lẫn nó với các chỉ số như accuracy hay F1-score."
+    ],
+    "reasoning": "Định nghĩa cốt lõi của ML Pipeline là một chuỗi các bước xử lý dữ liệu và xây dựng mô hình được liên kết với nhau một cách tuần tự. Các phương án còn lại mô tả các khái niệm riêng lẻ và không liên quan đến cấu trúc tổng thể của một pipeline."
+  },
+  {
+    "question_id": "p3_q12",
+    "concepts": [
+      "Lợi ích của Machine Learning Pipeline",
+      "Phân biệt giữa lợi ích và tác dụng phụ"
+    ],
+    "misconceptions": [
+      "cho rằng việc sử dụng Pipeline bắt buộc làm cho mô hình dễ giải thích hơn, vì nó làm cho quy trình rõ ràng hơn.",
+      "tin rằng Pipeline làm giảm hiệu quả vì phải định nghĩa nhiều bước phức tạp.",
+      "cho rằng Pipeline làm giảm khả năng tái lập kết quả vì có nhiều thành phần tự động."
+    ],
+    "reasoning": "Pipeline mang lại lợi ích về hiệu quả, khả năng tái lập kết quả, và dễ cộng tác. Tuy nhiên, nó không bắt buộc làm mô hình dễ giải thích hơn; một mô hình hộp đen vẫn là hộp đen dù được đặt trong pipeline."
+  },
+  {
+    "question_id": "p3_q13",
+    "concepts": [
+      "Đặc điểm của dữ liệu thô (Raw data)",
+      "Sự cần thiết của tiền xử lý"
+    ],
+    "misconceptions": [
+      "cho rằng dữ liệu thô đã luôn được kiểm tra và tiền xử lý, vì nó là đầu vào của một quy trình chuyên nghiệp.",
+      "tin rằng dữ liệu thô luôn sẵn sàng cho huấn luyện mô hình mà không cần bất kỳ sự can thiệp nào.",
+      "cho rằng dữ liệu thô chỉ đến từ một nguồn duy nhất, không phải là tổng hợp từ nhiều nơi."
+    ],
+    "reasoning": "Dữ liệu thô (raw data) đúng như tên gọi của nó, thường chưa qua xử lý, có thể đến từ nhiều nguồn và chứa các vấn đề như nhiễu, thiếu thông tin. Nó không phải là dữ liệu sạch và sẵn sàng để huấn luyện mô hình ngay lập tức."
+  },
+  {
+    "question_id": "p3_q14",
+    "concepts": [
+      "Vai trò của Data Validation",
+      "Mối quan hệ giữa Data Validation và EDA"
+    ],
+    "misconceptions": [
+      "cho rằng Data Validation có thể thay thế hoàn toàn bước đánh giá mô hình (Model Evaluation), vì cả hai đều là 'kiểm tra'.",
+      "tin rằng Data Validation chỉ là việc kiểm tra lỗi cú pháp trong file dữ liệu.",
+      "cho rằng Data Validation không liên quan đến EDA, coi chúng là hai công đoạn hoàn toàn tách biệt."
+    ],
+    "reasoning": "Data validation là bước kiểm tra chất lượng và tính phù hợp của dữ liệu đầu vào, thường được thực hiện cùng với EDA. Nó không thể thay thế việc đánh giá mô hình, vốn là bước kiểm tra hiệu suất của mô hình trên dữ liệu thử nghiệm."
+  },
+  {
+    "question_id": "p3_q15",
+    "concepts": [
+      "Các tác vụ trong tiền xử lý dữ liệu (Data Preprocessing)",
+      "Phân biệt giữa tiền xử lý và triển khai mô hình"
+    ],
+    "misconceptions": [
+      "cho rằng việc đóng gói và chuyển giao mô hình là một phần của tiền xử lý dữ liệu, nhầm lẫn giữa giai đoạn chuẩn bị và giai đoạn cuối cùng.",
+      "tin rằng tiền xử lý chỉ bao gồm làm sạch dữ liệu, bỏ qua các bước quan trọng như chuẩn hóa và tạo đặc trưng.",
+      "cho rằng việc chọn lựa đặc trưng không thuộc về tiền xử lý, mà là một phần của việc huấn luyện mô hình."
+    ],
+    "reasoning": "Tiền xử lý dữ liệu bao gồm một loạt các tác vụ nhằm chuẩn bị dữ liệu cho mô hình, như làm sạch, chuẩn hóa, xử lý giá trị thiếu, và kỹ thuật đặc trưng. Việc đóng gói và chuyển giao mô hình thuộc về giai đoạn triển khai (deployment), không phải tiền xử lý."
+  },
+  {
+    "question_id": "p3_q16",
+    "concepts": [
+      "Bản chất của huấn luyện mô hình (Model Training)",
+      "Đầu vào của quá trình huấn luyện"
+    ],
+    "misconceptions": [
+      "cho rằng huấn luyện mô hình chỉ là việc đo độ chính xác, nhầm lẫn giữa quá trình huấn luyện và quá trình đánh giá.",
+      "tin rằng huấn luyện mô hình chỉ là việc kiểm tra rò rỉ dữ liệu, coi đó là mục tiêu chính thay vì một vấn đề cần tránh.",
+      "cho rằng bước huấn luyện mô hình bao gồm cả việc chuyển giao mô hình cho môi trường thực tế, gộp chung hai bước training và deployment."
+    ],
+    "reasoning": "Huấn luyện mô hình là quá trình cốt lõi của việc cho mô hình học từ dữ liệu đã được chuẩn bị, bao gồm việc khởi tạo và điều chỉnh các tham số. Các phương án khác mô tả các bước đánh giá, kiểm tra hoặc triển khai, là các giai đoạn khác trong pipeline."
+  },
+  {
+    "question_id": "p3_q17",
+    "concepts": [
+      "Quy trình đánh giá mô hình (Model Evaluation)",
+      "Tầm quan trọng của dữ liệu thử nghiệm khách quan"
+    ],
+    "misconceptions": [
+      "cho rằng việc đánh giá mô hình chỉ là quan sát đồ thị loss trên tập huấn luyện, bỏ qua nguy cơ overfitting.",
+      "tin rằng việc đánh giá mô hình được thực hiện sau khi đã triển khai, thay vì là một bước kiểm tra trước khi triển khai.",
+      "cho rằng kể cả khi kết quả đánh giá không tốt, vẫn nên tiếp tục các bước tiếp theo trong quy trình."
+    ],
+    "reasoning": "Đánh giá mô hình là việc đo lường hiệu suất của mô hình một cách định lượng trên một bộ dữ liệu thử nghiệm khách quan (chưa từng thấy). Việc này phải được thực hiện trước khi triển khai để đảm bảo chất lượng, và kết quả xấu đòi hỏi phải quay lại các bước trước để cải thiện."
+  },
+  {
+    "question_id": "p3_q18",
+    "concepts": [
+      "Các khía cạnh của Model Validation",
+      "Mục tiêu của việc kiểm định mô hình"
+    ],
+    "misconceptions": [
+      "cho rằng việc kiểm định mô hình phải luôn do chính đội huấn luyện thực hiện, không nhận ra tầm quan trọng của việc kiểm tra độc lập.",
+      "tin rằng Model Validation chỉ quan tâm đến độ chính xác, bỏ qua các yếu tố vận hành như tốc độ thực thi.",
+      "cho rằng Model Validation không cần quan tâm đến rò rỉ dữ liệu, vì nghĩ rằng đó là vấn đề của bước training."
+    ],
+    "reasoning": "Model validation kiểm tra xem mô hình có hoạt động tốt trong thực tế không, bao gồm độ chính xác trên dữ liệu mới, tốc độ thực thi và các vấn đề tiềm ẩn như rò rỉ dữ liệu. Việc kiểm định bởi một đội độc lập thường mang lại kết quả khách quan hơn."
+  },
+  {
+    "question_id": "p3_q19",
+    "concepts": [
+      "Định nghĩa Model Deployment",
+      "Vị trí của Model Deployment trong pipeline"
+    ],
+    "misconceptions": [
+      "cho rằng Model Deployment là một bước trong tiền xử lý dữ liệu như làm sạch hay tạo đặc trưng mới.",
+      "tin rằng Model Deployment là một kỹ thuật EDA để kiểm tra outlier.",
+      "cho rằng Model Deployment là một phần của việc huấn luyện mô hình."
+    ],
+    "reasoning": "Model deployment là bước cuối cùng trong chu trình phát triển mô hình, có nghĩa là đưa mô hình đã được huấn luyện và kiểm định vào hoạt động trên môi trường thực tế. Các phương án khác mô tả các bước tiền xử lý và EDA ở giai đoạn đầu."
+  },
+  {
+    "question_id": "p3_q20",
+    "concepts": [
+      "Khái niệm Model Feedback",
+      "Vòng lặp phản hồi sau triển khai"
+    ],
+    "misconceptions": [
+      "cho rằng Model Feedback chỉ là việc huấn luyện lại mô hình từ đầu, không hiểu rằng nó là một quá trình thu thập thông tin để cải tiến.",
+      "tin rằng phản hồi chỉ có thể là từ nhận xét trực tiếp của người dùng, bỏ qua các chỉ số khách quan.",
+      "cho rằng Model Feedback không phải là một phần của pipeline, mà là một hoạt động hoàn toàn tách biệt."
+    ],
+    "reasoning": "Model feedback là quá trình thu thập thông tin (cả chủ quan và khách quan) về hiệu suất của mô hình sau khi đã triển khai để cải tiến và huấn luyện lại. Nó là một phần quan trọng của vòng đời pipeline sau triển khai."
+  },
+  {
+    "question_id": "p3_q21",
+    "concepts": [
+      "Lý do cần phân tích dữ liệu (EDA)",
+      "Vai trò của EDA trong việc ra quyết định"
+    ],
+    "misconceptions": [
+      "cho rằng phân tích dữ liệu có thể thay thế hoàn toàn bước huấn luyện mô hình, vì nghĩ rằng nếu hiểu dữ liệu đủ sâu thì không cần mô hình nữa.",
+      "tin rằng phân tích dữ liệu chỉ là để xem có bao nhiêu mẫu, bao nhiêu đặc trưng, mà không cần hiểu sâu hơn về phân bố hay mối quan hệ.",
+      "cho rằng các quyết định như xóa/điền khuyết dữ liệu có thể được thực hiện một cách ngẫu nhiên mà không cần dựa trên kết quả phân tích."
+    ],
+    "reasoning": "Phân tích dữ liệu là bước nền tảng để hiểu rõ các khía cạnh của dữ liệu từ cơ bản đến phức tạp, qua đó hỗ trợ các quyết định quan trọng trong tiền xử lý. Nó không thể thay thế bước huấn luyện mô hình mà là để hỗ trợ cho bước đó."
+  },
+  {
+    "question_id": "p3_q22",
+    "concepts": [
+      "Ứng dụng của EDA trong làm sạch dữ liệu",
+      "Giới hạn của EDA"
+    ],
+    "misconceptions": [
+      "cho rằng EDA có thể giúp chọn được mô hình tối ưu tuyệt đối, gán cho nó một khả năng siêu việt.",
+      "tin rằng dữ liệu thiếu là không thể phát hiện được bằng EDA, chỉ có thể phát hiện bằng cách chạy mô hình và gặp lỗi.",
+      "cho rằng dữ liệu trùng lặp không ảnh hưởng đến mô hình và không cần xác định trong EDA."
+    ],
+    "reasoning": "EDA là công cụ cực kỳ hiệu quả để xác định các vấn đề phổ biến trong dữ liệu như thiếu, trùng lặp, hoặc nhiễu. Tuy nhiên, nó chỉ hỗ trợ việc lựa chọn mô hình chứ không thể đảm bảo tìm ra mô hình 'tối ưu tuyệt đối'."
+  },
+  {
+    "question_id": "p3_q23",
+    "concepts": [
+      "Vai trò của EDA trong kỹ thuật đặc trưng",
+      "Mối liên hệ giữa EDA và chuẩn bị dữ liệu"
+    ],
+    "misconceptions": [
+      "cho rằng EDA có thể loại bỏ hoàn toàn nhu cầu đánh giá mô hình, vì nếu đã khám phá kỹ thì mô hình chắc chắn sẽ tốt.",
+      "tin rằng việc chọn lựa hay tạo đặc trưng mới có thể được thực hiện mà không cần đến EDA.",
+      "cho rằng việc chuẩn hóa đặc trưng không liên quan đến việc hiểu phân bố của chúng thông qua EDA."
+    ],
+    "reasoning": "EDA là tiền đề cho việc kỹ thuật đặc trưng (chọn lựa, tạo mới, chuẩn hóa) vì nó cung cấp sự hiểu biết sâu sắc về dữ liệu, giúp đưa ra các quyết định xử lý phù hợp. Tuy nhiên, nó không thể thay thế bước đánh giá mô hình, vốn dùng để xác thực các giả định và quyết định đã đưa ra."
+  },
+  {
+    "question_id": "p3_q24",
+    "concepts": [
+      "Vai trò của EDA trong việc lường trước rủi ro",
+      "EDA như một công cụ giao tiếp"
+    ],
+    "misconceptions": [
+      "cho rằng EDA luôn giúp giảm số chiều dữ liệu, nhầm lẫn giữa việc khám phá và các kỹ thuật giảm chiều như PCA.",
+      "tin rằng vấn đề mất cân bằng dữ liệu chỉ có thể được phát hiện sau khi huấn luyện mô hình và thấy kết quả kém.",
+      "cho rằng việc giải thích vấn đề với người không chuyên môn không phải là một phần công việc của khoa học dữ liệu."
+    ],
+    "reasoning": "Thông qua việc trực quan hóa và phân tích, EDA giúp phát hiện sớm các vấn đề tiềm ẩn như mất cân bằng dữ liệu, rò rỉ thông tin. Đồng thời, các biểu đồ từ EDA là công cụ hiệu quả để giải thích các phát hiện cho các bên liên quan."
+  },
+  {
+    "question_id": "p3_q25",
+    "concepts": [
+      "EDA như một công cụ giao tiếp và truyền thông",
+      "Sức mạnh của trực quan hóa dữ liệu"
+    ],
+    "misconceptions": [
+      "cho rằng EDA có thể thay thế hoàn toàn các báo cáo kỹ thuật chi tiết.",
+      "tin rằng EDA bắt buộc làm cho mô hình chính xác hơn, nhầm lẫn giữa việc hỗ trợ và việc đảm bảo kết quả.",
+      "cho rằng EDA tự động tạo ra các đặc trưng mới mà không cần sự can thiệp của con người."
+    ],
+    "reasoning": "EDA được coi là một công cụ truyền thông vì khả năng của nó trong việc sử dụng trực quan hóa để giải thích các vấn đề phức tạp trong dữ liệu một cách dễ hiểu cho cả người có và không có chuyên môn kỹ thuật."
+  },
+  {
+    "question_id": "p3_q26",
+    "concepts": [
+      "Công cụ trực quan hóa trong EDA",
+      "Phân biệt giữa công cụ trực quan và công cụ xử lý"
+    ],
+    "misconceptions": [
+      "cho rằng KNNImputer là một công cụ trực quan, vì nó được dùng để xử lý dữ liệu thiếu, một vấn đề được phát hiện trong EDA.",
+      "tin rằng mọi đối tượng trong thư viện scikit-learn đều có thể là công cụ trực quan.",
+      "cho rằng 'Ma trận tương quan' chỉ là một bảng số, không phải là một công cụ trực quan."
+    ],
+    "reasoning": "Histogram, box plot, và ma trận tương quan (thường được biểu diễn bằng heatmap) là các công cụ trực quan. KNNImputer là một thuật toán để điền dữ liệu thiếu, thuộc về bước tiền xử lý, không phải là công cụ trực quan."
+  },
+  {
+    "question_id": "p3_q27",
+    "concepts": [
+      "Các chỉ số thống kê mô tả trong EDA",
+      "Phân biệt giữa thống kê mô tả và chỉ số đánh giá mô hình"
+    ],
+    "misconceptions": [
+      "cho rằng Precision và Recall là các chỉ số thống kê dùng trong EDA, nhầm lẫn chúng với các chỉ số đánh giá mô hình phân loại.",
+      "tin rằng chỉ cần biết giá trị trung bình là đủ để hiểu một biến, bỏ qua sự phân tán và các đặc điểm khác.",
+      "cho rằng phương sai và độ lệch chuẩn không quan trọng bằng trung bình hay trung vị."
+    ],
+    "reasoning": "Trung bình, trung vị, phương sai và độ lệch chuẩn là các chỉ số thống kê mô tả cơ bản dùng để tóm tắt đặc điểm của một biến trong EDA. Precision và Recall là các chỉ số dùng để đánh giá hiệu suất của mô hình, không phải để mô tả dữ liệu."
+  },
+  {
+    "question_id": "p3_q28",
+    "concepts": [
+      "Các phương pháp phân tích trong EDA",
+      "Phân biệt giữa công cụ EDA và kỹ thuật mô hình hóa"
+    ],
+    "misconceptions": [
+      "cho rằng Dropout là một công cụ hỗ trợ EDA, nhầm lẫn một kỹ thuật điều chuẩn trong mạng nơ-ron với phân tích dữ liệu.",
+      "tin rằng hồi quy tuyến tính chỉ được dùng để xây dựng mô hình dự đoán, không nhận ra nó cũng có thể được dùng như một công cụ phân tích để hiểu mối quan hệ giữa các biến.",
+      "cho rằng hệ số tương quan Pearson chỉ là một con số, không phải là một công cụ phân tích."
+    ],
+    "reasoning": "Hồi quy tuyến tính, hệ số Pearson và phân tích tương quan đều là các công cụ và khái niệm được sử dụng trong EDA để khám phá mối quan hệ giữa các biến. Dropout là một kỹ thuật điều chuẩn (regularization) trong huấn luyện mạng nơ-ron, không liên quan đến EDA."
+  },
+  {
+    "question_id": "p3_q29",
+    "concepts": [
+      "Các loại phân tích dữ liệu trong EDA",
+      "Phân loại dựa trên số lượng biến"
+    ],
+    "misconceptions": [
+      "cho rằng có rất nhiều kiểu phân tích và không thể phân loại được.",
+      "tin rằng chỉ có hai loại là 'đơn giản' và 'phức tạp'.",
+      "cho rằng số lượng kiểu phân tích là cố định và không thay đổi theo tài liệu tham khảo."
+    ],
+    "reasoning": "Trong EDA, phân tích dữ liệu thường được phân loại thành ba kiểu chính dựa trên số lượng biến được xem xét cùng lúc: đơn biến (univariate), hai biến (bivariate), và đa biến (multivariate)."
+  },
+  {
+    "question_id": "p3_q30",
+    "concepts": [
+      "Định nghĩa phân tích đơn biến",
+      "Phạm vi của phân tích đơn biến"
+    ],
+    "misconceptions": [
+      "cho rằng phân tích đơn biến là phân tích mối quan hệ giữa nhiều biến, nhầm lẫn với phân tích hai biến hoặc đa biến.",
+      "tin rằng phân tích đơn biến chỉ áp dụng được cho một loại dữ liệu nhất định (ví dụ chỉ cho dữ liệu phân loại).",
+      "cho rằng phân tích đơn biến chỉ dùng cho dữ liệu có nhãn, nhầm lẫn với các bài toán học có giám sát."
+    ],
+    "reasoning": "Phân tích đơn biến (univariate analysis) tập trung vào việc phân tích từng đặc trưng hoặc cột dữ liệu một cách riêng lẻ để hiểu phân phối, xu hướng tập trung và sự biến thiên của nó."
+  },
+  {
+    "question_id": "p3_q31",
+    "concepts": [
+      "Đo lường xu hướng tập trung (Central Tendency)",
+      "Phân biệt giữa xu hướng tập trung và tương quan"
+    ],
+    "misconceptions": [
+      "cho rằng tương quan (Correlation) là một độ đo xu hướng tập trung, nhầm lẫn giữa việc đo lường mối quan hệ hai chiều và việc tóm tắt một biến.",
+      "tin rằng trung bình, trung vị và mode luôn cho kết quả giống nhau.",
+      "cho rằng chỉ có trung bình là độ đo xu hướng tập trung duy nhất quan trọng."
+    ],
+    "reasoning": "Các độ đo xu hướng tập trung (Central Tendency) như trung bình, trung vị, và mode được dùng để tìm giá trị 'trung tâm' hoặc 'điển hình' của một biến. Tương quan (Correlation) là một độ đo mối quan hệ giữa hai biến, không phải là một độ đo xu hướng tập trung."
+  },
+  {
+    "question_id": "p3_q32",
+    "concepts": [
+      "Đo lường độ phân tán (Dispersion)",
+      "Định nghĩa khoảng giá trị (Range)"
+    ],
+    "misconceptions": [
+      "cho rằng khoảng giá trị (Range) là giá trị trung bình cộng, nhầm lẫn giữa độ đo phân tán và độ đo xu hướng tập trung.",
+      "tin rằng khoảng giá trị (Range) giống với độ lệch chuẩn, không phân biệt được các loại độ đo phân tán khác nhau.",
+      "cho rằng khoảng giá trị là hệ số tương quan, nhầm lẫn với một độ đo mối quan hệ."
+    ],
+    "reasoning": "Khoảng giá trị (Range) là một độ đo đơn giản về sự phân tán của dữ liệu, được tính bằng cách lấy giá trị lớn nhất trừ đi giá trị nhỏ nhất. Nó mô tả phạm vi mà dữ liệu trải dài, khác với các khái niệm về trung tâm hay mối quan hệ."
+  },
+  {
+    "question_id": "p3_q33",
+    "concepts": [
+      "Trực quan hóa trong phân tích đơn biến",
+      "Phân biệt biểu đồ đơn biến và hai biến"
+    ],
+    "misconceptions": [
+      "cho rằng Clustered Bar Chart (biểu đồ cột theo cụm) được dùng cho phân tích đơn biến, không nhận ra nó dùng để so sánh một biến số qua các nhóm của một biến phân loại khác (phân tích hai biến).",
+      "tin rằng bất kỳ biểu đồ nào cũng có thể được dùng cho phân tích đơn biến.",
+      "cho rằng histogram và biểu đồ mật độ chỉ dùng cho dữ liệu phân loại."
+    ],
+    "reasoning": "Histogram, biểu đồ mật độ, và box-plot là các loại biểu đồ phổ biến để trực quan hóa phân phối của một biến duy nhất. Biểu đồ cột theo cụm (Clustered Bar Chart) được dùng cho phân tích hai biến."
+  },
+  {
+    "question_id": "p3_q34",
+    "concepts": [
+      "Định nghĩa Histogram",
+      "Cách đọc biểu đồ Histogram"
+    ],
+    "misconceptions": [
+      "cho rằng histogram chỉ hiển thị giá trị trung bình và độ lệch chuẩn, nhầm lẫn nó với một bảng tóm tắt thống kê.",
+      "tin rằng histogram chỉ dùng để so sánh hai biến phân loại, nhầm lẫn nó với biểu đồ cột nhóm hoặc xếp chồng.",
+      "cho rằng histogram biểu diễn mọi điểm dữ liệu rời rạc, nhầm lẫn nó với biểu đồ phân tán (scatter plot)."
+    ],
+    "reasoning": "Histogram là một biểu đồ thể hiện phân phối tần suất của một biến liên tục, trong đó dữ liệu được chia thành các khoảng (bins) và chiều cao của mỗi thanh chữ nhật biểu thị tần số của dữ liệu trong khoảng đó."
+  },
+  {
+    "question_id": "p3_q35",
+    "concepts": [
+      "Định nghĩa biểu đồ mật độ (Density Plot)",
+      "Mối quan hệ giữa Histogram và Biểu đồ mật độ"
+    ],
+    "misconceptions": [
+      "cho rằng biểu đồ mật độ là một dạng của box plot, vì cả hai đều có thể cho thấy hình dạng phân phối.",
+      "tin rằng biểu đồ mật độ là một biểu đồ cột theo cụm, nhầm lẫn giữa biểu đồ đường cong và biểu đồ cột.",
+      "cho rằng biểu đồ mật độ là ma trận tương quan, nhầm lẫn giữa phân tích đơn biến và đa biến."
+    ],
+    "reasoning": "Biểu đồ mật độ (hay Kernel Density Estimate - KDE) có thể được coi là một phiên bản được làm mịn, liên tục của histogram. Nó ước tính hàm mật độ xác suất của một biến ngẫu nhiên, cho một cái nhìn mượt mà hơn về phân phối dữ liệu."
+  },
+  {
+    "question_id": "p3_q36",
+    "concepts": [
+      "Cách đọc biểu đồ Box-plot",
+      "Các thành phần của Box-plot"
+    ],
+    "misconceptions": [
+      "cho rằng box-plot thể hiện hệ số tương quan Pearson, nhầm lẫn giữa một công cụ phân tích đơn biến và một độ đo mối quan hệ hai biến.",
+      "tin rằng box-plot chỉ hiển thị giá trị trung vị, không nhận ra các thông tin khác như tứ phân vị và khoảng giá trị.",
+      "cho rằng 'râu' của box-plot luôn biểu diễn giá trị nhỏ nhất và lớn nhất tuyệt đối của toàn bộ dữ liệu."
+    ],
+    "reasoning": "Box-plot là một công cụ tóm tắt phân phối dữ liệu một cách hiệu quả, thể hiện năm giá trị chính: giá trị nhỏ nhất, tứ phân vị thứ nhất (Q1), trung vị (Q2), tứ phân vị thứ ba (Q3), và giá trị lớn nhất. Nó không thể hiện hệ số tương quan."
+  },
+  {
+    "question_id": "p3_q37",
+    "concepts": [
+      "Mục tiêu của phân tích hai biến",
+      "Khái niệm mối liên hệ thống kê"
+    ],
+    "misconceptions": [
+      "cho rằng phân tích hai biến chỉ dùng để tìm giá trị bị thiếu, nhầm lẫn mục tiêu chính với một ứng dụng phụ.",
+      "tin rằng phân tích hai biến chỉ dùng để chuẩn hóa dữ liệu số, nhầm lẫn giữa phân tích và tiền xử lý.",
+      "cho rằng phân tích hai biến là bước triển khai mô hình, gộp chung các giai đoạn khác nhau."
+    ],
+    "reasoning": "Mục tiêu chính của phân tích hai biến (bivariate analysis) là để khám phá và xác định xem có tồn tại mối liên hệ hoặc tương quan thống kê giữa hai biến hay không. Các lựa chọn khác mô tả các nhiệm vụ riêng biệt trong quy trình ML."
+  },
+  {
+    "question_id": "p3_q38",
+    "concepts": [
+      "Các loại phân tích hai biến",
+      "Phân loại dựa trên kiểu dữ liệu"
+    ],
+    "misconceptions": [
+      "cho rằng có thể phân tích mối quan hệ giữa 'chuỗi' và 'ma trận' theo cách tương tự như các cặp biến khác, không hiểu rõ về kiểu dữ liệu và các phép toán tương ứng.",
+      "tin rằng chỉ có một cách duy nhất để phân tích hai biến, không phụ thuộc vào kiểu dữ liệu của chúng.",
+      "cho rằng phân tích hai biến chỉ áp dụng cho cặp biến cùng kiểu (số-số hoặc phân loại-phân loại)."
+    ],
+    "reasoning": "Phân tích hai biến được phân loại dựa trên kiểu dữ liệu của hai biến được xem xét, bao gồm ba trường hợp chính: số - số, số - phân loại, và phân loại - phân loại. Mỗi loại đòi hỏi các phương pháp thống kê và trực quan hóa khác nhau."
+  },
+  {
+    "question_id": "p3_q39",
+    "concepts": [
+      "Trực quan hóa cho phân tích số - số",
+      "Công cụ khám phá mối quan hệ tuyến tính và phi tuyến"
+    ],
+    "misconceptions": [
+      "cho rằng Stacked Bar Chart (biểu đồ cột xếp chồng) được sử dụng để phân tích mối quan hệ giữa hai biến số, không nhận ra nó dùng cho biến phân loại.",
+      "tin rằng scatter plot chỉ hiển thị các điểm một cách ngẫu nhiên và không cho thấy mối quan hệ.",
+      "cho rằng ma trận tương quan chỉ là một bảng số và không phải là một phương pháp trực quan (khi kết hợp với heatmap)."
+    ],
+    "reasoning": "Để phân tích mối quan hệ giữa hai biến số, các công cụ trực quan phổ biến bao gồm biểu đồ phân tán (scatter plot) để xem mối quan hệ trực tiếp, pair plot để xem tất cả các cặp, và ma trận tương quan (thường là heatmap) để xem tóm tắt mối quan hệ tuyến tính."
+  },
+  {
+    "question_id": "p3_q40",
+    "concepts": [
+      "Trực quan hóa cho phân tích số - phân loại",
+      "So sánh phân phối của biến số qua các nhóm"
+    ],
+    "misconceptions": [
+      "cho rằng scatter plot và correlation matrix là công cụ phù hợp cho phân tích số - phân loại, không nhận ra chúng thường được dùng cho cặp biến số - số.",
+      "tin rằng không thể so sánh một biến số với một biến phân loại.",
+      "cho rằng chỉ có thể dùng các chỉ số thống kê (như trung bình theo nhóm) chứ không thể trực quan hóa cho loại phân tích này."
+    ],
+    "reasoning": "Khi phân tích một biến số và một biến phân loại, mục tiêu là so sánh phân phối của biến số qua các nhóm của biến phân loại. Các biểu đồ như histogram/density plot cho từng nhóm hoặc box-plot song song là rất hiệu quả."
+  },
+  {
+    "question_id": "p3_q41",
+    "concepts": [
+      "Trực quan hóa cho phân tích phân loại - phân loại",
+      "So sánh tần suất giữa hai biến phân loại"
+    ],
+    "misconceptions": [
+      "cho rằng scatter plot và histogram là công cụ phù hợp để phân tích mối quan hệ giữa hai biến phân loại, không nhận ra chúng dùng cho biến số.",
+      "tin rằng không thể trực quan hóa mối quan hệ giữa hai biến phân loại, chỉ có thể dùng bảng tần suất (contingency table).",
+      "cho rằng biểu đồ cột xếp chồng và biểu đồ cột theo cụm là một."
+    ],
+    "reasoning": "Để trực quan hóa mối quan hệ giữa hai biến phân loại, các biểu đồ cột như biểu đồ cột xếp chồng (Stacked Bar Chart) hoặc theo cụm (Clustered Bar Chart) là lựa chọn phổ biến. Chúng giúp so sánh tần suất hoặc tỷ lệ của một biến qua các danh mục của biến kia."
+  },
+  {
+    "question_id": "p3_q42",
+    "concepts": [
+      "Định nghĩa phân tích đa biến",
+      "So sánh phân tích đơn biến, hai biến, và đa biến"
+    ],
+    "misconceptions": [
+      "cho rằng phân tích đa biến chỉ là phân tích một đặc trưng, nhầm lẫn với phân tích đơn biến.",
+      "tin rằng phân tích đa biến chỉ giới hạn ở hai biến, nhầm lẫn với phân tích hai biến.",
+      "cho rằng phân tích đa biến chỉ dùng các chỉ số thống kê đơn giản, không nhận ra sự phức tạp của nó."
+    ],
+    "reasoning": "Phân tích đa biến (multivariate analysis) là việc kiểm tra mối quan hệ và tương tác giữa ba hoặc nhiều biến cùng một lúc, vượt ra ngoài phạm vi của phân tích đơn biến (một biến) và hai biến (hai biến)."
+  },
+  {
+    "question_id": "p3_q43",
+    "concepts": [
+      "Phát hiện dữ liệu thiếu trong Pandas",
+      "Hàm `.isnull()`"
+    ],
+    "misconceptions": [
+      "cho rằng hàm `.describe()` có thể phát hiện mọi giá trị thiếu, trong khi nó chỉ cung cấp thông tin về số lượng giá trị không rỗng (`count`).",
+      "tin rằng hàm `.pivot()` hoặc `.corr()` được dùng để tìm giá trị thiếu, nhầm lẫn chức năng của các hàm này.",
+      "cho rằng không cần hàm đặc biệt để phát hiện giá trị thiếu, chỉ cần nhìn vào bảng dữ liệu là thấy."
+    ],
+    "reasoning": "Trong thư viện Pandas, hàm `.isnull()` (hoặc `.isna()`) là phương thức chuẩn để tạo ra một ma trận boolean chỉ ra vị trí của các giá trị bị thiếu (NaN). Các hàm khác có mục đích khác như thống kê mô tả, xoay bảng, hay tính tương quan."
+  },
+  {
+    "question_id": "p3_q44",
+    "concepts": [
+      "Xử lý dữ liệu thiếu trong Pandas",
+      "Hàm `dropna()`"
+    ],
+    "misconceptions": [
+      "cho rằng hàm `fillna()` được dùng để loại bỏ dòng chứa NaN, nhầm lẫn giữa việc điền và việc xóa.",
+      "tin rằng hàm `replace()` được dùng để xóa dòng NaN, trong khi nó dùng để thay thế các giá trị cụ thể.",
+      "cho rằng hàm `isnull()` tự nó xóa dữ liệu, không nhận ra nó chỉ là hàm để kiểm tra."
+    ],
+    "reasoning": "Hàm `dropna()` trong Pandas được thiết kế đặc biệt để loại bỏ các hàng hoặc cột chứa giá trị bị thiếu (NaN). `fillna()` dùng để điền vào giá trị thiếu, `replace()` để thay thế giá trị, và `isnull()` để kiểm tra."
+  },
+  {
+    "question_id": "p3_q45",
+    "concepts": [
+      "Phát hiện giá trị ngoại lệ (Outlier Detection)",
+      "Phương pháp dựa trên phân phối chuẩn (Gaussian)"
+    ],
+    "misconceptions": [
+      "cho rằng One-hot encoding hoặc Label encoding là phương pháp phát hiện ngoại lệ, nhầm lẫn giữa kỹ thuật mã hóa và phát hiện outlier.",
+      "tin rằng KNNImputer được dùng để phát hiện ngoại lệ, nhầm lẫn giữa việc điền giá trị thiếu và phát hiện outlier.",
+      "cho rằng chỉ có một cách duy nhất để phát hiện ngoại lệ cho mọi loại dữ liệu."
+    ],
+    "reasoning": "Với dữ liệu có phân phối chuẩn (Gaussian), một phương pháp phổ biến để xác định giá trị ngoại lệ là dựa vào trung bình và độ lệch chuẩn. Các giá trị nằm ngoài một khoảng nhất định (ví dụ, 3 độ lệch chuẩn) so với trung bình có thể được coi là ngoại lệ."
+  },
+  {
+    "question_id": "p3_q46",
+    "concepts": [
+      "Phát hiện giá trị ngoại lệ (Outlier Detection)",
+      "Phương pháp không tham số (Interquartile Range - IQR)"
+    ],
+    "misconceptions": [
+      "cho rằng StandardScaler được dùng để phát hiện ngoại lệ, nhầm lẫn giữa việc chuẩn hóa dữ liệu và phát hiện outlier.",
+      "tin rằng hệ số tương quan Pearson có thể dùng để tìm outlier trong một biến duy nhất.",
+      "cho rằng Cross-validation là một kỹ thuật phát hiện ngoại lệ."
+    ],
+    "reasoning": "Với dữ liệu không tuân theo phân phối chuẩn, phương pháp Interquartile Range (IQR) là một kỹ thuật mạnh mẽ và phổ biến. Nó xác định ngoại lệ là các điểm dữ liệu nằm ngoài khoảng [Q1 - 1.5*IQR, Q3 + 1.5*IQR]."
+  },
+  {
+    "question_id": "p3_q47",
+    "concepts": [
+      "Hệ số tương quan (Correlation Coefficient)",
+      "Đo lường mối quan hệ tuyến tính"
+    ],
+    "misconceptions": [
+      "cho rằng hệ số tương quan dùng để đo độ nghiêng (skewness) của dữ liệu, nhầm lẫn giữa mối quan hệ hai biến và hình dạng phân phối của một biến.",
+      "tin rằng hệ số tương quan dùng để xác định độ lệch chuẩn hoặc độ phân tán của một biến.",
+      "cho rằng hệ số tương quan có thể đo lường mọi loại mối quan hệ (ví dụ: phi tuyến), không chỉ mối quan hệ tuyến tính."
+    ],
+    "reasoning": "Vai trò chính của hệ số tương quan (ví dụ: Pearson) là để đo lường sức mạnh và chiều hướng của mối quan hệ tuyến tính giữa hai biến số. Nó không đo lường các đặc điểm của một biến duy nhất như độ nghiêng hay độ phân tán."
+  },
+  {
+    "question_id": "p3_q48",
+    "concepts": [
+      "Lựa chọn đặc trưng (Feature Selection)",
+      "Mục tiêu của việc giảm số chiều đặc trưng"
+    ],
+    "misconceptions": [
+      "cho rằng lựa chọn đặc trưng là để tăng cường đặc trưng, nhầm lẫn với kỹ thuật tạo đặc trưng (feature engineering).",
+      "tin rằng lựa chọn đặc trưng là để tăng số lượng mẫu, nhầm lẫn với các kỹ thuật như data augmentation.",
+      "cho rằng nên giữ lại các đặc trưng tương quan cao với nhau, không nhận ra vấn đề đa cộng tuyến."
+    ],
+    "reasoning": "Lựa chọn đặc trưng là quá trình tìm và loại bỏ các đặc trưng không liên quan hoặc dư thừa (ví dụ, tương quan cao với đặc trưng khác) để cải thiện hiệu suất mô hình, giảm thời gian huấn luyện và tránh overfitting."
+  },
+  {
+    "question_id": "p3_q49",
+    "concepts": [
+      "Chuẩn hóa dữ liệu với StandardScaler",
+      "Tác động của chuẩn hóa lên mô hình"
+    ],
+    "misconceptions": [
+      "cho rằng StandardScaler biến đổi dữ liệu về khoảng [0.0, 1.0], nhầm lẫn nó với MinMaxScaler.",
+      "tin rằng StandardScaler không làm thay đổi dấu của giá trị (ví dụ: giá trị dương vẫn sẽ dương).",
+      "cho rằng việc chuẩn hóa không ảnh hưởng đến tốc độ hội tụ của các mô hình."
+    ],
+    "reasoning": "StandardScaler biến đổi dữ liệu để có trung bình bằng 0 và phương sai bằng 1, làm cho các đặc trưng có phạm vi tương tự nhau. Quá trình này có thể làm giá trị dương thành âm và giúp một số thuật toán như hồi quy luận lý hội tụ nhanh hơn."
+  },
+  {
+    "question_id": "p3_q50",
+    "concepts": [
+      "Kiểm định chéo (Cross-validation)",
+      "Mục đích và ứng dụng của kiểm định chéo"
+    ],
+    "misconceptions": [
+      "cho rằng kiểm định chéo luôn huấn luyện mô hình nhanh hơn so với hold-out, không nhận ra rằng nó phải huấn luyện mô hình nhiều lần (k lần).",
+      "tin rằng kiểm định chéo chỉ dùng cho bộ dữ liệu lớn, trong khi nó đặc biệt hữu ích cho dữ liệu nhỏ.",
+      "cho rằng kiểm định chéo không liên quan đến việc tìm siêu tham số."
+    ],
+    "reasoning": "Kiểm định chéo là một kỹ thuật đánh giá hiệu suất mô hình một cách tổng quát hơn so với phương pháp hold-out, đặc biệt hữu ích trên các bộ dữ liệu nhỏ. Nó cũng là nền tảng cho các kỹ thuật tìm kiếm siêu tham số như GridSearchCV."
+  }
+]

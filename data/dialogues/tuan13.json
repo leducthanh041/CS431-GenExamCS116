@@ -1,0 +1,2908 @@
+[
+  {
+    "question_id": "ch10_q1",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng mục tiêu là làm mô hình nhỏ nhất. Vì sao nhỏ lại quan trọng?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì mô hình nhỏ sẽ chạy nhanh hơn, tốn ít tài nguyên hơn. Đó chẳng phải là 'hiệu quả' sao?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'hiệu quả' chỉ có nghĩa là tốc độ và tài nguyên?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Một mô hình chậm và cồng kềnh thì có ích gì chứ? Nhanh và nhỏ là tốt nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giữa mô hình A (nhỏ, chính xác 85%) và B (lớn hơn, chính xác 99%), bạn chọn cái nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Tôi vẫn chọn A. Nó nhỏ gọn. 85% là đủ tốt cho nhiều việc, B quá cồng kềnh."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu đây là mô hình chẩn đoán khối u ung thư?"
+      },
+      {
+        "role": "Student",
+        "text": "Tất nhiên trường hợp đó thì... 99% quan trọng hơn. Nhưng đó là ngoại lệ thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'tốt nhất' còn phụ thuộc vào yếu tố nào khác ngoài kích thước?"
+      },
+      {
+        "role": "Student",
+        "text": "Phụ thuộc vào... độ chính xác yêu cầu của bài toán. Kích thước không phải là tất cả."
+      },
+      {
+        "role": "Tutor",
+        "text": "Khi mô hình hoạt động tốt trên dữ liệu thực tế, ta gọi đó là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là nó có tính tổng quát hóa. Giờ thì mình đã hiểu mục tiêu rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Mục tiêu là tổng quát hóa cao. Kích thước là một yếu tố để tối ưu, không phải mục tiêu cuối cùng."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q2",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ rằng cứ thêm đặc trưng là mô hình sẽ luôn tốt hơn, đúng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Càng có nhiều thông tin đầu vào thì máy tính càng có cơ sở để quyết định chính xác hơn chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'thông tin' có phải luôn luôn hữu ích không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc chắn rồi. Dù nó không hữu ích nhiều thì cũng không hại gì. Máy tính đủ thông minh để bỏ qua nó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Thử xét mô hình dự đoán giá nhà. Ta thêm đặc trưng 'số điện thoại của chủ nhà'."
+      },
+      {
+        "role": "Student",
+        "text": "Biết đâu có quy luật gì đó? Có thể nó không liên quan, nhưng cứ cho vào, máy tính sẽ tự tìm ra thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu tập huấn luyện chỉ có một nhà của 'anh An - 090xxxx' giá 10 tỷ. Mô hình sẽ học được gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ thấy sđt đó gắn với giá 10 tỷ. Nhưng khi gặp sđt khác, nó sẽ biết là không áp dụng được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nó có đang học một 'quy luật' hay chỉ đang 'ghi nhớ' một trường hợp cụ thể?"
+      },
+      {
+        "role": "Student",
+        "text": "... Chắc là nó đang ghi nhớ. Vì số điện thoại thì không có quy luật gì về giá nhà cả."
+      },
+      {
+        "role": "Tutor",
+        "text": "Việc ghi nhớ đó giúp hay hại cho việc dự đoán giá của một căn nhà hoàn toàn mới?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó làm hại ạ, vì mô hình chú ý vào một chi tiết vô nghĩa. Vậy không phải cứ thêm là tốt."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Bạn đã thấy rằng việc thêm đặc trưng không phù hợp sẽ khiến mô hình 'học vẹt' thay vì học quy luật, làm giảm tính tổng quát hóa."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q3",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "[A] Bạn nói ensemble learning là huấn luyện một mô hình lâu hơn. Vì sao lại vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì huấn luyện lâu hơn, nhiều epoch hơn, thì mô hình sẽ học được nhiều hơn và trở nên tốt hơn. Nó tích lũy kiến thức."
+      },
+      {
+        "role": "Tutor",
+        "text": "[B] Mục tiêu của việc huấn luyện lâu hơn để mô hình 'tốt hơn' là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để có độ chính xác cao nhất. Cuối cùng mình chỉ cần một mô hình duy nhất, tốt nhất có thể."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Giả sử mình huấn luyện một mô hình trong 100 epochs, rồi huấn luyện tiếp đến 200 epochs. Đây là ensemble?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Mô hình 200-epoch là một phiên bản 'ensemble' của mô hình 100-epoch vì nó mạnh hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Vậy mình chỉ cần giữ lại mô hình 200-epoch thôi, đúng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Tất nhiên, nó tốt hơn mà. Bỏ cái cũ đi."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Nếu chỉ giữ một mô hình, từ 'kết hợp' hay 'tập hợp' nằm ở đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó kết hợp kiến thức từ 100 epoch đầu với 100 epoch sau trong chính nó. Vẫn là một dạng kết hợp."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Một mô hình duy nhất đang học, hay có hai mô hình riêng biệt đang hoạt động?"
+      },
+      {
+        "role": "Student",
+        "text": "...Chỉ có một mô hình đang được cập nhật thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "[D] Vậy Ensemble Learning nên mô tả việc gì để đúng với chữ 'tập hợp'?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là... phải có nhiều mô hình khác nhau cùng tham gia vào việc dự đoán."
+      },
+      {
+        "role": "Tutor",
+        "text": "[E] Đúng. Bạn đã nhầm lẫn việc 'tinh chỉnh' một mô hình duy nhất với việc 'kết hợp' nhiều mô hình riêng biệt để đưa ra quyết định cuối cùng."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q4",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói ensemble hiệu quả vì mỗi model con có bias bằng không. Điều này luôn đúng?"
+      },
+      {
+        "role": "Student",
+        "text": "Vâng, để kết quả cuối cùng chính xác thì các thành phần ban đầu cũng phải chính xác chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một mô hình có 'bias bằng không' nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nghĩa là trung bình, nó dự đoán đúng giá trị thực. Nó là một mô hình lý tưởng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử mình có 10 mô hình, không cái nào lý tưởng cả, mỗi cái đều có bias."
+      },
+      {
+        "role": "Student",
+        "text": "Thế thì kết hợp lại cũng sẽ có bias thôi. Kết quả sẽ không tốt được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu 5 mô hình có bias lệch sang trái, 5 mô hình lệch sang phải thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì có thể chúng triệt tiêu nhau. Nhưng đó là trường hợp quá may mắn, thực tế làm sao có được?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy vấn đề cốt lõi là 'bias bằng không' hay là 'lỗi không cùng một hướng'?"
+      },
+      {
+        "role": "Student",
+        "text": "...Chắc là lỗi không cùng một hướng quan trọng hơn. Nếu chúng cùng sai thì kết hợp lại sẽ tệ hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, để giảm variance, sức mạnh của ensemble đến từ đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó đến từ việc trung bình hóa các lỗi từ nhiều mô hình khác nhau, miễn là lỗi của chúng không giống hệt nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Ensemble giảm variance bằng cách trung bình hóa các lỗi đa dạng, không phải vì các mô hình con hoàn hảo."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q5",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói KNN dùng 'hàng xóm' nên là ensemble. Vậy mỗi 'hàng xóm' là một 'mô hình' à?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Mỗi 'hàng xóm' đóng góp vào quyết định, giống như mỗi mô hình trong một ensemble."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một thuật toán ensemble kết hợp nhiều 'mô hình' hay nhiều 'dữ liệu'?"
+      },
+      {
+        "role": "Student",
+        "text": "Kết hợp nhiều thứ để ra quyết định tốt hơn. Dữ liệu hay mô hình thì cũng là một cách nói thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một cây quyết định duy nhất có dùng nhiều dữ liệu để học không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có chứ, nó học từ toàn bộ tập dữ liệu huấn luyện."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo logic của bạn, cây quyết định đó cũng là ensemble sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nó chỉ là một cây. Nhưng KNN khác, nó xét từng điểm lân cận một cách riêng rẽ để bỏ phiếu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Random Forest kết hợp nhiều cây quyết định. Mỗi cây đó có phải là một mô hình không?"
+      },
+      {
+        "role": "Student",
+        "text": "Vâng, mỗi cây là một mô hình đã được huấn luyện."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy trong KNN, mỗi 'hàng xóm' có phải là một mô hình được huấn luyện không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Không. Nó chỉ là một điểm dữ liệu thô."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy đâu là sự khác biệt cốt lõi giữa ensemble và KNN?"
+      },
+      {
+        "role": "Student",
+        "text": "Ensemble kết hợp nhiều *mô hình đã học*. KNN chỉ dùng các *điểm dữ liệu* lân cận. Giờ thì mình hiểu rồi. Đáp án là Random Forest."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Nhầm lẫn của bạn là coi việc sử dụng nhiều điểm dữ liệu giống như việc kết hợp nhiều mô hình."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q6",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn tin rằng một mô hình mạnh duy nhất sẽ có bias thấp. Cơ sở của niềm tin này là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì mô hình mạnh phức tạp hơn. Nó có thể nắm bắt quy luật phức tạp trong dữ liệu, nên bias phải thấp."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một mô hình 'mạnh' ở đây có nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là một mô hình có khả năng học cao, ví dụ một cây quyết định không giới hạn độ sâu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hãy xét một cây quyết định không giới hạn độ sâu. Nó có thể học thuộc lòng tập huấn luyện không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc chắn rồi. Nó có thể tạo một nhánh riêng cho mỗi điểm dữ liệu nếu cần thiết."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một mô hình học thuộc lòng như vậy, bạn nghĩ bias của nó trên dữ liệu mới sẽ thấp?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải. Vì nó đã học rất 'kỹ' dữ liệu, nó hiểu rõ quy luật rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu quy luật đó chỉ là nhiễu trong dữ liệu huấn luyện thì sao? Nó sẽ dự đoán dữ liệu lạ thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là sẽ không tốt... Nhưng đó là vấn đề overfitting, không phải bias. Bias của bản thân mô hình vẫn thấp."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một mô hình 'quá mạnh' có thể học cả những thứ không nên học. Việc kết hợp nhiều mô hình giúp gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Có lẽ... để chúng không cùng học một loại nhiễu? Nếu mỗi mô hình yếu tập trung vào một khía cạnh, kết hợp lại sẽ tốt hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Lỗi sai là đồng nhất 'mạnh' với 'bias thấp' một cách tuyệt đối. Ensemble kết hợp các mô hình yếu hơn để tránh một mô hình duy nhất học thuộc các đặc điểm nhiễu, từ đó giảm bias tổng thể."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q7",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng 'Weak Learners' phải có độ chính xác cao. Logic của bạn là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì ensemble learning tạo ra mô hình mạnh. Kết hợp nhiều thứ yếu sao ra thứ mạnh được?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, mục đích của việc 'kết hợp' là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là để cộng hưởng sức mạnh. Nhiều mô hình mạnh gộp lại sẽ càng mạnh hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu 10 chuyên gia đều giỏi giống hệt nhau, họ có giải quyết vấn đề mới tốt hơn không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có chứ. 10 cái đầu vẫn hơn một. Họ sẽ chắc chắn hơn về quyết định của mình."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu cả 10 chuyên gia đó cùng mắc chung một lỗi sai thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "...thì kết quả sẽ sai. Nhưng xác suất đó thấp nếu họ giỏi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy điều gì quan trọng hơn: sức mạnh cá nhân hay sự đa dạng về lỗi sai?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là... sự đa dạng. Để chúng bù trừ cho nhau. À..."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy quay lại câu hỏi ban đầu. 'Weak Learners' đề cập đến điều gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là những mô hình có độ chính xác thấp, miễn là chúng mắc lỗi khác nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Nhầm lẫn của bạn là nghĩ sức mạnh đến từ cá nhân, thay vì sự bù trừ của tập thể."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q8",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng mục tiêu của ensemble là bắt buộc tạo dữ liệu mới. Tại sao lại bắt buộc?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nếu dùng cùng một dữ liệu, các mô hình con sẽ giống hệt nhau. Ensemble vậy thì còn ý nghĩa gì."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một ensemble model, theo bạn, là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là kết hợp nhiều mô hình yếu để tạo ra một mô hình mạnh hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mình có 3 mô hình đã huấn luyện xong. Mình lấy dự đoán của cả ba rồi bỏ phiếu. Đây có phải ensemble không?"
+      },
+      {
+        "role": "Student",
+        "text": "Cũng là ensemble... nhưng cách đó không hiệu quả. Phải tạo dữ liệu mới như Bagging mới chuẩn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mình chưa bàn đến hiệu quả. Mô hình 'bỏ phiếu' đó có tạo ra dữ liệu huấn luyện mới không?"
+      },
+      {
+        "role": "Student",
+        "text": "Dạ không... nó chỉ dùng kết quả của các mô hình đã có."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'tạo dữ liệu mới' có phải là điều kiện bắt buộc cho mọi ensemble model không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là không... Vậy mục tiêu chung của cả Bagging và Voting là gì?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Một cái tạo dữ liệu mới, một cái thì không. Nhưng chúng cùng hướng đến điều gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để... cải thiện kết quả cuối cùng. Tăng độ chính xác."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Ban đầu bạn đã nhầm lẫn phương pháp (tạo dữ liệu) với mục tiêu (tăng chính xác)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q9",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn viết rằng điểm yếu của ensemble là độ chính xác thấp. Tại sao kết hợp nhiều mô hình lại làm giảm độ chính xác?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì gộp nhiều thứ vào sẽ gây nhiễu. Mỗi mô hình có sai số riêng, gộp lại thì sai số cộng dồn, làm kết quả chung tệ đi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mục đích chính của kỹ thuật ensemble là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là một cách tiếp cận phức tạp, nhưng không hiệu quả bằng một mô hình đơn lẻ được tinh chỉnh kỹ. Nó chỉ là thử nhiều phương án thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hãy tưởng tượng một hội đồng gồm 10 chuyên gia. Chín người nói A đúng, một người nói B. Quyết định cuối cùng nên là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Tất nhiên là A. Nhưng đó là chuyên gia, còn đây là các mô hình máy học, chúng có thể sai hàng loạt."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nếu 9 mô hình 'hơi tốt' cùng đồng ý về một kết quả thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc gì chúng đã đồng ý. Nếu chúng 'hơi tốt' thì kết hợp lại vẫn chỉ là 'hơi tốt', không thể chính xác cao được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Việc kết hợp nhiều ý kiến 'hơi đúng' làm kết quả cuối cùng tệ hơn sao?"
+      },
+      {
+        "role": "Student",
+        "text": "...Chắc là không. Có lẽ nó sẽ bù trừ sai sót cho nhau. Độ chính xác có thể sẽ tăng lên."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu mục tiêu là tăng độ chính xác, vậy trở ngại lớn nhất khi áp dụng nó là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải huấn luyện và chạy nhiều mô hình cùng lúc. Chắc là tốn thời gian và tài nguyên máy tính. À... chi phí tính toán lớn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Bạn đã nhầm mục tiêu chính (tăng độ chính xác) thành điểm yếu. Điểm yếu thực sự là chi phí tính toán để đạt được độ chính xác đó."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q10",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn chọn Bagging không phải ensemble learning. Lý do của bạn là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì Bagging chỉ chạy một thuật toán duy nhất nhiều lần thôi. Nó không phải là một 'tập hợp' đúng nghĩa."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, một 'tập hợp' (ensemble) đúng nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là phải kết hợp nhiều loại thuật toán khác nhau. Ví dụ như kết hợp Decision Tree với SVM chẳng hạn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bagging có tạo ra nhiều mô hình con không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có, nhưng chúng đều cùng một loại. Không có sự đa dạng về thuật toán, nên em không nghĩ nó là ensemble."
+      },
+      {
+        "role": "Tutor",
+        "text": "Kết quả cuối cùng của Bagging được quyết định như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Bằng cách lấy trung bình hoặc bỏ phiếu (voting) từ các mô hình con đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy các mô hình con đó có giống hệt nhau không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không hẳn... vì chúng được huấn luyện trên các mẫu dữ liệu khác nhau. À..."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, yếu tố nào định nghĩa một kỹ thuật là ensemble?"
+      },
+      {
+        "role": "Student",
+        "text": "Là việc nó kết hợp kết quả từ nhiều mô hình con để tạo ra một dự đoán cuối cùng. Dù chúng cùng loại. Vậy Bagging là ensemble. Cái không phải là Clustering."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Niềm tin sai của bạn là cho rằng ensemble bắt buộc phải kết hợp các loại mô hình khác nhau về bản chất."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q11",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói Voting dùng cho hồi quy. Logic của bạn là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì nó lấy kết quả của nhiều model, cũng là một dạng ensemble giống Averaging thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Kết quả của bài toán hồi quy là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là một con số cụ thể, một giá trị liên tục. Ví dụ như giá nhà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử 3 model dự đoán giá nhà: [1 tỷ, 1.1 tỷ, 1.9 tỷ]. Voting ở đây hoạt động thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì... mỗi giá trị được 1 vote. Nó không hữu ích lắm nhưng về nguyên tắc vẫn là 'vote'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy kết quả cuối cùng bạn chọn là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải chọn một trong ba thôi. Averaging thì tốt hơn nhưng về lý thuyết Voting vẫn được mà?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu 3 model dự đoán là [Chó, Mèo, Mèo]. Voting cho kết quả gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là 'Mèo', vì nó chiếm đa số. Đến đây thì mình thấy có sự khác biệt rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy cơ chế 'lấy cái phổ biến nhất' phù hợp với loại kết quả nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Loại kết quả có các giá trị rời rạc, lặp lại... như nhãn. Vậy câu trả lời là Phân loại."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm Voting (lấy phiếu đa số cho nhãn) với Averaging (lấy trung bình cho số)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q12",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "[A] Bạn nói mỗi mô hình là một 'đặc trưng'. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì mỗi mô hình cung cấp một phần thông tin, giống như một cột dữ liệu, để đi đến quyết định cuối cùng."
+      },
+      {
+        "role": "Tutor",
+        "text": "[B] Trong machine learning, 'đặc trưng' thường được dùng để làm gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để làm đầu vào cho một mô hình và huấn luyện nó."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Vậy trong Voting, có mô hình nào được 'huấn luyện' bằng các mô hình con không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nó chỉ tổng hợp kết quả thôi. Nhưng các kết quả đó vẫn là 'input' cho bước tổng hợp. Nên nó là đặc trưng."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Một 'đặc trưng' (ví dụ: 'màu sắc') có thể tự đưa ra dự đoán không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không. Đặc trưng chỉ là một giá trị, nó không có khả năng dự đoán."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Mỗi mô hình con trong Voting có tự đưa ra dự đoán không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Có. Nhưng em vẫn thấy vai trò của nó giống một đặc trưng trong bức tranh lớn."
+      },
+      {
+        "role": "Tutor",
+        "text": "[D] Vậy nó giống một thực thể đưa ra 'ý kiến', hay một thuộc tính của dữ liệu?"
+      },
+      {
+        "role": "Student",
+        "text": "À... nó giống một thực thể đưa ra ý kiến hơn. Vậy trong câu hỏi này, đáp án là 'một cử tri'."
+      },
+      {
+        "role": "Tutor",
+        "text": "[E] Chính xác. Bạn đã nhầm lẫn vì nó là 'input' cho bước cuối, nhưng vai trò của nó là một 'cử tri' bỏ phiếu, không phải một 'đặc trưng' dữ liệu."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q13",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói kết quả là 'không xác định'. Vì sao 3 phiếu không đủ để thắng?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì vẫn có 1 phiếu chống lại. Không phải tất cả đều đồng ý, nên không thể quyết định được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục đích của phương pháp 'Voting' (bỏ phiếu) là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để tìm ra lựa chọn chung. Nhưng nếu không nhất trí 100% thì đâu gọi là chung được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử có 100 phiếu. Lớp 1 được 99 phiếu, lớp 2 được 1 phiếu. Kết quả là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Vẫn là không xác định. Chỉ cần 1 phiếu khác là có sự bất đồng. Phải tuyệt đối."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy khi nào phương pháp này mới cho ra kết quả?"
+      },
+      {
+        "role": "Student",
+        "text": "Khi tất cả phiếu đều bầu cho một lớp, ví dụ 4-0. Nếu có bất đồng thì không quyết, vậy là an toàn nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trong một cuộc bầu cử tổng thống, có cần 100% phiếu để có người thắng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không... họ lấy đa số. Nhưng đây là thuật toán, em nghĩ nó phải chặt chẽ hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'lấy đa số' khác gì 'lấy tất cả'?"
+      },
+      {
+        "role": "Student",
+        "text": "Một cái chấp nhận có ý kiến khác, một cái thì không... Có lẽ 'lấy đa số' là đủ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy quy tắc của 'Voting' trong trường hợp này nên là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là lớp nào có nhiều phiếu hơn sẽ thắng. Áp dụng lại, Lớp 1 có 3 phiếu, Lớp 2 có 1 phiếu. Kết quả là Lớp 1."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn rằng voting cần sự đồng thuận tuyệt đối. Thực tế, nó chỉ cần quy tắc đa số đơn giản."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q14",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói voting dùng để 'chọn ra mô hình tốt nhất'. Vì sao bạn lại nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì tên là 'voting' (bỏ phiếu) mà. Bỏ phiếu là để chọn ra người thắng cuộc, tức là mô hình tốt nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, một 'mô hình tốt nhất' được định nghĩa thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Là mô hình cho ra dự đoán đúng. Đơn giản vậy thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét 3 mô hình A, B, C. Dự đoán cho một ảnh: A nói 'Chó', B nói 'Chó', C nói 'Mèo'. Kết quả voting là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Kết quả là 'Chó', vì có 2 phiếu. Rõ ràng mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giờ, nếu đáp án đúng thực sự là 'Mèo'. Điều này nói gì về việc 'chọn mô hình tốt nhất'?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì tức là mô hình A và B sai. Nhưng đây là trường hợp đặc biệt thôi. Về cơ bản nó vẫn là chọn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trong ví dụ này, mô hình C là 'tốt nhất'. Nhưng voting có chọn C không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nó đã chọn 'Chó'... À, vậy là nó không chọn mô hình, mà là chọn kết quả có nhiều phiếu nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Vậy hãy diễn đạt lại mục đích chính của voting xem nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó là để kết hợp ý kiến của nhiều mô hình, rồi lấy theo đa số, chứ không phải chọn ra một mô hình nào cả."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn giữa việc 'chọn một kết quả' với 'chọn một mô hình'. Voting kết hợp các dự đoán, chứ không chọn ra mô hình đơn lẻ nào."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q15",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói Averaging dùng cho phân loại. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó giống hệt Voting. Mình gộp kết quả từ nhiều mô hình để ra quyết định cuối cùng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đầu ra của một bài toán phân loại thường là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là một cái nhãn, một danh mục. Ví dụ như là 'Mèo' hoặc 'Chó'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Ok. Giả sử 3 mô hình đưa ra 3 nhãn: 'Mèo', 'Chó', 'Chim'. Kết quả \"trung bình\" là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì mình lấy cái xuất hiện nhiều nhất. Trường hợp này thì... không có. Nhưng nếu có 2 'Mèo', 1 'Chó' thì kết quả là 'Mèo'. Nó là Voting mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bạn đang dùng logic \"lấy cái nhiều nhất\". Vậy phép toán \"Averaging\" thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì nó cũng vậy thôi, chỉ là cách gọi khác. Cả hai đều là kỹ thuật để kết hợp mô hình."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy phép tính trung bình của 'Mèo' và 'Chó' là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "...Làm gì có phép tính đó. Nhưng ý em là về nguyên tắc chúng giống nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy Averaging có vẻ không dùng được cho \"nhãn\". Nó nên dùng cho loại dữ liệu nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là... số? Vì chỉ có số mới tính trung bình được. Vậy nó dùng cho hồi quy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm Averaging, vốn tính trung bình cộng các con số (hồi quy), với Voting, vốn \"bầu chọn\" cho các nhãn (phân loại)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q16",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng Averaging là chọn mô hình tốt nhất. Tại sao đây lại là cách hiệu quả nhất?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì mô hình tốt nhất có độ chính xác cao nhất. Lấy kết quả của nó thì khả năng đúng sẽ cao nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mục đích của việc dùng nhiều mô hình là để tìm ra một nhà vô địch duy nhất?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Các mô hình khác chỉ là để so sánh và xác định đâu là mô hình mạnh nhất để tin tưởng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử mô hình A (95% chính xác) và B (90% chính xác). Có một điểm dữ liệu mà A sai và B đúng. Nếu chỉ chọn A, bạn sẽ mất thông tin gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nhưng đó chỉ là một trường hợp. Về tổng thể, A vẫn đáng tin hơn B. Dùng B sẽ làm giảm độ chính xác chung."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy thông tin từ mô hình B ở điểm đó là hoàn toàn vô giá trị sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Không hẳn... nhưng rủi ro khi tin vào B lớn hơn. Em vẫn chọn A."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy có cách nào tận dụng được cái 'đúng' của B mà không phải 'đặt cược' hoàn toàn vào nó không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là... kết hợp chúng lại? Có lẽ là lấy trung bình dự đoán của chúng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tốt. Vậy bạn hãy trả lời lại câu hỏi ban đầu. Averaging tổng hợp kết quả bằng cách nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Averaging sẽ lấy trung bình cộng kết quả của tất cả các mô hình con."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Lỗi sai ban đầu của bạn là nhầm lẫn 'kết hợp' để giảm rủi ro với 'lựa chọn' một mô hình duy nhất."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q17",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói có thể chọn 100 hoặc 110. Vì sao chọn một số ở giữa lại là 'averaging'?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì 'averaging' là làm cho cân bằng. Lấy một số ở giữa các giá trị là hợp lý nhất rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'averaging' có nghĩa là chọn một số bất kỳ ở giữa dãy số?"
+      },
+      {
+        "role": "Student",
+        "text": "Không phải bất kỳ. Nhưng 100 và 110 đều nằm trong khoảng đó. Chọn số nào cũng đại diện được cho cả nhóm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét bộ số khác: 1, 2, 100. Theo logic của bạn, trung bình là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là 2. Vì nó ở giữa. Đó là giá trị trung tâm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bạn thấy số 2 có đại diện tốt cho cả bộ số đó không?"
+      },
+      {
+        "role": "Student",
+        "text": "Vẫn hợp lý mà. Nếu có nhiều số thì lấy số ở giữa là một cách làm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Ba người có 1 nghìn, 2 nghìn, và 100 nghìn. Trung bình họ có 2 nghìn?"
+      },
+      {
+        "role": "Student",
+        "text": "Nghe hơi... vô lý. Vậy là không thể chỉ chọn một số ở giữa được à?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy làm sao để có một số đại diện chính xác cho cả 1, 2, và 100?"
+      },
+      {
+        "role": "Student",
+        "text": "Có lẽ... phải cộng lại rồi chia? (1+2+100)/3 = 34.3. À. Vậy bài cũ phải là (120+90+100+110)/4 = 105."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Lỗi sai là giả định 'averaging' là chọn một giá trị. Đúng ra, nó là một phép tính: tổng các giá trị chia cho số lượng."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q18",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng Weighted Averaging chỉ dùng cho phân loại. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó giống như Voting. Mô hình nào giỏi hơn thì 'phiếu' của nó có trọng số cao hơn. Chỉ có phân loại mới có 'phiếu' để vote."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy bài toán hồi quy (regression) thì kết quả đầu ra là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là một con số cụ thể, như giá nhà hay nhiệt độ. Không phải là các lớp (class) để mà vote."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử model A dự đoán giá nhà là 2 tỷ, model B là 3 tỷ. Averaging thông thường cho kết quả nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Là 2.5 tỷ. Nhưng đó là Averaging, không phải Weighted Averaging. Weighted Averaging không áp dụng được ở đây."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu bạn biết model A tốt hơn nhiều. Bạn sẽ làm gì với hai con số 2 tỷ và 3 tỷ?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì kết quả cuối cùng phải gần với 2 tỷ hơn. Nhưng làm sao tính được? Đâu có 'vote' được cho giá nhà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Làm thế nào để kết hợp hai số 2 và 3 để ra một số gần 2 hơn?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là... lấy 80% của 2 cộng với 20% của 3? Cách đó có được gọi là Weighted Averaging không?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, bản chất của Weighted Averaging là xử lý 'phiếu' hay xử lý 'số'?"
+      },
+      {
+        "role": "Student",
+        "text": "Là xử lý số. Vậy nó dùng được cho cả hồi quy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Sai lầm của bạn là nhầm lẫn Weighted Averaging với Voting, và cho rằng nó chỉ áp dụng cho bài toán phân loại. Thực tế, nó là một kỹ thuật toán học để tính trung bình có trọng số của các con số, nên áp dụng được cho cả hồi quy."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q19",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng trọng số tính từ số lượng mẫu. Tại sao yếu tố này lại quyết định?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì mô hình học trên nhiều dữ liệu hơn thì sẽ tổng quát và tốt hơn. Số lượng mẫu phản ánh điều đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục tiêu cuối cùng của việc kết hợp các mô hình là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để có được một dự đoán cuối cùng chính xác hơn so với từng mô hình riêng lẻ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử mô hình A dùng 1000 mẫu, mô hình B dùng 100 mẫu. Trọng số của A lớn hơn B, đúng chứ?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng. Về lý thuyết nó phải có trọng số cao hơn gấp 10 lần."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu A có độ chính xác 50%, còn B có độ chính xác 95% thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Đó là trường hợp đặc biệt. Nhưng về nguyên tắc, mô hình được huấn luyện trên nhiều dữ liệu hơn vẫn đáng tin hơn về khả năng tổng quát hóa."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy bạn muốn một kết quả chung chính xác, hay một kết quả dựa trên 'nguyên tắc' đó?"
+      },
+      {
+        "role": "Student",
+        "text": "... Mình muốn một kết quả chính xác. Có lẽ logic của mình có vấn đề."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy để tối đa hóa độ chính xác, trọng số nên phản ánh điều gì của mô hình?"
+      },
+      {
+        "role": "Student",
+        "text": "Phản ánh hiệu suất của nó. Tức là độ chính xác. Vậy đáp án là độ chính xác trên tập train/validation."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn giữa lượng dữ liệu đầu vào và chất lượng dự đoán của mô hình. Trọng số phải dựa trên hiệu suất đã được kiểm chứng."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q20",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng công thức chỉ là tổng các kết quả. Tại sao từ 'Weighted' (có trọng số) lại không ảnh hưởng đến phép tính?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì 'averaging' (trung bình) về cơ bản là gộp các kết quả lại, mà gộp lại thì là cộng. Từ 'weighted' chỉ để cho biết các kết quả có tầm quan trọng khác nhau thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, 'trọng số' chỉ là thông tin tham khảo, không nằm trong công thức?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Công thức chính vẫn là cộng các kết quả lại với nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét ví dụ: điểm Toán (hệ số 2) là 9, điểm Nhạc (hệ số 1) là 7. Điểm trung bình tính thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Theo em là 9 + 7 = 16. Nhưng điểm không thể là 16 được... Chắc là (9+7)/2 = 8."
+      },
+      {
+        "role": "Tutor",
+        "text": "Công thức (9+7)/2 coi hai môn quan trọng như nhau. Hệ số 2 của môn Toán đã được dùng ở đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng là công thức đó chưa dùng. Nhưng em vẫn không nghĩ là nhân chúng vào. Có thể là cách khác."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy làm thế nào để công thức phản ánh được điểm Toán 'nặng' gấp đôi điểm Nhạc?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là... phải nhân điểm với hệ số của nó? Ví dụ 9*2 và 7*1. Sau đó cộng lại."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy công thức tổng quát cho Weighted Averaging nên được viết thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ là w1*R1 + w2*R2 + ... chứ không phải R1 + R2. Em hiểu rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Lỗi sai ban đầu của bạn là cho rằng 'averaging' chỉ là phép cộng, bỏ qua vai trò của 'trọng số' trong công thức. Công thức đúng phải nhân mỗi kết quả với trọng số tương ứng."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q21",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói Stacking là vote số đông. Tại sao lại là vote?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì mình kết hợp nhiều mô hình, mô hình nào được chọn nhiều nhất thì lấy. Đó là vote số đông mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, Stacking và Voting Ensemble có khác nhau không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là tên gọi khác nhau thôi. Về bản chất vẫn là lấy ý kiến đa số để ra quyết định cuối cùng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét một trường hợp: 3 mô hình dự đoán. 2 mô hình luôn sai ở ca khó."
+      },
+      {
+        "role": "Student",
+        "text": "Thì kết quả cuối cùng sẽ sai theo số đông. Chuyện đó bình thường trong ensemble."
+      },
+      {
+        "role": "Tutor",
+        "text": "Làm thế nào để hệ thống học được rằng mô hình thứ 3 đáng tin hơn?"
+      },
+      {
+        "role": "Student",
+        "text": "Học á? Nó chỉ vote thôi mà, làm sao mà 'học' được? Cứ theo đa số thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nếu có một lớp mô hình nữa 'học' từ chính các dự đoán đó thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "...Tức là dùng kết quả [sai, sai, đúng] làm đầu vào cho một mô hình khác?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Vậy Stacking có phải chỉ là vote số đông không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không. Nó phức tạp hơn. Nó dùng dự đoán làm đặc trưng để huấn luyện tiếp."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm Stacking, vốn học từ dự đoán, với Voting là cơ chế bỏ phiếu đơn giản."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q22",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng Stacking là sử dụng một mô hình duy nhất. Điều gì trong logic của bạn dẫn đến kết luận đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì Stacking là một kỹ thuật mạnh. Một mô hình duy nhất, phức tạp và được tinh chỉnh kỹ sẽ mạnh hơn là một mớ hỗn độn nhiều mô hình."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, 'ensemble learning' có nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là một nhóm các phương pháp thôi. Nhưng Stacking chắc hẳn là trường hợp đặc biệt, nó tối ưu hóa một mô hình duy nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu chỉ có một mô hình, nó khác gì việc huấn luyện một mô hình bình thường?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó được 'stack' (xếp chồng) nhiều lớp hơn, kiến trúc phức tạp hơn. Kiểu như một mạng neural rất sâu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Từ 'stacking' nghĩa là xếp chồng. Bạn có thể xếp chồng một vật duy nhất không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không. Nhưng thuật ngữ trong machine learning có thể có nghĩa khác chứ? Việc xếp chồng có thể chỉ là ẩn dụ cho sự phức tạp."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử có mô hình A và B. Một mô hình C học từ đầu ra của A và B. Cái gì đang được 'xếp chồng' ở đây?"
+      },
+      {
+        "role": "Student",
+        "text": "...Đầu ra của A và B. Nó giống như chúng được đặt lên trên nhau để C có thể nhìn thấy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, để Stacking xảy ra, chúng ta cần tối thiểu những gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Cần ít nhất hai mô hình cơ sở và một mô hình để kết hợp kết quả của chúng. Vậy là nó kết hợp nhiều mô hình khác nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bạn đã nhận ra Stacking không phải là dùng một mô hình, mà là kết hợp đầu ra của nhiều mô hình để một mô hình cuối cùng đưa ra dự đoán."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q23",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng mô hình tổng hợp là 'Weak learner'. Tại sao nó phải 'yếu'?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó chỉ tổng hợp kết quả từ các mô hình khác, nhiệm vụ của nó đơn giản nên nó là weak learner."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, 'weak learner' được định nghĩa thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Là một mô hình có hiệu suất chỉ hơn đoán mò một chút. Giống như trong AdaBoost."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trong Boosting, các weak learner học từ đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Chúng học tuần tự từ dữ liệu, mỗi mô hình sau sửa lỗi của mô hình trước."
+      },
+      {
+        "role": "Tutor",
+        "text": "Còn mô hình tổng hợp trong Stacking học từ đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó học từ dự đoán của các mô hình tầng dưới. Nhưng bản chất vẫn là một việc đơn giản, nên nó yếu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu nhiệm vụ là tìm ra quy luật phức tạp từ các dự đoán đó thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Em nghĩ không phức tạp. Nó chỉ cần lấy trung bình hoặc một quy tắc nào đó là được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một mô hình 'yếu' có đủ khả năng tìm ra quy luật kết hợp tốt nhất không?"
+      },
+      {
+        "role": "Student",
+        "text": "... Chắc là không. Nếu nó quá yếu, có thể nó sẽ bỏ lỡ các mối quan hệ tinh vi giữa các dự đoán."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy vai trò của nó là 'học từ các learner khác'. Ta nên gọi nó là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Học từ các learner khác... Có lẽ là một 'learner của các learner'? À, Meta learner. Vậy câu trả lời là Meta learner."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Bạn đã nhầm lẫn 'weak learner' của Boosting, vốn chỉ các mô hình riêng lẻ có hiệu suất thấp, với mô hình tổng hợp của Stacking, có vai trò học ở một 'cấp độ meta'."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q24",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói Blending dùng dự đoán từ tập train. Tại sao điều đó lại hiệu quả?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì mô hình con đã học trên tập train, nên lấy dự đoán trên đó là hợp lý nhất. Nó biết rõ dữ liệu đó mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục tiêu của mô hình con khi học trên tập train là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là để dự đoán chính xác nhất có thể trên chính tập train đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu một mô hình con học thuộc lòng tập train, dự đoán của nó sẽ thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Sẽ gần như hoàn hảo, 100% chính xác. Đó là mô hình tốt."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mô hình tổng hợp sẽ nhận đầu vào là các dự đoán hoàn hảo này. Nó sẽ học được gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ học được rằng chỉ cần tin vào một mô hình con là đủ. Điều đó giúp đơn giản hóa vấn đề, không phải sao?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Mô hình tổng hợp đó sẽ hoạt động thế nào trên dữ liệu mới mà nó chưa từng thấy?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì... chắc là không tốt bằng. Vì mô hình con đã học thuộc lòng tập train, không phải dữ liệu mới. Đây là overfitting."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, làm thế nào để đánh giá khả năng của mô hình con một cách công bằng?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải dùng dữ liệu mà nó chưa thấy khi học. Một tập dữ liệu riêng... như tập validation."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tóm lại, Blending dùng một tập validation riêng để tạo dự đoán. Điều này ngăn mô hình tổng hợp học từ các dự đoán bị 'overfit' trên tập train."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q25",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ rằng Stacking chỉ dành cho một loại bài toán, Blending cho loại khác?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Stacking cho hồi quy, Blending cho phân loại. Đó là cách phân biệt cơ bản nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mục đích cốt lõi của Stacking là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là kết hợp mô hình để tăng độ chính xác, nhưng nó được tối ưu cho việc dự đoán giá trị số liên tục."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử mình có bài toán phân loại ảnh. Mình cố tình dùng Stacking thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Sẽ không hiệu quả. Blending sinh ra cho việc đó. Dùng Stacking là sai mục đích."
+      },
+      {
+        "role": "Tutor",
+        "text": "Meta-learner trong Stacking đó sẽ học từ dữ liệu nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó học từ dự đoán của các base model. Nhưng các dự đoán đó là nhãn, không phải số, nên sẽ không tốt."
+      },
+      {
+        "role": "Tutor",
+        "text": "Dự đoán xác suất (ví dụ: 90% là chó) có phải là số không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Cũng là số. Vậy thì meta-learner vẫn học được. Nhưng nó vẫn không đúng bản chất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy khác biệt có phải nằm ở loại bài toán, hay ở cách tạo ra dữ liệu cho meta-learner?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là cách tạo dữ liệu. Vậy tóm lại, điểm khác biệt gần nhất giữa chúng là gì?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Bạn đã thấy, loại bài toán không phải là ranh giới. Sai lầm của bạn là gán cứng chúng. Khác biệt cốt lõi là Stacking dùng dự đoán từ tập train (qua cross-validation), Blending dùng tập validation riêng."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q26",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn viết Bagging dùng meta-learner. Nó kết hợp kết quả các mô hình con thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì nó dùng một mô hình khác để học từ output của các mô hình con, giống hệt Stacking."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, Bagging và Stacking giống nhau ở điểm đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Về cơ bản là vậy. Chắc Bagging là một dạng đơn giản hơn của Stacking, nhưng vẫn cần meta-learner để tổng hợp."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét một mô hình Random Forest, một dạng Bagging. Kết quả cuối cùng được quyết định thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì meta-learner sẽ học từ dự đoán của mỗi cây và quyết định. Làm sao khác được?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Cơ chế 'bỏ phiếu theo đa số' (majority voting) trong Random Forest có phải là một 'meta-learner' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó... không hẳn là một mô hình học. Nhưng nó vẫn là bước tổng hợp. Khoan đã..."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy cơ chế 'bỏ phiếu' và một mô hình học (meta-learner) có khác nhau không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có, khác chứ. Bỏ phiếu chỉ là một quy tắc. Vậy là Bagging không dùng meta-learner. Nó dùng voting."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy dựa vào đó, bạn trả lời lại câu hỏi ban đầu như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Bagging khác Stacking ở chỗ nó dùng cùng một thuật toán cho các mô hình con và kết hợp kết quả bằng voting hoặc averaging, không phải qua meta-learner."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Lỗi sai của bạn là đánh đồng cơ chế voting/averaging của Bagging với meta-learner của Stacking."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q27",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ Bagging huấn luyện tuần tự để sửa lỗi. Việc 'sửa lỗi' này diễn ra thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì mô hình sau sẽ tập trung vào những điểm mà mô hình trước dự đoán sai. Như vậy mới mạnh lên được chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, mô hình thứ 10 phải chờ 9 mô hình trước huấn luyện xong?"
+      },
+      {
+        "role": "Student",
+        "text": "Đương nhiên rồi. Phải biết mô hình trước sai ở đâu thì mô hình sau mới học được. Đó là cách duy nhất để cải thiện."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu mình có 1000 máy tính, mình có thể huấn luyện 1000 mô hình cùng lúc không?"
+      },
+      {
+        "role": "Student",
+        "text": "Cùng lúc thì làm sao mà sửa lỗi cho nhau được? Huấn luyện xong một lượt rồi chẳng biết kết quả có tốt hơn không."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy cách của bạn cần rất nhiều thời gian vì phải chờ đợi. Đúng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Ừm... thì tuần tự nên sẽ lâu hơn. Nhưng chất lượng phải tốt hơn chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Có cách nào vừa nhanh (chạy song song), vừa giảm được lỗi tổng thể không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là... nếu mỗi mô hình học độc lập trên một phần dữ liệu, rồi lấy kết quả trung bình? Như vậy sẽ không bị ảnh hưởng bởi một mô hình quá tệ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo cách đó, Bagging huấn luyện các mô hình con như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Huấn luyện độc lập trên các tập con của dataset."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm Bagging với Boosting. Bagging huấn luyện các mô hình song song và độc lập, không phải tuần tự để sửa lỗi."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q28",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "[A] Bạn nói Random Forest là một dạng Boosting. Cơ sở của suy nghĩ này là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì cả hai đều là ensemble của các cây quyết định. Chúng gộp nhiều cây yếu lại để tạo ra một mô hình mạnh."
+      },
+      {
+        "role": "Tutor",
+        "text": "[B] Vậy trong Boosting, cây thứ hai được tạo ra như thế nào so với cây đầu tiên?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó tập trung vào những điểm dữ liệu mà cây đầu tiên dự đoán sai. Nó sửa lỗi cho cây trước đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Chính xác. Vậy bạn có thể huấn luyện cây thứ 100 mà không cần cây thứ 99 không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không được. Cây 100 phải biết lỗi của 99 cây trước để sửa. Đó là bản chất của Boosting mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Tốt. Bây giờ, với Random Forest, cây thứ 100 có cần biết kết quả của cây 99 không?"
+      },
+      {
+        "role": "Student",
+        "text": "Em nghĩ là có chứ, để chúng 'phối hợp' với nhau. Chúng đều là một 'khu rừng' mà, phải có liên kết."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Nếu các cây trong Random Forest không phụ thuộc vào nhau, thì lập luận của bạn còn đúng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Nhưng chúng phải phụ thuộc chứ? Nếu không thì làm sao gọi là ensemble được? Chúng chỉ là một đám cây rời rạc."
+      },
+      {
+        "role": "Tutor",
+        "text": "[D] Sự 'phụ thuộc' để sửa lỗi và sự 'kết hợp' độc lập, cái nào mô tả Random Forest?"
+      },
+      {
+        "role": "Student",
+        "text": "... Kết hợp độc lập. Tức là các cây được tạo song song. Vậy nó không phải Boosting. Nó là Bagging."
+      },
+      {
+        "role": "Tutor",
+        "text": "[E] Chính xác. Bạn đã nhầm lẫn vì cả hai đều dùng cây, nhưng mấu chốt là quy trình xây dựng: tuần tự (Boosting) và song song, độc lập (Bagging)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q29",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng Bagging dễ giải thích. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó được tạo từ nhiều cây quyết định, mà mỗi cây thì rất dễ hiểu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một cây quyết định riêng lẻ, bạn giải thích nó thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì cứ đi theo các nhánh 'if... then...' là ra kết quả thôi. Rất rõ ràng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mô hình Bagging có 100 cây. Bạn giải thích kết quả cuối cùng thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì mình giải thích 100 cây đó. Hơi nhiều nhưng về bản chất vẫn là các quy tắc 'if-then'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử 51 cây nói 'A', 49 cây nói 'B'. Bạn giải thích 'vì sao là A'?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì đa số các cây đã bỏ phiếu cho A. Đó là lời giải thích."
+      },
+      {
+        "role": "Tutor",
+        "text": "Lời giải thích 'vì đa số' có giống 'vì A > 10 và B < 5' không?"
+      },
+      {
+        "role": "Student",
+        "text": "…Không. Cái sau rõ ràng về nguyên nhân hơn. Cái trước chỉ nói về kết quả bỏ phiếu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy việc kết hợp nhiều mô hình ảnh hưởng đến khả năng diễn giải thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó làm giảm khả năng diễn giải. Mình không thể truy vết một quy tắc cụ thể nữa."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Việc tổng hợp làm mất đi sự rõ ràng của từng mô hình đơn lẻ."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q30",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói Bagging bắt buộc phải dùng Decision Tree. Vì sao lại bắt buộc như vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì Random Forest là một dạng Bagging, và nó dùng hoàn toàn Decision Tree. Đó là cách nó hoạt động."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo định nghĩa, Bagging là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là lấy mẫu bootstrap, train nhiều mô hình trên các mẫu đó, rồi lấy kết quả trung bình hoặc vote. Mô hình đó là Decision Tree."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trong định nghĩa bạn vừa nói, có từ nào bắt buộc là 'Decision Tree' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nhưng thực tế toàn dùng nó. Chứ dùng mô hình gì khác được mà hiệu quả?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử mình thay Decision Tree bằng các mô hình Logistic Regression. Có vi phạm bước nào của Bagging không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có chứ. Nó không hợp lý. Logistic Regression làm sao tạo ra sự đa dạng như cây được? Làm vậy thì còn gì là Random Forest."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác, nó không còn là Random Forest. Vậy Random Forest và Bagging là một sao?"
+      },
+      {
+        "role": "Student",
+        "text": "À... không. Tức là Random Forest là trường hợp đặc biệt của Bagging khi dùng Decision Tree."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, bản chất của Bagging có phụ thuộc vào một mô hình cụ thể không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nó là một quy trình. Mô hình cơ sở có thể là bất kỳ loại nào, miễn là tuân thủ quy trình."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tóm lại, bạn nhầm lẫn vì coi Random Forest là Bagging. Thực chất, Bagging là một kỹ thuật tổng quát, linh hoạt vì có thể dùng nhiều loại mô hình."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q31",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng Bagging không dùng cho hồi quy. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì Bagging là bootstrap aggregating, nó dùng cơ chế voting. Mà voting chỉ áp dụng cho bài toán classification thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Cơ chế 'voting' trong Bagging hoạt động thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì mỗi mô hình con sẽ 'vote' cho một lớp. Lớp nào nhiều phiếu nhất thì thắng. Hồi quy làm gì có lớp mà vote."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu mỗi mô hình con trả về một số, không phải nhãn. Chúng ta 'vote' thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì không 'vote' được. Nên nó không áp dụng cho hồi quy được, đúng như em nói."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy chúng ta có thể làm gì khác với N con số đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Làm gì khác? Em không biết... Chắc là không làm gì được. Vốn dĩ nó chỉ dành cho classification."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu có nhiều con số, làm sao để ra một con số đại diện?"
+      },
+      {
+        "role": "Student",
+        "text": "À... có thể lấy trung bình chăng?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu vậy, Bagging có thể áp dụng cho hồi quy không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có lẽ là được, bằng cách lấy trung bình. Vậy 'không áp dụng cho hồi quy' không phải khuyết điểm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Lỗi sai của bạn là cho rằng Bagging chỉ có thể voting. Thực tế, nó có thể lấy trung bình cho bài toán hồi quy."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q32",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng AdaBoost là một thuật toán Bagging. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì cả hai đều là phương pháp ensemble, đều kết hợp nhiều mô hình con để ra quyết định."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trong Bagging, các mô hình con được huấn luyện như thế nào với nhau?"
+      },
+      {
+        "role": "Student",
+        "text": "Chúng được huấn luyện độc lập, song song trên các mẫu dữ liệu khác nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Còn AdaBoost, mô hình thứ hai có cần biết kết quả của mô hình thứ nhất không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không cần chứ. Chúng đều là các weak learner, được tạo ra rồi gộp lại thôi mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu mô hình 1 phân loại sai một điểm, AdaBoost sẽ làm gì với điểm đó ở bước 2?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì nó vẫn là một điểm dữ liệu thôi. Mô hình 2 sẽ học trên một mẫu khác. Việc gì phải quan tâm đến lỗi của mô hình 1."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy AdaBoost không tập trung vào việc sửa lỗi của các mô hình trước đó?"
+      },
+      {
+        "role": "Student",
+        "text": "...Chờ đã. AdaBoost có tăng trọng số cho các điểm bị phân loại sai mà. Vậy là nó có tập trung vào lỗi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu vậy, các mô hình có thực sự được huấn luyện “độc lập” không?"
+      },
+      {
+        "role": "Student",
+        "text": "À không, mô hình sau phải dựa vào kết quả của mô hình trước. Vậy nó là tuần tự, không phải song song. Nó là Boosting."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm lẫn vì cho rằng mọi phương pháp ensemble đều hoạt động giống nhau. Bagging huấn luyện song song, độc lập. Boosting huấn luyện tuần tự, tập trung sửa lỗi."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q33",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn nói Bagging huấn luyện tuần tự. 'Tuần tự' ở đây nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nghĩa là mô hình sau được huấn luyện dựa trên kết quả của mô hình trước. Nó học từ lỗi của mô hình đi trước để cải thiện dần."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mô hình thứ hai phải đợi mô hình thứ nhất huấn luyện xong, đúng chứ?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Đó là cách duy nhất để nó biết mô hình trước sai ở đâu mà sửa. Nếu chạy song song thì làm sao học hỏi nhau được?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử mô hình đầu tiên có một lỗi sai rất lớn. Các mô hình sau sẽ làm gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì chúng sẽ tập trung vào việc sửa lỗi sai đó. Càng về sau mô hình càng chính xác hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nó sửa lỗi, hay nó bị 'ám ảnh' bởi lỗi đó và bỏ qua các lỗi khác?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là... nó sẽ ưu tiên sửa lỗi lớn đó. Nhưng nó vẫn là cải thiện mà?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu 10 mô hình đều phụ thuộc tuần tự, ta có thể huấn luyện chúng trên 10 máy cùng lúc không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, vì phải đợi. À... Nếu vậy thì Bagging sẽ rất chậm. Nhưng để chính xác thì phải chấp nhận."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy để giảm variance, các mô hình cần phụ thuộc vào nhau hay độc lập với nhau?"
+      },
+      {
+        "role": "Student",
+        "text": "Để giảm variance... có lẽ chúng cần độc lập. Nếu phụ thuộc thì chúng sẽ sai giống nhau. Vậy chúng phải được huấn luyện độc lập."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Bạn đã nhầm lẫn Bagging với Boosting. Bagging huấn luyện các mô hình độc lập và song song để giảm variance. Boosting huấn luyện tuần tự để sửa lỗi."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q34",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn viết Bagging phải huấn luyện tuần tự. Tại sao mô hình sau cần đợi mô hình trước?"
+      },
+      {
+        "role": "Student",
+        "text": "Để mô hình sau học từ lỗi của mô hình trước. Như vậy kết quả cuối cùng mới được cải thiện."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nó học 'từ lỗi' như thế nào? Mô hình sau nhận thông tin gì từ mô hình trước?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó phải biết mô hình trước dự đoán sai ở những điểm nào, để tập trung hơn vào các điểm đó. Đó là cách duy nhất để làm tốt hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trong Bagging, mỗi mô hình được huấn luyện trên một mẫu bootstrap. Các mẫu này được tạo ra thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Lấy ngẫu nhiên và có lặp lại từ tập dữ liệu gốc. Nhưng điều đó không thay đổi việc nó phải học tuần tự."
+      },
+      {
+        "role": "Tutor",
+        "text": "Việc tạo mẫu cho mô hình 2 có phụ thuộc vào 'lỗi' của mô hình 1 không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Chắc là không. Việc lấy mẫu là ngẫu nhiên. Nhưng logic cải thiện dần vẫn phải đúng chứ?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu việc tạo dữ liệu và huấn luyện không phụ thuộc vào nhau, chúng ta có thể làm gì đồng thời?"
+      },
+      {
+        "role": "Student",
+        "text": "Có thể huấn luyện chúng cùng lúc... Vậy là, các mô hình trong Bagging không học hỏi lẫn nhau à? Chúng chạy độc lập?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Vậy với câu hỏi ban đầu, phát biểu nào sẽ đúng về Bagging?"
+      },
+      {
+        "role": "Student",
+        "text": "Huấn luyện độc lập các mô hình."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn cơ chế của Bagging, vốn huấn luyện độc lập, với cơ chế của Boosting, nơi mô hình sau học từ lỗi của mô hình trước."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q35",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ Boosting có thể huấn luyện song song. Logic của bạn là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì song song sẽ nhanh hơn. Huấn luyện tuần tự từng mô hình một thì quá chậm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục đích của 'boosting' (tăng cường) là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là để mô hình sau tốt hơn mô hình trước, sửa lỗi của mô hình trước."
+      },
+      {
+        "role": "Tutor",
+        "text": "Làm thế nào mô hình sau 'biết' lỗi của mô hình trước?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó nhìn vào dữ liệu và học. Cả hai mô hình đều học từ cùng một dữ liệu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu chúng học song song, chúng có biết về kết quả của nhau không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nhưng sau khi chạy xong có thể so sánh lỗi. Rõ ràng song song hiệu quả hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu đã huấn luyện xong, làm sao mô hình sau 'sửa' được lỗi của mô hình trước?"
+      },
+      {
+        "role": "Student",
+        "text": "...Vậy là... mô hình sau phải biết lỗi trước khi nó huấn luyện?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, để mô hình sau học từ lỗi của mô hình trước, thứ tự huấn luyện phải là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải là tuần tự. Mô hình trước phải chạy xong thì mô hình sau mới bắt đầu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Niềm tin của bạn là hiệu suất tốc độ là ưu tiên. Nhưng logic của Boosting yêu cầu mô hình sau phải học từ lỗi của mô hình trước, bắt buộc quá trình phải tuần tự."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q36",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng mô hình sau được train để 'tái tạo lại dữ liệu'. Tại sao đó là mục tiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nếu nó tái tạo được dữ liệu một cách hoàn hảo, tức là nó đã hiểu được quy luật và sẽ không mắc lỗi nữa."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục tiêu cuối cùng của cả chuỗi mô hình Boosting là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là để có một mô hình tổng hợp chính xác nhất. Việc tái tạo dữ liệu là cách tốt nhất để làm điều đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử mô hình 1 đã đúng 90% dữ liệu. Mô hình 2 có nên cố tái tạo 90% đó không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có chứ. Nó phải học từ toàn bộ dữ liệu để có cái nhìn tổng thể, không thể chỉ học 10% được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu vậy, công việc của mô hình 2 có khác gì mô hình 1 không?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó... khác chứ. Nó là một mô hình mới, cố gắng làm tốt hơn. Nhưng vẫn phải dựa trên toàn bộ dữ liệu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy phần nào của dữ liệu là quan trọng nhất đối với mô hình 2?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là... những phần mà mô hình 1 chưa thể hiện tốt. Những điểm bị sai."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, câu hỏi ban đầu nên trả lời thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Mô hình sau sẽ cố gắng sửa các lỗi sai của mô hình trước."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Mục tiêu không phải là tái tạo lại dữ liệu, mà là tập trung sửa chữa những gì mô hình trước còn thiếu sót."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q37",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói Bagging là tuần tự. Vì sao mô hình sau cần đợi mô hình trước?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó phải xây dựng tuần tự để giảm phương sai, mỗi mô hình sau sẽ cải thiện hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy trong Bagging, mô hình sau có học từ lỗi của mô hình trước không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc chắn rồi. Đó là cách các kỹ thuật ensemble hoạt động mà, mô hình sau phải tốt hơn mô hình trước."
+      },
+      {
+        "role": "Tutor",
+        "text": "Thế mình có thể huấn luyện tất cả các mô hình trong Bagging cùng lúc không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không thể. Nếu chạy cùng lúc làm sao biết mô hình trước sai ở đâu mà cải thiện?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu mỗi mô hình chạy trên một tập dữ liệu con hoàn toàn độc lập thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Vẫn phải chờ để tổng hợp kết quả cuối cùng chứ? Chạy xong rồi vẫn phải xếp hàng đợi để vote."
+      },
+      {
+        "role": "Tutor",
+        "text": "Việc 'đợi để vote' có giống với 'đợi để học từ lỗi' không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Khác nhau. 'Học từ lỗi' nghĩa là mô hình sau bị phụ thuộc. Còn 'vote' thì không."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy đâu là Bagging, đâu là Boosting dựa trên sự phân biệt đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Boosting là 'học từ lỗi', nên nó tuần tự. Bagging chỉ 'vote', nên nó có thể chạy độc lập."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm vì cho rằng Bagging cũng học hỏi tuần tự. Thực chất, Bagging tạo các mô hình độc lập, còn Boosting tạo chúng một cách tuần tự để sửa lỗi."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q38",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói Bagging và Boosting chỉ dùng cây quyết định. Tại sao lại chắc chắn như vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì Random Forest dùng Bagging, và nó là tập hợp cây. Gradient Boosting cũng dùng cây. Đó là các ví dụ tiêu biểu nhất rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, bản chất của 'Bagging' là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là tạo ra nhiều cây từ các mẫu dữ liệu khác nhau rồi bỏ phiếu. Giống như Random Forest."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu mình có 100 mô hình SVM. Mình huấn luyện mỗi SVM trên một mẫu bootstrap. Rồi lấy voting kết quả. Quy trình này có được gọi là Bagging không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không. Đó không phải Bagging. Bagging phải dùng cây. Cái bạn nói là một kỹ thuật khác, không phải Bagging tiêu chuẩn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Quy trình của mình có lấy mẫu bootstrap không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nó có tổng hợp (aggregating) kết quả từ nhiều mô hình không?"
+      },
+      {
+        "role": "Student",
+        "text": "Cũng có... Nhưng nó không phải là cây. Bagging là về cây."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy Bagging là một quy trình hay một loại mô hình cụ thể?"
+      },
+      {
+        "role": "Student",
+        "text": "Là một quy trình... quy trình này áp dụng cho mô hình cơ sở... Chắc là mô hình cơ sở không nhất thiết phải là cây."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy dựa trên điều đó, hãy xem lại các phát biểu. Phát biểu nào đúng về Bagging và Boosting?"
+      },
+      {
+        "role": "Student",
+        "text": "Phát biểu đúng là 'Cả bagging và boosting đều kết hợp nhiều mô hình cơ sở'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Ban đầu bạn đã nhầm lẫn ví dụ (Random Forest) với định nghĩa của phương pháp (Bagging). Bagging là một kỹ thuật tổng quát, có thể áp dụng cho nhiều loại mô hình cơ sở."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q39",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải của bạn, bạn nói Gradient Boost dùng vote số đông. Tại sao lại là vote?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì đây là một thuật toán ensemble, kết hợp nhiều cây lại để ra kết quả cuối. Kết hợp thì vote là hợp lý nhất rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy các cây quyết định này được tạo ra độc lập với nhau, đúng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Mỗi cây là một bộ não riêng, chúng độc lập rồi mình lấy biểu quyết để giảm sai sót."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu các cây độc lập, tại sao không tạo chúng cùng một lúc?"
+      },
+      {
+        "role": "Student",
+        "text": "Tạo tuần tự cho chắc chắn thôi. Nhưng ý tưởng cốt lõi vẫn là vote, cách tạo không ảnh hưởng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Cây thứ N có biết thông tin gì về sai sót của N-1 cây trước đó không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không. Đã nói là chúng độc lập mà. Nếu biết thì đâu còn khách quan để mà vote nữa."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo logic đó, cây sau không sửa lỗi cho cây trước. Đúng chứ?"
+      },
+      {
+        "role": "Student",
+        "text": "…Đúng. Chúng chỉ vote thôi. Nhưng… vậy thì ý tưởng không phải là cải thiện dần dần à?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Vậy ý tưởng chính nên là gì để 'cải thiện dần dần'?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là… cây sau phải học từ sai lầm của cây trước. Nó phải tập trung vào những gì các cây trước dự đoán sai."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bạn đã tự nhận ra. Sai lầm của bạn là nhầm lẫn Gradient Boost với Bagging. Gradient Boost xây dựng các cây tuần tự, cây sau sửa lỗi cho cây trước. Bagging mới tạo các mô hình độc lập rồi vote."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q40",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn viết rằng thêm cây mới làm residuals tăng. Tại sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì mỗi cây mới thêm vào làm mô hình phức tạp hơn. Phức tạp hơn thì khả năng sai phải tăng lên chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục tiêu của thuật toán Gradient Boosting là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để có một mô hình dự đoán tốt, chính xác cao."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một mô hình 'chính xác cao' có sai số (residuals) thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải có sai số nhỏ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Ok. Vậy nếu thêm cây luôn làm sai số tăng, thuật toán có đạt được mục tiêu không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không... Nhưng logic của em vẫn thấy đúng. Thêm một thứ mới vào một hệ thống đang lỗi thì nó phải lỗi hơn chứ?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Cây mới được huấn luyện để dự đoán điều gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó được huấn luyện trên chính phần sai số (residual) của các cây trước. À... vậy là nó được tạo ra để sửa lỗi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu nó 'sửa lỗi' thành công, dù chỉ một phần, thì residual mới sẽ thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ nhỏ hơn cái cũ. Vậy là residuals sẽ có xu hướng nhỏ dần."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Ban đầu bạn cho rằng thêm cây làm tăng độ phức tạp và lỗi. Thực tế, mỗi cây mới được thêm vào để khắc phục lỗi của chuỗi cây trước đó, vì vậy residuals có xu hướng giảm."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q41",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ rằng Random Forest thuộc nhóm Boosting. Logic của bạn là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó là thuật toán ensemble, kết hợp nhiều cây quyết định để cho kết quả tốt hơn. Giống định nghĩa của Boosting mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, thuật toán ensemble hoạt động thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Là gộp nhiều mô hình yếu thành một mô hình mạnh. Random Forest gộp nhiều cây, nên nó là ensemble."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Vậy trong Random Forest, các cây được tạo ra độc lập hay tuần tự?"
+      },
+      {
+        "role": "Student",
+        "text": "Chúng được tạo song song, độc lập với nhau. Nhưng cuối cùng vẫn gộp lại mà, nên kết quả vẫn mạnh hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy cây thứ hai có học hỏi từ lỗi sai của cây thứ nhất không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, chúng độc lập mà. Nhưng việc đó có quan trọng không? Miễn là kết hợp lại là được chứ?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Một phương pháp mà mô hình sau không sửa lỗi cho mô hình trước... có phải là Boosting không?"
+      },
+      {
+        "role": "Student",
+        "text": "Hmm... Em nghĩ là có. Vì nó vẫn là 'boost' hiệu năng tổng thể lên."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, sự khác biệt cốt lõi giữa 'học từ lỗi sai' và 'trung bình kết quả' là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "À... một cái là cải tiến tuần tự, một cái là tổng hợp độc lập. Có lẽ Random Forest không phải Boosting rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Giờ hãy xem lại các lựa chọn. Thuật toán nào được xây dựng trên nguyên tắc học tuần tự từ lỗi?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là AdaBoost. Vì nó là viết tắt của Adaptive Boosting, nghĩa là nó thích ứng với lỗi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tóm lại: Bạn đã nhầm Random Forest (một thuật toán Bagging) với Boosting. Điểm cốt lõi của Boosting là các mô hình sau học và sửa lỗi của các mô hình trước một cách tuần tự."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q42",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói AdaBoost không phải Boosting. Căn cứ của bạn là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì trong tên nó không có chữ 'Boost'. XGBoost, CatBoost đều có, nên chúng mới là Boosting."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một thuật toán thuộc nhóm Boosting bắt buộc phải có chữ 'Boost' trong tên?"
+      },
+      {
+        "role": "Student",
+        "text": "Gần như vậy. Đó là một dấu hiệu nhận biết quan trọng để phân loại chúng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tên 'AdaBoost' là viết tắt của 'Adaptive Boosting'. Bạn nghĩ sao về điều này?"
+      },
+      {
+        "role": "Student",
+        "text": "Chỉ là cái tên thôi. Có thể cơ chế bên trong của nó đã khác rồi, không còn là Boosting nữa."
+      },
+      {
+        "role": "Tutor",
+        "text": "AdaBoost học từ lỗi của mô hình yếu trước đó. Đúng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng, nó điều chỉnh trọng số... Nhưng em thấy nó không giống XGBoost hay CatBoost lắm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Việc 'học từ lỗi của bước trước' có phải là đặc điểm cốt lõi của Boosting?"
+      },
+      {
+        "role": "Student",
+        "text": "...Chắc là có. Vậy là em đã sai khi chỉ nhìn vào tên."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nhìn lại 4 lựa chọn, thuật toán nào hoạt động khác biệt nhất?"
+      },
+      {
+        "role": "Student",
+        "text": "Random Forest. Các cây của nó hoàn toàn độc lập, không học từ lỗi của nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn vì tên gọi, nhưng cốt lõi của Boosting là học tuần tự, điều mà AdaBoost làm và Random Forest thì không."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q43",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn viết rằng Boosting chỉ dùng cho hồi quy. Cơ sở cho khẳng định này là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì Boosting tối ưu các mô hình yếu bằng cách giảm sai số. Sai số thường là số, nên nó là hồi quy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, bài toán dự đoán 'có mưa hay không' có phải hồi quy không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không. Đó là bài toán phân loại nhị phân. Boosting không dùng cho cái này được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bạn có nghe về thuật toán AdaBoost chưa?"
+      },
+      {
+        "role": "Student",
+        "text": "Có, đó là một thuật toán Boosting. Chắc nó chỉ dùng để dự đoán giá cả hay gì đó thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu mình nói AdaBoost được phát triển đầu tiên cho bài toán phân loại thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Vô lý. Làm sao nó có thể tối ưu trên nhãn 'mưa' và 'không mưa' được? Logic của em là đúng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy giới hạn nằm ở logic của bạn hay ở thuật toán?"
+      },
+      {
+        "role": "Student",
+        "text": "...Có lẽ em đã sai về giới hạn của nó. Vậy nó có thể dùng cho cả hai."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu nó mạnh mẽ trên nhiều loại bài toán, slide đã nêu minh chứng nào cho sự 'mạnh mẽ' đó?"
+      },
+      {
+        "role": "Student",
+        "text": "À... slide có nhắc đến việc các thuật toán này đạt giải cao trong các cuộc thi Kaggle."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Nhầm lẫn của bạn là giới hạn Boosting vào một loại bài toán, trong khi sự nổi tiếng của nó đến từ hiệu quả vượt trội trên nhiều lĩnh vực, được chứng minh qua các cuộc thi."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q44",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn viết rằng CatBoost là đủ để thắng. Vì sao bạn chắc chắn như vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì CatBoost là mô hình SOTA (state-of-the-art). Nó rất mạnh và nhanh, xử lý được nhiều loại dữ liệu. Dùng nó là đủ rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục tiêu chính của một cuộc thi Kaggle là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là đạt được điểm số cao nhất trên bảng xếp hạng, vượt qua các đối thủ khác."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử tất cả mọi người đều dùng CatBoost. Ai sẽ là người chiến thắng?"
+      },
+      {
+        "role": "Student",
+        "text": "Người nào tinh chỉnh tham số tốt hơn, hoặc có feature engineering tốt hơn. Nhưng mô hình cốt lõi vẫn là CatBoost."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nếu có một mô hình khác, ví dụ A, kém hơn CatBoost tổng thể. Nhưng A lại đúng ở những điểm mà CatBoost sai thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Nhưng CatBoost đã là tốt nhất rồi. Những điểm nó sai rất ít, không đáng để dùng một mô hình kém hơn để sửa."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trên bảng xếp hạng Kaggle, chênh lệch 0.001 điểm có quan trọng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Rất quan trọng, nó có thể quyết định thứ hạng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, để có thêm 0.001 điểm đó, bạn sẽ làm gì với mô hình A?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là... tìm cách tận dụng những dự đoán đúng của nó mà CatBoost bỏ lỡ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, một quy tắc chung để tối đa hóa điểm số là gì? Áp dụng điều đó, hãy trả lời lại câu hỏi ban đầu."
+      },
+      {
+        "role": "Student",
+        "text": "Là kết hợp điểm mạnh của nhiều mô hình khác nhau. Vậy đáp án đúng là 'Kết hợp của nhiều mô hình như trên'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Một mô hình dù mạnh vẫn có điểm yếu. Việc kết hợp nhiều mô hình giúp bù trừ và tạo ra kết quả vượt trội."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q45",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn chọn Logistic Regression. Vì sao bạn nghĩ nó xử lý tốt dữ liệu phi tuyến?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó là một thuật toán phân loại mạnh mẽ. Nó có thể tìm ra mối quan hệ giữa các biến để phân loại."
+      },
+      {
+        "role": "Tutor",
+        "text": "Ranh giới mà Logistic Regression tạo ra để phân loại có hình dạng gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó tạo ra một ranh giới quyết định. Với dữ liệu phức tạp, ranh giới đó cũng sẽ phức tạp."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy ranh giới đó là một đường thẳng hay một đường cong?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó phải là đường cong chứ? Làm sao một đường thẳng có thể xử lý dữ liệu phi tuyến được. Em tin là nó có thể uốn lượn được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hãy tưởng tượng dữ liệu có dạng hai hình tròn lồng vào nhau. Một đường thẳng có thể tách chúng ra không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không thể. Nhưng Logistic Regression không chỉ là một đường thẳng đơn giản. Nó phải có cách nào đó chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bản chất của phương trình Logistic Regression là tuyến tính. Vậy mô hình nào có thể tạo ra ranh giới không phải đường thẳng?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là một mô hình dựa trên cây quyết định... như Random Forest. Nó có thể chia không gian theo nhiều cách."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy với bài toán yêu cầu xử lý quan hệ phi tuyến, lựa chọn nào sẽ phù hợp hơn?"
+      },
+      {
+        "role": "Student",
+        "text": "Là Random Forest, vì nó có thể tạo ra các ranh giới phức tạp, không bị giới hạn trong một đường thẳng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Lỗi sai của bạn là cho rằng Logistic Regression có thể học được ranh giới phi tuyến. Thực chất, nó là một mô hình tuyến tính."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q46",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói Bagging và Boosting là kỹ thuật cơ bản. Vì sao bạn nghĩ chúng 'cơ bản'?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì chúng thay thế cho Voting. Cái mới thay thế cái cũ thì nó phải đơn giản và hiệu quả hơn chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, 'cơ bản' có nghĩa là đơn giản hơn trong cách hoạt động?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Chúng chỉ là cách kết hợp mô hình thôi mà, cũng giống như Voting."
+      },
+      {
+        "role": "Tutor",
+        "text": "Boosting hoạt động thế nào? Mô hình sau có biết gì về mô hình trước không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có, nó tập trung vào lỗi sai của mô hình trước. Nhưng cuối cùng vẫn là gộp lại. Em không thấy nó phức tạp hơn nhiều."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một hệ thống học tuần tự từ lỗi sai của chính nó, có được xem là 'cơ bản' không?"
+      },
+      {
+        "role": "Student",
+        "text": "So với các mạng neural phức tạp thì nó vẫn là cơ bản. Về bản chất nó vẫn là một chuỗi các bước đơn giản thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu Voting là cộng điểm, còn Boosting là sửa lỗi nối tiếp. Chúng cùng một mức độ phức tạp sao?"
+      },
+      {
+        "role": "Student",
+        "text": "...Chắc là không. Boosting có vẻ có nhiều bước phụ thuộc nhau hơn. Nó không chỉ đơn giản là gộp lại."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy dựa trên điều đó, bạn sẽ phân loại chúng như thế nào so với Voting?"
+      },
+      {
+        "role": "Student",
+        "text": "Chúng là các kỹ thuật nâng cao hơn, hiệu quả cao."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm khi cho rằng chúng 'cơ bản'. Chúng là kỹ thuật nâng cao vì có cơ chế hoạt động phức tạp hơn Voting."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q47",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói nên dùng cùng một bộ siêu tham số. Tại sao lại hiệu quả?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nếu đã tìm ra bộ tốt nhất rồi, cứ dùng lại cho nhanh chứ ạ? Việc gì phải tìm lại."
+      },
+      {
+        "role": "Tutor",
+        "text": "Siêu tham số của một mô hình dùng để làm gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để điều khiển cách mô hình học từ dữ liệu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tưởng tượng mình có bộ siêu tham số tốt nhất cho ảnh chó mèo."
+      },
+      {
+        "role": "Student",
+        "text": "Vâng, một bộ đã được tối ưu hoàn hảo."
+      },
+      {
+        "role": "Tutor",
+        "text": "Dùng chính bộ đó cho bài toán dự đoán giá nhà được không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là được chứ? Dữ liệu nào cũng là số thôi mà. Miễn là mô hình học tốt."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mô hình có cần thích ứng với đặc điểm riêng của dữ liệu không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có lẽ là có... Dữ liệu khác nhau thì cách học cũng phải khác. Em đoán vậy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy làm thế nào để mô hình thích ứng với mỗi bộ dữ liệu mới?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải... chọn lại siêu tham số cho phù hợp với nó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Lỗi là giả định một bộ siêu tham số 'tốt nhất' cho mọi bài toán. Đúng ra phải tinh chỉnh chúng cho từng dữ liệu cụ thể."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q48",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng Blending là kỹ thuật cơ bản. Dựa vào đâu bạn kết luận vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó cũng kết hợp kết quả từ nhiều model, giống như Voting hay Averaging thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Voting kết hợp kết quả của các model như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó lấy kết quả bỏ phiếu theo đa số. Rất đơn giản."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy Blending có chỉ đơn giản là lấy kết quả bỏ phiếu không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không hẳn, nó có dùng một model khác để học cách kết hợp. Nhưng mục tiêu cuối cùng vẫn là kết hợp, nên nó vẫn là cơ bản."
+      },
+      {
+        "role": "Tutor",
+        "text": "Model 'học cách kết hợp' đó, nó lấy gì làm đầu vào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó lấy output của các model ban đầu để học. Nhưng nó vẫn là một phần của ensemble thôi mà?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Một bên chỉ tính toán, một bên có thêm một bước 'học' nữa. Chúng có cùng độ phức tạp không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Chắc là không. Bên có bước học thêm sẽ phức tạp hơn. Vậy nó là nâng cao."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy với tiêu chí đó, kỹ thuật nào trong slide là cơ bản?"
+      },
+      {
+        "role": "Student",
+        "text": "Là Voting. Vì nó không có bước học thêm đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm vì chúng cùng là kỹ thuật kết hợp. Điểm khác biệt cốt lõi là Blending dùng một 'meta-learner' để học cách kết hợp, nên nó là kỹ thuật nâng cao."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q49",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn đã chọn Bagging và Boosting. Vì sao bạn nghĩ chúng là kỹ thuật 'nâng cao'?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì chúng rất mạnh và phức tạp. Random Forest (Bagging) hay Gradient Boosting đều là những model hàng đầu mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, 'nâng cao' đồng nghĩa với 'mạnh' hoặc 'phức tạp'?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Những kỹ thuật cơ bản như Decision Tree thì không thể gọi là nâng cao được. Boosting rõ ràng phức tạp hơn nhiều."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hãy xem xét Stacking. Bạn có biết đầu vào của một Stacking model là gì không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là dữ liệu thôi, giống như các model khác?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Stacking lấy *kết quả dự đoán* của các model khác làm đầu vào. Điều này có khác Bagging không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có khác. Nhưng em vẫn thấy Boosting phức tạp hơn. Nó sửa lỗi của cây trước, logic rất rắc rối."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một kỹ thuật xây dựng model từ dữ liệu. Một kỹ thuật xây dựng model từ *model khác*. Cái nào ở tầng cao hơn?"
+      },
+      {
+        "role": "Student",
+        "text": "À... cái xây dựng từ model khác nghe có vẻ 'meta' hơn. Giống như nó quản lý các model khác."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, giữa các lựa chọn, kỹ thuật nào hoạt động ở 'tầng quản lý' đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Là Stacking. Vậy 'nâng cao' ở đây không phải là 'phức tạp' mà là 'meta-level'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm lẫn độ phức tạp tính toán với cấp độ kiến trúc. Bagging và Boosting là các kỹ thuật nền tảng, còn Stacking là kỹ thuật meta-ensemble."
+      }
+    ]
+  },
+  {
+    "question_id": "ch10_q50",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng Ensemble Learning chỉ dùng cho phân loại nhị phân. Tại sao bạn chắc chắn vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì các ví dụ em học như Adaboost đều tập trung vào bài toán có/không. Nó tối ưu cho việc đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mục đích cốt lõi của Ensemble Learning là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là kết hợp nhiều mô hình yếu để thành một mô hình mạnh, chính xác hơn trong việc phân loại."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử ta cần dự đoán giá nhà. Đây là bài toán gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Đó là bài toán hồi quy, không phải phân loại."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu mình có 3 mô hình dự đoán giá, mình có thể lấy trung bình kết quả của chúng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Được chứ, để kết quả ổn định hơn. Nhưng đó đâu phải Ensemble Learning, đó là hồi quy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Việc 'kết hợp nhiều mô hình để kết quả ổn định hơn' có khớp với định nghĩa bạn nêu không?"
+      },
+      {
+        "role": "Student",
+        "text": "…Nó có vẻ giống. Nhưng em vẫn nghĩ bản chất của Ensemble là cho nhị phân."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy dựa trên logic vừa rồi, phạm vi áp dụng của Ensemble Learning thực sự là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Có lẽ nó không chỉ giới hạn ở phân loại nhị phân, mà có thể dùng cho cả hồi quy nữa."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Lỗi sai của bạn là giới hạn một kỹ thuật chung (kết hợp mô hình) vào một trường hợp cụ thể (phân loại nhị phân)."
+      }
+    ]
+  }
+]

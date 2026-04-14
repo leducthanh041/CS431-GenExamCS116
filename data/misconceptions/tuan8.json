@@ -1,0 +1,632 @@
+[
+  {
+    "question_id": "ch7b_q1",
+    "concepts": [
+      "Ứng dụng của Logistic Regression",
+      "Bài toán phân lớp nhị phân"
+    ],
+    "misconceptions": [
+      "cho rằng Logistic Regression dùng để dự đoán một giá trị liên tục vì tên của nó có chữ 'Regression'.",
+      "tin rằng bài toán phân lớp và bài toán gom nhóm (clustering) là giống nhau nên có thể dùng chung thuật toán.",
+      "cho rằng Logistic Regression là một thuật toán học không giám sát, tương tự như gom nhóm hay giảm chiều dữ liệu."
+    ],
+    "reasoning": "Logistic Regression là một mô hình phân lớp, không phải hồi quy, mặc dù có tên 'Regression'. Nó được dùng để dự đoán xác suất của một đầu ra nhị phân (0 hoặc 1), khác với gom nhóm hay giảm chiều dữ liệu là các bài toán học không giám sát."
+  },
+  {
+    "question_id": "ch7b_q2",
+    "concepts": [
+      "Hàm giả thuyết của Logistic Regression",
+      "Hàm Sigmoid"
+    ],
+    "misconceptions": [
+      "cho rằng hàm dự đoán của Logistic Regression là tuyến tính thuần túy (ŷ = β̂x) vì nó là một dạng của mô hình tuyến tính tổng quát.",
+      "tin rằng hàm dự đoán sử dụng logarit trực tiếp vì tên mô hình là 'Logistic'.",
+      "cho rằng hàm dự đoán chỉ đơn giản là tổng của trọng số và đầu vào, không có hàm kích hoạt nào."
+    ],
+    "reasoning": "Mô hình Logistic Regression sử dụng hàm sigmoid (σ) để chuyển đổi đầu ra của tổ hợp tuyến tính (β̂x) thành một giá trị xác suất trong khoảng (0, 1), phù hợp cho bài toán phân lớp."
+  },
+  {
+    "question_id": "ch7b_q3",
+    "concepts": [
+      "Hàm mất mát cho bài toán phân lớp",
+      "Binary Cross-Entropy (BCE)"
+    ],
+    "misconceptions": [
+      "cho rằng có thể dùng các hàm lỗi của bài toán hồi quy như MSE hay MAE cho Logistic Regression, vì tên của nó cũng là 'Regression'.",
+      "tin rằng mọi mô hình học máy đều có thể tối ưu bằng hàm lỗi bình phương trung bình (MSE) vì đây là hàm lỗi phổ biến nhất.",
+      "cho rằng RMSE là lựa chọn tốt hơn MSE vì nó cùng đơn vị với biến mục tiêu, và áp dụng logic này cho cả bài toán phân lớp."
+    ],
+    "reasoning": "Hàm lỗi cho Logistic Regression là Binary Cross-Entropy (BCE) vì đây là bài toán phân lớp nhị phân. Các hàm lỗi như MSE, MAE, RMSE thường được dùng cho các bài toán hồi quy (dự đoán giá trị liên tục)."
+  },
+  {
+    "question_id": "ch7b_q4",
+    "concepts": [
+      "Biên quyết định trong Logistic Regression",
+      "Ngưỡng phân lớp"
+    ],
+    "misconceptions": [
+      "cho rằng biên quyết định là nơi xác suất dự đoán bằng 1, vì đó là lúc mô hình chắc chắn nhất về một lớp.",
+      "tin rằng biên quyết định là một miền (lớn hơn 0 hoặc nhỏ hơn 0) chứ không phải là một đường ranh giới.",
+      "cho rằng đường biên quyết định không tồn tại hoặc không được xác định bởi biểu thức β̂x."
+    ],
+    "reasoning": "Đường biên quyết định là nơi mô hình không chắc chắn nên phân vào lớp nào. Trong Logistic Regression, điều này xảy ra khi đầu vào của hàm sigmoid bằng 0 (β̂x = 0), dẫn đến đầu ra xác suất là σ(0) = 0.5."
+  },
+  {
+    "question_id": "ch7b_q5",
+    "concepts": [
+      "Diễn giải biên quyết định",
+      "Quan hệ giữa đầu ra tuyến tính và nhãn dự đoán"
+    ],
+    "misconceptions": [
+      "cho rằng khi β̂x > 0 thì giá trị dự đoán là 0, vì nhầm lẫn với hướng của bất đẳng thức.",
+      "tin rằng miền β̂x > 0 chứa cả hai lớp như nhau, vì cho rằng đường biên chỉ là một đường thẳng trong không gian.",
+      "cho rằng miền này không thể phân loại được, có thể vì nghĩ rằng chỉ có đường biên mới có ý nghĩa."
+    ],
+    "reasoning": "Khi β̂x > 0, hàm sigmoid σ(β̂x) sẽ có giá trị lớn hơn 0.5. Theo quy ước, xác suất lớn hơn 0.5 được phân vào lớp 1. Do đó, miền β̂x > 0 tương ứng với dự đoán y = 1."
+  },
+  {
+    "question_id": "ch7b_q6",
+    "concepts": [
+      "Diễn giải biên quyết định",
+      "Quan hệ giữa đầu ra tuyến tính và nhãn dự đoán"
+    ],
+    "misconceptions": [
+      "cho rằng khi β̂x < 0 thì giá trị dự đoán là 1, vì nhầm lẫn với hướng của bất đẳng thức hoặc vai trò của các lớp.",
+      "tin rằng miền β̂x < 0 là miền nhiễu vì giá trị âm thường liên quan đến sai số hoặc giá trị không mong muốn.",
+      "cho rằng miền này không có dữ liệu, vì có thể nghĩ rằng dữ liệu chỉ tồn tại ở một phía của đường biên."
+    ],
+    "reasoning": "Khi β̂x < 0, hàm sigmoid σ(β̂x) sẽ có giá trị nhỏ hơn 0.5. Theo quy ước, xác suất nhỏ hơn 0.5 được phân vào lớp 0. Do đó, miền β̂x < 0 tương ứng với dự đoán y = 0."
+  },
+  {
+    "question_id": "ch7b_q7",
+    "concepts": [
+      "Ưu điểm của Logistic Regression"
+    ],
+    "misconceptions": [
+      "cho rằng Logistic Regression có thể giải quyết tốt mọi bài toán phức tạp vì nó là một mô hình nền tảng.",
+      "tin rằng Logistic Regression không bị ảnh hưởng bởi nhiễu vì nó là một mô hình đơn giản và có cơ sở xác suất."
+    ],
+    "reasoning": "Logistic Regression là một mô hình đơn giản, hiệu quả và có thể mở rộng, nhưng nó là một mô hình tuyến tính nên gặp khó khăn với dữ liệu có quan hệ phi tuyến phức tạp và cũng nhạy cảm với các điểm dữ liệu ngoại lai (nhiễu)."
+  },
+  {
+    "question_id": "ch7b_q8",
+    "concepts": [
+      "Nhược điểm của Logistic Regression"
+    ],
+    "misconceptions": [
+      "cho rằng Logistic Regression không thể dùng cho phân loại nhị phân, có lẽ vì nhầm lẫn với một mô hình khác hoặc hiểu sai mục đích chính của nó.",
+      "tin rằng Logistic Regression bắt buộc cần hidden layer, vì nhầm lẫn với kiến trúc của mạng nơ-ron đa lớp (MLP)."
+    ],
+    "reasoning": "Khuyết điểm chính của Logistic Regression là giả định biên quyết định tuyến tính, khiến nó hoạt động không tốt trên dữ liệu phức tạp và dễ bị ảnh hưởng bởi nhiễu. Ngược lại, nó là mô hình tiêu biểu cho phân loại nhị phân và không có hidden layer."
+  },
+  {
+    "question_id": "ch7b_q9",
+    "concepts": [
+      "Biên quyết định của Logistic Regression",
+      "Tổ hợp tuyến tính của đặc trưng"
+    ],
+    "misconceptions": [
+      "cho rằng biên quyết định của Logistic Regression có dạng cong vì mô hình này sử dụng hàm sigmoid, một hàm phi tuyến.",
+      "tin rằng biên quyết định của Logistic Regression chỉ có thể dựa trên một đặc trưng duy nhất, giống như cách một nút trong cây quyết định hoạt động.",
+      "cho rằng biên quyết định là một thuộc tính cố định của thuật toán, không phụ thuộc vào dữ liệu hay các đặc trưng đầu vào."
+    ],
+    "reasoning": "Biên quyết định của Logistic Regression cơ bản là một siêu phẳng, được tạo ra từ một tổ hợp tuyến tính của các đặc trưng đầu vào. Mặc dù hàm sigmoid được sử dụng, nó chỉ biến đổi đầu ra tuyến tính thành xác suất và không làm cho biên quyết định bị cong."
+  },
+  {
+    "question_id": "ch7b_q10",
+    "concepts": [
+      "Mô hình cho dữ liệu phi tuyến",
+      "Cấu trúc bài giảng"
+    ],
+    "misconceptions": [
+      "cho rằng cross-validation là nội dung chính tiếp theo, vì đây là một kỹ thuật đánh giá mô hình quan trọng.",
+      "tin rằng tiền xử lý dữ liệu thiếu là bước logic tiếp theo sau khi học một mô hình.",
+      "cho rằng học không giám sát sẽ được đề cập ngay sau một mô hình học có giám sát như Logistic Regression."
+    ],
+    "reasoning": "Sau khi giới thiệu một mô hình tuyến tính (Logistic Regression), một bước phát triển tự nhiên trong bài giảng là thảo luận về cách xử lý các mối quan hệ phi tuyến mà mô hình tuyến tính không giải quyết được."
+  },
+  {
+    "question_id": "ch7b_q11",
+    "concepts": [
+      "Nguyên lý hoạt động của KNN",
+      "Học dựa trên thực thể (Instance-based learning)"
+    ],
+    "misconceptions": [
+      "cho rằng KNN phân loại dựa trên xác suất hậu nghiệm, vì nhầm lẫn với mô hình Naive Bayes.",
+      "tin rằng KNN tối ưu hóa hàm lỗi BCE thông qua gradient descent, vì nhầm lẫn với các mô hình như Logistic Regression hay mạng nơ-ron.",
+      "cho rằng KNN sử dụng Information Gain để phân loại, vì nhầm lẫn với Cây quyết định (Decision Tree)."
+    ],
+    "reasoning": "KNN (K-Nearest Neighbors) là một thuật toán phân loại bằng cách tìm K điểm dữ liệu huấn luyện gần nhất với điểm dữ liệu mới và dự đoán nhãn dựa trên đa số nhãn của K điểm lân cận đó."
+  },
+  {
+    "question_id": "ch7b_q12",
+    "concepts": [
+      "Đặc điểm của mô hình KNN",
+      "Mô hình tham số và phi tham số"
+    ],
+    "misconceptions": [
+      "cho rằng KNN là mô hình có tham số vì nó có tham số K.",
+      "tin rằng KNN luôn là mô hình tuyến tính vì nó tính toán khoảng cách.",
+      "cho rằng KNN chỉ có thể dùng cho bài toán hồi quy, vì nhầm lẫn với biến thể KNN Regressor hoặc không biết về KNN Classifier."
+    ],
+    "reasoning": "KNN được coi là mô hình phi tham số vì nó không học một tập hợp trọng số (tham số) cố định từ dữ liệu huấn luyện. Thay vào đó, nó ghi nhớ toàn bộ tập dữ liệu để đưa ra dự đoán."
+  },
+  {
+    "question_id": "ch7b_q13",
+    "concepts": [
+      "Áp dụng thuật toán KNN",
+      "Quy tắc bỏ phiếu theo đa số (Majority vote)"
+    ],
+    "misconceptions": [
+      "cho rằng nhãn dự đoán là 'cam' hoặc 'hồng' vì chỉ nhìn vào các điểm gần nhất thuộc các lớp đó mà không đếm đủ K=3.",
+      "tin rằng không thể xác định được nhãn vì có thể có sự cân bằng giữa các lớp lân cận (ví dụ nếu K=2 và có 1 hồng, 1 đen).",
+      "cho rằng phải tính trung bình vị trí của các điểm lân cận thay vì chỉ lấy nhãn của chúng."
+    ],
+    "reasoning": "Để dự đoán cho điểm mới với K=3, ta tìm 3 điểm gần nhất. Dựa trên hình minh họa, 3 điểm gần nhất có khả năng bao gồm 2 điểm 'đen' và 1 điểm 'hồng'. Theo quy tắc đa số, nhãn dự đoán sẽ là 'đen'."
+  },
+  {
+    "question_id": "ch7b_q14",
+    "concepts": [
+      "Mô hình tham số và phi tham số",
+      "Bản chất của KNN"
+    ],
+    "misconceptions": [
+      "cho rằng KNN vẫn có thể học trọng số, có thể nhầm với phiên bản KNN có trọng số theo khoảng cách.",
+      "tin rằng việc KNN là mô hình phi tham số chỉ đúng với K=1.",
+      "cho rằng đặc điểm tham số/phi tham số của mô hình phụ thuộc vào số chiều của dữ liệu."
+    ],
+    "reasoning": "Phát biểu rằng mô hình học một bộ trọng số cố định từ dữ liệu mâu thuẫn với bản chất của KNN. KNN là một mô hình phi tham số, nó không học tham số mà sử dụng toàn bộ dữ liệu huấn luyện tại thời điểm dự đoán."
+  },
+  {
+    "question_id": "ch7b_q15",
+    "concepts": [
+      "Nguyên lý cốt lõi của KNN",
+      "Học dựa trên khoảng cách"
+    ],
+    "misconceptions": [
+      "cho rằng KNN ra quyết định dựa trên hàm sigmoid, vì nhầm lẫn với Logistic Regression.",
+      "tin rằng KNN xây dựng một cây quyết định ngầm, vì nhầm lẫn với Decision Tree.",
+      "cho rằng KNN sử dụng hidden layer, vì nhầm lẫn với mạng nơ-ron (MLP)."
+    ],
+    "reasoning": "Điểm cốt lõi của thuật toán KNN là việc phân loại một điểm dữ liệu mới dựa trên việc tính toán khoảng cách từ điểm đó đến tất cả các điểm trong tập huấn luyện và lấy ý kiến của K điểm gần nhất."
+  },
+  {
+    "question_id": "ch7b_q16",
+    "concepts": [
+      "Cấu trúc của MLP (Multi-Layer Perceptron)",
+      "Lớp ẩn (Hidden Layer)"
+    ],
+    "misconceptions": [
+      "cho rằng MLP sử dụng các centroid, vì nhầm lẫn với thuật toán gom nhóm như K-Means.",
+      "tin rằng MLP sử dụng entropy để ra quyết định, vì nhầm lẫn với Decision Tree.",
+      "cho rằng MLP sử dụng epsilon và minPts, vì nhầm lẫn với thuật toán gom nhóm DBSCAN."
+    ],
+    "reasoning": "MLPClassifier là một kiến trúc mạng nơ-ron. Điểm khác biệt chính của nó so với các mô hình tuyến tính đơn giản là việc sử dụng một hoặc nhiều lớp ẩn (hidden layer) nằm giữa lớp đầu vào và lớp đầu ra."
+  },
+  {
+    "question_id": "ch7b_q17",
+    "concepts": [
+      "Vai trò của lớp ẩn trong MLP",
+      "Học biểu diễn (Representation Learning)"
+    ],
+    "misconceptions": [
+      "cho rằng hidden layer chỉ có tác dụng chuẩn hóa dữ liệu, vì nhầm lẫn với các bước tiền xử lý.",
+      "tin rằng hidden layer thay thế hoàn toàn nhãn đầu ra, không hiểu rằng nó chỉ là một bước trung gian.",
+      "cho rằng mục đích của hidden layer là giảm số lượng mẫu dữ liệu, nhầm lẫn với các kỹ thuật giảm kích thước dữ liệu."
+    ],
+    "reasoning": "Vai trò của các lớp ẩn trong MLP là để học các biểu diễn hoặc đặc trưng trung gian, phức tạp hơn từ dữ liệu đầu vào. Những đặc trưng mới này giúp cho lớp đầu ra có thể phân loại dữ liệu một cách dễ dàng hơn, đặc biệt với dữ liệu phi tuyến."
+  },
+  {
+    "question_id": "ch7b_q18",
+    "concepts": [
+      "Kiến trúc mạng nơ-ron",
+      "Vị trí của lớp ẩn"
+    ],
+    "misconceptions": [
+      "cho rằng hidden layer nằm sau output, có thể vì nghĩ rằng nó là một bước xử lý hậu kỳ.",
+      "tin rằng hidden layer nằm trước input, có thể nhầm với bước tiền xử lý đặc trưng.",
+      "cho rằng hidden layer hoạt động độc lập, không hiểu về luồng truyền dữ liệu trong mạng nơ-ron."
+    ],
+    "reasoning": "Trong kiến trúc mạng nơ-ron truyền thẳng (feedforward network) như MLP, dữ liệu đi từ lớp đầu vào (input), qua một hoặc nhiều lớp ẩn (hidden layer), và cuối cùng đến lớp đầu ra (output). Do đó, lớp ẩn nằm giữa lớp vào và lớp ra."
+  },
+  {
+    "question_id": "ch7b_q19",
+    "concepts": [
+      "Đặc điểm của Cây quyết định",
+      "Mô hình phi tham số"
+    ],
+    "misconceptions": [
+      "cho rằng Cây quyết định chỉ dùng cho dữ liệu dạng số, không biết rằng nó xử lý rất tốt dữ liệu dạng phân loại (categorical).",
+      "tin rằng Cây quyết định bắt buộc phải dùng hàm lỗi BCE, vì nhầm lẫn với Logistic Regression hoặc MLP.",
+      "cho rằng Cây quyết định là một thuật toán giảm chiều dữ liệu, vì nó chọn ra các đặc trưng quan trọng để phân chia."
+    ],
+    "reasoning": "Cây quyết định là một mô hình phi tham số, có cấu trúc phân cấp giống như một lưu đồ. Nó không đưa ra các giả định về phân phối của dữ liệu và có thể hoạt động trên cả dữ liệu số và dữ liệu phân loại."
+  },
+  {
+    "question_id": "ch7b_q20",
+    "concepts": [
+      "Cấu trúc Cây quyết định",
+      "Nút trong cây"
+    ],
+    "misconceptions": [
+      "cho rằng mỗi nút đại diện cho một nhãn đầu ra, vì nhầm lẫn nút trong với nút lá.",
+      "tin rằng mỗi nút đại diện cho một bộ dữ liệu huấn luyện, không phân biệt được giữa cấu trúc mô hình và dữ liệu.",
+      "cho rằng mỗi nút là một centroid, vì nhầm lẫn với thuật toán gom nhóm K-Means."
+    ],
+    "reasoning": "Trong một cây quyết định, mỗi nút trong (internal node) đại diện cho một bài kiểm tra trên một thuộc tính (đặc trưng), nhằm mục đích chia dữ liệu thành các tập con nhỏ hơn và thuần nhất hơn."
+  },
+  {
+    "question_id": "ch7b_q21",
+    "concepts": [
+      "Cấu trúc Cây quyết định",
+      "Nhánh trong cây"
+    ],
+    "misconceptions": [
+      "cho rằng mỗi nhánh đại diện cho toàn bộ tập huấn luyện, không hiểu quá trình phân chia dữ liệu.",
+      "tin rằng mỗi nhánh tương ứng với một trọng số đã học, vì nhầm lẫn với các mô hình tuyến tính hoặc mạng nơ-ron.",
+      "cho rằng mỗi nhánh là một hidden layer, vì nhầm lẫn với kiến trúc của MLP."
+    ],
+    "reasoning": "Mỗi nhánh tỏa ra từ một nút trong cây quyết định đại diện cho một kết quả có thể có của bài kiểm tra tại nút đó. Ví dụ, nếu nút kiểm tra thuộc tính 'Thời tiết', các nhánh có thể là 'Nắng', 'Mưa', 'U ám'."
+  },
+  {
+    "question_id": "ch7b_q22",
+    "concepts": [
+      "Cấu trúc Cây quyết định",
+      "Nút lá"
+    ],
+    "misconceptions": [
+      "cho rằng nút lá chứa tất cả các đặc trưng, không hiểu rằng nó là điểm kết thúc của một chuỗi quyết định.",
+      "tin rằng nút lá là một bước chuẩn hóa dữ liệu.",
+      "cho rằng nút lá đại diện cho giá trị BCE thấp nhất, nhầm lẫn giữa quyết định cuối cùng và một chỉ số tối ưu hóa."
+    ],
+    "reasoning": "Nút lá (leaf node) là điểm kết thúc của một nhánh trong cây quyết định. Nó không phân chia dữ liệu nữa mà chứa quyết định phân loại cuối cùng (ví dụ: 'Yes' hoặc 'No') cho các mẫu dữ liệu đi đến nút đó."
+  },
+  {
+    "question_id": "ch7b_q23",
+    "concepts": [
+      "Áp dụng Cây quyết định",
+      "Duyệt cây"
+    ],
+    "misconceptions": [
+      "cho rằng quyết định là 'No' vì có thể nhớ nhầm nhánh.",
+      "tin rằng vẫn phải xét thêm Humidity hoặc Wind, không hiểu rằng khi một điều kiện đã đủ để ra quyết định thì cây sẽ dừng lại.",
+      "cho rằng chỉ cần một điều kiện là không đủ để ra quyết định."
+    ],
+    "reasoning": "Dựa trên ví dụ cây quyết định chơi cầu lông, nếu đi theo nhánh 'Weather = Cloudy', ta sẽ đến thẳng một nút lá có quyết định là 'Yes' mà không cần xét thêm các thuộc tính khác."
+  },
+  {
+    "question_id": "ch7b_q24",
+    "concepts": [
+      "Áp dụng Cây quyết định",
+      "Duyệt cây"
+    ],
+    "misconceptions": [
+      "cho rằng quyết định là 'Yes' vì có thể nhớ nhầm nhánh.",
+      "tin rằng vẫn phải xét thêm thuộc tính 'Wind', không đi theo đúng cấu trúc cây phân cấp.",
+      "cho rằng không xác định được, có thể vì không tìm thấy đường đi chính xác trong cây."
+    ],
+    "reasoning": "Để đưa ra quyết định, ta duyệt cây: bắt đầu từ gốc, đi theo nhánh 'Weather = Sunny', đến nút 'Humidity'. Từ đó, đi tiếp theo nhánh 'Humidity = High', ta sẽ đến một nút lá có quyết định là 'No'."
+  },
+  {
+    "question_id": "ch7b_q25",
+    "concepts": [
+      "Áp dụng Cây quyết định",
+      "Duyệt cây"
+    ],
+    "misconceptions": [
+      "cho rằng quyết định là 'No' vì có thể nhớ nhầm nhánh.",
+      "tin rằng cần phải xét đến 'Temperature' hoặc 'Day', không nhận ra rằng các thuộc tính này không xuất hiện trên đường đi quyết định trong cây.",
+      "cho rằng phải dùng tất cả các thuộc tính có trong dữ liệu gốc."
+    ],
+    "reasoning": "Để đưa ra quyết định, ta duyệt cây: bắt đầu từ gốc, đi theo nhánh 'Weather = Sunny', đến nút 'Humidity'. Từ đó, đi tiếp theo nhánh 'Humidity = Normal', ta sẽ đến một nút lá có quyết định là 'Yes'."
+  },
+  {
+    "question_id": "ch7b_q26",
+    "concepts": [
+      "Áp dụng Cây quyết định",
+      "Duyệt cây"
+    ],
+    "misconceptions": [
+      "cho rằng quyết định là 'Yes' vì có thể nhớ nhầm nhánh.",
+      "tin rằng phải xét thêm 'Humidity' hoặc 'Temperature', không đi theo đúng cấu trúc của cây đã cho.",
+      "cho rằng khi 'Weather = Rainy' thì không cần xét gì thêm."
+    ],
+    "reasoning": "Để đưa ra quyết định, ta duyệt cây: bắt đầu từ gốc, đi theo nhánh 'Weather = Rainy', đến nút 'Wind'. Từ đó, đi tiếp theo nhánh 'Wind = Strong', ta sẽ đến một nút lá có quyết định là 'No'."
+  },
+  {
+    "question_id": "ch7b_q27",
+    "concepts": [
+      "Áp dụng Cây quyết định",
+      "Duyệt cây"
+    ],
+    "misconceptions": [
+      "cho rằng quyết định là 'No' vì có thể nhớ nhầm nhánh.",
+      "tin rằng vẫn phải xét thêm 'Humidity', không nhận ra rằng chỉ cần 'Wind = Weak' là đủ để ra quyết định trong trường hợp này.",
+      "cho rằng không thể suy ra được, có thể vì không tìm thấy đường đi chính xác trong cây."
+    ],
+    "reasoning": "Để đưa ra quyết định, ta duyệt cây: bắt đầu từ gốc, đi theo nhánh 'Weather = Rainy', đến nút 'Wind'. Từ đó, đi tiếp theo nhánh 'Wind = Weak', ta sẽ đến một nút lá có quyết định là 'Yes'."
+  },
+  {
+    "question_id": "ch7b_q28",
+    "concepts": [
+      "Xây dựng Cây quyết định",
+      "Information Gain"
+    ],
+    "misconceptions": [
+      "cho rằng Cây quyết định được xây dựng dựa trên RMSE, vì nhầm lẫn với cây hồi quy (Regression Tree).",
+      "tin rằng Cây quyết định sử dụng nguyên tắc của K láng giềng gần nhất để phân chia, vì nhầm lẫn với KNN.",
+      "cho rằng Cây quyết định cần chuẩn hóa dữ liệu bằng StandardScaler, không biết rằng cây quyết định không nhạy cảm với tỉ lệ của đặc trưng."
+    ],
+    "reasoning": "Để xây dựng cây quyết định, các thuật toán như ID3, C4.5 sử dụng tiêu chí Information Gain (lượng thông tin thu được) để chọn ra thuộc tính tốt nhất tại mỗi nút để phân chia dữ liệu."
+  },
+  {
+    "question_id": "ch7b_q29",
+    "concepts": [
+      "Entropy trong Cây quyết định",
+      "Độ bất định (impurity) của tập dữ liệu"
+    ],
+    "misconceptions": [
+      "cho rằng entropy đo lường số lượng đặc trưng, nhầm lẫn giữa độ phức tạp của dữ liệu và số chiều dữ liệu.",
+      "tin rằng entropy là độ lớn của hệ số hồi quy, vì nhầm lẫn với các mô hình tuyến tính.",
+      "cho rằng entropy là một thước đo độ chính xác của mô hình."
+    ],
+    "reasoning": "Trong lý thuyết thông tin và cây quyết định, entropy là một thước đo độ bất định hoặc mức độ 'tạp nham' của một tập dữ liệu. Entropy càng cao, các lớp trong tập dữ liệu càng lẫn lộn; entropy bằng 0 khi tất cả các đối tượng trong tập thuộc cùng một lớp."
+  },
+  {
+    "question_id": "ch7b_q30",
+    "concepts": [
+      "Công thức Information Gain",
+      "Mối quan hệ giữa Entropy cha và con"
+    ],
+    "misconceptions": [
+      "cho rằng Information Gain được tính bằng cách lấy entropy của con trừ đi entropy của cha, đảo ngược công thức đúng.",
+      "tin rằng Information Gain là tổng của các entropy, không hiểu rằng mục tiêu là giảm entropy.",
+      "cho rằng Information Gain là một phép biến đổi logarit của entropy, một sự nhầm lẫn về công thức toán học."
+    ],
+    "reasoning": "Information Gain được định nghĩa là sự sụt giảm của entropy. Nó được tính bằng cách lấy entropy của tập cha (trước khi chia) trừ đi trung bình có trọng số của entropy của các tập con (sau khi chia)."
+  },
+  {
+    "question_id": "ch7b_q31",
+    "concepts": [
+      "Ý nghĩa của Information Gain",
+      "Lựa chọn thuộc tính phân chia"
+    ],
+    "misconceptions": [
+      "cho rằng việc giảm entropy nhiều hơn sẽ làm giảm Information Gain, vì nghĩ rằng 'giảm' thì phải tương ứng với giá trị 'thấp hơn'.",
+      "tin rằng việc giảm entropy không liên quan gì đến Information Gain.",
+      "cho rằng Information Gain luôn không đổi bất kể phép chia nào."
+    ],
+    "reasoning": "Theo định nghĩa, Information Gain = Entropy(cha) - E[Entropy(con)]. Nếu entropy của các tập con giảm càng nhiều, tức là E[Entropy(con)] càng nhỏ, thì hiệu số (Information Gain) sẽ càng cao. Do đó, một phép chia tốt sẽ có Information Gain cao."
+  },
+  {
+    "question_id": "ch7b_q32",
+    "concepts": [
+      "Cây quyết định trong scikit-learn",
+      "Phân chia nhị phân"
+    ],
+    "misconceptions": [
+      "cho rằng một nút có thể phân chia dựa trên tất cả các đặc trưng cùng lúc, nhầm lẫn với cách hoạt động của các mô hình khác.",
+      "tin rằng một nút có thể phân ra nhiều hơn hai nhánh, giống như thuật toán ID3 gốc có thể làm với biến phân loại.",
+      "cho rằng một nút có thể tạo ra một phép chia phi tuyến, nhầm lẫn với các mô hình phức tạp hơn."
+    ],
+    "reasoning": "Triển khai DecisionTreeClassifier trong scikit-learn tạo ra các cây nhị phân. Tại mỗi nút, nó tìm ra đặc trưng và ngưỡng chia tốt nhất để phân dữ liệu thành hai nhánh (ví dụ: feature_i <= threshold và feature_i > threshold)."
+  },
+  {
+    "question_id": "ch7b_q33",
+    "concepts": [
+      "Ưu điểm của Cây quyết định"
+    ],
+    "misconceptions": [
+      "cho rằng Cây quyết định luôn ổn định trước mọi thay đổi nhỏ của dữ liệu, không nhận ra đây chính là một trong những nhược điểm lớn của nó."
+    ],
+    "reasoning": "Cây quyết định có nhiều ưu điểm: dễ diễn giải, có thể xử lý cả dữ liệu số và phân loại, và là mô hình phi tham số. Tuy nhiên, một nhược điểm lớn là tính không ổn định: một thay đổi nhỏ trong dữ liệu có thể dẫn đến một cấu trúc cây hoàn toàn khác."
+  },
+  {
+    "question_id": "ch7b_q34",
+    "concepts": [
+      "Overfitting trong Cây quyết định",
+      "Độ sâu của cây"
+    ],
+    "misconceptions": [
+      "cho rằng việc cắt tỉa cây sẽ gây ra overfitting.",
+      "tin rằng overfitting xảy ra khi dữ liệu có ít đặc trưng, trong khi thực tế cây có thể học thuộc lòng nhiễu ngay cả với ít đặc trưng.",
+      "cho rằng việc dùng entropy gây ra overfitting."
+    ],
+    "reasoning": "Cây quyết định rất dễ bị overfitting nếu không có sự giới hạn nào về độ sâu. Một cây quá sâu sẽ học thuộc lòng cả nhiễu trong tập huấn luyện, dẫn đến kết quả kém trên dữ liệu mới. Cắt tỉa là một kỹ thuật để chống lại overfitting."
+  },
+  {
+    "question_id": "ch7b_q35",
+    "concepts": [
+      "Tính không ổn định của Cây quyết định"
+    ],
+    "misconceptions": [
+      "cho rằng cây không ổn định vì cần gradient descent, nhầm lẫn với phương pháp tối ưu của các mô hình khác.",
+      "tin rằng cây không ổn định vì không làm việc được với dữ liệu số.",
+      "cho rằng cây không ổn định vì yêu cầu dữ liệu chuẩn hóa."
+    ],
+    "reasoning": "Tính không ổn định (instability) của cây quyết định là một nhược điểm nổi bật. Điều này có nghĩa là những thay đổi nhỏ, không đáng kể trong tập dữ liệu huấn luyện có thể dẫn đến việc tạo ra một cấu trúc cây hoàn toàn khác, ảnh hưởng đến kết quả dự đoán."
+  },
+  {
+    "question_id": "ch7b_q36",
+    "concepts": [
+      "Kỹ thuật Ensemble",
+      "Random Forest"
+    ],
+    "misconceptions": [
+      "cho rằng có thể dùng Logistic Regression để khắc phục tính không ổn định của cây, không hiểu về bản chất của kỹ thuật ensemble.",
+      "tin rằng KNNImputer hoặc PCA là các kỹ thuật ensemble để cải thiện mô hình.",
+      "cho rằng Random Forest là một mô hình hoàn toàn khác biệt, không phải là một tập hợp của các cây quyết định."
+    ],
+    "reasoning": "Random Forest là một kỹ thuật ensemble (cụ thể là bagging) được thiết kế để cải thiện hiệu suất và giảm tính không ổn định của một cây quyết định đơn lẻ. Nó hoạt động bằng cách xây dựng nhiều cây quyết định trên các tập con dữ liệu khác nhau và tổng hợp kết quả của chúng."
+  },
+  {
+    "question_id": "ch7b_q37",
+    "concepts": [
+      "Độ phức tạp tính toán của Cây quyết định",
+      "Bài toán NP-hard"
+    ],
+    "misconceptions": [
+      "cho rằng việc tìm cây tối ưu là đơn giản vì thuật toán xây dựng cây trông có vẻ trực tiếp.",
+      "tin rằng thuật toán xây dựng cây luôn cho ra một nghiệm tối ưu duy nhất.",
+      "cho rằng quá trình tìm cây tối ưu không phụ thuộc vào dữ liệu huấn luyện."
+    ],
+    "reasoning": "Việc tìm ra cây quyết định tối ưu nhất (ví dụ: cây nhỏ nhất mà vẫn phân loại đúng dữ liệu) là một bài toán NP-hard. Do đó, các thuật toán xây dựng cây trong thực tế đều sử dụng các phương pháp heuristic (tham lam), tìm kiếm giải pháp tốt tại mỗi bước chứ không đảm bảo tìm được cây tối ưu toàn cục."
+  },
+  {
+    "question_id": "ch7b_q38",
+    "concepts": [
+      "Thiên vị (bias) của Cây quyết định"
+    ],
+    "misconceptions": [
+      "cho rằng cây quyết định ưu tiên các đặc trưng có ít giá trị hơn, ngược lại với thực tế.",
+      "tin rằng cây quyết định ưu tiên các đặc trưng bị thiếu dữ liệu.",
+      "cho rằng việc chuẩn hóa dữ liệu sẽ làm một đặc trưng được ưu tiên hơn."
+    ],
+    "reasoning": "Các thước đo như Information Gain có xu hướng thiên vị, ưu tiên các đặc trưng có nhiều giá trị riêng biệt (với biến phân loại) hoặc có phạm vi lớn (với biến số). Điều này là do các đặc trưng này có khả năng chia dữ liệu thành nhiều tập con nhỏ và thuần khiết hơn, ngay cả khi sự phân chia đó không có ý nghĩa thực tế."
+  },
+  {
+    "question_id": "ch7b_q39",
+    "concepts": [
+      "Diễn giải Cây quyết định",
+      "Nút gốc"
+    ],
+    "misconceptions": [
+      "cho rằng nút gốc chia theo Age, Pclass hoặc LogFare, có thể vì nhớ nhầm hoặc đoán một đặc trưng quan trọng khác.",
+      "tin rằng nút gốc phải là một đặc trưng dạng số.",
+      "cho rằng thứ tự các đặc trưng trong dữ liệu gốc quyết định nút gốc."
+    ],
+    "reasoning": "Trong ví dụ cây quyết định cho bài toán Titanic, nút gốc (phép chia đầu tiên và quan trọng nhất) dựa trên đặc trưng 'Sex'. Điều này cho thấy 'Sex' là đặc trưng mang lại Information Gain cao nhất khi xét trên toàn bộ tập dữ liệu."
+  },
+  {
+    "question_id": "ch7b_q40",
+    "concepts": [
+      "Overfitting trong Cây quyết định",
+      "So sánh độ phức tạp của mô hình"
+    ],
+    "misconceptions": [
+      "cho rằng cây bên phải đơn giản hơn, có lẽ vì chỉ nhìn vào một nhánh của nó.",
+      "tin rằng cây bên phải không còn dùng chỉ số gini, dù nó vẫn được hiển thị trên các nút.",
+      "cho rằng hai cây được huấn luyện trên hai bộ dữ liệu khác nhau."
+    ],
+    "reasoning": "So với cây bên trái, cây bên phải trong ví dụ rõ ràng phức tạp hơn: nó có độ sâu lớn hơn, nhiều nút và nhiều phép chia hơn. Đây là một minh họa trực quan cho hiện tượng overfitting, khi cây học quá chi tiết các đặc điểm của tập huấn luyện."
+  },
+  {
+    "question_id": "ch7b_q41",
+    "concepts": [
+      "Tổng quan các mô hình phân lớp"
+    ],
+    "misconceptions": [
+      "cho rằng chỉ có một vài mô hình trong danh sách này là đúng, không nhận ra rằng slide liệt kê tất cả chúng."
+    ],
+    "reasoning": "Câu hỏi này kiểm tra việc nhận biết các mô hình phân lớp khác nhau đã được liệt kê trong slide. Tất cả các lựa chọn đều là những mô hình phân lớp nổi tiếng và được đề cập."
+  },
+  {
+    "question_id": "ch7b_q42",
+    "concepts": [
+      "Phân biệt mô hình phân lớp và hồi quy"
+    ],
+    "misconceptions": [
+      "cho rằng Support Vector Machine, Naive Bayes, hoặc Random Forest không được liệt kê, có thể do không nhớ hết danh sách.",
+      "tin rằng LinearRegression có thể dùng cho bài toán phân lớp, không phân biệt rõ ràng giữa hồi quy và phân lớp."
+    ],
+    "reasoning": "Support Vector Machine, Naïve Bayes, và Random Forest đều là các mô hình phân lớp được đề cập. LinearRegression là một mô hình hồi quy (dự đoán giá trị liên tục), không phải là mô hình phân lớp."
+  },
+  {
+    "question_id": "ch7b_q43",
+    "concepts": [
+      "Mô hình Boosting",
+      "Các thuật toán Ensemble"
+    ],
+    "misconceptions": [
+      "cho rằng LinearRegression là một mô hình boosting.",
+      "tin rằng KNNImputer (dùng để xử lý dữ liệu thiếu) hoặc StandardScaler (dùng để chuẩn hóa) là các mô hình phân loại boosting.",
+      "không phân biệt được giữa các loại thuật toán ensemble (ví dụ boosting và bagging)."
+    ],
+    "reasoning": "CatBoost Classifier thuộc nhóm các thuật toán boosting, cùng với XGBoost, LightGBM, và Gradient Boost. Các mô hình này xây dựng một chuỗi các mô hình yếu, mỗi mô hình sau cố gắng sửa lỗi của mô hình trước đó."
+  },
+  {
+    "question_id": "ch7b_q44",
+    "concepts": [
+      "Mô hình phi tham số",
+      "So sánh các loại mô hình"
+    ],
+    "misconceptions": [
+      "cho rằng Logistic Regression là mô hình phi tham số, không nhận ra nó học một tập tham số (trọng số).",
+      "tin rằng BCE (một hàm lỗi) hoặc StandardScaler (một bước tiền xử lý) là một mô hình phi tham số."
+    ],
+    "reasoning": "Trong các lựa chọn được đưa ra, KNNClassifier là mô hình phi tham số. Nó không học một bộ tham số cố định từ dữ liệu mà lưu trữ toàn bộ tập huấn luyện để đưa ra dự đoán."
+  },
+  {
+    "question_id": "ch7b_q45",
+    "concepts": [
+      "Mạng nơ-ron đa lớp (MLP)",
+      "So sánh các mô hình phân lớp"
+    ],
+    "misconceptions": [
+      "cho rằng Logistic Regression, KNN hoặc Decision Tree sử dụng hidden layer.",
+      "tin rằng hidden layer là một thành phần chung của tất cả các mô hình học máy phức tạp."
+    ],
+    "reasoning": "MLPClassifier là mô hình mạng nơ-ron sử dụng các lớp ẩn (hidden layers) để học các biểu diễn đặc trưng trung gian, phi tuyến từ dữ liệu. Các mô hình còn lại (Logistic Regression, KNN, Decision Tree) không có cấu trúc này."
+  },
+  {
+    "question_id": "ch7b_q46",
+    "concepts": [
+      "Cấu trúc Cây quyết định",
+      "So sánh các mô hình phân lớp"
+    ],
+    "misconceptions": [
+      "cho rằng Logistic Regression, KNN hoặc MLP có cấu trúc phân cấp dạng cây.",
+      "tin rằng mọi mô hình có tính diễn giải cao đều phải có cấu trúc cây."
+    ],
+    "reasoning": "Decision Tree (Cây quyết định) là mô hình có cấu trúc phân cấp rõ ràng, bao gồm các nút (kiểm tra đặc trưng), nhánh (kết quả của phép kiểm tra), và lá (quyết định cuối cùng). Cấu trúc này làm cho nó rất dễ hiểu và trực quan hóa."
+  },
+  {
+    "question_id": "ch7b_q47",
+    "concepts": [
+      "Khái quát hóa trong học máy",
+      "Overfitting",
+      "Learning Curve"
+    ],
+    "misconceptions": [
+      "cho rằng khi tăng số lượng mẫu huấn luyện, lỗi huấn luyện luôn giảm xuống, không nhận ra rằng với nhiều dữ liệu hơn, mô hình khó có thể 'học thuộc lòng' tất cả và lỗi huấn luyện có thể tăng nhẹ."
+    ],
+    "reasoning": "Tăng tính linh hoạt của mô hình (ví dụ: tăng độ sâu cây) giúp nó khớp với tập huấn luyện tốt hơn, làm giảm lỗi huấn luyện nhưng có nguy cơ tăng khoảng cách giữa lỗi train/test (overfitting). Tăng số lượng mẫu huấn luyện giúp mô hình khái quát hóa tốt hơn, làm giảm khoảng cách giữa lỗi train/test."
+  },
+  {
+    "question_id": "ch7b_q48",
+    "concepts": [
+      "Khái quát hóa trong học máy",
+      "Learning Curve"
+    ],
+    "misconceptions": [
+      "cho rằng lỗi huấn luyện luôn giảm khi tăng dữ liệu, không hiểu rằng mô hình khó khớp hoàn hảo với một tập dữ liệu lớn hơn.",
+      "tin rằng nhiều dữ liệu hơn sẽ làm tăng chênh lệch giữa lỗi train và test, ngược lại với thực tế.",
+      "cho rằng tăng dữ liệu chắc chắn sẽ làm mô hình overfit hơn."
+    ],
+    "reasoning": "Khi số lượng mẫu huấn luyện tăng lên và độ phức tạp của mô hình được giữ cố định, mô hình có nhiều thông tin hơn để học các quy luật tổng quát thay vì các chi tiết nhiễu. Điều này giúp mô hình khái quát hóa tốt hơn, dẫn đến sự chênh lệch giữa lỗi huấn luyện và lỗi kiểm thử nhỏ hơn."
+  },
+  {
+    "question_id": "ch7b_q49",
+    "concepts": [
+      "Nguyên lý hoạt động của KNN",
+      "So sánh các mô hình phân lớp"
+    ],
+    "misconceptions": [
+      "cho rằng MLP, Decision Tree, hay Naive Bayes cũng hoạt động dựa trên nguyên tắc 'K điểm gần nhất'.",
+      "nhầm lẫn giữa 'gần nhất' trong không gian đặc trưng (KNN) và 'gần nhất' trong cấu trúc cây (Decision Tree)."
+    ],
+    "reasoning": "Mô tả 'phân loại dựa trên nhãn của K điểm gần nhất' chính là định nghĩa cốt lõi của thuật toán K-Nearest Neighbors (KNNClassifier). Các mô hình khác hoạt động dựa trên các nguyên tắc khác nhau (hàm kích hoạt, phân chia theo thuộc tính, xác suất)."
+  },
+  {
+    "question_id": "ch7b_q50",
+    "concepts": [
+      "Ưu và nhược điểm của Logistic Regression",
+      "So sánh các mô hình phân lớp"
+    ],
+    "misconceptions": [
+      "cho rằng KNN, Decision Tree, hoặc Random Forest cũng có cùng bộ đặc điểm này.",
+      "tin rằng một mô hình đơn giản như Logistic Regression sẽ không nhạy cảm với nhiễu."
+    ],
+    "reasoning": "Các đặc điểm 'đơn giản, dễ cài đặt', 'có thể mở rộng cho nhiều lớp', nhưng 'khó xử lý dữ liệu phức tạp' (do tính tuyến tính) và 'nhạy với nhiễu' mô tả chính xác nhất ưu và nhược điểm của Logistic Regression so với các mô hình khác trong danh sách."
+  }
+]

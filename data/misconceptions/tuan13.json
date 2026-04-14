@@ -1,0 +1,638 @@
+[
+  {
+    "question_id": "ch10_q1",
+    "concepts": [
+      "Mục tiêu của máy học",
+      "Tính tổng quát hóa của mô hình"
+    ],
+    "misconceptions": [
+      "cho rằng mục tiêu cuối cùng của máy học là làm cho mô hình nhỏ nhất có thể, vì nghĩ rằng mô hình nhỏ gọn sẽ luôn hiệu quả hơn.",
+      "tin rằng mục tiêu chính của máy học là tạo ra thêm dữ liệu, vì nhầm lẫn kỹ thuật data augmentation với mục tiêu tổng thể.",
+      "cho rằng một mô hình máy học 'tốt' là mô hình không cần phải đánh giá nữa, vì nó đã đạt đến mức hoàn hảo."
+    ],
+    "reasoning": "Mục tiêu cốt lõi của máy học là xây dựng mô hình có khả năng tổng quát hóa, tức là hoạt động tốt trên dữ liệu mới chưa từng thấy. Các lựa chọn khác như giảm kích thước mô hình, tạo dữ liệu, hay việc đánh giá chỉ là các phương tiện hoặc khía cạnh liên quan, không phải mục tiêu cuối cùng."
+  },
+  {
+    "question_id": "ch10_q2",
+    "concepts": [
+      "Cải thiện tính tổng quát hóa",
+      "Học kết hợp (Ensemble Learning)"
+    ],
+    "misconceptions": [
+      "cho rằng chỉ cần tăng số lượng đặc trưng là có thể cải thiện mô hình, vì nghĩ rằng 'càng nhiều thông tin càng tốt' mà không cân nhắc đến nguy cơ overfitting.",
+      "tin rằng chỉ cần tăng kích thước tập huấn luyện là đủ để cải thiện mô hình, mà không nhận ra rằng bản thân kiến trúc mô hình cũng có giới hạn."
+    ],
+    "reasoning": "Để cải thiện tính tổng quát hóa, ta có thể tối ưu một mô hình đơn lẻ hoặc kết hợp nhiều mô hình lại (ensemble learning). Các phương án chỉ tập trung vào việc tăng dữ liệu hoặc đặc trưng một cách đơn lẻ là không đủ và có thể dẫn đến các vấn đề khác."
+  },
+  {
+    "question_id": "ch10_q3",
+    "concepts": [
+      "Định nghĩa Ensemble Learning",
+      "Kết hợp mô hình"
+    ],
+    "misconceptions": [
+      "tin rằng Ensemble Learning chỉ đơn giản là huấn luyện một mô hình lâu hơn (nhiều epoch hơn), vì nhầm lẫn việc tinh chỉnh một mô hình với việc kết hợp nhiều mô hình.",
+      "cho rằng Ensemble Learning là một kỹ thuật giảm chiều dữ liệu, vì có thể đã nghe nói về các kỹ thuật này trong cùng một bối cảnh tối ưu hóa mô hình.",
+      "tin rằng Ensemble Learning là một phương pháp chuyên biệt chỉ dành cho dữ liệu ảnh, có thể do các ví dụ nổi tiếng trong lĩnh vực này."
+    ],
+    "reasoning": "Ensemble Learning về bản chất là một phương pháp chiến lược kết hợp nhiều mô hình học máy để tạo ra một dự đoán tổng hợp tốt hơn. Các lựa chọn sai mô tả các kỹ thuật khác trong máy học (tinh chỉnh mô hình, giảm chiều dữ liệu) hoặc giới hạn phạm vi áp dụng của nó một cách không chính xác."
+  },
+  {
+    "question_id": "ch10_q4",
+    "concepts": [
+      "Ensemble Learning và giảm variance",
+      "Trung bình hóa dự đoán"
+    ],
+    "misconceptions": [
+      "tin rằng Ensemble Learning hiệu quả vì mỗi mô hình con có bias bằng 0, một giả định quá lý tưởng và không thực tế.",
+      "cho rằng để thực hiện Ensemble Learning, tất cả các mô hình con phải là mô hình tuyến tính, đây là một giới hạn không tồn tại.",
+      "cho rằng khi dùng Ensemble Learning thì không cần đánh giá trên tập validation, vì nghĩ rằng việc kết hợp nhiều mô hình đã tự động đảm bảo kết quả tốt."
+    ],
+    "reasoning": "Ensemble Learning giúp giảm phương sai (variance) vì việc lấy trung bình các dự đoán từ nhiều mô hình khác nhau có xu hướng triệt tiêu các sai số ngẫu nhiên, đưa kết quả tổng hợp đến gần giá trị thực tế hơn. Các lựa chọn sai đưa ra các giả định không chính xác hoặc quá mạnh về các mô hình con."
+  },
+  {
+    "question_id": "ch10_q5",
+    "concepts": [
+      "Random Forest",
+      "Giảm variance bằng ensemble",
+      "Cây quyết định (Decision Tree)"
+    ],
+    "misconceptions": [
+      "cho rằng KNN là một thuật toán ensemble, vì nó cũng dựa trên 'hàng xóm' (dữ liệu xung quanh) để đưa ra quyết định.",
+      "tin rằng PCA là một thuật toán ensemble, vì nhầm lẫn giữa kỹ thuật giảm chiều dữ liệu và kỹ thuật kết hợp mô hình.",
+      "cho rằng DBSCAN là một thuật toán ensemble, vì nhầm lẫn giữa thuật toán phân cụm và thuật toán học có giám sát."
+    ],
+    "reasoning": "Random Forest là một thuật toán ensemble tiêu biểu, cụ thể là một dạng của Bagging, kết hợp nhiều cây quyết định để cải thiện độ chính xác và giảm variance. Các thuật toán còn lại thuộc các nhóm khác: KNN (học dựa trên thực thể), PCA (giảm chiều dữ liệu), và DBSCAN (phân cụm)."
+  },
+  {
+    "question_id": "ch10_q6",
+    "concepts": [
+      "Ensemble Learning và giảm bias",
+      "Mô hình yếu (Weak learners)",
+      "Boosting"
+    ],
+    "misconceptions": [
+      "tin rằng để giảm bias thì phải dùng một mô hình mạnh duy nhất, vì nghĩ rằng mô hình mạnh sẽ có bias thấp một cách tự nhiên.",
+      "cho rằng cách giảm bias là phải loại bỏ hoàn toàn dữ liệu nhiễu, một hành động lý tưởng nhưng thường không khả thi và không phải là cơ chế của ensemble.",
+      "tin rằng tăng số chiều dữ liệu sẽ giúp giảm bias, trong khi thực tế nó có thể làm tăng độ phức tạp và variance."
+    ],
+    "reasoning": "Các phương pháp Boosting trong Ensemble Learning giúp giảm bias bằng cách kết hợp tuần tự nhiều mô hình yếu, trong đó mỗi mô hình sau tập trung sửa lỗi cho các mô hình trước, dần dần tạo ra một mô hình tổng hợp mạnh hơn. Các lựa chọn sai đề xuất các cách tiếp cận không chính xác hoặc không liên quan."
+  },
+  {
+    "question_id": "ch10_q7",
+    "concepts": [
+      "Mô hình yếu (Weak Learners)",
+      "Định nghĩa trong Ensemble Learning"
+    ],
+    "misconceptions": [
+      "cho rằng 'Weak Learners' là những mô hình có độ chính xác cao, vì hiểu sai từ 'weak' và nghĩ rằng chúng phải tốt mới được dùng.",
+      "tin rằng 'Weak Learners' là những mô hình không cần huấn luyện, vì nghĩ rằng chúng quá đơn giản đến mức không cần học.",
+      "cho rằng 'Weak Learners' là những mô hình được huấn luyện tối ưu với toàn bộ dữ liệu, vì nhầm lẫn với khái niệm mô hình phức tạp, mạnh."
+    ],
+    "reasoning": "Trong bối cảnh ensemble learning, 'Weak Learners' là các mô hình có hiệu suất chỉ nhỉnh hơn một chút so với việc đoán ngẫu nhiên (độ chính xác thấp). Ý tưởng của các kỹ thuật như Boosting là kết hợp nhiều mô hình yếu này lại để tạo thành một mô hình mạnh duy nhất."
+  },
+  {
+    "question_id": "ch10_q8",
+    "concepts": [
+      "Mục tiêu của Ensemble Models",
+      "Giảm bias-variance"
+    ],
+    "misconceptions": [
+      "cho rằng mục tiêu của Ensemble Models là bắt buộc phải tạo ra dữ liệu huấn luyện mới, vì nhầm lẫn với các kỹ thuật data augmentation hoặc bootstrapping như một mục tiêu thay vì một phương tiện."
+    ],
+    "reasoning": "Mục tiêu chính của các mô hình ensemble là cải thiện hiệu suất tổng thể, có thể bao gồm việc tăng độ chính xác, giảm phương sai (variance) - như trong Bagging, và trong một số trường hợp là giảm độ chệch (bias) - như trong Boosting."
+  },
+  {
+    "question_id": "ch10_q9",
+    "concepts": [
+      "Nhược điểm của Ensemble Learning",
+      "Chi phí tính toán"
+    ],
+    "misconceptions": [
+      "cho rằng điểm yếu của ensemble là độ chính xác thấp, vì không hiểu được mục đích chính của kỹ thuật này là để cải thiện độ chính xác.",
+      "tin rằng mô hình ensemble không có độ tổng quát hóa cao, một nhận định trái ngược hoàn toàn với lý do chính mà người ta sử dụng chúng.",
+      "cho rằng ensemble learning không thể dùng cho bài toán phân loại, vì có thể chỉ biết đến các ví dụ về hồi quy hoặc nhầm lẫn với hạn chế của một thuật toán cụ thể."
+    ],
+    "reasoning": "Điểm yếu lớn nhất và dễ thấy nhất của ensemble learning là chi phí tính toán cao, vì phải huấn luyện và lưu trữ nhiều mô hình thay vì chỉ một. Các lựa chọn khác mô tả những điều trái ngược với ưu điểm của ensemble (chúng thường có độ chính xác và tổng quát hóa cao) hoặc đưa ra một giới hạn không có thật."
+  },
+  {
+    "question_id": "ch10_q10",
+    "concepts": [
+      "Các kỹ thuật Ensemble Learning",
+      "Phân biệt Ensemble và Clustering"
+    ],
+    "misconceptions": [
+      "cho rằng Bagging không phải là ensemble learning.",
+      "cho rằng Boosting không phải là ensemble learning.",
+      "cho rằng Stacking không phải là ensemble learning.",
+      "tin rằng Clustering (phân cụm) là một kỹ thuật ensemble learning, vì nhầm lẫn giữa học không giám sát và học có giám sát kết hợp."
+    ],
+    "reasoning": "Bagging, Boosting, và Stacking là ba họ kỹ thuật chính của ensemble learning. Clustering (phân cụm) là một nhiệm vụ của học không giám sát, nhằm mục đích nhóm các điểm dữ liệu tương tự lại với nhau, không phải là một kỹ thuật để kết hợp các mô hình dự đoán."
+  },
+  {
+    "question_id": "ch10_q11",
+    "concepts": [
+      "Kỹ thuật Voting",
+      "Bài toán phân loại"
+    ],
+    "misconceptions": [
+      "cho rằng Voting dùng cho bài toán hồi quy, vì nhầm lẫn với kỹ thuật Averaging.",
+      "tin rằng Voting là một kỹ thuật giảm chiều dữ liệu.",
+      "cho rằng Voting là một kỹ thuật phân cụm."
+    ],
+    "reasoning": "Kỹ thuật Voting (bỏ phiếu) được sử dụng trong các bài toán phân loại, nơi kết quả cuối cùng được quyết định bằng cách chọn lớp được dự đoán bởi đa số các mô hình con. Đối với bài toán hồi quy, kỹ thuật tương ứng là Averaging (lấy trung bình)."
+  },
+  {
+    "question_id": "ch10_q12",
+    "concepts": [
+      "Kỹ thuật Voting",
+      "Phép ẩn dụ 'cử tri'"
+    ],
+    "misconceptions": [
+      "cho rằng mỗi mô hình trong Voting được xem như một đặc trưng, vì nhầm lẫn với cách hoạt động của Stacking.",
+      "tin rằng mỗi mô hình là một centroid, vì nhầm lẫn với thuật toán phân cụm như K-Means.",
+      "cho rằng mỗi mô hình là một siêu tham số, vì không phân biệt được giữa thành phần của mô hình và tham số cần tinh chỉnh."
+    ],
+    "reasoning": "Trong kỹ thuật Voting, mỗi mô hình con được ví như một 'cử tri' đưa ra 'phiếu bầu' của mình (dự đoán lớp). Lớp nhận được nhiều phiếu bầu nhất sẽ là kết quả cuối cùng. Phép ẩn dụ này giúp dễ hình dung cơ chế hoạt động."
+  },
+  {
+    "question_id": "ch10_q13",
+    "concepts": [
+      "Cơ chế hoạt động của Voting",
+      "Nguyên tắc đa số"
+    ],
+    "misconceptions": [
+      "cho rằng kết quả là không xác định, vì có thể nghĩ rằng cần có một sự đồng thuận tuyệt đối hoặc một quy tắc phức tạp hơn.",
+      "tin rằng phải dùng trung bình cộng, vì nhầm lẫn kỹ thuật Voting cho bài toán phân loại với kỹ thuật Averaging cho bài toán hồi quy."
+    ],
+    "reasoning": "Trong Hard Voting, kết quả cuối cùng được quyết định bởi lớp nào nhận được nhiều phiếu bầu nhất từ các mô hình con. Với 3 phiếu cho Lớp 1 và 1 phiếu cho Lớp 2, Lớp 1 chiến thắng theo nguyên tắc đa số."
+  },
+  {
+    "question_id": "ch10_q14",
+    "concepts": [
+      "Mục đích của Voting",
+      "Tổng hợp dự đoán"
+    ],
+    "misconceptions": [
+      "cho rằng Voting được dùng để 'chọn ra mô hình tốt nhất', vì nhầm lẫn việc kết hợp với việc lựa chọn.",
+      "tin rằng mục đích của Voting là 'loại bỏ mô hình yếu', vì nghĩ rằng nó là một bước lọc thay vì tổng hợp.",
+      "cho rằng Voting dùng để 'tạo ra mô hình mới từ dữ liệu', một mô tả quá chung chung và không nắm bắt được bản chất của việc 'kết hợp' các dự đoán có sẵn."
+    ],
+    "reasoning": "Mục đích chính của Voting trong ensemble models là để kết hợp 'ý kiến' (dự đoán) của nhiều mô hình khác nhau, nhằm tạo ra một dự đoán cuối cùng ổn định và chính xác hơn là chỉ dựa vào một mô hình duy nhất."
+  },
+  {
+    "question_id": "ch10_q15",
+    "concepts": [
+      "Kỹ thuật Averaging",
+      "Bài toán hồi quy"
+    ],
+    "misconceptions": [
+      "cho rằng Averaging dùng cho bài toán phân loại, vì nhầm lẫn với kỹ thuật Voting.",
+      "tin rằng Averaging là một kỹ thuật phân cụm hoặc trích chọn đặc trưng."
+    ],
+    "reasoning": "Kỹ thuật Averaging (lấy trung bình) được sử dụng trong các bài toán hồi quy, nơi kết quả cuối cùng là giá trị trung bình của các kết quả dự đoán (giá trị số liên tục) từ các mô hình con. Đối với bài toán phân loại, kỹ thuật tương ứng là Voting."
+  },
+  {
+    "question_id": "ch10_q16",
+    "concepts": [
+      "Cơ chế của Averaging",
+      "Tính trung bình cộng"
+    ],
+    "misconceptions": [
+      "cho rằng Averaging sẽ lấy kết quả của mô hình tốt nhất, vì nhầm lẫn giữa việc kết hợp và việc lựa chọn.",
+      "tin rằng Averaging hoạt động bằng cách lấy vote nhiều nhất, vì nhầm lẫn với kỹ thuật Voting.",
+      "cho rằng Averaging cần một meta learner, vì nhầm lẫn với các kỹ thuật phức tạp hơn như Stacking."
+    ],
+    "reasoning": "Phương pháp Averaging đơn giản tổng hợp kết quả bằng cách tính trung bình cộng của tất cả các giá trị dự đoán từ các mô hình con. Đây là cách tiếp cận trực tiếp cho các bài toán hồi quy trong ensemble."
+  },
+  {
+    "question_id": "ch10_q17",
+    "concepts": [
+      "Áp dụng Averaging",
+      "Tính trung bình cộng"
+    ],
+    "misconceptions": [
+      "cho rằng kết quả là 100 hoặc 110, vì có thể chỉ chọn một giá trị ở giữa hoặc giá trị lớn nhất thay vì tính toán.",
+      "cho rằng kết quả là 102.5, có thể do tính nhầm (ví dụ: (120+90+100)/4 = 102.5) hoặc lỗi tính toán khác."
+    ],
+    "reasoning": "Averaging yêu cầu tính trung bình cộng của các kết quả. Tổng là 120 + 90 + 100 + 110 = 420. Trung bình của 4 số này là 420 / 4 = 105. Các lựa chọn sai là kết quả của việc không tính toán hoặc tính toán sai."
+  },
+  {
+    "question_id": "ch10_q18",
+    "concepts": [
+      "Weighted Averaging",
+      "So sánh với Averaging",
+      "Trọng số mô hình"
+    ],
+    "misconceptions": [
+      "cho rằng Weighted Averaging chỉ dùng cho phân loại, vì nhầm lẫn với Voting hoặc không hiểu bản chất của nó.",
+      "tin rằng Weighted Averaging không cần kết quả từ mô hình con, một điều phi lý vì nó là một phương pháp kết hợp kết quả.",
+      "cho rằng Weighted Averaging luôn cần meta learner, vì nhầm lẫn với Stacking."
+    ],
+    "reasoning": "Điểm khác biệt chính của Weighted Averaging so với Averaging thông thường là mỗi mô hình con được gán một trọng số (weight) khác nhau, thường dựa trên hiệu suất của nó. Các mô hình tốt hơn sẽ có 'tiếng nói' lớn hơn trong kết quả cuối cùng."
+  },
+  {
+    "question_id": "ch10_q19",
+    "concepts": [
+      "Weighted Averaging",
+      "Xác định trọng số"
+    ],
+    "misconceptions": [
+      "cho rằng trọng số được tính từ số lượng mẫu của toàn bộ dataset, một yếu tố không phản ánh hiệu suất của từng mô hình.",
+      "tin rằng trọng số phụ thuộc vào số chiều dữ liệu, một yếu tố liên quan đến dữ liệu đầu vào chứ không phải chất lượng mô hình.",
+      "cho rằng trọng số được quyết định bởi kích thước của mô hình, vì nghĩ rằng mô hình lớn hơn thì quan trọng hơn, điều này không phải lúc nào cũng đúng."
+    ],
+    "reasoning": "Trong Weighted Averaging, một cách hợp lý để xác định trọng số cho mỗi mô hình là dựa trên hiệu suất của nó, chẳng hạn như độ chính xác hoặc một metric đánh giá khác trên tập validation. Mô hình hoạt động tốt hơn sẽ được gán trọng số cao hơn."
+  },
+  {
+    "question_id": "ch10_q20",
+    "concepts": [
+      "Công thức Weighted Averaging",
+      "Tổng có trọng số"
+    ],
+    "misconceptions": [
+      "cho rằng công thức là tổng các kết quả, vì bỏ qua việc chia cho số lượng hoặc gán trọng số.",
+      "tin rằng công thức là trung bình cộng đơn giản, vì nhầm lẫn với Averaging thông thường.",
+      "cho rằng công thức là lấy giá trị lớn nhất, vì nhầm lẫn với một chiến lược lựa chọn thay vì kết hợp."
+    ],
+    "reasoning": "Weighted Averaging được biểu diễn dưới dạng một tổng có trọng số, trong đó mỗi kết quả (Ri) của mô hình thứ i được nhân với trọng số tương ứng của nó (wi), sau đó cộng lại. Công thức đúng là w1*R1 + w2*R2 + ... + wN*RN (thường có điều kiện tổng các trọng số bằng 1)."
+  },
+  {
+    "question_id": "ch10_q21",
+    "concepts": [
+      "Định nghĩa Stacking",
+      "Meta learner",
+      "Sử dụng dự đoán làm đặc trưng"
+    ],
+    "misconceptions": [
+      "cho rằng Stacking là lấy vote số đông, vì nhầm lẫn với Voting.",
+      "tin rằng Stacking là lấy trung bình cộng, vì nhầm lẫn với Averaging.",
+      "cho rằng Stacking là huấn luyện tuần tự các cây để sửa sai, vì nhầm lẫn với Boosting."
+    ],
+    "reasoning": "Stacking là một kỹ thuật ensemble nâng cao, trong đó các dự đoán của một tập các mô hình cơ sở (base models) trên tập huấn luyện được sử dụng làm đặc trưng đầu vào mới để huấn luyện một mô hình tầng trên gọi là meta learner."
+  },
+  {
+    "question_id": "ch10_q22",
+    "concepts": [
+      "Bản chất của Stacking",
+      "Kết hợp mô hình đa dạng"
+    ],
+    "misconceptions": [
+      "cho rằng Stacking là sử dụng một mô hình duy nhất, điều này trái ngược với bản chất của ensemble.",
+      "tin rằng Stacking là huấn luyện mô hình với một phần nhỏ dữ liệu, vì có thể nhầm lẫn với việc chia dữ liệu trong cross-validation.",
+      "cho rằng Stacking là tạo ra các nhóm dữ liệu, vì nhầm lẫn với các thuật toán phân cụm."
+    ],
+    "reasoning": "Stacking là một phương pháp kết hợp các dự đoán từ nhiều mô hình khác nhau (thường là các loại thuật toán khác nhau) để một meta-model học cách tổng hợp chúng một cách thông minh, tạo ra một mô hình cuối cùng mạnh mẽ hơn."
+  },
+  {
+    "question_id": "ch10_q23",
+    "concepts": [
+      "Thuật ngữ trong Stacking",
+      "Meta learner"
+    ],
+    "misconceptions": [
+      "cho rằng mô hình tổng hợp được gọi là 'Weak learner', vì nhầm lẫn với khái niệm trong Boosting.",
+      "tin rằng mô hình tổng hợp được gọi là 'Base scaler' hoặc 'Validation splitter', vì nhầm lẫn với các bước tiền xử lý hoặc chia dữ liệu."
+    ],
+    "reasoning": "Trong kiến trúc Stacking, các mô hình ở tầng dưới được gọi là base learners. Mô hình ở tầng trên, có nhiệm vụ học từ các dự đoán của base learners, được gọi là 'meta learner' hoặc 'meta model'."
+  },
+  {
+    "question_id": "ch10_q24",
+    "concepts": [
+      "Định nghĩa Blending",
+      "Sử dụng tập validation"
+    ],
+    "misconceptions": [
+      "cho rằng Blending chỉ dùng kết quả dự đoán của tập train, vì nhầm lẫn với một dạng đơn giản của Stacking.",
+      "tin rằng Blending chỉ dùng đặc trưng gốc của tập train, điều này bỏ qua bước quan trọng nhất là sử dụng dự đoán của mô hình con.",
+      "cho rằng Blending sử dụng nhãn thật của tập test, điều này là vi phạm nguyên tắc cơ bản của máy học (không được nhìn vào tập test trong quá trình huấn luyện)."
+    ],
+    "reasoning": "Blending là một biến thể của Stacking. Nó huấn luyện các mô hình cơ sở trên tập train, sau đó tạo dự đoán trên một tập validation riêng. Các dự đoán này (có thể kết hợp với đặc trưng gốc) được dùng làm đầu vào để huấn luyện meta learner."
+  },
+  {
+    "question_id": "ch10_q25",
+    "concepts": [
+      "So sánh Stacking và Blending",
+      "Sử dụng dữ liệu huấn luyện meta learner"
+    ],
+    "misconceptions": [
+      "cho rằng có sự phân chia cứng nhắc về loại bài toán (hồi quy/phân loại) cho Stacking và Blending.",
+      "tin rằng Stacking luôn tuần tự và Blending luôn đồng thời, một sự đơn giản hóa không chính xác về quy trình.",
+      "cho rằng Blending không cần meta learner, điều này sai vì cả hai kỹ thuật đều có cấu trúc hai tầng với meta learner."
+    ],
+    "reasoning": "Sự khác biệt chính giữa Stacking (dạng phổ biến dùng k-fold) và Blending nằm ở cách tạo ra dữ liệu huấn luyện cho meta-learner. Stacking thường dùng dự đoán out-of-fold trên toàn bộ tập train, trong khi Blending dùng một tập validation riêng biệt, đơn giản hơn nhưng có thể lãng phí dữ liệu hơn."
+  },
+  {
+    "question_id": "ch10_q26",
+    "concepts": [
+      "Đặc điểm của Bagging",
+      "Mô hình con đồng nhất (Homogeneous)"
+    ],
+    "misconceptions": [
+      "cho rằng Bagging luôn dùng meta learner, vì nhầm lẫn với Stacking/Blending.",
+      "tin rằng Bagging chỉ dùng cho dữ liệu validation.",
+      "cho rằng Bagging chỉ hoạt động với một mô hình duy nhất, điều này mâu thuẫn với khái niệm 'ensemble'."
+    ],
+    "reasoning": "Một đặc điểm phân biệt của Bagging so với Stacking và Blending là nó thường sử dụng cùng một loại thuật toán (ví dụ: cây quyết định) cho tất cả các mô hình con. Các mô hình con này được huấn luyện trên các mẫu bootstrap khác nhau của dữ liệu."
+  },
+  {
+    "question_id": "ch10_q27",
+    "concepts": [
+      "Cơ chế huấn luyện của Bagging",
+      "Huấn luyện độc lập",
+      "Bootstrap aggregating"
+    ],
+    "misconceptions": [
+      "cho rằng Bagging huấn luyện tuần tự để sửa lỗi, vì nhầm lẫn với Boosting.",
+      "tin rằng Bagging chỉ huấn luyện trên tập validation.",
+      "cho rằng Bagging huấn luyện các mô hình con trong một meta learner, vì nhầm lẫn với Stacking."
+    ],
+    "reasoning": "Trong Bagging (Bootstrap Aggregating), các mô hình con được huấn luyện một cách độc lập và song song. Mỗi mô hình được huấn luyện trên một tập dữ liệu con được tạo ra bằng cách lấy mẫu có hoàn lại (bootstrap) từ tập dữ liệu gốc."
+  },
+  {
+    "question_id": "ch10_q28",
+    "concepts": [
+      "Random Forest",
+      "Phân loại là kỹ thuật Bagging"
+    ],
+    "misconceptions": [
+      "cho rằng Random Forest là một mô hình Boosting, vì nó cũng là ensemble của các cây quyết định, dễ nhầm lẫn với Gradient Boosting.",
+      "tin rằng Random Forest là một mô hình Stacking, vì không nắm rõ kiến trúc của nó.",
+      "cho rằng Random Forest là một mô hình giảm chiều dữ liệu."
+    ],
+    "reasoning": "Random Forest là một ví dụ kinh điển của phương pháp Bagging. Nó xây dựng nhiều cây quyết định trên các mẫu con (bootstrap samples) của dữ liệu và các tập con ngẫu nhiên của đặc trưng, sau đó tổng hợp kết quả của chúng."
+  },
+  {
+    "question_id": "ch10_q29",
+    "concepts": [
+      "Ưu điểm của Bagging",
+      "Giảm overfitting",
+      "Song song hóa"
+    ],
+    "misconceptions": [
+      "cho rằng mô hình Bagging luôn rất dễ giải thích, trong khi thực tế việc kết hợp nhiều mô hình làm giảm khả năng diễn giải so với một mô hình đơn lẻ (như một cây quyết định)."
+    ],
+    "reasoning": "Ưu điểm của Bagging bao gồm cải thiện độ chính xác và tính tổng quát hóa, khả năng huấn luyện song song (do các mô hình con độc lập), và giảm khả năng overfitting, làm cho mô hình ít bị ảnh hưởng bởi nhiễu và outlier."
+  },
+  {
+    "question_id": "ch10_q30",
+    "concepts": [
+      "Tính linh hoạt của Bagging",
+      "Ứng dụng trong hồi quy và phân loại"
+    ],
+    "misconceptions": [
+      "cho rằng Bagging bắt buộc phải dùng Decision Tree, mặc dù đây là mô hình cơ sở phổ biến nhất (trong Random Forest) nhưng không phải là duy nhất.",
+      "tin rằng Bagging chỉ dùng cho bài toán nhị phân, giới hạn không đúng về phạm vi ứng dụng của nó."
+    ],
+    "reasoning": "Bagging là một kỹ thuật linh hoạt vì nó có thể được áp dụng cho cả bài toán hồi quy (dùng averaging) và phân loại (dùng voting). Ngoài ra, nó cũng xử lý tốt với không gian đặc trưng lớn mà không cần lựa chọn đặc trưng phức tạp."
+  },
+  {
+    "question_id": "ch10_q31",
+    "concepts": [
+      "Nhược điểm của Bagging",
+      "Độ phức tạp tính toán",
+      "Khó giải thích"
+    ],
+    "misconceptions": [
+      "cho rằng Bagging không thể áp dụng cho hồi quy, một nhận định sai vì có thể kết hợp bằng phương pháp averaging."
+    ],
+    "reasoning": "Các khuyết điểm chính của Bagging bao gồm việc mô hình kết hợp trở nên khó giải thích (mất tính 'white-box' của cây quyết định đơn lẻ), độ phức tạp tính toán cao do phải huấn luyện nhiều mô hình, và có thể bị chệch (bias) nếu dữ liệu huấn luyện không cân bằng."
+  },
+  {
+    "question_id": "ch10_q32",
+    "concepts": [
+      "Các thuật toán Bagging",
+      "Random Forest",
+      "Bagged CART"
+    ],
+    "misconceptions": [
+      "cho rằng AdaBoost là một thuật toán Bagging, vì nhầm lẫn nó với nhóm Boosting.",
+      "tin rằng GradientBoost là một thuật toán Bagging, vì nhầm lẫn nó với nhóm Boosting."
+    ],
+    "reasoning": "Random Forest và Bagged CART (Cây Phân loại và Hồi quy được Bagging) là các ví dụ điển hình của phương pháp Bagging. Ngược lại, AdaBoost và GradientBoost là các thuật toán thuộc họ Boosting."
+  },
+  {
+    "question_id": "ch10_q33",
+    "concepts": [
+      "Bagging với mô hình cơ sở tuyến tính",
+      "Huấn luyện độc lập"
+    ],
+    "misconceptions": [
+      "cho rằng Bagging huấn luyện tuần tự, vì nhầm lẫn với Boosting.",
+      "tin rằng Bagging luôn làm tăng overfitting, trong khi mục đích chính của nó là giảm variance và chống overfitting."
+    ],
+    "reasoning": "Khi áp dụng Bagging, các mô hình cơ sở (kể cả Linear Regression) được huấn luyện độc lập trên các mẫu bootstrap. Việc kết hợp nhiều mô hình làm tăng độ phức tạp tính toán so với chỉ dùng một mô hình Linear Regression duy nhất."
+  },
+  {
+    "question_id": "ch10_q34",
+    "concepts": [
+      "Bagging với Linear Regression",
+      "Độ phức tạp"
+    ],
+    "misconceptions": [
+      "cho rằng Bagging với Linear Regression phải huấn luyện tuần tự, vì nhầm lẫn cơ chế của Bagging với Boosting.",
+      "tin rằng Bagging luôn làm tăng overfitting một cách bắt buộc, trong khi nó thường giúp giảm overfitting."
+    ],
+    "reasoning": "Bagging luôn huấn luyện các mô hình cơ sở một cách độc lập. Việc phải huấn luyện và lưu trữ N mô hình thay vì 1 làm tăng độ phức tạp tính toán và bộ nhớ so với một mô hình Linear Regression đơn lẻ. Bagging thường giảm overfitting, không làm tăng nó."
+  },
+  {
+    "question_id": "ch10_q35",
+    "concepts": [
+      "Định nghĩa Boosting",
+      "Huấn luyện tuần tự"
+    ],
+    "misconceptions": [
+      "cho rằng Boosting huấn luyện độc lập hoặc song song, vì nhầm lẫn với Bagging.",
+      "tin rằng Boosting chỉ huấn luyện trên tập validation."
+    ],
+    "reasoning": "Trái ngược với Bagging, các thuật toán Boosting huấn luyện các mô hình con một cách tuần tự. Mỗi mô hình trong chuỗi được xây dựng để tập trung vào việc sửa các lỗi mà các mô hình trước đó đã mắc phải."
+  },
+  {
+    "question_id": "ch10_q36",
+    "concepts": [
+      "Cơ chế của Boosting",
+      "Sửa lỗi của mô hình trước"
+    ],
+    "misconceptions": [
+      "cho rằng mục tiêu của mô hình sau là tái tạo lại dữ liệu, một ý tưởng giống với các mô hình sinh hơn.",
+      "tin rằng Boosting nhằm loại bỏ meta learner, trong khi nó không sử dụng meta learner theo kiểu Stacking.",
+      "cho rằng mục tiêu là tăng số chiều dữ liệu, một sự nhầm lẫn về mục đích của thuật toán."
+    ],
+    "reasoning": "Trong Boosting, các mô hình được xây dựng tuần tự. Trọng tâm của mỗi mô hình mới (mô hình sau) là học cách sửa những sai lầm (ví dụ: các mẫu bị dự đoán sai) của chuỗi mô hình đã có trước đó, từ đó dần dần cải thiện hiệu suất chung."
+  },
+  {
+    "question_id": "ch10_q37",
+    "concepts": [
+      "So sánh Bagging và Boosting",
+      "Huấn luyện tuần tự và độc lập"
+    ],
+    "misconceptions": [
+      "cho rằng Bagging huấn luyện các mô hình một cách tuần tự và Boosting huấn luyện độc lập, vì hoán đổi định nghĩa của hai phương pháp.",
+      "tin rằng cả Bagging và Boosting đều là các quy trình tuần tự, vì nghĩ rằng mọi kỹ thuật ensemble đều xây dựng mô hình theo chuỗi.",
+      "cho rằng cả Bagging và Boosting bắt buộc phải dùng các loại thuật toán khác nhau cho các mô hình con, vì nhầm lẫn với ý tưởng của Stacking."
+    ],
+    "reasoning": "Sự khác biệt chính nằm ở cách huấn luyện: Bagging huấn luyện các mô hình độc lập (có thể song song), trong khi Boosting huấn luyện tuần tự để mô hình sau sửa lỗi cho mô hình trước. Các phương án sai thể hiện sự nhầm lẫn về thứ tự huấn luyện hoặc nhầm lẫn với đặc điểm của kỹ thuật khác như Stacking."
+  },
+  {
+    "question_id": "ch10_q38",
+    "concepts": [
+      "Đặc điểm chung và riêng của Bagging và Boosting",
+      "Cơ chế kết hợp"
+    ],
+    "misconceptions": [
+      "cho rằng cả Bagging và Boosting chỉ làm việc được với cây quyết định, vì nghĩ rằng Random Forest và Gradient Boosting là các đại diện duy nhất và bắt buộc."
+    ],
+    "reasoning": "Cả Bagging và Boosting đều là kỹ thuật ensemble kết hợp nhiều mô hình cơ sở. Tuy nhiên, chúng khác nhau ở cơ chế: Bagging huấn luyện đồng thời/độc lập, trong khi Boosting huấn luyện tuần tự. Mặc dù cây quyết định là mô hình cơ sở phổ biến, cả hai kỹ thuật đều có thể hoạt động với các loại mô hình khác."
+  },
+  {
+    "question_id": "ch10_q39",
+    "concepts": [
+      "Ý tưởng của Gradient Boost",
+      "Giảm sai số tuần tự"
+    ],
+    "misconceptions": [
+      "cho rằng Gradient Boost hoạt động bằng cách lấy vote số đông, vì nhầm lẫn với Bagging cho bài toán phân loại.",
+      "tin rằng Gradient Boost lấy trung bình cộng của các cây độc lập, vì nhầm lẫn với Bagging cho bài toán hồi quy.",
+      "cho rằng Gradient Boost chỉ giữ lại cây tốt nhất, vì không hiểu ý tưởng kết hợp tuần tự."
+    ],
+    "reasoning": "Ý tưởng cốt lõi của Gradient Boosting là xây dựng một chuỗi các mô hình (thường là cây quyết định) một cách tuần tự. Mỗi cây mới được huấn luyện để dự đoán và bù trừ cho phần sai số (residual) còn lại của các cây trước đó, dần dần làm giảm tổng sai số của toàn bộ mô hình."
+  },
+  {
+    "question_id": "ch10_q40",
+    "concepts": [
+      "Cơ chế của Gradient Boost",
+      "Phần dư (Residuals)"
+    ],
+    "misconceptions": [
+      "cho rằng residuals luôn tăng lên, một điều trái ngược với mục tiêu của thuật toán là giảm sai số.",
+      "tin rằng việc thêm cây mới sẽ làm giảm số đặc trưng, không có mối liên hệ trực tiếp.",
+      "cho rằng sau khi thêm cây mới thì không cần dữ liệu huấn luyện nữa."
+    ],
+    "reasoning": "Trong Gradient Boosting, mỗi cây mới được huấn luyện để học từ phần sai số (residuals) của mô hình hiện tại. Bằng cách cộng thêm dự đoán của cây mới (đã được điều chỉnh bởi learning rate), mô hình tổng hợp sẽ tiến gần hơn đến giá trị thực, do đó phần sai số còn lại có xu hướng nhỏ dần qua mỗi bước."
+  },
+  {
+    "question_id": "ch10_q41",
+    "concepts": [
+      "Các thuật toán Boosting",
+      "AdaBoost",
+      "GradientBoost",
+      "XGBoost"
+    ],
+    "misconceptions": [],
+    "reasoning": "Đây là câu hỏi nhận biết, liệt kê các thuật toán nổi tiếng và hiệu quả thuộc họ Boosting. Tất cả các lựa chọn được đưa ra (AdaBoost, GradientBoost, XGBoost, LightGBM, CatBoost) đều là những đại diện tiêu biểu của phương pháp này."
+  },
+  {
+    "question_id": "ch10_q42",
+    "concepts": [
+      "Phân loại thuật toán Ensemble",
+      "Boosting vs. Bagging"
+    ],
+    "misconceptions": [
+      "cho rằng AdaBoost không thuộc nhóm Boosting.",
+      "cho rằng XGBoost không thuộc nhóm Boosting.",
+      "cho rằng CatBoost không thuộc nhóm Boosting.",
+      "tin rằng Random Forest thuộc nhóm Boosting, vì nó cũng là một ensemble của các cây và dễ bị nhầm lẫn với Gradient Boosting."
+    ],
+    "reasoning": "AdaBoost, XGBoost, và CatBoost là các thuật toán nổi tiếng thuộc họ Boosting. Ngược lại, Random Forest là một thuật toán thuộc họ Bagging."
+  },
+  {
+    "question_id": "ch10_q43",
+    "concepts": [
+      "Ứng dụng của thuật toán Boosting",
+      "Các cuộc thi Kaggle"
+    ],
+    "misconceptions": [
+      "cho rằng các thuật toán Boosting chỉ dùng cho dữ liệu văn bản hoặc chỉ cho bài toán hồi quy, là những giới hạn không chính xác.",
+      "tin rằng các thuật toán Boosting không cần tinh chỉnh siêu tham số, trong khi thực tế chúng có rất nhiều siêu tham số và việc tinh chỉnh là cực kỳ quan trọng để đạt hiệu suất cao."
+    ],
+    "reasoning": "Các thuật toán Boosting hiện đại như XGBoost, LightGBM, và CatBoost nổi tiếng vì hiệu suất vượt trội của chúng trên dữ liệu có cấu trúc dạng bảng, và thường xuyên là lựa chọn hàng đầu, giúp các đội đạt thứ hạng cao trong các cuộc thi khoa học dữ liệu như Kaggle."
+  },
+  {
+    "question_id": "ch10_q44",
+    "concepts": [
+      "Chiến lược chiến thắng tại Kaggle",
+      "Ensemble của các ensemble"
+    ],
+    "misconceptions": [
+      "cho rằng chỉ cần một mô hình duy nhất như CatBoost là đủ để thắng, dù nó rất mạnh.",
+      "cho rằng chỉ cần một mô hình duy nhất như Random Forest là đủ để thắng.",
+      "cho rằng chỉ cần một mô hình duy nhất như XGBoost là đủ để thắng."
+    ],
+    "reasoning": "Mặc dù các mô hình như XGBoost hay CatBoost rất mạnh, các giải pháp chiến thắng trong các cuộc thi Kaggle thường không chỉ dựa vào một mô hình duy nhất. Thay vào đó, họ thường sử dụng các kỹ thuật ensemble phức tạp hơn (như Stacking) để kết hợp dự đoán từ nhiều mô hình mạnh khác nhau (ví dụ: kết hợp XGBoost, LightGBM, và một mạng nơ-ron)."
+  },
+  {
+    "question_id": "ch10_q45",
+    "concepts": [
+      "Lựa chọn mô hình và phương pháp đánh giá",
+      "Bài toán quy mô lớn",
+      "Dữ liệu phi tuyến"
+    ],
+    "misconceptions": [
+      "cho rằng Logistic Regression phù hợp với dữ liệu phi tuyến, trong khi bản chất nó là một mô hình tuyến tính.",
+      "tin rằng Cross-validation là lựa chọn tốt cho tập dữ liệu một tỷ mẫu, vì không nhận ra chi phí tính toán khổng lồ của việc huấn luyện mô hình nhiều lần trên dữ liệu lớn như vậy.",
+      "cho rằng RMSE là metric phù hợp cho bài toán phân loại, vì nhầm lẫn với metric cho bài toán hồi quy."
+    ],
+    "reasoning": "Với dữ liệu lớn (một tỷ mẫu), Holdout Validation hiệu quả hơn Cross-Validation về mặt tính toán. Với quan hệ phi tuyến, Random Forest phù hợp hơn Logistic Regression. Với bài toán phân loại, Accuracy là metric đánh giá phù hợp hơn RMSE. Do đó, kết hợp Random Forest, Holdout Validation và Accuracy là lựa chọn hợp lý nhất."
+  },
+  {
+    "question_id": "ch10_q46",
+    "concepts": [
+      "Tổng kết về Bagging và Boosting",
+      "Kỹ thuật nâng cao"
+    ],
+    "misconceptions": [
+      "cho rằng Bagging và Boosting là kỹ thuật cơ bản thay thế cho Voting, vì không phân biệt được mức độ phức tạp và mục đích.",
+      "tin rằng chúng chỉ áp dụng cho dữ liệu ảnh, một giới hạn sai.",
+      "cho rằng chúng không cần tinh chỉnh tham số, một nhận định rất sai lầm, đặc biệt là với Boosting."
+    ],
+    "reasoning": "Bagging và Boosting được coi là hai kỹ thuật ensemble nâng cao, có khả năng mang lại hiệu quả rất cao khi được sử dụng và tinh chỉnh đúng cách. Chúng phức tạp hơn các phương pháp cơ bản như Voting/Averaging."
+  },
+  {
+    "question_id": "ch10_q47",
+    "concepts": [
+      "Sử dụng Ensemble Model",
+      "Tinh chỉnh siêu tham số"
+    ],
+    "misconceptions": [
+      "cho rằng nên dùng cùng một bộ siêu tham số cho mọi bài toán, vì không hiểu tầm quan trọng của việc thích ứng mô hình với dữ liệu cụ thể.",
+      "tin rằng có thể bỏ qua bước đánh giá mô hình khi dùng ensemble.",
+      "cho rằng chỉ cần dùng Voting là đủ và không cần các kỹ thuật nâng cao."
+    ],
+    "reasoning": "Giống như bất kỳ mô hình máy học nào, các mô hình ensemble (đặc biệt là các loại phức tạp như Gradient Boosting) có nhiều siêu tham số. Việc lựa chọn và tinh chỉnh các siêu tham số này cho phù hợp với bài toán và bộ dữ liệu cụ thể là một bước cực kỳ quan trọng để tối đa hóa hiệu suất."
+  },
+  {
+    "question_id": "ch10_q48",
+    "concepts": [
+      "Các kỹ thuật ensemble cơ bản",
+      "Voting",
+      "Averaging"
+    ],
+    "misconceptions": [
+      "cho rằng Blending là một kỹ thuật cơ bản, trong khi nó được xếp vào nhóm nâng cao vì liên quan đến kiến trúc meta-learner."
+    ],
+    "reasoning": "Các kỹ thuật ensemble cơ bản nhất bao gồm Voting (cho phân loại), Averaging (cho hồi quy), và Weighted Averaging (một biến thể của Averaging). Chúng hoạt động bằng cách tổng hợp trực tiếp các kết quả đầu ra của mô hình con. Blending phức tạp hơn và thuộc nhóm nâng cao."
+  },
+  {
+    "question_id": "ch10_q49",
+    "concepts": [
+      "Các kỹ thuật ensemble nâng cao",
+      "Stacking",
+      "Blending",
+      "Bagging",
+      "Boosting"
+    ],
+    "misconceptions": [],
+    "reasoning": "Đây là câu hỏi nhận biết, liệt kê các kỹ thuật ensemble được coi là nâng cao. Stacking, Blending, Bagging và Boosting đều thuộc nhóm này, chúng có cơ chế phức tạp hơn và thường cho hiệu quả cao hơn các phương pháp cơ bản."
+  },
+  {
+    "question_id": "ch10_q50",
+    "concepts": [
+      "Tổng quan về Ensemble Learning",
+      "Ưu điểm và nhược điểm"
+    ],
+    "misconceptions": [
+      "cho rằng Ensemble Learning chỉ dùng cho bài toán phân loại nhị phân, một giới hạn không đúng vì nó có thể áp dụng cho phân loại đa lớp, hồi quy và nhiều bài toán khác."
+    ],
+    "reasoning": "Ensemble learning là một phương pháp luận quan trọng để xây dựng mô hình có tính tổng quát hóa cao, hoạt động bằng cách kết hợp nhiều mô hình. Mặc dù rất hiệu quả, một trong những nhược điểm chính của nó là chi phí tính toán có thể rất lớn do phải huấn luyện và quản lý nhiều mô hình."
+  }
+]

@@ -1,0 +1,136 @@
+```json
+[
+  {
+    "question_id": "1",
+    "concepts": [
+      "kiểu dữ liệu chuỗi trong Python",
+      "khai báo biến"
+    ],
+    "misconceptions": [
+      "nhầm lẫn chuỗi ký tự chứa số với kiểu dữ liệu số thực (float)",
+      "cho rằng giá trị số được đặt trong dấu nháy vẫn là kiểu số (integer hoặc float)"
+    ],
+    "reasoning": "Giá trị '5.5' được đặt trong cặp dấu nháy đơn, do đó Python xác định đây là một chuỗi ký tự (string). Các phương án sai thể hiện sự nhầm lẫn giữa chuỗi và các kiểu dữ liệu số."
+  },
+  {
+    "question_id": "2",
+    "concepts": [
+      "toán tử logic trong Python",
+      "thứ tự ưu tiên của toán tử"
+    ],
+    "misconceptions": [
+      "nhầm lẫn thứ tự ưu tiên giữa toán tử `and` và `or` (thực hiện `or` trước `and`)",
+      "đánh giá sai giá trị logic của các biểu thức so sánh đơn lẻ",
+      "cho rằng cú pháp của biểu thức logic phức hợp không hợp lệ"
+    ],
+    "reasoning": "Biểu thức được tính toán dựa trên độ ưu tiên của toán tử, với `and` được thực hiện trước `or`. Do đó, `(False and False)` được tính trước, sau đó kết quả `False` được `or` với `True`, cho ra kết quả cuối cùng là `True`."
+  },
+  {
+    "question_id": "3",
+    "concepts": [
+      "phép toán với list trong Python",
+      "phép nối list (concatenation)"
+    ],
+    "misconceptions": [
+      "nhầm lẫn phép nối list với phép cộng các phần tử tương ứng theo vị trí",
+      "cho rằng phép cộng hai list sẽ thực hiện cộng chéo các phần tử hoặc tự động sắp xếp"
+    ],
+    "reasoning": "Trong Python, toán tử `+` trên hai list thực hiện việc nối chúng lại với nhau thành một list mới. Các phương án sai thể hiện sự nhầm lẫn với phép cộng ma trận hoặc vector trong các thư viện tính toán như NumPy."
+  },
+  {
+    "question_id": "4",
+    "concepts": [
+      "list comprehension trong Python",
+      "toán tử lũy thừa",
+      "định nghĩa hàm"
+    ],
+    "misconceptions": [
+      "nhầm lẫn toán tử lũy thừa (`**2`) với phép nhân với 2 (`*2`)",
+      "hiểu sai list comprehension thành phép tính tổng các phần tử",
+      "cho rằng hàm chỉ trả về giá trị đầu vào mà không qua xử lý"
+    ],
+    "reasoning": "Hàm sử dụng list comprehension với toán tử `**2` để tính bình phương của mỗi phần tử trong list đầu vào. Do đó, `[1, 2, 3]` trở thành `[1, 4, 9]`."
+  },
+  {
+    "question_id": "5",
+    "concepts": [
+      "thư viện NumPy",
+      "tính toán khoa học trong Python",
+      "chức năng các thư viện khoa học dữ liệu"
+    ],
+    "misconceptions": [
+      "nhầm lẫn chức năng của Pandas (xử lý dữ liệu bảng) với NumPy (tính toán mảng)",
+      "nhầm lẫn chức năng của Matplotlib (trực quan hóa) với chức năng tính toán mảng",
+      "không phân biệt được vai trò của Scikit-learn (học máy) và NumPy (tính toán nền tảng)"
+    ],
+    "reasoning": "NumPy là thư viện nền tảng cho tính toán khoa học trong Python, được tối ưu hóa cho các thao tác trên mảng và ma trận đa chiều. Các thư viện khác có mục đích chuyên biệt hơn như phân tích dữ liệu (Pandas) hoặc học máy (Scikit-learn)."
+  },
+  {
+    "question_id": "6",
+    "concepts": [
+      "khởi tạo mảng NumPy",
+      "kích thước (shape) của mảng",
+      "hàm np.ones"
+    ],
+    "misconceptions": [
+      "nhầm lẫn thứ tự của số hàng và số cột trong tham số `shape` của mảng NumPy",
+      "không phân biệt được các hàm tạo mảng khác nhau như `np.array`, `np.ones`, `np.full`"
+    ],
+    "reasoning": "Ma trận yêu cầu có 2 hàng và 3 cột, tương ứng `shape=(2,3)`. Lệnh `np.ones(shape=(3,2), ...)` tạo ra một ma trận 3 hàng và 2 cột, do đó không cho ra kết quả mong muốn."
+  },
+  {
+    "question_id": "7",
+    "concepts": [
+      "trực quan hóa dữ liệu",
+      "thư viện Matplotlib",
+      "hệ sinh thái khoa học dữ liệu Python"
+    ],
+    "misconceptions": [
+      "gán sai chức năng của các thư viện tính toán (NumPy) hoặc học máy (Scikit-learn) cho nhiệm vụ trực quan hóa",
+      "cho rằng Tensorflow, một thư viện học sâu, cũng có chức năng chính là vẽ biểu đồ"
+    ],
+    "reasoning": "Matplotlib là thư viện cốt lõi và phổ biến nhất trong Python cho việc trực quan hóa dữ liệu. Các thư viện còn lại trong các lựa chọn phục vụ cho tính toán số, học máy, và học sâu."
+  },
+  {
+    "question_id": "8",
+    "concepts": [
+      "cấu trúc dữ liệu Pandas",
+      "Pandas Series",
+      "Pandas DataFrame"
+    ],
+    "misconceptions": [
+      "cho rằng Pandas chỉ có một cấu trúc dữ liệu chính là DataFrame",
+      "cho rằng Pandas chỉ có một cấu trúc dữ liệu chính là Series"
+    ],
+    "reasoning": "Pandas có hai cấu trúc dữ liệu chính và cơ bản nhất là `Series` (1 chiều, tương tự một cột) và `DataFrame` (2 chiều, dạng bảng), cả hai đều quan trọng cho việc phân tích dữ liệu."
+  },
+  {
+    "question_id": "9",
+    "concepts": [
+      "lọc dữ liệu Pandas DataFrame",
+      "truy cập dữ liệu theo nhãn",
+      "boolean indexing"
+    ],
+    "misconceptions": [
+      "nhầm lẫn phương thức `.at` (truy cập một giá trị đơn lẻ) với các phương thức lọc nhiều hàng",
+      "sử dụng sai cú pháp cho phương thức `.loc` (dùng ngoặc tròn `()` thay vì ngoặc vuông `[]`)",
+      "không phân biệt được cú pháp của `.query()` và boolean indexing"
+    ],
+    "reasoning": "Phương thức `.at` được tối ưu để truy cập một giá trị đơn lẻ theo nhãn hàng và cột, không hỗ trợ lọc nhiều hàng dựa trên một điều kiện boolean. Các phương thức như `.loc`, `.query` hoặc boolean indexing mới là công cụ phù hợp."
+  },
+  {
+    "question_id": "10",
+    "concepts": [
+      "học sâu (Deep Learning)",
+      "thư viện Tensorflow",
+      "phân biệt học máy và học sâu"
+    ],
+    "misconceptions": [
+      "nhầm lẫn Scikit-learn (thư viện học máy truyền thống) với các thư viện học sâu",
+      "hiểu sai chức năng của thư viện xử lý dữ liệu (Pandas) là để xây dựng mô hình học sâu",
+      "cho rằng Matplotlib (trực quan hóa) được dùng để xây dựng mô hình"
+    ],
+    "reasoning": "Tensorflow là một nền tảng mã nguồn mở chuyên dụng cho việc xây dựng và triển khai các mô hình học sâu. Scikit-learn tập trung vào các thuật toán học máy cổ điển hơn và không có các công cụ mạnh mẽ cho mạng nơ-ron sâu."
+  }
+]
+```
