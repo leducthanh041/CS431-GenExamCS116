@@ -18,7 +18,7 @@ import json
 import sys
 import traceback
 from pathlib import Path
-
+import os
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from common import (
@@ -27,6 +27,17 @@ from common import (
     load_jsonl, save_jsonl,
     init_vllm_eval, make_vllm_sampling,
 )
+
+# ── Override EXP_NAME from environment (set by deploy_pipeline.sh) ────────────
+_exp_name = os.environ.get("EXP_NAME", "")
+if _exp_name:
+    Config.EXP_NAME = _exp_name
+    # Re-compute dependent paths after name change
+    Config.OUTPUT_DIR = Config.PROJECT_ROOT / "output" / Config.EXP_NAME
+    Config.EVAL_OUTPUT = Config.OUTPUT_DIR / "07_eval"
+    Config.EVAL_IWF_OUTPUT = Config.OUTPUT_DIR / "08_eval_iwf"
+    Config.EXPLAIN_OUTPUT = Config.OUTPUT_DIR / "09_explain"
+    print(f"[eval_iwf] EXP_NAME overridden: {Config.EXP_NAME}")
 
 
 def get_distractor_labels(mcq: dict) -> list[str]:
@@ -130,6 +141,14 @@ def run_eval_iwf():
     print(f"   Final rejected: {len(rejected_final)}")
     print(f"   → {accepted_file}")
     print(f"   → {rejected_file}")
+
+    # ── Release VRAM before next pipeline step ──
+    import gc, torch
+    del llm
+    del SamplingParams
+    gc.collect()
+    torch.cuda.empty_cache()
+    print("  [cleanup] VRAM released")
 
 
 if __name__ == "__main__":

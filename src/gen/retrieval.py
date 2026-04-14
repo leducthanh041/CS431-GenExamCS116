@@ -1,19 +1,28 @@
 """
-retrieval.py — Step 02: RAG Retrieval
-MCQGen Pipeline: ChromaDB → Top-K context blocks cho từng topic
+retrieval.py — Step 02: 5-tier Hybrid RAG Retrieval
+MCQGen Pipeline: ChromaDB + BM25 → Top-K context blocks cho từng topic
 
 Input:
   - input/topic_list.json
   - data/indexes/concept_kb/         (ChromaDB concept collection)
-  - data/indexes/assessment_kb/      (ChromaDB assessment collection)
+  - data/processed/concept_chunks.jsonl   (BM25 source)
+  - configs/generation_config.yaml    (optional: topic weights, focus topics)
 
 Output:
   - data/intermediate/02_retrieval/<topic_id>.jsonl
+
+Retrieval pipeline (5-tier from tieplm):
+  Tier 1: BM25 lexical search on concept_chunks.jsonl text
+  Tier 2: ChromaDB vector search (BGE-m3 embedding)
+  Tier 3: RRF fusion (Reciprocal Rank Fusion, k=60)
+  Tier 4: Cross-encoder reranking (ms-marco-MiniLM-L-6-v2)
+  Tier 5: Metadata enrichment (youtube_url, slide, timestamps)
 """
 
 from __future__ import annotations
 
 import json
+import os
 import sys
 import traceback
 from pathlib import Path
@@ -25,6 +34,16 @@ from common import (
     load_topic_list, save_jsonl,
     format_context_block,
 )
+from gen.retrieval_hybrid import HybridRetriever
+
+# ── Override EXP_NAME from environment ────────────────────────────────────────
+_exp_name = os.environ.get("EXP_NAME", "")
+if _exp_name:
+    Config.EXP_NAME = _exp_name
+    Config.OUTPUT_DIR = Config.PROJECT_ROOT / "output" / Config.EXP_NAME
+    Config.RETRIEVE_OUTPUT = Config.OUTPUT_DIR / "02_retrieval"
+    Config.GEN_STEM_OUTPUT = Config.OUTPUT_DIR / "03_gen_stem"
+    print(f"[retrieval] EXP_NAME overridden: {Config.EXP_NAME}")
 
 
 # ─── Keyword expansion map (từ retrieval_pipeline.py cũ) ───────────────────
@@ -116,119 +135,96 @@ def expand_query(topic_name: str) -> str:
 
 def run_retrieval():
     """
-    Entry point cho Step 02 — RAG retrieval cho tất cả topics.
+    Entry point cho Step 02 — 5-tier hybrid RAG retrieval cho tất cả topics.
     """
     config.makedirs()
 
-    # ─── Load ChromaDB + embedding model ──────────────────────────
+    # ─── Load generation config (optional topic weights / focus) ────────────
     try:
-        import chromadb
-        from sentence_transformers import SentenceTransformer
-    except ImportError as e:
-        print(f"❌ Missing dependency: {e}")
-        sys.exit(1)
-
-    print("🔄 Loading ChromaDB concept index...")
-    concept_client = chromadb.PersistentClient(path=str(Config.CONCEPT_KB_DIR))
-    try:
-        concept_collection = concept_client.get_collection("concept_chunks")
+        from gen.prompt_config import load_generation_config
+        gen_cfg = load_generation_config()
+        print("📋 Loaded generation_config.yaml (topic weights / focus topics)")
     except Exception:
-        concept_collection = concept_client.get_or_create_collection("concept_chunks")
+        gen_cfg = {}
+        print("📋 No generation_config.yaml — using topic_list.json as-is")
 
-    print("🔄 Loading ChromaDB assessment index...")
-    assess_client = chromadb.PersistentClient(path=str(Config.ASSESSMENT_KB_DIR))
-    try:
-        assess_collection = assess_client.get_collection("assessment_items")
-    except Exception:
-        assess_collection = assess_client.get_or_create_collection("assessment_items")
+    # ─── Build hybrid retriever (BM25 + ChromaDB + RRF + Rerank) ────────────
+    print("🔄 Building hybrid retriever (5-tier retrieval)...")
+    hr = HybridRetriever(
+        chroma_dir=Config.INDEX_DIR,
+        chunk_file=Config.CONCEPT_CHUNKS_FILE,
+        top_k_vector=150,
+        top_k_bm25=150,
+    )
+    hr.build_bm25_index()
+    print("✅ Hybrid retriever ready")
 
-    print("🔄 Loading BGE-m3 for query embedding...")
-    embed_model = SentenceTransformer("BAAI/bge-m3")
-    print("✅ ChromaDB + BGE-m3 loaded")
-
-    # ─── Load topics ────────────────────────────────────────────────
+    # ─── Load topics ────────────────────────────────────────────────────────
     topics_raw = load_topic_list()
     topic_entries = []
     for ch in topics_raw:
         for t in ch.get("topics", []):
-            t["chapter_id"] = ch["chapter_id"]
+            t = dict(t)  # copy
+            t["chapter_id"]   = ch["chapter_id"]
+            t["chapter_name"] = ch["chapter_name"]
             topic_entries.append(t)
+
+    # Apply topic weights / focus from gen_cfg
+    focus_chapters = gen_cfg.get("generation", {}).get("focus_chapters", [])
+    if focus_chapters:
+        topic_entries = [t for t in topic_entries if t["chapter_id"] in focus_chapters]
+
+    focus_topics = gen_cfg.get("generation", {}).get("focus_topics", [])
+    if focus_topics:
+        topic_entries = [t for t in topic_entries if t["topic_id"] in focus_topics]
 
     print(f"📂 Loaded {len(topic_entries)} topics")
 
-    # ─── Retrieval cho từng topic ──────────────────────────────────
+    # ─── Hybrid retrieval cho từng topic ───────────────────────────────────
     total = 0
     for entry in topic_entries:
         topic_id   = entry["topic_id"]
         topic_name = entry["topic_name"]
         query      = expand_query(topic_name)
+        chapter_id = entry.get("chapter_id", "")
 
         out_file = Config.RETRIEVE_OUTPUT / f"{topic_id}.jsonl"
         results = []
 
-        # Embed query bằng BGE-m3 (1024-dim) — phải match với lúc index
-        query_embedding = embed_model.encode([query]).tolist()
-
-        # Retrieval từ concept KB — dùng query_embeddings thay vì query_texts
+        # ── 5-tier hybrid retrieval ──────────────────────────────────────────
         try:
-            concept_results = concept_collection.query(
-                query_embeddings=query_embedding,
-                n_results=Config.RETRIEVAL_CONCEPT_TOP_K,
+            blocks = hr.retrieve(
+                query=query,
+                top_k=Config.RETRIEVAL_CONCEPT_TOP_K,  # top-K for prompt
+                chapter_filter=[chapter_id] if chapter_id else None,
+                use_bm25=True,
+                use_rerank=True,
             )
         except Exception as e:
-            print(f"  ⚠️  ChromaDB query error for {topic_id}: {e}")
-            concept_results = {"documents": [[]], "metadatas": [[]], "distances": [[]], "ids": [[]]}
+            print(f"  ⚠️  Hybrid retrieval error for {topic_id}: {e}")
+            traceback.print_exc()
+            blocks = []
 
-        # Retrieval từ assessment KB (optional reference)
-        try:
-            assess_results = assess_collection.query(
-                query_embeddings=query_embedding,
-                n_results=Config.RETRIEVAL_ASSESSMENT_TOP_K,
-            )
-        except Exception:
-            assess_results = {"documents": [[]], "metadatas": [[]]}
+        # ── Build context string (same format as before) ────────────────────
+        context_blocks_str = "\n".join(
+            format_context_block(b) for b in blocks
+        )
 
-        # Build context blocks
-        concept_docs = concept_results.get("documents", [[]])[0]
-        concept_metas = concept_results.get("metadatas", [[]])[0]
-
-        blocks = []
-        for i, (doc, meta) in enumerate(zip(concept_docs, concept_metas)):
-            if not doc:
-                continue
-            block = {
-                "chunk_id": meta.get("chunk_id", f"{topic_id}_c{i}"),
-                "chapter_id": meta.get("chapter_id", entry.get("chapter_id", "")),
-                "topic": meta.get("topic", topic_name),
-                "section_title": meta.get("section_title", ""),
-                "text": doc,
-                "source": "concept_kb",
-            }
-            blocks.append(block)
-
-        if not blocks:
-            print(f"  ⚠️  No context found for {topic_id}")
-            continue
-
-        # Lưu retrieval result cho topic
         record = {
             "topic_id": topic_id,
             "topic_name": topic_name,
             "query": query,
             "num_context_blocks": len(blocks),
             "context_blocks": blocks,
-            "context_blocks_str": "\n".join(
-                format_context_block(b) for b in blocks
-            ),
-            "assessment_reference": assess_results.get("documents", [[]])[0][:2],
+            "context_blocks_str": context_blocks_str,
+            "assessment_reference": "",
         }
         results.append(record)
-
         save_jsonl(results, out_file)
         total += 1
-        print(f"  ✅ {topic_id}: {len(blocks)} concept blocks retrieved")
+        print(f"  ✅ {topic_id}: {len(blocks)} context blocks (hybrid, 5-tier)")
 
-    print(f"\n✅ Retrieval done. {total} topics → {Config.RETRIEVE_OUTPUT}")
+    print(f"\n✅ Hybrid retrieval done. {total} topics → {Config.RETRIEVE_OUTPUT}")
 
 
 if __name__ == "__main__":

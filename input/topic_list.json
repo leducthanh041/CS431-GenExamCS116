@@ -1,100 +1,80 @@
 [
   {
-    "chapter_id": "ch02",
-    "chapter_name": "Popular Libraries",
-    "topics": [
-      {"topic_id": "ch02_t01", "topic_name": "NumPy", "difficulty": "G1", "num_questions": 3},
-      {"topic_id": "ch02_t02", "topic_name": "Pandas", "difficulty": "G1", "num_questions": 3},
-      {"topic_id": "ch02_t03", "topic_name": "Matplotlib", "difficulty": "G1", "num_questions": 2},
-      {"topic_id": "ch02_t04", "topic_name": "Scikit-learn", "difficulty": "G2", "num_questions": 2}
-    ]
-  },
-  {
-    "chapter_id": "ch03",
-    "chapter_name": "Pipeline & EDA",
-    "topics": [
-      {"topic_id": "ch03_t01", "topic_name": "Pipeline", "difficulty": "G2", "num_questions": 3},
-      {"topic_id": "ch03_t02", "topic_name": "Exploratory Data Analysis", "difficulty": "G2", "num_questions": 3}
-    ]
-  },
-  {
     "chapter_id": "ch04",
     "chapter_name": "Tiền xử lý dữ liệu",
     "topics": [
-      {"topic_id": "ch04_t01", "topic_name": "Missing Data", "difficulty": "G2", "num_questions": 5},
-      {"topic_id": "ch04_t02", "topic_name": "Outlier Detection", "difficulty": "G2", "num_questions": 4},
-      {"topic_id": "ch04_t03", "topic_name": "Feature Extraction", "difficulty": "G2", "num_questions": 4},
-      {"topic_id": "ch04_t04", "topic_name": "Feature Transformation", "difficulty": "G2", "num_questions": 4},
-      {"topic_id": "ch04_t05", "topic_name": "Feature Selection", "difficulty": "G3", "num_questions": 3}
-    ]
-  },
-  {
-    "chapter_id": "ch05",
-    "chapter_name": "Đánh giá mô hình",
-    "topics": [
-      {"topic_id": "ch05_t01", "topic_name": "Classification Metrics", "difficulty": "G2", "num_questions": 5},
-      {"topic_id": "ch05_t02", "topic_name": "Regression Metrics", "difficulty": "G2", "num_questions": 3},
-      {"topic_id": "ch05_t03", "topic_name": "Cross-validation", "difficulty": "G2", "num_questions": 4}
-    ]
-  },
-  {
-    "chapter_id": "ch06",
-    "chapter_name": "Unsupervised Learning",
-    "topics": [
-      {"topic_id": "ch06_t01", "topic_name": "Clustering", "difficulty": "G2", "num_questions": 4},
-      {"topic_id": "ch06_t02", "topic_name": "Dimensionality Reduction", "difficulty": "G3", "num_questions": 3}
-    ]
-  },
-  {
-    "chapter_id": "ch07a",
-    "chapter_name": "Supervised Learning - Regression",
-    "topics": [
-      {"topic_id": "ch07a_t01", "topic_name": "Linear Regression", "difficulty": "G2", "num_questions": 5},
-      {"topic_id": "ch07a_t02", "topic_name": "Regularization", "difficulty": "G3", "num_questions": 3}
+      {
+        "topic_id": "ch04_t01",
+        "topic_name": "Missing Data",
+        "difficulty": "G2",
+        "num_questions": 1
+      },
+      {
+        "topic_id": "ch04_t02",
+        "topic_name": "Outlier Detection",
+        "difficulty": "G2",
+        "num_questions": 1
+      },
+      {
+        "topic_id": "ch04_t03",
+        "topic_name": "Feature Extraction",
+        "difficulty": "G2",
+        "num_questions": 1
+      },
+      {
+        "topic_id": "ch04_t04",
+        "topic_name": "Feature Transformation",
+        "difficulty": "G2",
+        "num_questions": 1
+      },
+      {
+        "topic_id": "ch04_t05",
+        "topic_name": "Feature Selection",
+        "difficulty": "G3",
+        "num_questions": 1
+      }
     ]
   },
   {
     "chapter_id": "ch07b",
     "chapter_name": "Supervised Learning - Classification",
     "topics": [
-      {"topic_id": "ch07b_t01", "topic_name": "Logistic Regression", "difficulty": "G2", "num_questions": 4},
-      {"topic_id": "ch07b_t02", "topic_name": "Decision Trees", "difficulty": "G2", "num_questions": 3},
-      {"topic_id": "ch07b_t03", "topic_name": "SVM", "difficulty": "G2", "num_questions": 3}
+      {
+        "topic_id": "ch07b_t01",
+        "topic_name": "Logistic Regression",
+        "difficulty": "G2",
+        "num_questions": 2
+      },
+      {
+        "topic_id": "ch07b_t02",
+        "topic_name": "Decision Trees",
+        "difficulty": "G2",
+        "num_questions": 2
+      },
+      {
+        "topic_id": "ch07b_t03",
+        "topic_name": "SVM",
+        "difficulty": "G2",
+        "num_questions": 2
+      }
     ]
   },
   {
     "chapter_id": "ch08",
     "chapter_name": "Deep Learning với CNN",
     "topics": [
-      {"topic_id": "ch08_t01", "topic_name": "Neural Networks", "difficulty": "G2", "num_questions": 3},
-      {"topic_id": "ch08_t02", "topic_name": "CNN", "difficulty": "G2", "num_questions": 4}
-    ]
-  },
-  {
-    "chapter_id": "ch09",
-    "chapter_name": "Parameter Tuning",
-    "topics": [
-      {"topic_id": "ch09_t01", "topic_name": "Grid Search", "difficulty": "G2", "num_questions": 3},
-      {"topic_id": "ch09_t02", "topic_name": "Random Search", "difficulty": "G2", "num_questions": 2},
-      {"topic_id": "ch09_t03", "topic_name": "Bayesian Optimization", "difficulty": "G3", "num_questions": 2}
-    ]
-  },
-  {
-    "chapter_id": "ch10",
-    "chapter_name": "Ensemble Models",
-    "topics": [
-      {"topic_id": "ch10_t01", "topic_name": "Bagging", "difficulty": "G2", "num_questions": 3},
-      {"topic_id": "ch10_t02", "topic_name": "Boosting", "difficulty": "G3", "num_questions": 3},
-      {"topic_id": "ch10_t03", "topic_name": "Random Forest", "difficulty": "G2", "num_questions": 3}
-    ]
-  },
-  {
-    "chapter_id": "ch11",
-    "chapter_name": "Model Deployment",
-    "topics": [
-      {"topic_id": "ch11_t01", "topic_name": "Model Serving", "difficulty": "G2", "num_questions": 3},
-      {"topic_id": "ch11_t02", "topic_name": "API", "difficulty": "G2", "num_questions": 2},
-      {"topic_id": "ch11_t03", "topic_name": "Monitoring", "difficulty": "G1", "num_questions": 2}
+      {
+        "topic_id": "ch08_t01",
+        "topic_name": "Neural Networks",
+        "difficulty": "G2",
+        "num_questions": 2
+      },
+      {
+        "topic_id": "ch08_t02",
+        "topic_name": "CNN",
+        "difficulty": "G2",
+        "num_questions": 2
+      }
     ]
   }
 ]

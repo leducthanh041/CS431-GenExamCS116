@@ -1,0 +1,2928 @@
+[
+  {
+    "question_id": "ch7_q1",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng học có giám sát không cần nhãn. Vì sao lại vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì 'giám sát' là máy tự tìm ra quy luật, không cần con người gán nhãn trước."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, 'nhãn' trong máy học có nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là kết quả, là cái đầu ra. Nhưng máy phải tự tìm ra nó chứ không phải được cho sẵn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét bài toán dự đoán giá nhà từ diện tích và số phòng ngủ. 'Nhãn' là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là giá nhà. Nhưng máy sẽ tự học từ diện tích và số phòng để suy ra giá, không cần biết giá trước."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu không biết giá nhà thực tế, làm sao máy biết nó dự đoán giá 1 tỷ là đúng hay 10 tỷ là sai?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó so sánh với các nhà tương tự... Chắc là có một cách nào đó để tự điều chỉnh. Đó mới là 'học'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Việc 'tự điều chỉnh' đó dựa trên cơ sở nào để biết là đang tốt lên hay tệ đi?"
+      },
+      {
+        "role": "Student",
+        "text": "...Chắc là... phải có giá nhà thực tế để so sánh. Vậy là cần nhãn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bạn đã nhầm vì cho rằng 'giám sát' là máy tự làm tất cả. Thực chất, nó dùng chính 'nhãn' (kết quả đã biết) để giám sát và điều chỉnh việc học."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q2",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói chỉ cần đặc trưng đầu vào (x) là đủ. Vậy mô hình học từ cái gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì nó học các mẫu và quy luật từ chính dữ liệu đầu vào (x) thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy từ 'giám sát' trong 'học có giám sát' có nghĩa là gì đối với bạn?"
+      },
+      {
+        "role": "Student",
+        "text": "Là quá trình học được theo dõi để đảm bảo nó tìm ra quy luật đúng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử ta có diện tích nhà (x), cần đoán giá (y). Chỉ đưa diện tích, mô hình đoán 100m² là 1 tỷ. Làm sao nó biết đúng hay sai?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó phải tự so sánh với các nhà 100m² khác trong dữ liệu chứ. Mô hình AI phải thông minh như vậy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Dữ liệu của mình chỉ có cột diện tích (x). Nó so sánh giá 1 tỷ với cái gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Hmm... Nhưng mục tiêu của AI là tự tìm ra mà. Nếu cung cấp cả đáp án thì nó học được gì?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Nó cần biết khi nào nó 'sai' để điều chỉnh. Làm sao nó biết 'sai' nếu không có đáp án đúng để so sánh?"
+      },
+      {
+        "role": "Student",
+        "text": "À... Tức là nó phải có cái giá thực tế để biết dự đoán của nó tệ thế nào."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy để 'giám sát' việc học, mô hình cần gì ngoài đặc trưng đầu vào (x)?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó cần giá trị đầu ra mong muốn (y). Vậy đáp án là cặp (x, y)."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Niềm tin ban đầu của bạn cho rằng chỉ cần (x) là không đủ, vì mô hình không có cơ sở để biết dự đoán của nó là đúng hay sai. Đó chính là vai trò của (y) trong việc 'giám sát'."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q3",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ 'gom nhóm' cần sự giám sát ở điểm nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì mình phải ra lệnh cho máy gom những cái giống nhau lại. Đó là giám sát rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'giám sát' trong học máy nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là mình cung cấp dữ liệu và cả 'đáp án' đúng để máy học theo."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử có 1000 ảnh chó và mèo chưa được dán nhãn."
+      },
+      {
+        "role": "Student",
+        "text": "Vâng, một tập dữ liệu ảnh."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bài toán gom nhóm có thể chia chúng thành 2 cụm không?"
+      },
+      {
+        "role": "Student",
+        "text": "Được chứ, nó sẽ tự động gom ảnh chó vào một cụm, ảnh mèo vào cụm kia. Vẫn là có giám sát."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bạn nói 'giám sát' cần 'đáp án'. Vậy 'đáp án' cho từng ảnh ở đây là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì đáp án là ảnh đó thuộc cụm nào. Nhưng máy phải tự tìm ra chứ. Mục đích của thuật toán là vậy mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy máy có biết trước cụm 1 là 'chó', cụm 2 là 'mèo' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không. Nó chỉ biết là cụm A và cụm B thôi. Nhưng mình vẫn là người bảo nó gom nhóm, nên nó có giám sát."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu vậy, bài toán phân lớp khác gì bài toán gom nhóm?"
+      },
+      {
+        "role": "Student",
+        "text": "...Phân lớp thì mình phải cung cấp nhãn 'chó', 'mèo' cho máy học trước. À... vậy là gom nhóm không cần nhãn có sẵn?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy sự khác biệt chính giữa có giám sát và không là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là việc dữ liệu có được gán nhãn trước hay không. Gom nhóm và giảm chiều không cần. Vậy đáp án là Hồi quy và Phân lớp."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn việc 'ra lệnh cho máy' với việc 'cung cấp dữ liệu có nhãn'. Học có giám sát cần nhãn có sẵn."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q4",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói có thể chia tuổi thành nhóm. Sao điều đó lại biến nó thành phân lớp?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì đúng mà. Phân lớp là chia đối tượng vào các lớp khác nhau. Chia tuổi thành 'thanh niên', 'trung niên' chính là như vậy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, một 'lớp' trong bài toán máy học có đặc điểm gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là các nhóm hữu hạn và riêng biệt. Một đối tượng chỉ thuộc một lớp tại một thời điểm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu mình muốn dự đoán tuổi chính xác, ví dụ 25 tuổi, 26 tuổi. Thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì 25 là một lớp, 26 là một lớp. Mỗi tuổi một lớp. Vẫn là phân lớp."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nếu có 100 người, tuổi từ 1 đến 100, ta có 100 lớp?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng. Vẫn hợp lý. Một bài toán phân lớp có nhiều lớp thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mô hình có thể dự đoán kết quả là '25.5 tuổi' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Lớp thường không phải số thập phân... nhưng nó có thể dự đoán lớp '25' hoặc '26'. Hoặc có thể làm tròn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Khi nào một giá trị là một 'lớp', khi nào là một 'số liên tục'?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là... 'lớp' là các nhãn rời rạc, còn tuổi có thể là bất kỳ số nào trên một khoảng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Vậy khi đầu ra là một số liên tục, ta gọi nó là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là... hồi quy. Vậy áp dụng lại, dự đoán tuổi là bài toán hồi quy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn việc có thể nhóm tuổi (để biến nó thành bài toán phân lớp) với bản chất của bài toán gốc. Dự đoán một giá trị số liên tục là hồi quy."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q5",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Chào bạn, mình thấy bạn cho rằng số đặc trưng quyết định loại bài toán. Vì sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Nhiều đặc trưng hơn thì mô hình phức tạp hơn, nó phải thay đổi cách học. Nên bản chất bài toán cũng thay đổi theo."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, hồi quy và phân lớp khác nhau cơ bản ở đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì... phân lớp là chia nhóm, hồi quy là dự đoán một con số. Nhưng đó chỉ là đầu ra, cái quyết định là độ phức tạp đầu vào cơ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét 2 bài toán. Bài 1: Dùng 10,000 từ để đoán email là 'spam' hay 'không spam'."
+      },
+      {
+        "role": "Student",
+        "text": "Ok, 10,000 đặc trưng, rất phức tạp. Chắc là một dạng hồi quy đặc biệt nào đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bài 2: Dùng 1 đặc trưng 'diện tích' để đoán 'giá nhà'. Đây là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Cái này thì rõ là hồi quy rồi. Nhưng nó đơn giản vì chỉ có 1 đặc trưng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bài 1 có đầu ra là 'spam'/'không spam'. Đó là số hay nhãn?"
+      },
+      {
+        "role": "Student",
+        "text": "Là nhãn. Nhưng em vẫn nghĩ số lượng 10,000 đặc trưng mới là yếu tố quyết định cách máy học."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy yếu tố nào thực sự phân biệt hai bài toán này, nếu không phải số đặc trưng?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là... cái mà chúng ta muốn dự đoán. Một cái là nhãn, một cái là số. Có lẽ em đã nhầm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng rồi. Sự khác biệt nằm ở bản chất biến đầu ra. Số lượng đặc trưng không thay đổi điều đó."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q6",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn giải thích lý do bạn nghĩ hàm dự đoán là β + x được không?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì tham số β tác động lên x, nên mình cộng chúng lại để ra kết quả dự đoán."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử x là diện tích nhà, ŷ là giá dự đoán. Cho β = 1000."
+      },
+      {
+        "role": "Student",
+        "text": "Vâng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu x = 1m², giá dự đoán theo công thức của bạn là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "ŷ = 1000 + 1 = 1001. Đơn giản mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nếu x = 2m², giá dự đoán là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "ŷ = 1000 + 2 = 1002. Tăng diện tích gấp đôi, giá chỉ tăng 1 đơn vị... Hơi kỳ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu x=0 (không có đất) thì sao? Giá là 1000 à?"
+      },
+      {
+        "role": "Student",
+        "text": "Không. Cái này vô lý. Phép cộng có vẻ không ổn. Chắc là... phép nhân?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy dựa trên suy luận đó, hàm dự đoán đúng nên là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó phải là ŷ = β̂x. Khi đó x=1, y=1000; x=2, y=2000. Hợp lý hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Ban đầu bạn đã nhầm lẫn tác động tuyến tính là phép cộng thay vì phép nhân."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q7",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn chọn MAE. Bạn có cho rằng MAE là hàm lỗi duy nhất cho hồi quy không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không phải duy nhất, nhưng nó là một hàm lỗi phổ biến và hợp lý. Em nghĩ đáp án của em đúng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục tiêu của việc huấn luyện mô hình hồi quy tuyến tính là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là tìm ra các hệ số để hàm lỗi là nhỏ nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bằng cách nào ta tìm được điểm nhỏ nhất của một hàm số?"
+      },
+      {
+        "role": "Student",
+        "text": "Thường là dùng đạo hàm, tìm điểm mà đạo hàm bằng 0."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hàm giá trị tuyệt đối trong MAE có đạo hàm tại mọi điểm không?"
+      },
+      {
+        "role": "Student",
+        "text": "Ừm... không, nó không có đạo hàm tại điểm 0. Nhưng nó vẫn tìm được giá trị nhỏ nhất mà?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy việc tối ưu bằng đạo hàm có đơn giản không? So với hàm bình phương trong MSE thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Hàm bình phương thì luôn có đạo hàm, nên có lẽ dễ hơn. Nhưng MAE vẫn là một lựa chọn tốt."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, hàm lỗi nào là nền tảng cho việc xây dựng công thức của hồi quy tuyến tính cổ điển?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là cái dễ tối ưu hơn... là MSE. Em hiểu rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tóm lại: bạn đã đúng khi nghĩ MAE là một hàm lỗi. Nhưng MSE mới là hàm lỗi cơ sở được nêu cho hồi quy tuyến tính vì tính chất toán học của nó."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q8",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng K-Means có thể huấn luyện hồi quy. Nó hoạt động thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì K-Means chia dữ liệu thành các cụm. Mỗi cụm sẽ có một đường hồi quy riêng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục tiêu của K-Means là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là tìm các nhóm điểm dữ liệu gần nhau, gom chúng vào các cụm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Và mục tiêu của hồi quy tuyến tính?"
+      },
+      {
+        "role": "Student",
+        "text": "Là tìm một đường thẳng khớp nhất với toàn bộ dữ liệu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Kết quả của K-Means là một đường thẳng hay các nhãn cụm?"
+      },
+      {
+        "role": "Student",
+        "text": "Là các nhãn cụm. Nhưng từ đó mình có thể vẽ đường thẳng cho từng cụm. Vẫn đúng mà?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử dữ liệu của bạn là một đường thẳng hoàn hảo. K-Means sẽ chia nó thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ chia thành K phần dọc theo đường thẳng đó. Vậy là mình có K mô hình nhỏ, vẫn mô tả được dữ liệu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hồi quy tuyến tính tìm một mô hình duy nhất. K-Means có tạo ra mô hình đó không?"
+      },
+      {
+        "role": "Student",
+        "text": "À không... K-Means chỉ phân nhóm. Nó không tìm ra phương trình đường thẳng tổng thể."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, phương pháp nào trong danh sách thực sự tìm ra phương trình đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là Normal equation. Em nhớ nó giải trực tiếp ra hệ số."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. K-Means là phân cụm, không phải tối ưu hồi quy. Normal Equation mới là phương pháp giải trực tiếp."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q9",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng KMeans dùng cho hồi quy. Nó giúp dự đoán một giá trị số cụ thể như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì nó sẽ nhóm các điểm dữ liệu lại. Dựa vào nhóm đó, mình sẽ biết giá trị cần dự đoán."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục tiêu của hồi quy tuyến tính là tìm ra một đường thẳng hay các cụm dữ liệu?"
+      },
+      {
+        "role": "Student",
+        "text": "Là tìm ra một đường thẳng. Nhưng KMeans có thể giúp tìm ra đường đó bằng cách nhóm các điểm gần nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy kết quả cuối cùng của KMeans là một đường thẳng hay là các nhãn của cụm?"
+      },
+      {
+        "role": "Student",
+        "text": "Là nhãn của cụm, ví dụ 'nhóm 1', 'nhóm 2'. Nhưng từ đó mình có thể suy ra giá trị. Chắc chắn là được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu có 3 cụm, kết quả là 0, 1, 2. Giá nhà có thể là 1.5 (tỷ) không?"
+      },
+      {
+        "role": "Student",
+        "text": "Ừm... không. Nó chỉ có thể là 0, 1, hoặc 2. Vậy là nó không dự đoán được các giá trị ở giữa."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy để dự đoán một giá trị liên tục như 1.5, ta cần một module có khả năng gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Cần một module có thể tạo ra một đường thẳng và dự đoán bất kỳ giá trị nào trên đường đó. Vậy đáp án phải là LinearRegression."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã thấy KMeans dùng để phân nhóm (clustering), tạo ra các nhãn rời rạc. Còn hồi quy tuyến tính (LinearRegression) tạo ra mô hình để dự đoán giá trị liên tục."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q10",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói hồi quy tuyến tính hiệu quả với dữ liệu phi tuyến. Cơ sở nào cho nhận định này?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì nó vẫn vẽ được một đường thẳng qua các điểm mà. Cố gắng khớp nhất có thể."
+      },
+      {
+        "role": "Tutor",
+        "text": "Từ 'tuyến tính' trong tên mô hình có ý nghĩa gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là mối quan hệ dạng đường thẳng. Nhưng mô hình vẫn cố tìm đường thẳng tốt nhất cho mọi loại dữ liệu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tưởng tượng các điểm dữ liệu tạo thành hình chữ U. Đường hồi quy sẽ trông thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Sẽ là một đường thẳng nằm ngang ở giữa chữ U để cân bằng hai bên."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đường ngang đó dự đoán tốt các điểm ở đáy hoặc đỉnh chữ U không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không tốt lắm, nhưng đó là đường 'tốt nhất' mô hình tìm được. Vẫn là hiệu quả trong giới hạn của nó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'hiệu quả' là 'tìm được một đường' hay 'dự đoán chính xác'?"
+      },
+      {
+        "role": "Student",
+        "text": "...Là dự đoán chính xác. Nhưng nó vẫn tốt hơn là không có gì."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy khi nào mô hình này thực sự 'hiệu quả' trong việc dự đoán?"
+      },
+      {
+        "role": "Student",
+        "text": "Khi dữ liệu có xu hướng gần giống một đường thẳng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Vậy ưu điểm của nó không phải là xử lý dữ liệu phức tạp. Nó mạnh ở đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Ưu điểm của nó là sự đơn giản, dễ hiểu cho các mối quan hệ tuyến tính."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q11",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói hồi quy tuyến tính không dùng cho dữ liệu số. Vì sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó là 'tuyến tính'. Em nghĩ nó chỉ dùng để phân loại, ví dụ như 0 hoặc 1, chứ không phải các con số liên tục."
+      },
+      {
+        "role": "Tutor",
+        "text": "Phương trình của hồi quy tuyến tính là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là y = ax + b. Nhưng em nghĩ x ở đây phải là các đặc trưng đã được mã hóa, không phải số thô."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu y là giá nhà, x là diện tích. Cả hai có phải số không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng là số. Nhưng chắc chắn phải có bước xử lý nào đó. Không thể đưa thẳng số vào được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xử lý như thế nào nếu x là diện tích 50m², 100m²?"
+      },
+      {
+        "role": "Student",
+        "text": "Có thể mình sẽ chia nó thành các khoảng, ví dụ 'nhỏ', 'vừa', 'lớn' rồi mới đưa vào mô hình."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy làm sao để biết giá của nhà 51m² và 69m² khác nhau?"
+      },
+      {
+        "role": "Student",
+        "text": "Ừm... theo cách của em thì không phân biệt được. Chúng sẽ có cùng một mức giá dự đoán."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy để phân biệt giá nhà 51m² và 69m², biến x nên là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "x nên là con số diện tích thực tế. Vậy là hồi quy tuyến tính làm việc được với số."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm rằng nó chỉ dùng cho phân loại. Thực tế, nó được thiết kế cho mối quan hệ giữa các biến số."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q12",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng `coef_` có shape (1,1). Vì sao lại cần hai chiều vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì input X là ma trận (n_samples, 1). Nó có 2 chiều, nên hệ số tương ứng cũng phải 2 chiều để nhất quán."
+      },
+      {
+        "role": "Tutor",
+        "text": "Thuộc tính `coef_` này lưu trữ giá trị gì của mô hình?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó lưu hệ số góc. Tức là độ dốc của đường thẳng hồi quy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu mô hình có 3 features, `coef_` sẽ lưu trữ bao nhiêu hệ số góc?"
+      },
+      {
+        "role": "Student",
+        "text": "Sẽ có 3 hệ số. Vậy shape của `coef_` lúc đó sẽ là (1, 3) hoặc (3, 1)."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tại sao bạn vẫn nghĩ nó phải là 2 chiều?"
+      },
+      {
+        "role": "Student",
+        "text": "Để thực hiện phép nhân ma trận với X. X có shape (n, 3) thì `coef_` phải là (3, 1) để nhân được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Phép toán dự đoán có phải là nhân ma trận không?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó là... tích vô hướng (dot product). À, tích vô hướng của (n, 3) và (3,) sẽ cho ra (n,). `coef_` không cần 2 chiều."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, quy tắc chung cho shape của `coef_` là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó là một mảng 1D có độ dài bằng số lượng features, tức là shape (n_features,). Với 1 feature thì là (1,). Còn intercept_ chỉ là một số."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm khi cho rằng `coef_` phải là ma trận 2D để tính toán. Thực chất nó là một vector hệ số có shape (n_features,)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q13",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải của bạn, Σ(Xi−X̄)² nằm ở tử số. Tại sao bạn cho rằng nó ở đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì β̂₁ đo lường sự thay đổi, và Σ(Xi−X̄)² là tổng bình phương độ lệch, nó thể hiện sự biến thiên mạnh nhất của X."
+      },
+      {
+        "role": "Tutor",
+        "text": "β̂₁ đo lường sự thay đổi của cái gì theo cái gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Của Y theo X. Tức là Y thay đổi bao nhiêu khi X thay đổi một đơn vị."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử X là tuổi (năm), Y là chiều cao (cm). Đơn vị của β̂₁ là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải là cm/năm. Rõ ràng rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy đơn vị của công thức bạn đưa ra là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Tử số là (năm)², mẫu số là (năm)(cm). Vậy là... năm/cm. Hơi lạ."
+      },
+      {
+        "role": "Tutor",
+        "text": "“Năm/cm” diễn giải ý nghĩa của hệ số góc như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó có nghĩa là... cần bao nhiêu năm để cao thêm 1 cm? Vẫn không hợp lý. Nhưng em chắc chắn tử số phải liên quan đến phương sai của X."
+      },
+      {
+        "role": "Tutor",
+        "text": "Để có được đơn vị 'cm/năm', tử số và mẫu số phải có đơn vị gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Tử phải là (cm*năm), mẫu phải là (năm²). À... vậy công thức của em đã đảo ngược. Tử số phải là hiệp phương sai."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Sai lầm của bạn là đặt phương sai của X lên tử số, dẫn đến đơn vị bị đảo ngược và sai về bản chất. Công thức đúng đảm bảo đơn vị của hệ số góc là Y/X."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q14",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn viết β̂0 = X̄ - β̂1Ȳ. Vì sao bạn lại nhân hệ số β̂1 với Ȳ?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì trong công thức gốc Ŷ = β̂0 + β̂1X, thì β̂1 luôn đi với một biến. Em nghĩ khi tính β̂0 thì nó đi với Ȳ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đường hồi quy có một điểm đặc biệt nào mà nó luôn đi qua không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có. Em nhớ là đường hồi quy luôn đi qua điểm có tọa độ là trung bình của X và Y, tức là điểm (X̄, Ȳ)."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Vậy khi thay X = X̄ vào phương trình, Ŷ phải bằng gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Theo tính chất đó, khi X = X̄ thì Ŷ phải bằng Ȳ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tốt. Giờ hãy thay công thức β̂0 = X̄ - β̂1Ȳ của bạn vào phương trình hồi quy gốc."
+      },
+      {
+        "role": "Student",
+        "text": "Ta có Ŷ = (X̄ - β̂1Ȳ) + β̂1X. Nếu thay X=X̄, thì Ŷ = X̄ - β̂1Ȳ + β̂1X̄. Có vẻ vẫn ổn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Kết quả cuối cùng đó, X̄ - β̂1Ȳ + β̂1X̄, có bằng Ȳ không?"
+      },
+      {
+        "role": "Student",
+        "text": "À không... Nó không bằng Ȳ. Trừ khi có điều kiện đặc biệt. Nhưng bản chất công thức em vẫn đúng chứ, chỉ là biến đổi thôi mà?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu nó không bằng Ȳ, có vi phạm tính chất bạn vừa nêu không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có... nó vi phạm. Vậy công thức của em sai. Để Ŷ=Ȳ thì Ȳ = β̂0 + β̂1X̄. Chuyển vế, β̂0 = Ȳ - β̂1X̄."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Lỗi của bạn là nhớ ngược công thức, dẫn đến mâu thuẫn với tính chất cơ bản của đường hồi quy là phải đi qua điểm (X̄, Ȳ)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q15",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng hệ số góc và tương quan luôn trái dấu. Vì sao bạn nghĩ chúng có mối quan hệ nghịch đảo?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì chúng đo lường hai thứ khác nhau nhưng liên quan. Em nghĩ một cái bù trừ cho cái kia, nên phải ngược dấu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, nếu tương quan là dương, bạn kỳ vọng điều gì về mối quan hệ giữa X và Y?"
+      },
+      {
+        "role": "Student",
+        "text": "Tương quan dương thì X tăng, Y có xu hướng tăng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Được. Nếu X tăng, Y tăng, đường hồi quy biểu diễn mối quan hệ này sẽ dốc lên hay dốc xuống?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải dốc lên chứ. Nhưng đó chỉ là đường biểu diễn thôi, còn giá trị hệ số góc phải khác."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một đường thẳng dốc lên có hệ số góc mang dấu gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Dấu dương. Nhưng... em vẫn thấy nó không hợp lý. Chắc phải có trường hợp chúng ngược dấu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy tương quan dương (X tăng, Y tăng) lại đi với một đường dốc lên (hệ số góc dương). Logic 'nghịch đảo' của bạn có còn đúng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có lẽ là không. Vậy là chúng luôn cùng dấu à?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy quy tắc chung về dấu của hệ số góc và hệ số tương quan là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Chúng phải có cùng dấu. Nếu tương quan dương thì hệ số góc dương, và ngược lại. Vậy câu trả lời đúng là 'Giống dấu'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Sai lầm của bạn là giả định một mối quan hệ 'bù trừ' không tồn tại. Thực tế, cả hai đều đo lường hướng của mối quan hệ tuyến tính."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q16",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói bias là sai số giữa hai tập huấn luyện. Sao lại cần hai tập?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì phải so sánh mới biết mô hình có ổn định không chứ ạ? Nếu kết quả trên hai tập khác nhau nhiều, thì bias cao."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một mô hình 'ổn định' nghĩa là gì theo bạn?"
+      },
+      {
+        "role": "Student",
+        "text": "Là nó cho kết quả giống nhau trên các bộ dữ liệu khác nhau. Không thay đổi nhiều."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử mình có một mô hình luôn dự đoán giá nhà là 1 tỷ."
+      },
+      {
+        "role": "Student",
+        "text": "Thì mình phải chạy nó trên một tập train khác xem nó có còn dự đoán 1 tỷ không để biết bias."
+      },
+      {
+        "role": "Tutor",
+        "text": "Không cần tập khác. Giá nhà thực tế là 2, 3, 5 tỷ. Mô hình này có vấn đề không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có, nó dự đoán sai. Nhưng vẫn phải so với tập khác mới kết luận được 'bias' của nó chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Cái sai số 'cố định' của mô hình so với thực tế... đó là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "...À. Có phải đó mới là bias không? Cái độ lệch cố hữu của mô hình?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy quay lại câu hỏi ban đầu. Bias được định nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Bias là sai số giữa trung bình mô hình dự đoán và mô hình thực tế."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn bias, là độ lệch của mô hình, với variance, là độ bất ổn của mô hình trên các tập dữ liệu khác nhau."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q17",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói bias cao nghĩa là overfit. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì khi bias cao, mô hình dự đoán sai nhiều. Overfit cũng là dự đoán sai, nên chúng là một."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, overfit có nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là mô hình quá phức tạp, học thuộc lòng cả nhiễu trong dữ liệu huấn luyện."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét một mô hình luôn đoán giá nhà là 1 tỷ, không cần biết đầu vào."
+      },
+      {
+        "role": "Student",
+        "text": "Mô hình đó quá đơn giản, chắc chắn sai nhiều. Bias rất cao."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mô hình này có phức tạp và học thuộc lòng nhiễu không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nó quá đơn giản thì không thể học thuộc lòng được. Nhưng nó vẫn sai, cũng như overfit."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nó có phải là overfit theo định nghĩa của bạn không?"
+      },
+      {
+        "role": "Student",
+        "text": "Theo định nghĩa thì không... nhưng kết quả đều là sai. Logic của em vẫn có điểm đúng chứ?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Mô hình 'luôn đoán 1 tỷ' và mô hình overfit, chúng sai theo kiểu giống nhau không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không. Mô hình bias cao quá đơn giản, còn overfit quá phức tạp. À... vậy bias cao là ngược lại với overfit. Nó là underfit."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Ban đầu bạn đã nhầm lẫn bias cao (underfit) với overfit (thường do variance cao)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q18",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói variance thấp là dự đoán kém trên dữ liệu mới. Vì sao lại vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó không linh hoạt. Nó chỉ học thuộc lòng một kiểu, gặp dữ liệu mới là chịu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, 'variance' trong machine learning đo lường điều gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Đo độ thay đổi của dự đoán khi dữ liệu training thay đổi. Variance thấp thì dự đoán ít đổi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét một mô hình luôn đoán là 'mèo' cho mọi ảnh. Variance cao hay thấp?"
+      },
+      {
+        "role": "Student",
+        "text": "Variance cực thấp. Vì dự đoán của nó không bao giờ thay đổi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mô hình đó có dự đoán tốt trên dữ liệu mới không?"
+      },
+      {
+        "role": "Student",
+        "text": "Tất nhiên là không. Nó chỉ đúng khi ảnh là mèo. Thấy chưa, variance thấp là tệ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giờ có mô hình thứ hai, variance cũng thấp, nhưng nó luôn đoán đúng mọi con vật."
+      },
+      {
+        "role": "Student",
+        "text": "Vô lý. Variance thấp là cứng nhắc, làm sao mà luôn đúng trên dữ liệu đa dạng được?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'dự đoán kém' là do variance thấp, hay do bản thân các dự đoán đó sai?"
+      },
+      {
+        "role": "Student",
+        "text": "...Chắc là do dự đoán sai. Variance thấp chỉ có nghĩa là nó nhất quán với cái sai đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nếu nó nhất quán với một dự đoán đúng thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì nó sẽ là mô hình tốt... À, vậy variance thấp không phải lúc nào cũng tệ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Sai lầm của bạn là đánh đồng 'nhất quán' (variance thấp) với 'dự đoán kém'."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q19",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng mô hình tốt cần bias cao. Vì sao việc mô hình sai một cách có hệ thống lại là tốt?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó đảm bảo variance thấp. Thà có một mô hình đơn giản, ổn định còn hơn một mô hình phức tạp, overfitting."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, bias cao ở đây có nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nghĩa là mô hình quá đơn giản, không khớp hết được dữ liệu huấn luyện. Nhưng đó là cái giá phải trả để nó không bị nhiễu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét một mô hình luôn dự đoán giá nhà là 2 tỷ, bất kể diện tích. Bias mô hình này cao không?"
+      },
+      {
+        "role": "Student",
+        "text": "Rất cao. Nhưng variance của nó gần như bằng không. Nó cực kỳ ổn định, không overfitting."
+      },
+      {
+        "role": "Tutor",
+        "text": "Sự 'ổn định' trong việc dự đoán sai mọi căn nhà không phải 2 tỷ có hữu ích không?"
+      },
+      {
+        "role": "Student",
+        "text": "Tất nhiên là không. Nhưng đó là một ví dụ cực đoan. Trong thực tế, một mô hình đơn giản vẫn có giá trị hơn mô hình overfitting."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục tiêu cuối cùng là 'không overfitting' hay 'dự đoán chính xác'?"
+      },
+      {
+        "role": "Student",
+        "text": "Là dự đoán chính xác... Tôi đoán là một mô hình luôn sai thì cũng vô dụng, dù nó ổn định."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, để dự đoán chính xác, một mô hình lý tưởng cần có bias và variance như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó cần... cả hai đều thấp. Bias thấp để dự đoán đúng, và variance thấp để không bị overfitting. Vậy đáp án là bias thấp, variance thấp."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Ban đầu bạn ưu tiên variance thấp tuyệt đối, nhưng thực tế mô hình tốt cần giảm cả hai nguồn lỗi: bias và variance."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q20",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "[A] Bạn nói khi tăng độ phức tạp, chênh lệch lỗi sẽ nhỏ hơn. Vì sao lại vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì mô hình phức tạp hơn, nó “thông minh” hơn. Nó sẽ học được bản chất của dữ liệu, nên cả train và test đều sẽ tốt, chênh lệch phải nhỏ."
+      },
+      {
+        "role": "Tutor",
+        "text": "[B] Vậy mục tiêu cuối cùng của mô hình là giảm lỗi huấn luyện xuống thấp nhất?"
+      },
+      {
+        "role": "Student",
+        "text": "Không hẳn, mục tiêu là phải hoạt động tốt trên dữ liệu mới. Nhưng để làm được thế, nó phải học tốt tập huấn luyện trước đã."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Giả sử mô hình có thể nhớ thuộc lòng mọi điểm dữ liệu huấn luyện. Lỗi huấn luyện của nó là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Nếu nhớ thuộc lòng thì lỗi huấn luyện bằng 0. Quá tốt rồi còn gì."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Vậy khi đưa một điểm dữ liệu kiểm thử, nó có chắc chắn dự đoán đúng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là đúng chứ. Nó đã học rất kỹ rồi mà, lỗi bằng 0 cơ mà. Sao sai được?"
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Nó học thuộc lòng dữ liệu cũ. Sao nó biết được quy luật cho dữ liệu mới?"
+      },
+      {
+        "role": "Student",
+        "text": "Em vẫn nghĩ nó sẽ làm tốt. Nếu nó đủ phức tạp để nhớ hết tập train, nó cũng đủ phức tạp để suy ra quy luật chung."
+      },
+      {
+        "role": "Tutor",
+        "text": "[D] Vậy chênh lệch giữa lỗi huấn luyện (bằng 0) và lỗi kiểm thử (có thể lớn) là như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "...à. Lỗi huấn luyện bằng 0, lỗi kiểm thử lớn... Vậy chênh lệch sẽ lớn. Logic của em sai rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "[E] Chính xác. Khi mô hình quá phức tạp, nó học thuộc lòng tập train (lỗi train thấp), nhưng thất bại trên tập test (lỗi test cao). Chênh lệch lỗi tăng."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q21",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn viết rằng mô hình bậc cao có lỗi kiểm thử tốt nhất. Tại sao bạn lại nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó khớp với dữ liệu huấn luyện tốt hơn. Một mô hình càng khớp chặt với dữ liệu thì càng chính xác chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Khớp 'chặt' với dữ liệu huấn luyện nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nghĩa là đường cong của mô hình đi qua tất cả các điểm dữ liệu. Lỗi trên tập huấn luyện gần như bằng không."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử tập huấn luyện có một điểm dữ liệu bị đo sai. Mô hình sẽ phản ứng thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì nó vẫn phải học điểm đó. Dữ liệu là dữ liệu mà, mô hình phải cố gắng khớp hết."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đường cong bị bẻ cong vì một điểm sai có đáng tin để dự đoán không?"
+      },
+      {
+        "role": "Student",
+        "text": "…Chắc là không. Nếu nó cố đi qua điểm sai đó, nó sẽ dự đoán sai cho các điểm mới ở gần đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, một mô hình tốt nên làm gì với những điểm 'nhiễu' hoặc 'sai' đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó nên bỏ qua chúng và chỉ học xu hướng chung của dữ liệu. Tức là lỗi huấn luyện sẽ không bằng không."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Mô hình bậc cao có thể học cả nhiễu, dẫn đến lỗi huấn luyện rất thấp nhưng lỗi kiểm thử cao. Đây gọi là quá khớp (overfitting)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q22",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn giải thích rằng tăng dữ liệu làm chênh lệch lỗi lớn hơn. Logic của bạn là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì càng nhiều dữ liệu, mô hình càng khó học hết. Lỗi huấn luyện có thể không đổi, nhưng dữ liệu mới lạ hơn, nên lỗi kiểm thử sẽ tăng vọt. Chênh lệch phải lớn hơn chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Lỗi huấn luyện thấp và lỗi kiểm thử cao cho thấy điều gì về mô hình?"
+      },
+      {
+        "role": "Student",
+        "text": "Là mô hình bị overfitting. Nó học thuộc lòng dữ liệu huấn luyện quá tốt."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Vậy để chống overfitting, ta cần mô hình 'học thuộc' kém đi, đúng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không hẳn. Ta cần nó tổng quát hóa tốt hơn. Nhưng thêm dữ liệu vào chỉ làm nó 'bối rối', khó mà học thuộc được nên lỗi huấn luyện sẽ tăng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử mô hình đang overfit nặng. Ta tăng gấp 10 lần dữ liệu. Khả năng 'học thuộc lòng' của nó tăng hay giảm?"
+      },
+      {
+        "role": "Student",
+        "text": "Giảm chứ, quá nhiều sao thuộc hết được. Nhưng như vậy thì hiệu suất trên tập huấn luyện sẽ kém đi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Vậy lỗi huấn luyện có thể tăng nhẹ. Còn lỗi kiểm thử thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì mô hình bớt 'học thuộc' và phải học cái chung hơn... nên nó sẽ hoạt động tốt hơn trên dữ liệu lạ. Lỗi kiểm thử sẽ giảm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nếu lỗi huấn luyện tăng nhẹ và lỗi kiểm thử giảm, chênh lệch giữa chúng sẽ thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "...Sẽ nhỏ lại. À, ra là vậy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng rồi. Tăng dữ liệu buộc mô hình phải tổng quát hóa, làm giảm overfitting, dẫn đến chênh lệch giữa lỗi huấn luyện và kiểm thử nhỏ hơn."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q23",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng overfitting xảy ra khi mô hình quá đơn giản. Vì sao lại vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó đơn giản nên không học được hết các đặc điểm của dữ liệu. Vì vậy nó hoạt động kém."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, 'overfitting' có nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là mô hình hoạt động kém trên dữ liệu mới. Do nó học không đủ tốt ngay từ đầu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tưởng tượng một đường thẳng (đơn giản) và một đường cong uốn lượn (phức tạp)."
+      },
+      {
+        "role": "Student",
+        "text": "Được ạ. Đường thẳng rõ ràng là mô hình đơn giản hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mô hình nào sẽ cố gắng đi qua từng điểm dữ liệu, kể cả điểm nhiễu?"
+      },
+      {
+        "role": "Student",
+        "text": "Đường cong phức tạp. Nhưng đường thẳng cũng tệ, nó bỏ sót gần hết các điểm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mô hình 'học thuộc' dữ liệu nhiễu, là mô hình nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Là đường cong. Nhưng việc học kỹ như vậy không phải là tốt sao? Nó chính xác hơn mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Học thuộc cả 'nhiễu' có giúp dự đoán tốt trên dữ liệu mới không có nhiễu đó không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là không... vì dữ liệu mới sẽ có nhiễu khác. Vậy... overfitting là do quá phức tạp?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, tóm lại quy luật gây ra overfitting là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là khi mô hình quá phức tạp, nó học cả những chi tiết không quan trọng, như nhiễu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Ban đầu bạn đã nhầm lẫn overfitting (học quá kỹ) với underfitting (học không đủ)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q24",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ vì sao tăng số tham số lại giúp tránh overfitting?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì càng nhiều tham số, mô hình càng học được nhiều chi tiết hơn, nên sẽ khớp với dữ liệu tốt hơn và tránh được lỗi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Theo bạn hiểu, overfitting là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là khi mô hình học quá tốt trên tập train, nhưng kém trên dữ liệu mới. Nhưng nếu nó học được 'hết' mọi thứ thì làm sao kém được?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu mô hình có nhiều tham số hơn số điểm dữ liệu thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì càng tốt. Nó có đủ 'chỗ' để ghi nhớ từng điểm dữ liệu một. Hiệu suất trên tập train sẽ là 100%."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một mô hình 'ghi nhớ' mọi điểm train, kể cả nhiễu. Nó sẽ dự đoán dữ liệu mới thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Dữ liệu mới gần giống cái cũ thì nó sẽ đoán đúng. Nó có một thư viện khổng lồ trong đầu mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'ghi nhớ' và 'tìm quy luật chung' có phải là một không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không... Ghi nhớ là học vẹt, còn tìm quy luật là khái quát hóa. À... tăng tham số quá mức có lẽ là đang bắt nó học vẹt."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy để tránh overfitting, ta nên làm gì với độ phức tạp của mô hình?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải giảm nó xuống. Để nó không còn khả năng 'học vẹt' và buộc phải tìm ra quy luật."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm lẫn việc tăng tham số sẽ giúp mô hình mạnh hơn, nhưng thực tế nó lại dẫn đến học vẹt (overfitting). Giảm phức tạp mới là cách đúng."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q25",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng underfitting xảy ra khi mô hình quá phức tạp. Tại sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì mô hình phức tạp quá thì nó không học được gì, nên kết quả kém. Nó bị rối."
+      },
+      {
+        "role": "Tutor",
+        "text": "Theo bạn, thế nào là một \"mô hình phức tạp\"?"
+      },
+      {
+        "role": "Student",
+        "text": "Là mô hình có nhiều tầng, nhiều tham số. Nó khó học nên không khớp được dữ liệu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét một mô hình đường thẳng (y=ax+b). Nó phức tạp hay đơn giản?"
+      },
+      {
+        "role": "Student",
+        "text": "Quá đơn giản."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu dữ liệu có dạng parabol (cong)? Mô hình đường thẳng có khớp tốt không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc chắn là không, kết quả sẽ rất tệ. Nó không thể nào theo được đường cong đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Kết quả tệ đó, ta gọi là underfitting hay overfitting?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó không khớp, nhưng nguyên nhân của underfitting là sự phức tạp cơ. Đây chỉ là trường hợp nó quá yếu thôi, khác mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy \"không khớp được dữ liệu\" là do quá phức tạp hay quá đơn giản?"
+      },
+      {
+        "role": "Student",
+        "text": "Trong ví dụ đường thẳng thì là do quá đơn giản. Nhưng mình vẫn nghĩ mô hình phức tạp cũng gây ra lỗi tương tự."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy underfitting là khi mô hình không nắm bắt được 'tính chất' của dữ liệu?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng. Vì nó không đủ 'sức' để học... À, vậy underfitting xảy ra khi mô hình quá đơn giản."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Ban đầu bạn nhầm lẫn vì cho rằng sự phức tạp gây ra hiệu suất kém. Nhưng underfitting là do mô hình quá đơn giản, không đủ năng lực để học."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q26",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ rằng giảm số tham số sẽ giúp tránh underfitting. Tại sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì mô hình sẽ đơn giản hơn, dễ học đúng quy luật cốt lõi hơn, không bị nhiễu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Theo bạn, underfitting nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là mô hình học kém, dự đoán sai nhiều ngay trên dữ liệu training."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một mô hình 'học kém' có phải do nó quá phức tạp không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không hẳn, nhưng nếu phức tạp quá thì sẽ thành overfitting. Giảm tham số là để nó tập trung vào cái chính, an toàn hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tưởng tượng dữ liệu có dạng Parabol. Một đường thẳng có khớp tốt không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, đường thẳng quá đơn giản, không thể nào khớp được hình parabol."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mô hình đường thẳng khi đó bị lỗi gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó... nó bị underfitting."
+      },
+      {
+        "role": "Tutor",
+        "text": "Để sửa lỗi này, bạn làm mô hình đơn giản hơn hay phức tạp hơn?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải làm nó phức tạp hơn, chuyển từ đường thẳng sang parabol... Tức là tăng khả năng biểu diễn của nó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy tóm lại, bạn đã nhầm lẫn. Giảm độ phức tạp là cách chống overfitting. Để chống underfitting, ta phải làm ngược lại: tăng độ phức tạp của mô hình."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q27",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "[A] Bạn giải thích lý do tại sao bias cao lại gây ra overfitting được không?"
+      },
+      {
+        "role": "Student",
+        "text": "[A] Vì mô hình có định kiến sai, nó sẽ cố gắng học cả nhiễu trong dữ liệu để bù đắp, dẫn đến quá khớp."
+      },
+      {
+        "role": "Tutor",
+        "text": "[B] Overfitting là đặc điểm của mô hình phức tạp hay đơn giản?"
+      },
+      {
+        "role": "Student",
+        "text": "[B] Rất phức tạp. Nó cần sự linh hoạt để bám theo từng điểm dữ liệu."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Xét mô hình hồi quy tuyến tính đơn giản. Mô hình này có bias cao không?"
+      },
+      {
+        "role": "Student",
+        "text": "[C] Có, vì nó giả định quan hệ phải là đường thẳng. Đây là một định kiến rất mạnh."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Mô hình này có đủ phức tạp để \"bám theo từng điểm dữ liệu\" không?"
+      },
+      {
+        "role": "Student",
+        "text": "[C] Không. Nhưng đó chỉ là một ví dụ. Với mô hình khác, bias cao vẫn có thể gây overfitting mà. (bảo vệ lần 1)"
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Bias cao nghĩa là giả định của mô hình rất cứng nhắc. Đúng chứ?"
+      },
+      {
+        "role": "Student",
+        "text": "[C] Đúng. Nhưng nếu giả định đó sai hoàn toàn, mô hình phải làm gì đó khác thường để bù lại. (bảo vệ lần 2)"
+      },
+      {
+        "role": "Tutor",
+        "text": "[D] Một giả định cứng nhắc có giúp mô hình \"học cả nhiễu\" được không?"
+      },
+      {
+        "role": "Student",
+        "text": "[D] ...Chắc là không. Nó sẽ bỏ qua nhiễu và cả tín hiệu. Vậy nó là underfitting. Giờ thì mình hiểu rồi. Bias cao dẫn đến underfitting. Vậy đáp án đúng phải là... gây ra lỗi hệ thống."
+      },
+      {
+        "role": "Tutor",
+        "text": "[E] Chính xác. Lỗi sai của bạn là đánh đồng bias cao, vốn gắn với sự đơn giản hóa, với overfitting, vốn là đặc trưng của sự phức tạp quá mức."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q28",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng variance cao thì mô hình tổng quát hóa tốt. Dựa vào đâu bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó 'linh hoạt'. Variance cao tức là nó học được các chi tiết phức tạp trong dữ liệu, nên nó phải tổng quát tốt hơn chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, 'linh hoạt' ở đây có nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là nó có thể khớp với nhiều dạng dữ liệu, không bị cứng nhắc. Mô hình đơn giản quá thì sao tổng quát được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử một mô hình học thuộc lòng mọi điểm dữ liệu training. Mô hình này có 'linh hoạt' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có chứ. Nó khớp hoàn hảo với tập training, rất linh hoạt là đằng khác."
+      },
+      {
+        "role": "Tutor",
+        "text": "Khi đưa một điểm dữ liệu test hoàn toàn mới, nó sẽ dự đoán tốt chứ?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là có... vì nó đã học rất kỹ rồi. Nó nắm được hết các chi tiết mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Việc học thuộc lòng đề cương và việc hiểu bản chất vấn đề có giống nhau không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không... học thuộc lòng thì gặp câu hỏi lạ sẽ không làm được. Tức là chỉ giỏi trên những gì đã thấy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mô hình học thuộc lòng đó, có variance cao, thì tổng quát hóa tốt hay kém?"
+      },
+      {
+        "role": "Student",
+        "text": "À... Vậy là kém. Nó không đoán tốt trên dữ liệu chưa gặp."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Lập luận của bạn đã tự mâu thuẫn. Variance cao cho thấy mô hình quá nhạy với dữ liệu training, dẫn đến tổng quát hóa kém."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q29",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng chính quy hóa giảm underfitting. Tại sao việc làm mô hình đơn giản hơn lại giúp?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Mô hình đơn giản hơn sẽ tập trung vào các quy luật chính, không bị nhiễu loạn, nên sẽ khớp với dữ liệu tốt hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một mô hình bị underfitting là do nó quá đơn giản hay quá phức tạp?"
+      },
+      {
+        "role": "Student",
+        "text": "Là do nó quá đơn giản. Nó không đủ phức tạp để học được hết các mẫu trong dữ liệu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính quy hóa làm trọng số của mô hình nhỏ đi. Điều này làm mô hình đơn giản hơn hay phức tạp hơn?"
+      },
+      {
+        "role": "Student",
+        "text": "Đơn giản hơn. Đó chính là lý do em nghĩ nó giải quyết được underfitting."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy ta có một mô hình vốn đã quá đơn giản. Giờ bạn lại làm nó đơn giản hơn nữa. Kết quả sẽ là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nhưng có thể nó sẽ tìm ra được một 'kiểu' đơn giản đúng đắn hơn? Loại bỏ các thành phần thừa để tập trung vào cốt lõi?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Tưởng tượng một đường thẳng đang cố fit một bộ dữ liệu hình parabol. Nó đang underfit. Giờ bạn thêm chính quy hóa vào."
+      },
+      {
+        "role": "Student",
+        "text": "Trọng số của nó sẽ bị kéo về 0... đường thẳng sẽ càng phẳng hơn. Nó còn tệ hơn lúc đầu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, việc làm mô hình đơn giản đi thực sự hữu ích cho vấn đề nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó phải hữu ích cho vấn đề ngược lại... là khi mô hình quá phức tạp, tức là overfitting."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhận ra rằng chính quy hóa làm mô hình đơn giản hơn để chống lại *quá khớp* (overfitting), không phải *chưa khớp* (underfitting)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q30",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn chọn L3. Bạn nghĩ rằng chuẩn L3 có tác dụng tương tự L1 và L2 phải không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Đã có L1, L2 thì L3 cũng là một chuẩn (norm) để đo độ lớn của vector tham số θ. Mục đích là để phạt các trọng số lớn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục đích của việc phạt các trọng số lớn là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để giảm overfitting, giúp mô hình đơn giản hơn. L3 vẫn làm được điều đó, nó phạt trọng số lớn còn mạnh hơn L1, L2."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét vector θ = (1, 1). Chuẩn L1, L2, L3 của nó là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "L1 là 2, L2 là căn 2, L3 là căn bậc ba của 2. Tôi vẫn không thấy vấn đề."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bây giờ xét vector θ = (√2, 0). Chuẩn L1, L2, L3 của nó là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "L1 là căn 2, L2 là căn 2, L3 là căn 2. Chúng vẫn là các giá trị phạt trọng số. Logic của tôi vẫn đúng."
+      },
+      {
+        "role": "Tutor",
+        "text": "L1 có một đặc tính gọi là 'sparsity'. Nó là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là khả năng đưa một số trọng số về chính xác bằng 0, giúp lựa chọn đặc trưng. Nhưng L3 vẫn có thể dùng chứ, có thể nó không tốt bằng nhưng không phải là sai."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một hàm 'có thể được dùng' cần mang lại lợi ích rõ ràng. Lợi ích của L3 là gì so với L1, L2?"
+      },
+      {
+        "role": "Student",
+        "text": "...Tôi chưa thấy lợi ích riêng của nó. Có lẽ nó không tạo ra hiệu ứng hữu ích nào cả, chỉ là một lựa chọn về mặt lý thuyết."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Vậy trong các lựa chọn, hàm nào được dùng vì đặc tính hữu ích của nó?"
+      },
+      {
+        "role": "Student",
+        "text": "Là L1, vì nó tạo ra sparsity."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tóm lại, bạn đã suy luận theo hình thức (L1, L2 thì có L3) mà bỏ qua mục đích. Một hàm regularization được chọn vì nó tạo ra một hiệu ứng có lợi (sparsity, ổn định), chứ không chỉ vì nó là một hàm của θ."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q31",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng LASSO dùng L2. Tại sao lại là L2 mà không phải cái khác?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì L2 là cách phổ biến để phạt trọng số lớn, chống overfitting. Ridge dùng L2, LASSO cũng có mục đích tương tự, nên nó cũng phải dùng L2 thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục đích của chúng có giống hệt nhau không?"
+      },
+      {
+        "role": "Student",
+        "text": "Giống chứ. Cả hai đều co các hệ số về gần 0 để mô hình đơn giản hơn. Đó là mục đích chính của chính quy hóa."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu một feature hoàn toàn không quan trọng, hệ số của nó nên bằng bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Nên bằng 0. Để loại bỏ hoàn toàn ảnh hưởng của nó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy Ridge Regression (dùng L2) có thể đưa hệ số về chính xác bằng 0 không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, L2 chỉ đưa hệ số về rất gần 0 thôi. Nhưng thế cũng đủ rồi chứ? Gần 0 thì cũng như là 0."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu LASSO cũng dùng L2 như bạn nói, vậy nó có gì khác biệt so với Ridge?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là cách tính toán hoặc tham số mặc định khác nhau. Nhưng về bản chất thì vẫn là dùng L2... À... nếu thế thì sao lại cần hai cái tên? Vô lý."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy đâu là điểm khác biệt cốt lõi khiến chúng có tên riêng?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là khả năng đưa hệ số về chính xác bằng 0. Nếu L2 không làm được, thì LASSO phải dùng một thứ khác... L1?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Bạn đã nhận ra sự nhầm lẫn giữa L1 và L2. LASSO dùng L1 để có thể đưa hệ số về 0, thực hiện việc lựa chọn đặc trưng. Ridge dùng L2 chỉ để làm nhỏ hệ số."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q32",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng LASSO giữ nguyên mọi hệ số. Vậy nó chọn đặc trưng bằng cách nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó thu nhỏ hệ số của các đặc trưng không quan trọng, nhưng không xóa chúng. Xóa là mất thông tin."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục đích của việc chọn đặc trưng (feature selection) là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là tìm ra các đặc trưng quan trọng nhất và loại bỏ những cái không cần thiết, gây nhiễu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu một đặc trưng 'hoàn toàn vô dụng', hệ số của nó nên bằng mấy?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó nên rất nhỏ, gần bằng 0. Nhưng không thể bằng 0 được, vì LASSO chỉ là làm giảm thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tại sao bạn lại chắc chắn LASSO không thể đưa hệ số về 0?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó là một kỹ thuật chính quy hóa, giống như Ridge. Mục tiêu là giảm độ lớn hệ số, không phải triệt tiêu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét hàm phạt L1. |0.001| và |0| khác nhau thế nào với mô hình?"
+      },
+      {
+        "role": "Student",
+        "text": "Một cái có giá trị phạt, một cái không. À... vậy mô hình có động lực để đẩy về 0 hẳn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, hãy trả lời lại câu hỏi ban đầu. LASSO chọn đặc trưng thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó chọn đặc trưng bằng cách cố gắng đưa hệ số của các đặc trưng không quan trọng về chính xác bằng 0."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn việc LASSO không xóa hệ số. Thực tế, khả năng đưa hệ số về 0 chính là thế mạnh của nó."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q33",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn nói Ridge Regression dùng chính quy hóa L1. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì Ridge và LASSO đều là các phương pháp regularization, em nghĩ chúng dùng chung một kỹ thuật là L1 để giảm overfitting."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục đích chính của chính quy hóa L1 là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là phạt các hệ số lớn. Đặc biệt, nó có thể đưa một số hệ số về chính xác bằng 0 để lựa chọn đặc trưng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Vậy L1 có thể làm cho hệ số thành 0."
+      },
+      {
+        "role": "Student",
+        "text": "Vâng, đó là điểm mạnh của nó. Và Ridge cũng là regularization, nên nó cũng phải làm được điều đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hãy xem xét hàm phạt của Ridge. Nó là tổng bình phương các hệ số. Bình phương của một số khác 0 có bao giờ bằng 0 không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nhưng nó có thể rất gần 0. Nếu tham số phạt đủ lớn, hệ số sẽ tiệm cận 0. Về cơ bản là giống nhau mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nó có thể *chính xác* bằng 0 để loại bỏ một đặc trưng không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Chắc là không. Nó chỉ tiến về 0 thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, nếu L1 có thể loại bỏ đặc trưng và Ridge thì không, chúng có dùng chung kỹ thuật không?"
+      },
+      {
+        "role": "Student",
+        "text": "Dạ không. Vậy Ridge dùng L2. Nó chỉ co các hệ số lại thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm lẫn vì nghĩ rằng mọi regularization đều phải có khả năng lựa chọn đặc trưng. Thực tế Ridge dùng L2, chỉ co rút hệ số chứ không loại bỏ chúng."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q34",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói Ridge loại bỏ đặc trưng. 'Loại bỏ' ở đây nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nghĩa là hệ số của nó bằng 0. Đặc trưng đó không còn ảnh hưởng đến kết quả nữa."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy Ridge làm cho hệ số của một số đặc trưng bằng đúng 0?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Nó chọn các đặc trưng quan trọng và bỏ đi những cái không cần thiết, giống LASSO."
+      },
+      {
+        "role": "Tutor",
+        "text": "Cụm từ 'co về gần 0' và 'bằng 0' có giống nhau không?"
+      },
+      {
+        "role": "Student",
+        "text": "Về thực tế thì giống chứ. Một hệ số là 0.00001 thì cũng coi như là 0, là bị loại bỏ rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu một đặc trưng có hệ số 0.00001, giá trị của nó có được nhân vào dự đoán không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có, nhưng ảnh hưởng rất nhỏ, không đáng kể. Về bản chất vẫn là loại bỏ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy sự khác biệt cốt lõi giữa 'ảnh hưởng rất nhỏ' và 'hoàn toàn không ảnh hưởng' là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "'Không ảnh hưởng' là hệ số bằng 0. 'Ảnh hưởng rất nhỏ' là hệ số khác 0... À, vậy là nó không thực sự loại bỏ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy quay lại câu hỏi ban đầu, Ridge hướng đến mục tiêu nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó không đưa hệ số nào về 0, nên nó vẫn dùng tất cả. Vậy là khai thác hết các đặc trưng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn việc 'co hệ số về gần 0' của Ridge với việc 'đưa hệ số về 0' của LASSO. Ridge giữ lại tất cả đặc trưng."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q35",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn viết Elastic Net chỉ dùng L1, vì nhầm với LASSO. Điều đó có nghĩa là chúng giống nhau?"
+      },
+      {
+        "role": "Student",
+        "text": "Vâng, về cơ bản là vậy. Cả hai đều dùng để lựa chọn biến. Elastic Net chỉ là một tên gọi khác thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mục tiêu của chính quy hóa L1 là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là đưa hệ số của các biến không quan trọng về 0. Để chọn biến."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử có 10 biến tương quan rất cao với nhau. LASSO (L1) sẽ làm gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ chọn ra một biến tốt nhất trong nhóm đó và bỏ những biến còn lại. Vẫn là chọn biến mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Việc chọn một biến ngẫu nhiên trong nhóm có phải là hành vi lý tưởng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không hẳn, nhưng mục tiêu chính vẫn đạt được. Em không thấy có vấn đề lớn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy tại sao người ta cần tạo ra Elastic Net nếu LASSO đã đủ tốt?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là... để cải thiện một chút? Nhưng cốt lõi vẫn là L1. Có lẽ nó xử lý nhóm biến đó tốt hơn?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy L1 một mình có đủ để xử lý nhóm biến tương quan không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có lẽ là không. Chắc phải cần thêm gì đó... để nhóm chúng lại. Có phải là L2 không?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy giờ bạn hãy thử trả lời lại. Elastic Net là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó là hồi quy tuyến tính... sử dụng cả L1 để chọn biến và L2 để xử lý các biến tương quan."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Lỗi sai của bạn là cho rằng Elastic Net chỉ dùng L1. Thực tế, nó kết hợp cả L1 và L2 để khắc phục nhược điểm của LASSO."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q36",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ rằng Elastic Net thay thế hoàn toàn các phương pháp khác. Vì sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó kết hợp cả điểm mạnh của LASSO và Ridge. Nó vừa chọn được biến vừa xử lý đa cộng tuyến, nên dùng nó là đủ rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục tiêu của LASSO là gì, mục tiêu của Ridge là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "LASSO để chọn biến, đưa hệ số không quan trọng về 0. Ridge để co cụm các hệ số lại khi có đa cộng tuyến."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu một bài toán chỉ cần chọn biến, không có đa cộng tuyến thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì vẫn dùng Elastic Net được. Nó vẫn có thành phần L1 để làm việc đó. Nó toàn diện hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "So với LASSO, Elastic Net có thêm tham số nào cần tinh chỉnh không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có thêm tham số l1_ratio. Nhưng thêm một tham số để có mô hình tốt hơn thì vẫn đáng chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu bạn biết chắc mình chỉ cần LASSO, việc thêm một tham số có làm quá trình phức tạp hơn không?"
+      },
+      {
+        "role": "Student",
+        "text": "À... Nếu đã biết rõ mục tiêu thì việc đó có thể không cần thiết. Nó làm tốn thêm tài nguyên để tìm tham số tối ưu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy vai trò của Elastic Net là 'thay thế' hay là một 'lựa chọn' khác?"
+      },
+      {
+        "role": "Student",
+        "text": "Là một lựa chọn cân bằng giữa hai cái kia, khi bài toán cần cả hai. Giờ thì mình thử trả lời lại câu hỏi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tóm lại, bạn đã nhầm khi cho rằng Elastic Net là sự thay thế tuyệt đối. Thực tế, nó là một công cụ để cân bằng, và việc lựa chọn công cụ nào phụ thuộc vào bài toán cụ thể."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q37",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói rằng tăng λ sẽ làm tất cả trọng số bằng 0. Vì sao lại là 'bằng 0' ngay lập tức?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì λ là hệ số hình phạt. Hình phạt càng lớn thì nó phải triệt tiêu các trọng số đi, tức là cho chúng bằng 0."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hàm mất mát của Ridge Regression có dạng toán học như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó là tổng bình phương sai số, cộng với λ nhân với tổng bình phương của các trọng số."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử có một trọng số w khác 0. Để nó trở thành đúng bằng 0, thành phần λ*w² phải thay đổi thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì nó cũng bằng 0. Nhưng nếu w=0, mô hình sẽ mất thông tin từ đặc trưng đó, phần sai số có thể tăng lên."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mô hình phải cân bằng giữa hai vế. Nếu w=0, điều gì xảy ra với 'lực kéo' của hình phạt lên w?"
+      },
+      {
+        "role": "Student",
+        "text": "Lực kéo cũng bằng 0. Nhưng nếu λ cực lớn, nó phải đủ sức ép w về 0 chứ? Logic của hình phạt là vậy mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hãy tưởng tượng w rất nhỏ, ví dụ 0.0001. 'Lực kéo' của hình phạt lúc này thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó cũng rất nhỏ. À... có vẻ như hình phạt mất dần tác dụng khi w tiến về 0. Nó không bao giờ thực sự đẩy được w về đúng số 0."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, từ đó, bạn sẽ mô tả lại tác động của việc tăng λ như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Tăng λ sẽ làm co các trọng số về gần 0. Càng tăng thì càng gần nhưng không bao giờ chạm tới 0."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Sai lầm ban đầu là cho rằng Ridge có thể triệt tiêu trọng số hoàn toàn. Thực tế, nó chỉ làm co chúng về gần 0, vì hình phạt L2 mất tác dụng khi trọng số đã rất nhỏ."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q38",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng chỉ cần giữ lại cột x. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì mô hình là Linear Regression. 'Linear' nghĩa là đường thẳng, chỉ cần cột x là đủ để vẽ đường thẳng rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Phương trình của mô hình Linear Regression là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "y = ax + b. Rất cơ bản."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu mình có 2 cột input x1 và x2, phương trình là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "y = a1*x1 + a2*x2 + b. Đây là Multiple Linear Regression, nó vẫn là linear."
+      },
+      {
+        "role": "Tutor",
+        "text": "Ok. Nếu ta đặt x1 = x và x2 = x^2 thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Vậy thì không còn là Linear Regression nữa. Nó đã trở thành Polynomial Regression rồi, vì có x^2."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mô hình có 'biết' rằng input x2 là bình phương của x1 không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không... Đối với nó, x1 và x2 chỉ là hai cột số liệu. Nhưng về bản chất, đó là quan hệ phi tuyến."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'Linear' trong 'Linear Regression' ám chỉ điều gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là... nó tuyến tính với các hệ số a1, a2 mà nó học. Nó chỉ cộng các thành phần lại. À... Vậy đưa x^2 vào vẫn ổn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy để một mô hình Linear Regression khớp với dữ liệu cong, ta làm gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Tạo thêm các đặc trưng phi tuyến như x^2, x^3 rồi đưa vào cho mô hình."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Sai lầm là nghĩ 'Linear' chỉ mối quan hệ với x gốc. Thực ra nó chỉ sự tuyến tính của các hệ số đối với đặc trưng đầu vào."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q39",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng đặc trưng chỉ cần `[1, x]`. Tại sao các bậc cao hơn lại không cần thiết?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì đây là hồi quy tuyến tính. Mô hình có dạng `y = b0*1 + b1*x`. Chỉ cần vậy thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'mô hình hàm bậc 3' có nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là dùng hồi quy tuyến tính để khớp dữ liệu có xu hướng bậc 3. Nhưng mô hình cơ bản vẫn là tuyến tính."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét hàm y = x³. Mô hình với `[1, x]` của bạn sẽ khớp nó thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ tìm một đường thẳng `y = a + bx` xấp xỉ tốt nhất đường cong x³."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một đường thẳng có thể biểu diễn chính xác một đường cong bậc 3 không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không chính xác, nhưng đó là bản chất của xấp xỉ. Không mô hình nào hoàn hảo cả."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy tại sao lại gọi nó là 'mô hình hàm bậc 3' nếu nó chỉ là đường thẳng?"
+      },
+      {
+        "role": "Student",
+        "text": "...Chắc là vì nó phải có khả năng tạo ra dạng bậc 3. Đường thẳng thì không thể."
+      },
+      {
+        "role": "Tutor",
+        "text": "Để tạo ra dạng bậc 3, ma trận đặc trưng cần có những gì ngoài `[1, x]`?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là cần thêm x² và x³. Khi đó phương trình sẽ là `y = b0 + b1*x + b2*x² + b3*x³`. Vậy ma trận đặc trưng sẽ là `[1, x, x², x³]`."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tóm lại: bạn đã nhầm lẫn mô hình tuyến tính với việc dùng hồi quy tuyến tính để khớp đa thức. Đặc trưng phải chứa tất cả các bậc lên tới bậc của đa thức."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q40",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng mô hình bậc cao luôn cho lỗi kiểm thử tốt nhất. Lập luận của bạn là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì bậc càng cao, đường cong càng khớp với các điểm dữ liệu. Khớp hơn thì lỗi phải nhỏ hơn chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mục tiêu của mô hình là làm cho lỗi trên dữ liệu đã có bằng không à?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Nếu mô hình đi qua tất cả các điểm thì nó là hoàn hảo, lỗi bằng không, đó là tốt nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tưởng tượng có 10 điểm dữ liệu, 9 điểm gần như thẳng hàng, 1 điểm ở rất xa. Mô hình bậc cao sẽ làm gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ tạo ra một đường cong đi qua cả 10 điểm đó, bao gồm cả điểm ở xa."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đường cong đó sẽ trông như thế nào so với một đường thẳng?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ uốn lượn rất phức tạp để bắt được điểm ở xa. Nhưng nó vẫn đúng với dữ liệu đã cho."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục tiêu là mô tả dữ liệu đã cho, hay dự đoán đúng cho dữ liệu mới?"
+      },
+      {
+        "role": "Student",
+        "text": "Ừm... là dự đoán cho dữ liệu mới. Nhưng để dự đoán đúng thì phải học đúng từ dữ liệu cũ chứ?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Đường cong uốn lượn đó có đáng tin cậy để dự đoán điểm thứ 11 không?"
+      },
+      {
+        "role": "Student",
+        "text": "... Chắc là không. Nó có vẻ quá cực đoan. Có lẽ việc khớp một cách tuyệt đối không phải lúc nào cũng tốt."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, một mô hình 'linh hoạt' quá mức có thể dẫn tới điều gì khi gặp dữ liệu mới?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó có thể đưa ra dự đoán sai lệch vì đã cố 'học' cả những điểm bất thường. Vậy câu trả lời đúng là nó linh hoạt hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Bạn đã nhầm lẫn giữa việc khớp dữ liệu huấn luyện và hiệu quả trên dữ liệu kiểm thử. Mô hình bậc cao linh hoạt hơn, nhưng sự linh hoạt đó có thể khiến nó học cả nhiễu, gọi là 'overfitting', dẫn đến lỗi kiểm thử cao."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q41",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ vì sao lấy giá trị lớn nhất lại là cách dự đoán tốt?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó tìm ra được trường hợp nổi bật nhất. Nếu các hàng xóm là giá nhà, thì lấy giá cao nhất là hợp lý."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mục tiêu của 'regression' là tìm giá trị nổi bật hay giá trị đại diện?"
+      },
+      {
+        "role": "Student",
+        "text": "Là tìm giá trị đúng nhất có thể. Giá trị lớn nhất cũng có thể là giá trị đúng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử 3 hàng xóm có giá [10, 11, 100]. Bạn sẽ dự đoán là 100?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng. Điểm 100 có thể là một biệt thự, trong khi hai điểm kia là nhà thường. Quy tắc là phải nhất quán."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu điểm mới nằm rất gần hai điểm 10 và 11 thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì... dự đoán 100 có vẻ hơi lạ. Nhưng quy tắc là quy tắc, nếu đổi thì không còn nhất quán nữa."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một quy tắc nhất quán nhưng cho kết quả 'lạ' có đáng tin không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là không. Kết quả có vẻ không ổn định lắm nếu chỉ dựa vào một điểm duy nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy làm sao để dùng cả ba số [10, 11, 100] mà không bị một số chi phối?"
+      },
+      {
+        "role": "Student",
+        "text": "Có lẽ... tính một giá trị nào đó ở giữa? Như là lấy trung bình của cả ba?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy là, thay vì chọn một giá trị cực đoan, bạn sẽ tính trung bình để có dự đoán ổn định hơn."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q42",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn giải thích cách bạn tính ra kết quả 40.0 được không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đơn giản mà. Mình cộng 35, 45, 50 lại rồi chia cho 3. Kết quả là 40."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tổng của 35, 45 và 50 chính xác là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Là 120. Và 120 chia cho 3 là 40. Rất hợp lý."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bạn có chắc 35 cộng 45 cộng 50 bằng 120 không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc chắn. Tôi tính nhẩm nhanh. 30+40+50 là 120, mấy số lẻ kia chắc bù trừ cho nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy thử tính lại giúp mình, chỉ 35 cộng 45 thôi?"
+      },
+      {
+        "role": "Student",
+        "text": "Là 80. ... Khoan đã. 80 cộng 50 phải là 130."
+      },
+      {
+        "role": "Tutor",
+        "text": "Khi tổng là 130, kết quả trung bình là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "130 chia cho 3... nó không ra 40. Nó là 43.33..."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, lỗi sai của bạn nằm ở phép tính cộng ban đầu, không phải ở logic tính trung bình."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q43",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn cho rằng có thể dùng tổng khoảng cách để dự đoán. Vì sao bạn nghĩ đây là một phương pháp hợp lý?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì tổng khoảng cách cho thấy mức độ 'xa lạ' của điểm mới so với các hàng xóm. Số càng lớn thì càng khác biệt."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mục tiêu của KNN Regressor là đo sự khác biệt hay dự đoán một giá trị?"
+      },
+      {
+        "role": "Student",
+        "text": "Là dự đoán một giá trị. Nhưng giá trị đó có thể là chỉ số khác biệt, cũng là một con số mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hãy xét ví dụ. Ta cần dự đoán giá nhà. Hai nhà hàng xóm có giá 2 tỷ và 4 tỷ."
+      },
+      {
+        "role": "Student",
+        "text": "Vâng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử khoảng cách từ nhà mới đến chúng là 10m và 20m. Dự đoán của bạn là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Theo cách của em là 10 + 20 = 30. Con số 30 này thể hiện vị trí tương đối của nó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy giá nhà dự đoán là 30 đồng, hay 30 tỷ?"
+      },
+      {
+        "role": "Student",
+        "text": "...Cũng không phải. Nó chỉ là một chỉ số. Nhưng nó vẫn được tính từ các hàng xóm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một 'chỉ số' không có đơn vị tiền tệ có phải là một dự đoán giá nhà hợp lệ không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là không... Vậy cách của em là sai hoàn toàn à? Thế thì khoảng cách dùng để làm gì?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Khoảng cách nhỏ (10m) cho ta biết điều gì về nhà hàng xóm tương ứng?"
+      },
+      {
+        "role": "Student",
+        "text": "Là nó gần hơn, và quan trọng hơn... À, vậy giá của nó nên ảnh hưởng nhiều hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm vai trò của khoảng cách. Nó không phải là kết quả, mà dùng để xác định sự 'quan trọng' của mỗi hàng xóm khi tổng hợp kết quả."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q44",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói lớp cuối của mạng hồi quy dùng softmax. Vì sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì softmax biến đầu ra thành xác suất. Hồi quy cũng có thể dự đoán xác suất mà, nên dùng softmax là đúng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hàm softmax trả về tổng các đầu ra bằng mấy?"
+      },
+      {
+        "role": "Student",
+        "text": "Bằng 1. Đó là định nghĩa của nó, để tạo thành một phân phối xác suất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mạng hồi quy có thể dự đoán giá nhà là 2.1 (tỷ) không?"
+      },
+      {
+        "role": "Student",
+        "text": "Được chứ. Đó là một bài toán hồi quy điển hình mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một mạng có lớp cuối là softmax có thể tạo ra đầu ra là 2.1 không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không... nó chỉ ra giá trị từ 0 đến 1. Nhưng có thể scale (nhân) kết quả lên mà? Vẫn dùng được chứ?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu dự đoán cả giá nhà và diện tích, tổng chúng có phải bằng 1 không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, tất nhiên là không... À... Em thấy mâu thuẫn rồi. Logic của em có vấn đề."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy để đầu ra là một số thực bất kỳ, lớp cuối nên thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là... không dùng hàm kích hoạt nào cả. Để giá trị tuyến tính thô. Vậy câu trả lời là không có hàm kích hoạt cuối."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm mục tiêu hồi quy (giá trị thực) với phân loại (xác suất lớp). Softmax chỉ dành cho phân loại đa lớp."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q45",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng Random Forest là tên khác của Neural Network. Điều gì khiến bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì cả hai đều là mô hình học máy phức tạp để dự đoán. Chúng đều là dạng 'hộp đen'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Random Forest được xây dựng từ thành phần cơ bản nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Từ nhiều 'cây' quyết định. Tên nó là 'rừng' mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Thế còn Neural Network, thành phần cơ bản của nó là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là các neuron. Nhưng nhiều neuron nối lại thì cũng giống như nhiều cây gộp lại thôi. Vẫn là tập hợp nhiều thứ nhỏ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một neuron có hoạt động giống một cây quyết định không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không hoàn toàn, nhưng chúng đều xử lý đầu vào để cho ra kết quả. Tôi thấy chúng chỉ là cách tiếp cận khác nhau cho cùng một mục tiêu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu chúng là một, ta có thể thay một 'cây' trong forest bằng một 'neuron' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Ừm... không. Thay thế như vậy thì cấu trúc sẽ hỏng. Chúng không thể thay thế cho nhau được ở cấp độ đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nếu đơn vị cấu thành khác nhau, chúng có thể là tên gọi của nhau không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là không. Chúng là hai kiến trúc khác nhau. Vậy trong các đáp án, Multi-Layer Perceptron mô tả cấu trúc nhiều lớp của network, nên có lẽ là nó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn nhầm lẫn vì cả hai đều là mô hình phức tạp, nhưng chúng có kiến trúc và đơn vị cấu thành khác nhau: cây quyết định so với neuron."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q46",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ rằng một thuật toán chỉ có thể làm phân lớp hoặc hồi quy, đúng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Mỗi cái có một mục đích riêng. SVM là để phân loại."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục tiêu cốt lõi của SVM trong phân lớp là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Tìm một siêu phẳng để chia tách hai hay nhiều nhóm dữ liệu khác nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu dữ liệu không phải là nhóm, mà là các điểm số. Siêu phẳng đó có thể làm gì khác?"
+      },
+      {
+        "role": "Student",
+        "text": "Không làm gì cả. Nó chỉ có ý nghĩa khi có các nhóm để phân tách."
+      },
+      {
+        "role": "Tutor",
+        "text": "Thay vì 'phân tách', nếu ta dùng nó để 'bám theo' một xu hướng thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Vô lý. 'Bám theo' là việc của Hồi quy tuyến tính. SVM là để tìm khoảng cách lớn nhất, không phải để bám theo."
+      },
+      {
+        "role": "Tutor",
+        "text": "Khoảng cách lớn nhất đó có thể được dùng để định ra một 'lề đường' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có thể... nhưng nó vẫn là để tối đa hóa khoảng cách giữa các lớp."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một 'lề đường' chứa hầu hết các điểm dữ liệu thì có định nghĩa một xu hướng không?"
+      },
+      {
+        "role": "Student",
+        "text": "…Chắc là có. Tức là ý tưởng cốt lõi có thể được áp dụng cho mục tiêu khác."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã sai khi cho rằng một họ thuật toán chỉ có một mục đích. Nhiều mô hình phân lớp có phiên bản hồi quy tương ứng."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q47",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng SVR không có nguồn gốc từ mô hình phân loại. Vì sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì tên nó là 'Regressor'. Nó dùng để dự đoán số, còn phân loại là ra nhãn. Hai việc hoàn toàn khác nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một 'dòng' thuật toán chỉ có thể làm một nhiệm vụ duy nhất?"
+      },
+      {
+        "role": "Student",
+        "text": "Thường là vậy. Như Linear Regression là hồi quy. Logistic Regression là phân loại. Tên nào việc đó, rất rõ ràng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bạn đã bao giờ nghe đến 'Support Vector Machine' (SVM) chưa?"
+      },
+      {
+        "role": "Student",
+        "text": "Có, nhưng đây là Support Vector 'Regressor'. Tên khác nhau mà, nó chỉ là một nhánh thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu có một mô hình tên là 'Support Vector Classifier' (SVC) thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Nếu có thì SVR và SVC cùng thuộc họ SVM. Nhưng em vẫn nghĩ SVR không phải 'có nguồn gốc' từ phân loại. Nó là một phiên bản khác thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hãy nhìn vào 4 lựa chọn. Có một cái tên rất khác biệt về cấu trúc."
+      },
+      {
+        "role": "Student",
+        "text": "Decision Tree Regressor, Random Forest Regressor... À, LinearRegression. Nó không có phiên bản phân loại nào tên tương tự."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy quy tắc chung về 'nguồn gốc' ở đây là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là các họ thuật toán lớn như SVM, Decision Tree có cả bản phân loại và hồi quy. Nên chúng được coi là có liên quan. Còn Linear Regression thì không."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Lỗi sai của bạn là cho rằng SVR độc lập. Thực tế nó là phiên bản hồi quy của họ SVM, vốn rất nổi tiếng với bài toán phân loại."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q48",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng tổng phần dư luôn dương. Tại sao lại vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì phần dư là sai số, mà sai số là khoảng cách từ điểm đến đường thẳng. Khoảng cách thì phải dương chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Công thức tính một phần dư (residual) là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là giá trị thực tế trừ đi giá trị dự báo. Nhưng mục đích là để đo lường sai số, nên nó phải là số dương."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu một điểm dữ liệu thực tế nằm BÊN DƯỚI đường hồi quy, phần dư của nó âm hay dương?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ âm... Nhưng đó chỉ là một trường hợp. Khi cộng tất cả lại, tổng vẫn phải dương để thể hiện có sai số tổng thể."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử tổng phần dư là +100. Điều đó nói gì về vị trí của đường thẳng so với các điểm?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó đang nằm quá thấp so với phần lớn các điểm dữ liệu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy ta có thể vẽ một đường thẳng 'tốt hơn' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có... chỉ cần dịch chuyển đường thẳng đó lên một chút. À... vậy đường cũ chưa phải là tốt nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đường OLS là đường 'tốt nhất'. Vậy tổng phần dư của nó có thể dương không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không thể. Vì nếu nó dương, ta luôn có thể làm nó 'tốt hơn'. Vậy tổng phần dư của OLS phải bằng 0. Em sẽ chọn lại đáp án."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Ban đầu bạn nhầm lẫn 'phần dư' (có thể âm/dương) với 'khoảng cách' (luôn dương). OLS đảm bảo các phần dư dương và âm triệt tiêu nhau, nên tổng của chúng bằng 0."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q49",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn giải thích được không, vì sao cộng gradient lại giúp tìm ra điểm thấp nhất?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì mình cần tối ưu mà. Tối ưu là phải đi tới, nên phải cộng thêm vào để giá trị tốt hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục tiêu của gradient descent là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là tìm điểm mà hàm loss L đạt giá trị nhỏ nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Gradient (∇L) cho ta biết hướng nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Hướng mà hàm L tăng nhanh nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nếu đi theo hướng L tăng nhanh nhất, L sẽ thay đổi thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì L sẽ tăng. Nhưng mình cộng vào tham số β chứ không phải L. Thay đổi β để L giảm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu bạn đang ở sườn đồi và muốn xuống thung lũng, bạn đi lên hay xuống?"
+      },
+      {
+        "role": "Student",
+        "text": "Đi xuống. Nhưng đây là toán, không phải đồi núi. Cộng là để tăng giá trị tham số, để nó 'tốt' hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy đi theo hướng ngược lại với hướng L tăng nhanh nhất thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Là đi ngược dốc... À, đi ngược hướng tăng nhanh nhất... nghĩa là đi về hướng giảm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy để biểu diễn 'đi ngược hướng', ta dùng phép toán nào với gradient?"
+      },
+      {
+        "role": "Student",
+        "text": "Phép trừ. Vậy là phải trừ đi gradient."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tóm lại, bạn đã nhầm lẫn giữa việc 'cải thiện' tham số và hướng di chuyển. Để giảm L, ta phải cập nhật β theo hướng ngược lại với gradient."
+      }
+    ]
+  },
+  {
+    "question_id": "ch7_q50",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn dường như xem LASSO, Ridge và Hồi quy tuyến tính là các mô hình riêng biệt. Tại sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì chúng giải quyết các vấn đề khác nhau. Hồi quy tuyến tính là cơ bản. LASSO dùng để chọn đặc trưng, còn Ridge xử lý đa cộng tuyến. Mục đích khác nhau thì là mô hình khác nhau chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục tiêu của Hồi quy tuyến tính là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là tìm một đường thẳng khớp tốt nhất với dữ liệu, để dự đoán một giá trị số liên tục."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy LASSO hay Ridge có dự đoán giá trị số liên tục không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có, nhưng đó không phải điểm chính. Điểm chính là cách chúng xử lý các hệ số. Chúng không chỉ đơn thuần là 'khớp dữ liệu'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu trong công thức của Ridge, ta đặt tham số lambda (λ) bằng 0, mô hình trở thành gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì phần L2 regularization sẽ biến mất. Nhưng thực tế không ai đặt lambda bằng 0 cả. Tham số đó là cốt lõi của Ridge."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng là thực tế không ai làm vậy. Nhưng về mặt lý thuyết, khi phần L2 biến mất, công thức còn lại là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là... hàm mất mát của Hồi quy tuyến tính thông thường. Nhưng đó chỉ là một trường hợp đặc biệt thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu một mô hình có thể trở thành một mô hình khác trong một trường hợp đặc biệt, chúng có mối quan hệ gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Có lẽ... nó là một dạng mở rộng, hoặc một biến thể. Vậy cả LASSO và Ridge đều là biến thể của Hồi quy tuyến tính, được thêm vào thành phần chính quy hóa."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Ban đầu bạn cho rằng chúng hoàn toàn riêng biệt vì giải quyết các vấn đề phụ khác nhau. Nhưng thực chất, cả ba đều chung gốc là Hồi quy tuyến tính, chỉ khác ở cách chúng 'chính quy hóa' các hệ số để cải thiện mô hình."
+      }
+    ]
+  }
+]

@@ -1,0 +1,98 @@
+# Axolotl YAML config — QLoRA Fine-tune cho Socratic Tutor (Qwen 2.5-14B-Instruct)
+#
+# Usage:
+#   axolotl train configs/qwen14b_socratic_qlora.yaml
+#
+# hoặc trong SLURM script:
+#   python -m axolotl.entrypoint.train configs/qwen14b_socratic_qlora.yaml
+#
+# Sử dụng chế độ QLoRA (FP16 base model + LoRA on A100 80GB)
+# ─────────────────────────────────────────────────────────────────────────────
+
+base_model: /datastore/uittogether/LuuTru/Thanhld/CS431MCQGen_copy_2/models/Qwen2.5-14B-Instruct
+# base_model: Qwen/Qwen2.5-14B-Instruct   # HuggingFace Hub (uncomment nếu chưa download)
+
+# ── Model config ──────────────────────────────────────────────────────────────
+model_type: qwen2
+tokenizer_type: qwen2
+tokenizer_use_fast: true
+compression_setting: null
+model_already_exists: false
+
+# ── Dataset ────────────────────────────────────────────────────────────────────
+# File JSONL đã qua convert và quality filter
+# Format mỗi dòng: {"messages": [{"role":"system",...}, {"role":"user",...}, {"role":"assistant",...}]}
+# Axolotl yêu cầu trường "messages" — script convert_dialogue.py sinh đúng format này
+datasets:
+  - path: /datastore/uittogether/LuuTru/Thanhld/CS431MCQGen_copy_2/socratic_tutor/data/filtered/train_filtered.jsonl
+    format: chat
+val_set_size: 0.05   # 5% validation split
+data_seed: 42
+
+# Axolotl sẽ tự parse trường "messages" → chat format
+# Nếu dùng chat template khác, uncomment:
+# chat_template: |
+#   {%- for message in messages %}
+#     {%- if loop.first and messages[0]['role'] == 'system' %}
+#       {%- set content = '<|im_start|>system\n' + messages[0]['content'] + '<|im_end|>\n' %}
+#     {%- endif %}
+#   {%- endfor %}
+
+# ── LoRA / QLoRA config ──────────────────────────────────────────────────────
+# QLoRA: base model giữ FP16, chỉ LoRA layers quantized (4-bit NF4)
+adapter: qlora
+load_in_4bit: true          # 4-bit loading via bitsandbytes (NF4)
+load_in_8bit: false
+
+lora_model_dir: null
+lora_r: 16                  # LoRA rank — trade-off capacity vs params (8-16 khuyến nghị)
+lora_alpha: 32              # LoRA alpha = 2×rank (16×2=32)
+lora_dropout: 0.05
+lora_target_linear: true     # Áp LoRA lên linear layers (Q, K, V, O)
+lora_target_modules:
+  - q_proj
+  - k_proj
+  - v_proj
+  - o_proj
+  - gate_proj
+  - up_proj
+  - down_proj
+lora_fan_mode_fanout: false
+lora_lr: 0.0002             # 2e-4 cho QLoRA (phù hợp A100)
+lora_extra_parameters: []
+
+# ── Training hyperparameters ──────────────────────────────────────────────────
+# GPU A100 80GB: batch_size=2 với gradient_accumulation=8 → effective_batch=16
+# GPU A100 40GB: giảm batch_size xuống 1
+batch_size: 2
+gradient_accumulation_steps: 8
+micro_batch_size: 1          # Per-device micro batch
+num_epochs: 3
+max_steps: -1
+optimizer: adamw_torch
+optimizer_learning_rate: 0.0002
+lr_scheduler: cosine
+warmup_steps: 10
+logging_steps: 10
+save_steps: 100
+eval_steps: 100
+save_total_limit: 3
+max_seq_length: 2048         # Đủ cho dialogue dài (13-15 turns × ~100 tokens/turn)
+cutoff_len: 2048
+
+# ── Generation / Sampling (không dùng cho training — chỉ reference) ───────────
+# generation_config: ./
+# Do not generate during training
+
+# ── Misc ───────────────────────────────────────────────────────────────────────
+seed: 42
+shuffle: true
+truncation_strategy: left      # Cắt từ trái nếu vượt cutoff_len
+special_tokens:
+  eos_token: "<|im_end|>"
+  pad_token: "<|endoftext|>"
+
+# ── Output ────────────────────────────────────────────────────────────────────
+output_dir: /datastore/uittogether/LuuTru/Thanhld/CS431MCQGen_copy_2/socratic_tutor/outputs/checkpoints/run_001
+huggingface_repo_id: null
+push_to_hub: false
