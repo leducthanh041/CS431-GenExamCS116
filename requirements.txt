@@ -1,0 +1,8 @@
+google-genai
+python-dotenv
+tqdm
+langchain-experimental
+langchain-huggingface
+sentence-transformers
+langchain
+torch

@@ -36,6 +36,7 @@ slurm-*.out
 output/
 data/intermediate/
 data/raw/
+data/raw_transcript/
 
 # ─── ChromaDB indexes (large binary data) ───────────────────
 data/indexes/
@@ -43,6 +44,10 @@ data/indexes/
 # ─── Processed data (generated during pipeline run) ─────────
 data/processed/*.jsonl
 data/processed/*.json
+data/raw_transcript/
+data/chunked_transcript/
+data/cleaned_transcript/
+data/embedding/
 
 # ─── HuggingFace / sentence-transformers cache ─────────────
 # Keep these on disk, git shouldn't track
@@ -63,6 +68,7 @@ Thumbs.db
 *.pem
 *.key
 secrets/
+credentials/
 
 # ─── Notebooks ──────────────────────────────────────────────
 *.ipynb
