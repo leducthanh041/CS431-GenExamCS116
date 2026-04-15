@@ -7,8 +7,7 @@
 #SBATCH --cpus-per-task=4
 #SBATCH --mem=48G
 #SBATCH --time=02:00:00
-
-# Step 02: RAG Retrieval (CPU — ChromaDB query)
+# Step 02: 5-tier Hybrid RAG Retrieval (CPU — BM25 + ChromaDB + RRF + Rerank)
 # Khong can GPU
 
 REQUIRED_VRAM=0
@@ -28,6 +27,8 @@ cd "$PROJECT_ROOT"
 export PYTHONPATH="$PROJECT_ROOT"
 
 echo "▶️  Running RAG retrieval..."
+export TOKENIZERS_PARALLELISM=false
+export OMP_NUM_THREADS=1
 python -u src/gen/retrieval.py
 
 echo "✅ Step 02 done"

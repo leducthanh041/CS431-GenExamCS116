@@ -36,17 +36,48 @@ from common import Config, save_jsonl
 # MP4 naming convention: X.Y.mp4 → video with chapter=X, sub_index=Y
 #   → maps to videos1.txt line number computed by cumulative count
 
-# (chapter_id, sub_index) → youtube_url — e.g. ("ch04", 1) → "https://youtu.be/..."
-VIDEO_URL_MAP: dict[tuple[str, int], str] = {}
+# (chapter_id, sub_index) → {url, slide_file, slide_start_page}
+# e.g. ("ch04", 1) → {"url": "https://youtu.be/...", "slide_file": "CS116-Bai04-Data preprocessing.pdf", "slide_start_page": 1}
+VIDEO_META_MAP: dict[tuple[str, int], dict] = {}
+
+
+def _parse_slide_metadata(raw: str) -> tuple[str, int]:
+    """
+    Parse slide metadata from the optional ", slide: filename.pdf, trang N" suffix.
+
+    Returns (slide_file, slide_start_page):
+      - "None"           → ("", 0)
+      - "slide: foo.pdf, trang 1" → ("foo.pdf", 1)
+      - "slide: foo.pdf, trang 10" → ("foo.pdf", 10)
+    """
+    raw = raw.strip()
+    if not raw or raw.lower() == "none":
+        return "", 0
+
+    import re
+    # Match: "slide: filename, trang N" or just "slide: filename"
+    slide_match = re.search(r"slide:\s*([^,]+)", raw, re.IGNORECASE)
+    page_match  = re.search(r"trang\s+(\d+)", raw, re.IGNORECASE)
+
+    slide_file    = slide_match.group(1).strip() if slide_match else ""
+    slide_start_page = int(page_match.group(1)) if page_match else 0
+    return slide_file, slide_start_page
 
 
 def _build_video_url_map() -> None:
     """
-    Build lookup: (chapter_id, sub_index) → youtube_url from videos1.txt.
+    Build VIDEO_META_MAP: (chapter_id, sub_index) → {url, slide_file, slide_start_page}
+    from videos1.txt.
 
-    videos1.txt format: each line = "chapter_number|URL"
+    videos1.txt format per line:
+      chapter_number|YouTube_URL[, extra...]
+    where extra can be:
+      - "None"
+      - "slide: CS116-Bai02-Popular Libs.pdf, trang 1"
+      - "slide: CS116-Bai02-Popular Libs.pdf, trang 4"
+      - "None, Coding Tutorials"
+
     We assign sequential sub_index per chapter based on line order.
-    Example: 4 lines for chapter 4 → sub_index 1,2,3,4
     """
     videos1 = Config.INPUT_DIR / "video" / "videos1.txt"
     if not videos1.exists():
@@ -55,7 +86,6 @@ def _build_video_url_map() -> None:
 
     lines = videos1.read_text(encoding="utf-8").strip().split("\n")
 
-    # Track current chapter and sub-index within that chapter
     current_chapter: int | None = None
     sub_index: int = 0
 
@@ -64,12 +94,15 @@ def _build_video_url_map() -> None:
             continue
         parts = line.split("|")
         url = parts[1].strip().split(",")[0].strip()
+        # Everything after URL is the optional metadata
+        extra = parts[2].strip() if len(parts) > 2 else ""
+        slide_file, slide_start_page = _parse_slide_metadata(extra)
+
         try:
             ch_int = int(parts[0].strip())
         except ValueError:
             continue
 
-        # Reset sub_index when chapter changes
         if ch_int != current_chapter:
             current_chapter = ch_int
             sub_index = 1
@@ -77,7 +110,14 @@ def _build_video_url_map() -> None:
             sub_index += 1
 
         chapter_id = f"ch{ch_int:02d}"
-        VIDEO_URL_MAP[(chapter_id, sub_index)] = url
+        VIDEO_META_MAP[(chapter_id, sub_index)] = {
+            "url":              url,
+            "slide_file":       slide_file,
+            "slide_start_page": slide_start_page,
+        }
+        # Verbose log for non-None slide entries
+        if slide_file:
+            print(f"  [video_map] {chapter_id} sub={sub_index}: {url} → slide={slide_file} page={slide_start_page}")
 
 
 # ─── Deduplication ────────────────────────────────────────────────────────────
@@ -170,7 +210,10 @@ def _chunk_segments(
             clean_text = raw_text.strip()
 
         if clean_text and len(clean_text.split()) >= min_w:
-            youtube_url = VIDEO_URL_MAP.get((chapter_id, int(video_sub)), "")
+            video_meta = VIDEO_META_MAP.get((chapter_id, int(video_sub)), {})
+            youtube_url = video_meta.get("url", "")
+            slide_file       = video_meta.get("slide_file", "")
+            slide_start_page = video_meta.get("slide_start_page", 0)
 
             chunk_id = f"cs116_{chapter_id}_transcript_{video_sub}_s{seq:03d}"
             chunk = {
@@ -189,6 +232,8 @@ def _chunk_segments(
                 "youtube_url": youtube_url,
                 "youtube_timestamp_start": _format_youtube_ts(start_ts),
                 "youtube_timestamp_end": _format_youtube_ts(end_ts),
+                "slide_file": slide_file,           # e.g. "CS116-Bai04-Data preprocessing.pdf"
+                "slide_start_page": slide_start_page,  # e.g. 1 or 7 or 34...
                 "word_count": len(clean_text.split()),
                 "embedding_ready": True,
             }

@@ -12,7 +12,7 @@
 # Step 08: IWF Distractor Analysis + Final Output
 # Model: Gemma-3-12b-it (vLLM)
 
-REQUIRED_VRAM=20000
+REQUIRED_VRAM=36000
 
 set -e
 
@@ -23,10 +23,10 @@ source /datastore/uittogether/tools/miniconda3/etc/profile.d/conda.sh
 PROJECT_ROOT="/datastore/uittogether/LuuTru/Thanhld/CS431MCQGen"
 
 unset CUDA_VISIBLE_DEVICES
-CHECK_OUT=$("$PROJECT_ROOT/scripts/gpu_check.sh" $REQUIRED_VRAM $SLURM_JOB_ID)
+CHECK_OUT=$("$PROJECT_ROOT/scripts/gpu_check.sh" $REQUIRED_VRAM $SLURM_JOB_ID) || true
 EXIT_CODE=$?
 
-if [ $EXIT_CODE -eq 11 ]; then
+if [ $EXIT_CODE -eq 10 ] || [ $EXIT_CODE -eq 11 ]; then
     echo "$CHECK_OUT"
     exit 1
 fi

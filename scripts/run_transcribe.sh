@@ -30,7 +30,7 @@ EXIT_CODE=$?
 
 if [ $EXIT_CODE -eq 10 ]; then
     echo "$CHECK_OUT"
-    exit 0
+    exit 1
 elif [ $EXIT_CODE -eq 11 ]; then
     echo "$CHECK_OUT"
     exit 1

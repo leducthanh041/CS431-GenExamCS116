@@ -41,12 +41,7 @@ class Transcriber:
 
     def __init__(self, model_name: str = "large-v3", device: str = None):
         self.model_name = model_name
-
-        if device is None:
-            self.device = "cuda" if torch.cuda.is_available() else "cpu"
-        else:
-            self.device = device
-
+        self.device = device if device is not None else "cuda"
         logger.info(f"Loading Whisper model '{model_name}' on {self.device}...")
         self.model = whisper.load_model(model_name, device=self.device)
         logger.info("Model loaded successfully!")

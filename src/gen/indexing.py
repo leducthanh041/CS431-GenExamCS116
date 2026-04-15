@@ -160,7 +160,7 @@ def embed_and_store(chunks: list[dict]) -> list[dict]:
 
     # ─── Embedding model ──────────────────────────────────────────
     print("  🔄 Loading BGE-m3 embedding model...")
-    model = SentenceTransformer("BAAI/bge-m3")
+    model = SentenceTransformer("BAAI/bge-m3", device="cpu")
     texts = [c["text"][:2000] for c in chunks]
     print(f"  🔄 Embedding {len(texts)} chunks...")
     embeddings = model.encode(texts, batch_size=32, show_progress_bar=True)
@@ -181,6 +181,11 @@ def embed_and_store(chunks: list[dict]) -> list[dict]:
             "youtube_url":      str(c.get("youtube_url", "")) or "",
             "youtube_ts_start": str(c.get("youtube_timestamp_start", "")) or "",
             "youtube_ts_end":   str(c.get("youtube_timestamp_end", "")) or "",
+            # Slide citation metadata
+            "slide_file":       str(c.get("slide_file", "")) or "",
+            # page_number: 1-based page from original slide chunk
+            # slide_start_page: 0-based page stored in ChromaDB (use 0-based for 1-based display)
+            "slide_start_page": int(c.get("slide_start_page") or c.get("page_number", 0) or 0),
         }
         # timestamp_start/end as float — only include if not None
         ts_start = c.get("timestamp_start")
