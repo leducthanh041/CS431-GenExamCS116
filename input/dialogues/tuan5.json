@@ -1,0 +1,2892 @@
+[
+  {
+    "question_id": "ch5_q1",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng đánh giá chỉ để chọn mô hình có độ chính xác cao nhất?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Cuối cùng thì mục tiêu là tìm ra mô hình tốt nhất, và độ chính xác là thước đo rõ ràng nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Độ chính xác cao trên tập dữ liệu nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Trên tập train chứ. Đó là dữ liệu mình dùng để dạy nó mà. Càng cao càng chứng tỏ nó học tốt."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu có một mô hình nhớ thuộc lòng mọi dữ liệu trong tập train thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì độ chính xác trên tập train sẽ là 100%. Quá lý tưởng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Khi gặp một dữ liệu mới chưa từng thấy, mô hình 'nhớ thuộc lòng' đó sẽ hoạt động thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là vẫn tốt. Nó đã học được từ dữ liệu gốc rồi. Học thuộc cũng là một cách học."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mục tiêu của bạn là điểm cao trên tập train hay dự đoán đúng cho dữ liệu thực tế?"
+      },
+      {
+        "role": "Student",
+        "text": "Ừm... Dữ liệu thực tế quan trọng hơn. Nhưng điểm train cao phải là dấu hiệu tốt chứ?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy việc đánh giá giúp ta phân biệt giữa 'học tốt' và 'học vẹt' như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó giúp xem mô hình có thực sự dự đoán được không, hay chỉ giỏi với dữ liệu đã biết. Tức là để phát hiện việc học vẹt."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Đánh giá không chỉ để chọn mô hình, mà để xác thực nó tổng quát hóa tốt, không phải chỉ 'nhớ' dữ liệu train."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q2",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng mô hình quá khớp thì lỗi kiểm thử phải thấp. Vì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì 'quá khớp' tức là nó học rất tốt, đã khớp rồi còn 'quá' nữa mà. Nên nó phải hoạt động tốt trên mọi dữ liệu chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục tiêu cuối cùng của một mô hình là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là dự đoán chính xác trên dữ liệu mới, dữ liệu nó chưa từng thấy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử mô hình chỉ học thuộc lòng mọi điểm dữ liệu huấn luyện. Lỗi huấn luyện là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Bằng 0. Vì nó thuộc bài rồi. Như vậy là khớp hoàn hảo."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giờ đưa một điểm dữ liệu mới chưa thấy. Kết quả dự đoán sẽ thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc chắn sẽ sai, vì nó đâu có trong 'bài' nó đã thuộc. Nhưng đó là trường hợp cực đoan, mô hình thực tế không học như vậy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nếu nó không thuộc lòng cả điểm dữ liệu, mà chỉ thuộc lòng 'nhiễu' thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Nhiễu cũng là dữ liệu mà. Học được thì càng chứng tỏ nó giỏi, càng khớp chặt hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Liệu 'nhiễu' đó có lặp lại trên dữ liệu kiểm thử mới không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là không... À. Vậy việc học 'nhiễu' làm nó dự đoán sai trên dữ liệu mới."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy bạn định nghĩa lại xem, hiện tượng quá khớp được nhận biết thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó hoạt động rất tốt trên dữ liệu huấn luyện, nhưng lại tệ trên dữ liệu kiểm thử. Tức là lỗi huấn luyện thấp, lỗi kiểm thử cao."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm 'quá khớp' với một mô hình hoàn hảo. Thực chất, đó là khi mô hình học cả nhiễu, làm mất khả năng tổng quát hóa."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q3",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói loại bài toán phụ thuộc vào số lượng đặc trưng. Tại sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nhiều đặc trưng hơn thì dữ liệu phức tạp hơn. Bài toán phải khác đi chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, hồi quy và phân lớp là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Phân lớp là chia nhóm, hồi quy là dự đoán một con số. Nhưng cách làm sẽ khác nếu input khác."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét bài toán dự đoán giá nhà. Input là diện tích. Đây là bài toán gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Rõ ràng là hồi quy rồi, đoán giá nhà là một con số mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giờ mình thêm 100 đặc trưng: số phòng, hướng nhà, năm xây... Bài toán là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Với nhiều đặc trưng thế, mình có thể phân lớp nó thành 'nhà đáng mua' và 'không đáng mua'. Nó có thể thành bài toán phân lớp rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nhưng mục tiêu ban đầu của mình vẫn là 'dự đoán giá nhà' mà?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng, nhưng input thay đổi thì bản chất bài toán cũng có thể thay đổi theo. Nhiều dữ liệu hơn cho phép mình làm việc khác."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục tiêu bài toán là do người đặt ra hay do dữ liệu đầu vào quyết định?"
+      },
+      {
+        "role": "Student",
+        "text": "... Chắc là do người đặt ra. Mục tiêu của mình là gì thì nó là bài toán đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy để phân biệt hai bài toán, ta nên nhìn vào đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Nhìn vào mục tiêu... tức là cái biến kết quả mình cần dự đoán."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nghĩ dữ liệu đầu vào quyết định loại bài toán. Nhưng thực ra, nó được quyết định bởi tính chất của biến kết quả."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q4",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn giải thích rằng tuổi là một 'lớp'. Tại sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì mỗi tuổi là một nhóm riêng. Người 20 tuổi là một nhóm, người 21 tuổi là một nhóm khác."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục tiêu của bài toán phân lớp là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là xếp một đối tượng vào đúng nhóm, đúng lớp đã được định nghĩa trước."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nếu mô hình đoán là 21 tuổi thay vì 20, lỗi có như khi đoán 80 tuổi không?"
+      },
+      {
+        "role": "Student",
+        "text": "Trong phân lớp thì là như nhau. Cả hai đều là dự đoán sai lớp, kết quả đều là 'sai'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một hệ thống đánh giá sai số 1 tuổi và 60 tuổi như nhau, bạn thấy nó hữu ích không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Nghe không hợp lý lắm. Nhưng về lý thuyết phân lớp thì nó là vậy. Chỉ có đúng hoặc sai lớp."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy có phải 'phân lớp' đã bỏ qua một thông tin quan trọng về 'tuổi' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là thông tin về 'khoảng cách' giữa các tuổi... À, vậy là độ lớn của sai số quan trọng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Khi độ lớn của sai số là yếu tố quan trọng, đó là đặc trưng của loại bài toán nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Là của hồi quy. Vậy bài toán dự đoán tuổi phải là hồi quy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã thấy việc coi tuổi là các lớp rời rạc đã bỏ qua mối quan hệ thứ tự và độ lớn sai số, vốn là cốt lõi của bài toán dự đoán tuổi. Đây là bài toán hồi quy."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q5",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói tăng tập train là giải pháp, nó liên quan gì tới việc xác định loại bài toán?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì bài toán nào cũng cần nhiều dữ liệu mới học chính xác được. Dữ liệu là quan trọng nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy bài toán \"phân loại chó/mèo\" và \"dự đoán giá nhà\" khác nhau ở điểm nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Một cái là ảnh, một cái là số. Nhưng cả hai đều cần thật nhiều dữ liệu. Thiếu dữ liệu thì phân biệt cũng vô nghĩa."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử cả hai mô hình đều tệ. Bạn thêm 1 triệu dữ liệu cho mỗi bài. Chúng sẽ tốt lên như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Mô hình giá nhà sẽ dự đoán gần giá thật hơn. Mô hình chó/mèo sẽ phân loại đúng nhiều hơn. Cả hai đều tốt lên."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục tiêu \"dự đoán gần giá thật\" và \"phân loại đúng\" có giống nhau không?"
+      },
+      {
+        "role": "Student",
+        "text": "Về bản chất là một. Đều là làm cho mô hình tốt hơn, chính xác hơn. Phân biệt chi li làm gì."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nếu mình dùng hàm mục tiêu của bài toán giá nhà cho bài toán chó/mèo thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "...Nó sẽ không chạy được. Vì đầu ra là 'chó' hoặc 'mèo', không phải con số để tính sai số. À..."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, việc chọn hàm mục tiêu nào phụ thuộc vào đâu? Và tại sao phải phân biệt bài toán?"
+      },
+      {
+        "role": "Student",
+        "text": "Phụ thuộc vào loại bài toán... để chọn đúng hàm mục tiêu. Em hiểu rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Phải xác định bài toán để chọn hàm mục tiêu. Tăng dữ liệu chỉ là bước sau để tối ưu hàm mục tiêu đó."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q6",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn viết rằng có thể so sánh 'chó' > 'mèo'. Cơ sở cho suy luận này là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì mình gán nhãn số cho chúng. Ví dụ 'chó'=1, 'mèo'=0. Vì 1 > 0 nên 'chó' > 'mèo'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Việc gán 'chó'=1, 'mèo'=0 là một quy tắc bắt buộc hay một lựa chọn?"
+      },
+      {
+        "role": "Student",
+        "text": "Là lựa chọn nhưng nó hợp lý. Máy tính làm việc với số mà, mình phải mã hóa chúng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu một người khác gán 'chó'=0, 'mèo'=1 thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì họ gán sai quy ước thôi. Nhưng nếu thống nhất được, logic của mình vẫn đúng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy kết quả 'lớn hơn' phụ thuộc vào quy ước gán số tùy ý?"
+      },
+      {
+        "role": "Student",
+        "text": "…Ừm, nếu nhìn theo hướng đó thì đúng là nó không ổn định. Kết quả so sánh lại thay đổi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy phép so sánh nào không bị ảnh hưởng bởi cách bạn gán số?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là chỉ so sánh xem chúng có phải là một hay không. Tức là bằng hoặc khác nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Lỗi sai của bạn là coi việc gán số tùy ý là một thứ tự có ý nghĩa. Với các lớp danh nghĩa, chỉ có thể so sánh bằng (=) hoặc khác (!=)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q7",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "[A] Bạn giải thích rằng MSE dùng giá trị tuyệt đối. Vì sao lại cần giá trị tuyệt đối ở đây?"
+      },
+      {
+        "role": "Student",
+        "text": "Để sai số luôn dương. Sai số là khoảng cách, mà khoảng cách thì không thể âm được. Nên lấy giá trị tuyệt đối là hợp lý nhất rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "[B] Ngoài giá trị tuyệt đối, còn cách toán học nào khác để đảm bảo một số luôn dương?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì... bình phương nó lên. Nhưng dùng giá trị tuyệt đối trực quan hơn, nó chính là khoảng cách mà. Bình phương lên làm gì cho phức tạp?"
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Giả sử có hai mô hình. Mô hình A có sai số là {1, -1, 1, -1}. Mô hình B có sai số là {2, -2, 0, 0}. Tổng sai số tuyệt đối của chúng là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Mô hình A là 1+1+1+1=4. Mô hình B là 2+2+0+0=4. Bằng nhau. Thì hai mô hình này tệ như nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Bây giờ, hãy tính tổng của các sai số sau khi đã bình phương chúng."
+      },
+      {
+        "role": "Student",
+        "text": "Mô hình A: 1+1+1+1 = 4. Mô hình B: 4+4+0+0 = 8. Khác nhau. Nhưng em vẫn thấy giá trị tuyệt đối phản ánh đúng hơn, mô hình B có lúc đúng tuyệt đối (sai số 0)."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Một mô hình có nhiều sai số nhỏ và một mô hình có một sai số rất lớn. Cách nào nhạy cảm hơn với sai số lớn đó?"
+      },
+      {
+        "role": "Student",
+        "text": "...Chắc là bình phương. Vì 2^2=4, lớn hơn 2. Nhưng 10^2=100, lớn hơn 10 rất nhiều. Nó khuếch đại lỗi lớn lên."
+      },
+      {
+        "role": "Tutor",
+        "text": "[D] Vậy, việc bình phương trong MSE có mục đích gì mà giá trị tuyệt đối không có?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó phạt nặng hơn những dự đoán sai nhiều. Vậy chữ 'S' trong MSE là 'Squared'... Công thức phải là (1/n) * Σ (y_i - yhat_i)^2."
+      },
+      {
+        "role": "Tutor",
+        "text": "[E] Chính xác. Bạn đã nhầm vì cho rằng mục đích duy nhất là làm dương sai số. Thực ra, MSE dùng phép bình phương để nhấn mạnh và trừng phạt các sai số lớn."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q8",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng MAE là trung bình bình phương sai số. Tại sao lại cần 'bình phương' ở đây?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì để khử dấu âm của sai số. Nếu không bình phương, các sai số âm và dương sẽ tự triệt tiêu nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy chữ 'Absolute' trong 'Mean Absolute Error' có ý nghĩa gì với bạn?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc chỉ là một cách gọi tên thôi. Quan trọng là phải bình phương để xử lý sai số đúng chuẩn thống kê."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét 2 bộ sai số: A = [2, 2, 2, 2] và B = [1, 1, 1, 5]. Tính lỗi trung bình theo cách của bạn."
+      },
+      {
+        "role": "Student",
+        "text": "Bộ A: (4+4+4+4)/4 = 4. Bộ B: (1+1+1+25)/4 = 7. Bộ B có lỗi lớn hơn, hợp lý mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bây giờ, hãy tính trung bình giá trị tuyệt đối của hai bộ sai số đó."
+      },
+      {
+        "role": "Student",
+        "text": "Bộ A: (2+2+2+2)/4 = 2. Bộ B: (1+1+1+5)/4 = 2. Chúng bằng nhau? Vô lý, cách tính này sai rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tại sao bạn nghĩ kết quả đó là vô lý?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì tổng sai số tuyệt đối bằng nhau. Một cái đo sai số trung bình, một cái phạt sai số lớn nặng hơn. Tên gọi 'Mean Absolute Error' là nói về cách đầu tiên."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, MAE đo lường điều gì? Hãy trả lời lại câu hỏi ban đầu."
+      },
+      {
+        "role": "Student",
+        "text": "MAE đo trung bình sai số tuyệt đối giữa giá trị thực và giá trị dự đoán."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Lỗi của bạn là nhầm lẫn MAE (trung bình trị tuyệt đối) với một chỉ số khác là MSE (trung bình bình phương)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q9",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng RMSE là giá trị tuyệt đối của MSE. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì MSE là bình phương nên luôn dương. Lấy giá trị tuyệt đối của số dương thì vẫn là chính nó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, RMSE và MSE là một?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Chúng về cơ bản là giống nhau. RMSE chỉ là cách gọi khác thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tên đầy đủ của RMSE là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Root Mean Squared Error. Nhưng em nghĩ chữ 'Root' chỉ là một phần của cái tên thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử có đại lượng 'Nửa X'. Nó có bằng X không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nó bằng X chia 2. Nhưng đây là tên chỉ số, không phải phép toán."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu MSE bằng 36, RMSE bằng bao nhiêu theo logic của bạn?"
+      },
+      {
+        "role": "Student",
+        "text": "Bằng 36. ...Chờ đã. 'Root' là căn. Căn của 36 là 6. Có lẽ em đã sai."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy bạn hãy phát biểu lại mối quan hệ giữa RMSE và MSE."
+      },
+      {
+        "role": "Student",
+        "text": "RMSE là căn bậc hai của MSE. Vậy đáp án là C."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Ban đầu bạn đã bỏ qua ý nghĩa của chữ 'Root' trong tên của nó."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q10",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng Accuracy dùng được cho bài toán hồi quy. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó là độ chính xác. Hồi quy cũng cần dự đoán chính xác mà. Gần đúng thì cũng là một kiểu chính xác."
+      },
+      {
+        "role": "Tutor",
+        "text": "Accuracy đo lường cụ thể điều gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó đo tỉ lệ số lần dự đoán đúng trên tổng số dự đoán. Đơn giản vậy thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét bài toán dự đoán giá nhà. Giá thật là 5 tỷ. Dự đoán 4.99 tỷ, là 'đúng' hay 'sai'?"
+      },
+      {
+        "role": "Student",
+        "text": "Gần thế thì phải coi là đúng chứ. Sai có 10 triệu cho căn nhà 5 tỷ là quá chính xác rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nếu mình đặt ngưỡng sai số 1% là 'đúng', thì dự đoán 5.01 tỷ cũng là 'đúng'?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng, nó vẫn nằm trong ngưỡng đó. Cả hai dự đoán đều tốt."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy Accuracy có phân biệt được độ tốt của 4.99 tỷ và 5.01 tỷ không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nó chỉ đếm cả hai là 'đúng'. Kết quả như nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một mô hình khác dự đoán đúng 5.00 tỷ. Nó có tốt hơn hai dự đoán kia không?"
+      },
+      {
+        "role": "Student",
+        "text": "Tốt hơn nhiều chứ, chính xác tuyệt đối. Nhưng... accuracy vẫn chỉ đếm nó là một lần 'đúng' thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy Accuracy đã bỏ qua thông tin quan trọng nào của bài toán hồi quy?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó bỏ qua... độ lớn của sai số. Nó chỉ quan tâm đúng/sai theo một ngưỡng mình tự đặt."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Accuracy chỉ đếm đúng/sai, không đo độ lớn sai số. Hồi quy cần đo mức độ sai, đó là vai trò của MAE."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q11",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải của mình, bạn nói rằng giá trị của các độ đo này càng lớn càng tốt, giống như 'điểm số'. Tại sao lại vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng rồi ạ. Giống như đi thi, điểm càng cao càng giỏi. Một mô hình có điểm hiệu suất cao hơn thì phải tốt hơn chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mình hiểu ý bạn về 'điểm số'. Vậy MAE là viết tắt của gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là... Mean Absolute Error. Nhưng nó vẫn là một chỉ số đo hiệu suất, nên logic 'điểm số' vẫn áp dụng được."
+      },
+      {
+        "role": "Tutor",
+        "text": "OK. 'Error' dịch ra tiếng Việt là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là 'lỗi' hoặc 'sai số'. Nhưng có thể nó chỉ là một cái tên thôi, quan trọng là giá trị."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét 2 mô hình. Mô hình A có 'Sai số tuyệt đối trung bình' là 10. Mô hình B là 1000. 'Điểm số' của mô hình nào cao hơn?"
+      },
+      {
+        "role": "Student",
+        "text": "Mô hình B có điểm cao hơn. Vậy theo logic của em thì nó tốt hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy bạn muốn một mô hình có sai số trung bình là 1000, hay là 10?"
+      },
+      {
+        "role": "Student",
+        "text": "Nếu nói là 'sai số' thì... em muốn nó thấp hơn. Chờ đã, vậy cách gọi 'điểm số' của em có vấn đề."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy quy tắc chung cho các độ đo có chữ 'Error' (Lỗi) là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó phải càng nhỏ càng tốt. Vì không ai muốn lỗi lớn cả. Vậy đáp án đúng là 'Càng nhỏ càng tốt'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm lẫn vì áp dụng logic 'điểm thưởng' cho 'chỉ số lỗi'. Với MAE, MSE, RMSE, giá trị càng nhỏ chứng tỏ sai số của mô hình càng thấp, tức là mô hình càng tốt."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q12",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "[A] Bạn nói mẫu số RAE là tổng sai số của mô hình. Sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì tên nó là Sai số tuyệt đối tương đối. Nên nó phải liên quan đến sai số của mô hình chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "[B] Vậy chữ 'Tương đối' (Relative) ở đây có ý nghĩa gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nghĩa là nó đo lường sai số của mô hình một cách tương đối. Chắc là so với chính nó ở một khía cạnh nào đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Ok. Nếu tử và mẫu số đều là tổng sai số của mô hình, thì RAE luôn bằng mấy?"
+      },
+      {
+        "role": "Student",
+        "text": "Đâu có luôn bằng. Nó còn tùy vào mô hình chứ. Mô hình tốt thì sai số nhỏ, mô hình tệ thì sai số lớn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Giờ giả sử tổng sai số mô hình là 50. Tử số là 50. Theo bạn, mẫu số là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì cũng là 50. Vậy RAE là 1. Nhưng đó chỉ là một trường hợp thôi. Nó phải đo độ tốt của mô hình chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Nếu RAE của mọi mô hình, dù tốt hay tệ, đều bằng 1, nó có dùng để so sánh được không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Chắc là không. Vậy logic của em có vấn đề ở đâu đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "[D] Vậy mẫu số phải là một mốc so sánh cố định. Mốc đơn giản nhất để so sánh là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Có lẽ là so sánh với một mô hình rất đơn giản... như là chỉ đoán giá trị trung bình?"
+      },
+      {
+        "role": "Tutor",
+        "text": "[E] Chính xác. Bạn đã nhầm mẫu số (sai số của mô hình baseline) với tử số (sai số của mô hình đang xét). Điều đó làm chỉ số luôn bằng 1 và vô nghĩa."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q13",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "[A] Tại sao bạn nghĩ mẫu số của RSE lại dùng sai số tuyệt đối?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó cần đo tổng độ lệch so với giá trị trung bình. Dùng giá trị tuyệt đối là cách chuẩn để làm vậy."
+      },
+      {
+        "role": "Tutor",
+        "text": "[B] Tên của chỉ số này là 'Relative Squared Error'. Từ 'Squared' ở đây có ý nghĩa gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó áp dụng cho tử số, tức là lỗi của mô hình. Mẫu số chỉ là một đường cơ sở, không nhất thiết phải bình phương."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Giả sử ta có các giá trị thực tế y là {1, 5}. y_bar (trung bình) là 3. Mẫu số theo cách của bạn là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Là |1-3| + |5-3|, tức là 2 + 2 = 4. Đây là tổng sai lệch so với trung bình."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Nếu tên gọi là 'Squared Error', tại sao ta không bình phương các độ lệch ở mẫu số?"
+      },
+      {
+        "role": "Student",
+        "text": "Làm vậy sẽ thổi phồng sai số lên một cách không cần thiết. 4 là một con số trực quan hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Cứ thử tính theo cách đó xem. (1-3)^2 + (5-3)^2 bằng bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Bằng (-2)^2 + 2^2 = 4 + 4 = 8. Con số này lớn quá, không hợp lý bằng."
+      },
+      {
+        "role": "Tutor",
+        "text": "[D] Tên của chỉ số yêu cầu tính 'lỗi bình phương'. Vậy mẫu số nên là 4 hay 8 để nhất quán?"
+      },
+      {
+        "role": "Student",
+        "text": "… Nếu phải nhất quán với cái tên thì phải là 8. Tức là tổng bình phương độ lệch."
+      },
+      {
+        "role": "Tutor",
+        "text": "[E] Chính xác. Sai lầm của bạn là cho rằng 'bình phương' chỉ áp dụng cho tử số. Trong RSE, cả tử số và mẫu số đều phải được tính theo cùng một cách là bình phương sai số."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q14",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng MAE và MSE phạt lỗi lớn như nhau. Vì sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì cả hai đều có chữ 'M' là 'Mean' (trung bình). Chúng đều đo sai số trung bình thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chúng khác nhau ở chữ 'A' và 'S'. Điều đó có ý nghĩa gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là Absolute (trị tuyệt đối) và Squared (bình phương). Nhưng cuối cùng vẫn là lấy trung bình sai số."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét hai kịch bản lỗi: A) {1, 1, 1, 1} và B) {4, 0, 0, 0}. MAE của chúng là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Cả hai đều có tổng sai số là 4, chia 4 điểm nên MAE đều bằng 1. Thấy chưa, chúng như nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bây giờ, hãy tính MSE cho cả hai kịch bản đó."
+      },
+      {
+        "role": "Student",
+        "text": "A) (1+1+1+1)/4 = 1. B) (16+0+0+0)/4 = 4. Hừm... có khác nhau. Nhưng bản chất vẫn là đo sai số."
+      },
+      {
+        "role": "Tutor",
+        "text": "Sự khác biệt gấp 4 lần đó đến từ đâu trong kịch bản B?"
+      },
+      {
+        "role": "Student",
+        "text": "À... nó đến từ việc bình phương con số 4 lên thành 16."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, phép toán nào làm cho lỗi lớn trở nên 'nặng' hơn?"
+      },
+      {
+        "role": "Student",
+        "text": "Là phép bình phương... Vậy với lỗi lớn, MSE sẽ phạt nặng hơn. Giờ quay lại câu hỏi gốc... đáp án là MSE."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã sai vì chỉ tập trung vào 'trung bình' và bỏ qua tác động của 'bình phương' lên các lỗi lớn."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q15",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói MSE có cùng đơn vị. Vì sao bạn chắc chắn về điều đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì MSE là sai số trung bình, nó đo lỗi thì phải có cùng đơn vị với cái nó đo chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Công thức của MSE có bước nào đặc biệt không?"
+      },
+      {
+        "role": "Student",
+        "text": "Là tổng bình phương sai số, rồi chia cho số lượng. Quá cơ bản."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu đầu ra là 'giá nhà' (tỷ đồng), sai số là 2 tỷ. Sai số bình phương là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là 4. Nhưng nó vẫn là về 'tỷ' thôi. Chỉ là con số để so sánh."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đơn vị của số 4 đó là 'tỷ đồng' hay 'tỷ đồng bình phương'?"
+      },
+      {
+        "role": "Student",
+        "text": "Là 'tỷ đồng bình phương'... Nhưng nó vẫn đo lỗi giá nhà. Ý nghĩa không đổi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'tỷ đồng' và 'tỷ đồng bình phương' là cùng một đơn vị?"
+      },
+      {
+        "role": "Student",
+        "text": "...Không. Vậy là MSE không phải rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Làm cách nào để đưa 'tỷ đồng bình phương' về lại 'tỷ đồng'?"
+      },
+      {
+        "role": "Student",
+        "text": "Lấy căn bậc hai. À... là RMSE."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Do phép bình phương, đơn vị của MSE là 'đơn vị gốc bình phương'. RMSE lấy căn để trả lại đơn vị gốc."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q16",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng công thức toán học thì luôn khách quan. Tại sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó là toán học. Accuracy là số dự đoán đúng chia tổng số mẫu. Công thức rõ ràng, làm sao có thiên lệch được?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mục đích của một độ đo đánh giá là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để xem mô hình tốt đến đâu. Accuracy cao là tốt."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét bài toán phát hiện 1 ca bệnh hiếm trong 10,000 người. Mô hình dự đoán tất cả đều 'không bệnh'. Accuracy là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Là 9999/10000, tức 99.99%. Rất cao. Con số này là sự thật, nó khách quan."
+      },
+      {
+        "role": "Tutor",
+        "text": "Với accuracy 99.99%, mô hình đó có hữu ích trong thực tế không?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó... không phát hiện được ca bệnh nào. Nhưng con số accuracy vẫn đúng. Vấn đề là ở mục tiêu chứ không phải độ đo."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy độ đo 'khách quan' này có cho ta một đánh giá 'thiên lệch' về giá trị của mô hình không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chờ đã... Tức là con số đúng, nhưng cách nó đại diện cho sự 'tốt' của mô hình lại lệch. Vì nó là trung bình trên tất cả."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, một độ đo tính theo kiểu trung bình có thể thiên lệch không? Giờ bạn trả lời câu hỏi gốc thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Có thể. Nó chỉ là cách tính trung bình nên có thể có tính thiên lệch."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tóm lại: Công thức toán học có thể khách quan, nhưng việc áp dụng nó như tính trung bình trên dữ liệu lệch có thể tạo ra một đánh giá thiên lệch."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q17",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ sao ta có thể đánh giá một mô hình chưa được huấn luyện?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì mình cứ so sánh dữ liệu đầu vào với nhãn. Mô hình chưa huấn luyện chỉ là một điểm khởi đầu thôi, nhưng vẫn so sánh được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một mô hình chưa huấn luyện cho ra kết quả gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó cho ra kết quả ngẫu nhiên hoặc dựa trên các giá trị khởi tạo. Nhưng ta vẫn có thể so sánh nó với kết quả thật."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu kết quả là ngẫu nhiên, việc đánh giá đó nói lên điều gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó cho biết mô hình tệ đến mức nào khi chưa học gì. Đó cũng là một dạng đánh giá chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử có hai mô hình A và B cùng chưa huấn luyện. Ta đánh giá chúng thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì xem cái nào 'ngẫu nhiên' ra kết quả gần đúng hơn. Có thể có một cái may mắn hơn cái kia."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu bạn chạy lại mô hình A, kết quả có giống lần trước không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là không, vì nó ngẫu nhiên mà... Vậy thì việc đánh giá không ổn định."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, để đánh giá một cách có ý nghĩa, ta cần so sánh những gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải so sánh giá trị thực tế và giá trị dự đoán từ một mô hình đã được huấn luyện, để kết quả của nó không còn là ngẫu nhiên nữa."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Đánh giá là đo lường hiệu suất sau khi mô hình đã học, không phải đánh giá sự ngẫu nhiên ban đầu."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q18",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "[A] Bạn nói MSE có thể dùng cho phân lớp. Vì sao lại vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó là hàm lỗi. Cứ đo sai số giữa dự đoán và thực tế. Lỗi càng nhỏ thì mô hình càng tốt."
+      },
+      {
+        "role": "Tutor",
+        "text": "[B] Trong bài toán phân lớp nhị phân, đầu ra thực tế là những giá trị nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Là 0 hoặc 1."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Giả sử nhãn đúng là 1. Mô hình dự đoán 0.9. MSE là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Là (1 - 0.9)^2 = 0.01. Lỗi rất nhỏ, đúng rồi còn gì."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu mô hình dự đoán là 2.0. MSE là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Là (1 - 2)^2 = 1. Lỗi lớn. Mô hình bị phạt nặng là đúng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Dự đoán 2.0 có ý nghĩa gì với bài toán phân lớp 0/1?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì nó rất xa số 0, nên nó rất chắc chắn là lớp 1. Vẫn đúng logic mà?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy MSE đang cố làm gì với dự đoán 2.0?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó đang phạt để kéo dự đoán từ 2.0 về 1.0. ... Khoan đã. Về mặt phân lớp thì 2.0 đã là một dự đoán 'rất đúng' rồi, tại sao lại phạt nó?"
+      },
+      {
+        "role": "Tutor",
+        "text": "[D] Vậy hàm lỗi cho phân lớp nên có đặc tính gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó nên khuyến khích mô hình tự tin vào dự đoán đúng, chứ không phải phạt khi nó quá tự tin. Vậy trong các đáp án, chỉ có Log loss làm việc đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "[E] Tốt. Bạn đã thấy vấn đề. MSE đo khoảng cách số học nên phù hợp với hồi quy. Log loss đo lường 'mức độ bất ngờ' của dự đoán, phù hợp với phân lớp."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q19",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng Log loss chỉ cần đầu vào là 0 hoặc 1. Tại sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì để tính lỗi, chỉ cần biết mô hình đoán đúng hay sai. Đúng là 1, sai là 0. Quá đủ rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, 'lỗi' của một dự đoán sai được tính thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nếu nhãn thật là 1, mô hình đoán 0 là sai. Lỗi là lỗi, có gì đâu mà tính phức tạp."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét 2 mô hình cùng đoán sai 1 nhãn thật. M-A đoán 0.4. M-B đoán 0.1. Chúng sai như nhau?"
+      },
+      {
+        "role": "Student",
+        "text": "Cùng đoán dưới 0.5 nên kết quả cuối cùng đều là 0. Vậy là sai như nhau. Lỗi của chúng phải bằng nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu lỗi bằng nhau, làm sao thuật toán biết nên phạt mô hình nào nặng hơn?"
+      },
+      {
+        "role": "Student",
+        "text": "...thì... tại sao lại phải phạt nặng hơn? Sai là sai thôi mà. Em vẫn nghĩ chúng nên có lỗi như nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một mô hình tự tin 90% là sai tệ hơn hay bằng một mô hình chỉ tự tin 10% là sai?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là... tự tin mà sai thì tệ hơn. Vậy Log loss không thể chỉ dùng 0 và 1 được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Vậy để đo lường 'độ tệ' đó, đầu vào của Log loss phải là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải là cái con số trước khi làm tròn. Chắc là xác suất dự đoán."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Sai lầm của bạn là nghĩ Log loss chỉ quan tâm đúng/sai. Thực tế, nó đo lường và phạt cả mức độ tự tin của dự đoán sai đó, nên cần đầu vào là xác suất."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q20",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ tại sao mọi độ đo hiệu suất đều phải càng lớn càng tốt?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó là 'độ đo hiệu suất'. Giống như Accuracy, điểm càng cao mô hình càng xịn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy từ 'loss' trong 'log loss' có ý nghĩa gì với bạn?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó chỉ là một cái tên thôi. Nó vẫn là một chỉ số để đo, nên phải lớn mới tốt."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử một mô hình dự đoán hoàn hảo. Log loss của nó là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải là giá trị lớn nhất có thể. Vì nó hoàn hảo mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Log loss có thể tiến tới vô cực. Vậy mô hình hoàn hảo có loss vô cực?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, vô cực thì vô lý. Nhưng chắc nó phải là một số lớn, ví dụ 1. Giống F1-score."
+      },
+      {
+        "role": "Tutor",
+        "text": "Accuracy đo 'độ đúng'. Log loss đo lường 'sự sai'. Chúng có giống nhau không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đo sự sai... à. Vậy nếu sai nhiều thì số phải lớn. Nhưng lớn lại là không tốt?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy để mô hình tốt hơn, giá trị đo lường 'sự sai' này nên thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó nên càng nhỏ càng tốt. Tức là càng gần 0."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm lẫn vì cho rằng mọi độ đo đều giống Accuracy. Loss là sai số, mục tiêu là giảm thiểu nó, nên càng gần 0 càng tốt."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q21",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng MSE dùng được cho phân lớp. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì MSE đo sai số. Phân lớp cũng cần đo sai số. Cứ coi các lớp là 0, 1, 2 thì tính được thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Được. Giờ ta có 3 lớp: Chó, Mèo, Cá. Gán số 0, 1, 2."
+      },
+      {
+        "role": "Student",
+        "text": "Vâng, gán như vậy là được rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu nhãn thật là Chó (0), mô hình đoán Cá (2). Lỗi là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Dùng MSE thì là (2-0)^2 = 4. Lỗi là 4."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu mô hình đoán là Mèo (1) thì lỗi là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "(1-0)^2 = 1. Vậy lỗi là 1. Rõ ràng đoán Mèo ít sai hơn đoán Cá."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy dự đoán 'Cá' là sai gấp 4 lần dự đoán 'Mèo' sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Ừm... Nghe hơi lạ. Về bản chất, đoán sai Mèo hay Cá thì đều là sai hoàn toàn như nhau chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy việc gán số và tính MSE có phản ánh đúng lỗi sai phân lớp không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là không rồi. Vậy trong các đáp án, chỉ có Jaccard là không dùng số học kiểu đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Lỗi của bạn là cho rằng MSE áp dụng được cho các nhãn không có thứ tự và khoảng cách. Ta cần một độ đo khác."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q22",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói Jaccard là TP / (TP + FP). Tại sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì đó là công thức của Precision, nó đo độ chính xác của dự đoán dương tính. Jaccard cũng đo sự tương đồng, nên chúng là một."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy còn False Negative (FN) thì sao? Nó nằm ở đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "FN là những thứ bị bỏ lỡ, không nằm trong các dự đoán của mô hình. Công thức Precision không cần quan tâm đến FN."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét trường hợp: TP=10, FP=2, FN=100. Tính Jaccard theo công thức của bạn."
+      },
+      {
+        "role": "Student",
+        "text": "Là 10 / (10 + 2) = 10/12. Kết quả khá cao. Hợp lý."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mô hình bỏ sót 100 điểm dữ liệu. Kết quả có thật sự 'khá cao' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Nhưng Precision chỉ quan tâm đến các dự đoán đã đưa ra thôi. Việc bỏ sót không liên quan đến độ chính xác của các dự đoán đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Jaccard index đo độ tương đồng giữa hai tập hợp. FN có thuộc hai tập hợp đó không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Có, nó thuộc tập hợp thực tế (Y) nhưng không thuộc tập dự đoán (Yhat). Việc bỏ qua nó có vẻ... không ổn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy công thức nào trong các đáp án xem xét cả TP, FP và FN?"
+      },
+      {
+        "role": "Student",
+        "text": "TP / (TP + FP + FN)... đó là |Y ∩ Yhat| / |Y ∪ Yhat|. Em chọn lại đáp án này."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm Jaccard index với Precision. Precision chỉ xét các dự đoán được đưa ra, còn Jaccard so sánh toàn bộ hai tập hợp, bao gồm cả những phần tử bị bỏ sót (FN)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q23",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ trong trường hợp nào Jaccard index có thể có giá trị âm?"
+      },
+      {
+        "role": "Student",
+        "text": "Khi dự đoán và thực tế hoàn toàn trái ngược nhau. Sai càng nhiều thì càng âm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Công thức của Jaccard index là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là |Y ∩ Yhat| chia cho |Y ∪ Yhat|."
+      },
+      {
+        "role": "Tutor",
+        "text": "Ký hiệu |X| trong công thức này có nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là giá trị của tập X. Nếu X sai thì giá trị đó có thể âm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hãy xem xét một trường hợp 'hoàn toàn trái ngược'. Y={a,b}, Yhat={c,d}. |Y ∩ Yhat| bằng mấy?"
+      },
+      {
+        "role": "Student",
+        "text": "Phần giao của chúng là tập rỗng, nên kích thước là 0."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy Jaccard index trong trường hợp này bằng bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Tử số bằng 0, nên kết quả là 0. Nhưng... nó vẫn chưa âm. Chắc phải có trường hợp khác."
+      },
+      {
+        "role": "Tutor",
+        "text": "Kích thước của một tập hợp có thể là một số âm không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không... Kích thước nhỏ nhất là 0, tương ứng với tập rỗng. Tử và mẫu đều là kích thước."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, từ công thức, Jaccard index có thể nhận giá trị âm không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không thể. Vì nó là thương của hai số không âm. Vậy giá trị nhỏ nhất của nó là 0."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Lỗi sai của bạn là đã nhầm lẫn 'kích thước tập hợp', vốn luôn không âm, với một loại 'điểm số' có thể âm."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q24",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "[A] Bạn lập luận Precision có công thức giống Recall. Tại sao bạn nghĩ FN (False Negative) lại nằm trong công thức của Precision?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì FN là lỗi mà model bỏ sót, nó cũng quan trọng như FP. Một độ đo tốt phải tính đến tất cả các loại lỗi chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "[B] Vậy theo bạn, mẫu số (TP + FN) đại diện cho nhóm nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó là tất cả các trường hợp thực sự là Positive. Công thức của em đo xem model tìm được bao nhiêu phần trăm trong số đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Hãy xét một hệ thống lọc thư rác (Spam). 'Spam' là nhãn Positive. Precision đo lường điều gì ở đây?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó đo mức độ chính xác của hệ thống khi lọc spam. Điểm càng cao càng tốt."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Chính xác về cái gì? Về tất cả email, hay về những email *bị dán nhãn* là spam?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải là những email bị dán nhãn spam chứ. Nhưng nếu nó bỏ sót một mail spam (FN) thì hệ thống cũng không tốt, nên vẫn phải tính FN."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Một email bị bỏ sót (FN) có nằm trong nhóm 'email bị dán nhãn spam' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Ừm... không. Nó bị model dán nhãn là 'không spam' rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "[D] Vậy mẫu số của Precision, vốn chỉ quan tâm đến các dự đoán 'Positive', nên chứa thành phần nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó nên chứa những thứ được dự đoán là Positive... Tức là TP và cả FP. Vậy công thức là TP / (TP + FP)."
+      },
+      {
+        "role": "Tutor",
+        "text": "[E] Chính xác. Bạn đã nhầm Precision với Recall. Precision đo độ tin cậy của các dự đoán Positive (TP/(TP+FP)), còn Recall đo khả năng phát hiện tất cả các ca Positive (TP/(TP+FN))."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q25",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn dùng mẫu số là (TP + FP). Cụm này đại diện cho điều gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là tổng số trường hợp được dự đoán là dương tính. Vì Recall đo độ chính xác của dự đoán dương tính mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy FN, False Negative, có ý nghĩa gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là trường hợp dương tính thực tế nhưng bị dự đoán là âm tính. Tức là bị bỏ sót."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét bài toán tìm 100 người bệnh. Mô hình A tìm thấy 90 người, nhưng dự đoán nhầm 10 người khỏe thành bệnh. Tính Recall theo công thức của bạn."
+      },
+      {
+        "role": "Student",
+        "text": "TP=90, FP=10, FN=10. Công thức của em là 90 / (90+10) = 0.9. Điểm khá cao."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mô hình B tìm thấy 85 người, và không dự đoán nhầm ai (FP=0). Recall của mô hình B là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "TP=85, FP=0, FN=15. Công thức là 85 / (85+0) = 1.0. Hoàn hảo. Mô hình B rõ ràng tốt hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mô hình B đạt điểm 1.0 nhưng bỏ sót 15 người bệnh. Điều này có hợp lý với mục tiêu 'tìm lại' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Nhưng nó không dự đoán sai ai cả! FP=0 nghĩa là mọi dự đoán của nó đều đáng tin. Còn hơn là báo động nhầm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mục tiêu của Recall là 'dự đoán đáng tin' hay là 'tìm được hết các ca dương tính thực tế'?"
+      },
+      {
+        "role": "Student",
+        "text": "…Chắc là tìm được hết. Nếu vậy thì mẫu số phải là tổng số ca dương tính thực tế... là TP + FN."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm mẫu số của Recall (tổng dương tính thực tế, TP+FN) với mẫu số của Precision (tổng dự đoán dương, TP+FP)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q26",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn cho rằng F1-score là trung bình cộng. Vì sao cách tính này lại hợp lý?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó là cách đơn giản và trực tiếp nhất để kết hợp hai chỉ số. Trung bình cộng luôn là cách chuẩn để tìm giá trị đại diện."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục đích của việc kết hợp Precision và Recall là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để có một con số duy nhất đánh giá mô hình, thay vì phải nhìn vào hai số riêng lẻ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét một mô hình có Precision = 1 và Recall = 0.02. Trung bình cộng là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Là (1 + 0.02) / 2 = 0.51. Vẫn là một điểm số khá ổn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một mô hình có Recall = 0.02, tức là bỏ sót 98% kết quả, có được xem là 'ổn' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, như vậy là rất tệ. Nhưng công thức là công thức, toán học là vậy. Trung bình của nó vẫn là 0.51."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một chỉ số tổng hợp có nên 'che giấu' đi điểm yếu của một thành phần không?"
+      },
+      {
+        "role": "Student",
+        "text": "Hmm... có lẽ là không. Nó nên bị 'phạt' nặng nếu một trong hai chỉ số quá thấp."
+      },
+      {
+        "role": "Tutor",
+        "text": "Công thức nào sẽ bị 'phạt' nặng, tiến về 0, khi một giá trị rất nhỏ?"
+      },
+      {
+        "role": "Student",
+        "text": "Một công thức có phép nhân ở tử số. Nếu một giá trị gần 0, cả kết quả sẽ gần 0. Vậy có lẽ phải là 2 * (P*R) / (P+R)."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. F1-score là trung bình điều hòa, không phải trung bình cộng. Nó trừng phạt nặng các trường hợp mất cân bằng giữa Precision và Recall."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q27",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói MSE dùng được cho phân loại. Vậy MSE đo lường chính xác điều gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó đo sai số tổng thể. Sai số càng nhỏ thì mô hình càng tốt, đúng cho mọi bài toán."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trong phân loại nhị phân, đầu ra thường là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là xác suất, ví dụ 0.8 là lớp 1, 0.2 là lớp 0. Hoặc là nhãn 0, 1."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử nhãn đúng là 1. Mô hình dự đoán 0.9. MSE là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Là (1 - 0.9)^2 = 0.01. Rất nhỏ, chứng tỏ dự đoán tốt."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu mô hình dự đoán 2.0 thì sao? MSE là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Là (1 - 2.0)^2 = 1. Lỗi lớn. Rõ ràng dự đoán 2.0 là tệ, hợp lý mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Dự đoán 2.0 có nghĩa là mô hình rất chắc chắn về lớp 1. Tại sao lại bị phạt nặng?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó cách xa giá trị thật là 1. Một dự đoán tốt phải gần bằng 1 chứ. Em vẫn thấy logic này đúng."
+      },
+      {
+        "role": "Tutor",
+        "text": "So sánh dự đoán 0.1 và 2.0. Cái nào sai về mặt phân loại?"
+      },
+      {
+        "role": "Student",
+        "text": "Dự đoán 0.1 sẽ bị phân vào lớp 0, là sai. Dự đoán 2.0 vẫn là lớp 1, là đúng... À, MSE lại phạt dự đoán đúng (2.0) nặng hơn dự đoán sai (0.1) vì (1-0.1)^2 = 0.81. Vô lý."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy MSE phù hợp với loại dữ liệu nào? Và phân loại cần gì?"
+      },
+      {
+        "role": "Student",
+        "text": "MSE chỉ hợp với các giá trị số có khoảng cách ý nghĩa. Phân loại chỉ cần biết đúng lớp hay sai lớp thôi. Vậy nên dùng Accuracy hoặc Precision."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Lỗi của bạn là áp dụng MSE, một độ đo khoảng cách, vào bài toán phân loại, nơi khoảng cách số học không phản ánh đúng lỗi sai lớp."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q28",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "[A] Bạn nói ma trận nhầm lẫn chỉ có thể là 2x2. Vì sao lại vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó có 4 ô: True Positive, False Positive, True Negative, False Negative. Luôn là 2x2."
+      },
+      {
+        "role": "Tutor",
+        "text": "[B] Vậy các hàng và cột của ma trận 2x2 đó biểu diễn điều gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Hàng là Thực tế (Positive/Negative), cột là Dự đoán (Positive/Negative). Chỉ có 2 giá trị thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Giờ có bài toán 3 lớp: Chó, Mèo, Chim. Hàng và cột sẽ là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì mình phải làm 3 ma trận 2x2 riêng. Ví dụ: 'Chó' và 'Không phải Chó'. Vẫn là 2x2."
+      },
+      {
+        "role": "Tutor",
+        "text": "Với cách đó, làm sao biết mô hình nhầm 'Chó' thành 'Mèo' bao nhiêu lần?"
+      },
+      {
+        "role": "Student",
+        "text": "Trong ma trận 'Chó vs Không phải Chó', nếu thực tế là 'Chó' và dự đoán là 'Không phải Chó'... thì nó là lỗi. Nhưng 'Không phải Chó' có thể là Mèo hoặc Chim. Không biết được."
+      },
+      {
+        "role": "Tutor",
+        "text": "[D] Vậy một ma trận duy nhất có thể cho thấy sự nhầm lẫn giữa Chó và Mèo không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là có... Nếu có một hàng 'Thực tế Chó' và một cột 'Dự đoán Mèo'. Vậy ma trận phải là 3x3."
+      },
+      {
+        "role": "Tutor",
+        "text": "[E] Tóm lại, kích thước ma trận nhầm lẫn phụ thuộc vào số lớp, không cố định là 2x2. Với N lớp, ma trận sẽ là NxN."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q29",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn có thể giải thích vì sao lại lấy TP chia cho (TP + FN) không?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì đó là công thức tính độ chính xác. Lấy số dự đoán đúng trên tổng số ca dương thực tế."
+      },
+      {
+        "role": "Tutor",
+        "text": "Theo bạn, từ 'precision' (độ chính xác) nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là xem mô hình tìm ra được bao nhiêu trường hợp Churn thật. Đó là mục tiêu chính mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét trường hợp: mô hình dự đoán 1 người Churn và đúng (TP=1, FP=0). Nhưng bỏ lỡ 999 người Churn khác (FN=999)."
+      },
+      {
+        "role": "Student",
+        "text": "Vậy theo công thức của em, precision là 1/(1+999) = 0.001. Rất thấp, đúng như dự đoán."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trong những lần nó *dám* dự đoán 'Churn', nó đúng hay sai?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó chỉ dự đoán 1 lần và lần đó đúng. Nhưng nó bỏ sót quá nhiều, nên không thể nói là nó 'precise' được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'không bỏ sót' và 'dự đoán là đúng' là hai việc khác nhau?"
+      },
+      {
+        "role": "Student",
+        "text": "Có lẽ... Vậy công thức của em đang đo cái gì? Nó đo khả năng không bỏ sót?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng, công thức đó đo 'khả năng tìm lại'. Vậy 'độ chính xác khi dự đoán' nên tính trên cái gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó nên tính trên tổng số lần dự đoán... tức là TP và FP. Vậy là 6 / (6+1) = 0.8571."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm Precision, vốn đo sự chính xác của các dự đoán dương (TP+FP), với Recall, đo khả năng tìm lại các ca dương thực tế (TP+FN)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q30",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn tính Recall bằng TP/(TP+FP). Vì sao bạn dùng mẫu số là TP+FP?"
+      },
+      {
+        "role": "Student",
+        "text": "Đó là định nghĩa mà. Mẫu số là tất cả các trường hợp được dự đoán là 'Churn=1'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mục tiêu của Recall là đo lường điều gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Đo khả năng dự đoán đúng của mô hình khi nó nói một khách hàng là 'Churn'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét kịch bản: 100 khách Churn. Mô hình chỉ đoán 1 người là Churn và đúng. TP=1, FP=0, FN=99. Recall là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Theo công thức của em, là 1/(1+0) = 1. Recall 100%. Rất tốt."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mô hình bỏ sót 99/100 khách hàng Churn thật. Kết quả đó có 'tốt' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Nhưng mỗi khi nó đoán, nó đều đúng. Công thức của em đo lường điều đó. Chẳng phải đó là mục tiêu sao?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục tiêu là tìm các ca Churn. Vậy ta nên đo trên số ca tìm được hay số ca dự đoán?"
+      },
+      {
+        "role": "Student",
+        "text": "Nếu mục tiêu là tìm hết... thì phải đo trên tổng số ca Churn thực tế. Tức là TP + FN."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy công thức đúng để đo lường khả năng tìm thấy các ca Churn là gì? Hãy tính lại."
+      },
+      {
+        "role": "Student",
+        "text": "Là TP/(TP+FN). Vậy đáp án là 6/(6+9) = 6/15 = 0.4."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm Recall với Precision. Recall đo lường khả năng tìm thấy trên tổng số thực tế (TP+FN)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q31",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn dường như cho rằng Accuracy chỉ cần đến TP. Tại sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì Accuracy là độ chính xác, TP là True Positive, tức là dự đoán đúng. Những cái khác không phải là 'dự đoán đúng' cho lớp Positive."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, TN (True Negative) có phải là một dự đoán đúng không?"
+      },
+      {
+        "role": "Student",
+        "text": "TN chỉ là mô hình nói 'không'. Mục tiêu chính là tìm ra các trường hợp 'có' (Positive). Nên TN không quan trọng bằng TP."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét một mô hình chẩn đoán bệnh hiếm. TP=1, FN=5, TN=9994. Mô hình này kém hiệu quả sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó bỏ sót 5 người bệnh. Tất nhiên là kém rồi. Việc xác định đúng người không bệnh không có nhiều ý nghĩa bằng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một mô hình dự đoán tất cả mọi người đều 'bệnh' thì sao? Sẽ không bao giờ bỏ sót."
+      },
+      {
+        "role": "Student",
+        "text": "...Như vậy thì lại sai với những người không bệnh. Hầu hết mọi người sẽ bị chẩn đoán sai."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Vậy việc 'dự đoán đúng người không bệnh' có giá trị không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có. Em hiểu rồi. Cả TP và TN đều là các dự đoán đúng. Chúng đều quan trọng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu cả hai đều là dự đoán đúng, công thức Accuracy nên tính thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải cộng cả TP và TN, rồi chia cho tổng số mẫu. (6+24)/(6+1+9+24) = 30/40 = 0.75."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã thấy Accuracy đo lường hiệu suất trên tất cả các dự đoán đúng, không chỉ riêng lớp Positive."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q32",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn đã tính Precision và Recall chưa?"
+      },
+      {
+        "role": "Student",
+        "text": "Rồi. Recall là 0.4, Precision là 6/7. F1-score chắc là một trong hai giá trị đó thôi, nên em đã chọn đáp án có 0.4."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tại sao lại cần cả ba chỉ số nếu F1 chỉ là một trong hai cái kia?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì để gọi tên khác nhau cho các trường hợp khác nhau. Nhưng bản chất nó vẫn là một. F1-score chỉ là một cách gọi khác."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét mô hình: TP=1, FP=0, FN=99."
+      },
+      {
+        "role": "Student",
+        "text": "Precision là 1, Recall là 0.01. Nếu theo logic của em, F1-score là 1 hoặc 0.01. Chọn cái nào bây giờ?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu F1 là 1, mô hình này có tốt không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nó bỏ sót tới 99 trường hợp. Nhưng nếu F1 là 0.01 thì lại quá tệ. Logic của em không thể sai, chắc là có quy ước để chọn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một chỉ số duy nhất có nên phụ thuộc vào 'quy ước chọn lựa' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là không... Có lẽ F1 không phải là chọn một trong hai. Nó phải kết hợp cả hai lại?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy bạn hãy thử tính lại F1 cho bài toán ban đầu xem."
+      },
+      {
+        "role": "Student",
+        "text": "Precision ≈ 0.857, Recall = 0.4. F1 = 2 * (0.857 * 0.4) / (0.857 + 0.4) ≈ 0.545. Ra đáp án khác hẳn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tóm lại: F1-score không phải là Precision hay Recall, mà là trung bình điều hòa của cả hai để có cái nhìn cân bằng."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q33",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ FP làm giảm Recall. Cơ chế cụ thể là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "FP là lỗi. Càng nhiều lỗi thì mô hình càng kém, hiệu suất giảm, nên Recall phải giảm theo."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy bạn viết giúp mình công thức của Recall được không?"
+      },
+      {
+        "role": "Student",
+        "text": "Recall = TP / (TP + FN). Dù công thức không có FP, nhưng về logic, FP tăng là mô hình tệ đi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét ví dụ: TP=80, FN=20, FP=10. Recall là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Recall là 80/(80+20) = 0.8."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giờ giữ TP, FN không đổi, tăng FP lên 500. Recall mới là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Vẫn là 80/(80+20) = 0.8. Nhưng FP tăng mạnh thế mà Recall không đổi thì quá vô lý. Chắc chắn có ảnh hưởng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy trong hai kịch bản, đại lượng nào đã thay đổi khi FP tăng?"
+      },
+      {
+        "role": "Student",
+        "text": "Precision thay đổi. Vì mẫu số (TP + FP) tăng. Vậy là nó ảnh hưởng đến Precision."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy quay lại câu hỏi ban đầu. FP tăng ảnh hưởng trực tiếp đến độ đo nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Là Precision."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm vì cho rằng mọi lỗi đều ảnh hưởng đến Recall. Thực tế, FP ảnh hưởng trực tiếp đến mẫu số của Precision."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q34",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng FN ảnh hưởng đến Precision. Logic của bạn là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "FN là lỗi dự đoán sai. Precision đo độ chính xác. Lỗi sai thì phải làm giảm độ chính xác chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Ok. Vậy công thức của Precision là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là TP / (TP + FP). Em biết công thức này."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy thành phần FN (False Negative) nằm ở đâu trong công thức đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó không có trực tiếp, nhưng chắc chắn có ảnh hưởng gián tiếp. Lỗi tăng thì Precision phải giảm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Thử nhé. TP=90, FP=10, FN=5. Precision là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Precision = 90 / (90 + 10) = 0.9."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bây giờ, nếu FN tăng lên 100, các số khác giữ nguyên. Tính lại Precision."
+      },
+      {
+        "role": "Student",
+        "text": "Vẫn là 90 / (90 + 10) = 0.9... Điều này vô lý. FN tăng mạnh mà Precision không đổi?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Công thức có cho ra kết quả khác không? Vậy FN có ảnh hưởng *trực tiếp* đến công thức không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không... Công thức không thay đổi. Vậy nó ảnh hưởng đến cái gì có mẫu số chứa FN?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Đó là độ đo nào? Hãy trả lời lại câu hỏi ban đầu."
+      },
+      {
+        "role": "Student",
+        "text": "Là Recall. Recall = TP / (TP + FN). Khi FN tăng, mẫu số tăng, Recall giảm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Nhầm lẫn của bạn là cho rằng mọi loại lỗi đều tác động đến Precision. Thực tế, Precision chỉ nhạy cảm với FP."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q35",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói Accuracy là tốt nhất. Nó đo lường chính xác điều gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó đo tỉ lệ dự đoán đúng trên tổng số. Một con số tổng quát về độ chính xác."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một mô hình có accuracy 99% luôn là một mô hình tốt?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc chắn rồi. 99% là cực kỳ cao, gần như hoàn hảo. Sai số chỉ 1%."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét bài toán: 1000 bài thi, chỉ có 1 bài gian lận. Mô hình dự đoán tất cả đều 'không gian lận'. Accuracy là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Mô hình đoán đúng 999 bài trong sạch, sai 1 bài gian lận. Vậy accuracy là 999/1000 = 99.9%. Vẫn rất cao."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mô hình đó có phát hiện được trường hợp gian lận nào không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không... Nhưng nó vẫn đúng với 99.9% dữ liệu. Đó là một kết quả tốt."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục tiêu ban đầu của bài toán là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là phát hiện gian lận. Ờ... mô hình này hoàn toàn thất bại trong việc đó, dù accuracy cao."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy khi mục tiêu là 'phát hiện', ta cần đo lường điều gì ngoài 'đúng' nói chung?"
+      },
+      {
+        "role": "Student",
+        "text": "Đo độ tin cậy khi nó nói 'đã phát hiện'. Tức là trong số các bài bị gắn cờ, bao nhiêu là gian lận thật. Đó là Precision."
+      },
+      {
+        "role": "Tutor",
+        "text": "Như vậy, bạn thấy rằng accuracy có thể gây hiểu lầm ở tập dữ liệu mất cân bằng. Precision lại đo lường độ tin cậy của các cảnh báo, điều rất quan trọng khi chi phí kết tội nhầm là cao."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q36",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói không thể tính accuracy. Vì sao lại không thể thực hiện phép tính đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì model đã 'thấy' đáp án rồi. Nó biết trước kết quả, nên không còn là 'dự đoán' nữa. Không có dự đoán thì làm sao tính accuracy?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Accuracy được tính bằng công thức nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Số dự đoán đúng chia cho tổng số mẫu. Nhưng ở đây không có 'dự đoán đúng', vì model chỉ đơn giản là nhả lại kết quả đã học thuộc."
+      },
+      {
+        "role": "Tutor",
+        "text": "Model vẫn nhận input và tạo ra output, đúng chứ?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng, nhưng output đó là do học thuộc lòng. Quá trình này không phải là suy luận."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy output do học thuộc đó có khớp với nhãn thật không?"
+      },
+      {
+        "role": "Student",
+        "text": "Tất nhiên là khớp. Nó có thể đạt 100%. Nhưng đó là một con số vô nghĩa, không thể gọi là accuracy được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy phép tính 'số lần khớp/tổng số' vẫn thực hiện được?"
+      },
+      {
+        "role": "Student",
+        "text": "Về mặt toán học thì được. Nhưng kết quả đó không phản ánh model có tốt không. Nó chỉ cho thấy model học thuộc tốt thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một kết quả đánh giá chỉ cho thấy khả năng học thuộc. Vậy nhược điểm chính là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là việc đánh giá đó không đáng tin cậy, không khách quan."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Vấn đề không phải là 'không thể tính', mà là con số tính ra không có giá trị đánh giá khách quan."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q37",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói độ chính xác cao trên tập train là một dấu hiệu tốt. 'Tốt' ở đây nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nghĩa là mô hình đã học được các quy luật rồi, nó hoạt động hiệu quả."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục tiêu cuối cùng khi xây dựng mô hình là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là để nó dự đoán đúng trên dữ liệu thực tế."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử mô hình học thuộc lòng đáp án trong đề cương ôn tập. Điểm ôn tập có cao không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc chắn cao. Học thuộc lòng thì phải làm đúng hết bài trong đề cương chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy khi thi thật với đề hoàn toàn mới, điểm có cao không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là không... vì đề mới nó khác. Nhưng nếu mô hình đủ thông minh, nó vẫn suy ra được mà?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Mô hình chỉ biết những gì có trong đề cương (tập train). Nó 'thông minh' từ đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "...Vậy là nó chỉ ghi nhớ chứ không thực sự hiểu quy luật à?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy độ chính xác cao trên tập train có đảm bảo hiệu quả trên dữ liệu mới không?"
+      },
+      {
+        "role": "Student",
+        "text": "Dạ không. Nó có thể chỉ là học thuộc lòng, không áp dụng được cho thực tế."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Độ chính xác cao trên tập train không phản ánh hiệu quả thực tế. Đó có thể là dấu hiệu của overfitting (học vẹt)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q38",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "[A] Bạn nói độ chính xác ngoài mẫu cũng chỉ đo độ khớp tập train. Tại sao lại cần hai tập dữ liệu khác nhau để đo cùng một thứ?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì để kiểm tra cho chắc thôi. Nếu mô hình học tốt từ tập train, nó sẽ làm tốt trên tập ngoài mẫu. Về bản chất chúng vẫn là một."
+      },
+      {
+        "role": "Tutor",
+        "text": "[B] Tập dữ liệu ngoài mẫu có điểm nào khác biệt cơ bản so với tập train?"
+      },
+      {
+        "role": "Student",
+        "text": "Dữ liệu khác nhau một chút, nhưng vẫn cùng một loại bài toán. Nó chỉ là một bài kiểm tra khác, khắt khe hơn thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Giả sử mô hình là học sinh chỉ học thuộc lòng đáp án. Độ chính xác trên 'bài tập' (tập train) là 100%. Liệu học sinh đó có chắc chắn điểm 10 'bài thi thật' (tập ngoài mẫu) không?"
+      },
+      {
+        "role": "Student",
+        "text": "Nếu đề thi thật giống hệt bài tập thì được chứ. Tập ngoài mẫu phải phản ánh đúng tập train, không thể ra một thứ hoàn toàn khác được."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] 'Phản ánh' và 'giống hệt' có phải là một không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không hẳn. Nhưng nếu học sinh đó học tốt, chỉ cần học thuộc bài tập là đủ để suy ra đáp án bài thi rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Vậy việc 'đo độ chính xác ngoài mẫu' là để kiểm tra cái gì? Khả năng học thuộc của học sinh, hay khả năng xử lý bài chưa từng gặp?"
+      },
+      {
+        "role": "Student",
+        "text": "...Chắc là… khả năng xử lý bài chưa từng gặp. Vì nó không có sẵn trong bài tập để học thuộc."
+      },
+      {
+        "role": "Tutor",
+        "text": "[D] Khả năng xử lý 'bài chưa từng gặp' đó tương ứng với điều gì trong thực tế?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó tương ứng với việc áp dụng vào các tình huống thực tế chưa gặp. À, vậy nó là hiệu quả khi áp dụng thực tế."
+      },
+      {
+        "role": "Tutor",
+        "text": "[E] Đúng. Sai lầm của bạn là đồng nhất việc 'học thuộc' (khớp tập train) với việc 'tổng quát hóa' (làm tốt trên tập ngoài mẫu). Độ chính xác ngoài mẫu đo lường khả năng tổng quát hóa, tức hiệu quả thực tế."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q39",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ vì sao Train-Test split đánh giá toàn diện hơn K-Fold?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó chỉ test một lần trên một tập dữ liệu lớn, giống như một bài thi cuối kỳ vậy. Đánh giá một lần là đủ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục đích của việc đánh giá mô hình là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để xem mô hình hoạt động tốt như thế nào trong thực tế."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu tập test của bạn vô tình chỉ chứa toàn các trường hợp dễ thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Đó là rủi ro thôi. Nhưng thường thì tập test đủ ngẫu nhiên nên sẽ không xảy ra."
+      },
+      {
+        "role": "Tutor",
+        "text": "Với K-Fold, mỗi điểm dữ liệu được dùng để test mấy lần?"
+      },
+      {
+        "role": "Student",
+        "text": "Mỗi điểm sẽ được vào tập test đúng một lần trong suốt quá trình."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy phương pháp nào cho phép mọi điểm dữ liệu đều được 'thử thách'?"
+      },
+      {
+        "role": "Student",
+        "text": "Là K-Fold... Nhưng nó vẫn không dứt khoát bằng một bài test lớn duy nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Phương pháp nào giảm thiểu hơn sự may rủi khi chọn tập test?"
+      },
+      {
+        "role": "Student",
+        "text": "K-Fold, vì nó đánh giá trên nhiều tập test khác nhau. Vậy ưu điểm của Train-Test split chỉ là nó đơn giản."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm lẫn độ toàn diện với sự đơn giản. K-Fold toàn diện hơn nhưng phức tạp hơn, còn Train-Test split thì đơn giản và nhanh."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q40",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói Train-Test split không áp dụng được cho tập dữ liệu lớn. Vì sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nếu dữ liệu quá lớn, việc chia ra sẽ rất tốn kém và không thực tế. Tập test sẽ quá lớn hoặc tập train sẽ không đủ đại diện."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'lớn' là bao nhiêu? Và 'không thực tế' nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Ví dụ hàng chục triệu, hàng trăm triệu bản ghi. 'Không thực tế' là không ai làm vậy cả, vì nó lãng phí tài nguyên."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử có 100 triệu bản ghi. Chia 80/20. Tập train có bao nhiêu bản ghi?"
+      },
+      {
+        "role": "Student",
+        "text": "80 triệu. Nhưng 20 triệu cho tập test là quá lãng phí tài nguyên. Rõ ràng là không hợp lý."
+      },
+      {
+        "role": "Tutor",
+        "text": "'Lãng phí' có đồng nghĩa với 'không thể áp dụng' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Về mặt kỹ thuật thì có thể, nhưng nó không hiệu quả. Nên người ta sẽ không dùng. Vậy thì cũng coi như không áp dụng được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy vấn đề là tính hiệu quả, hay là khả năng áp dụng của phương pháp?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là... tính hiệu quả. Nó vẫn có thể áp dụng được, nhưng không phải là lựa chọn tốt nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tốt. Giờ hãy xem lại các khuyết điểm. 'Không thể áp dụng' có phải là một trong số đó không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không. Vậy khuyết điểm của nó là có thể dẫn đến đánh giá mô hình không ổn định, và tốn thêm một bước chia."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm lẫn giữa 'không hiệu quả' hoặc 'không tối ưu' với 'không thể áp dụng'. Train-Test split luôn có thể áp dụng, vấn đề là nó có phải cách tốt nhất không."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q41",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng K-Fold có chi phí tính toán thấp. Cơ sở của bạn là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó chia nhỏ dữ liệu ra, mỗi lần chỉ xử lý một phần nhỏ nên nhanh hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Quy trình K-Fold cụ thể làm gì với các phần dữ liệu đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì chia làm K phần. Lấy K-1 phần để train, 1 phần để test. Lặp lại K lần."
+      },
+      {
+        "role": "Tutor",
+        "text": "Từ 'train' ở đây nghĩa là gì? Nó có tốn chi phí không?"
+      },
+      {
+        "role": "Student",
+        "text": "Là huấn luyện mô hình. Dĩ nhiên là có tốn. Nhưng mỗi lần train trên ít dữ liệu hơn mà?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Việc 'huấn luyện mô hình' đó được lặp lại chính xác bao nhiêu lần?"
+      },
+      {
+        "role": "Student",
+        "text": "Lặp lại K lần... Chẳng lẽ ý mình là nó không nhanh hơn sao?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu một lần huấn luyện tốn T giờ, tổng chi phí là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Khoảng K lần T... À, vậy là nó không hề thấp. Nó còn cao hơn train một lần."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy giờ bạn sẽ trả lời lại câu hỏi về ưu điểm của K-Fold như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Ưu điểm của nó không phải là chi phí thấp, mà là đánh giá mô hình kỹ hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm lẫn việc lặp lại K lần huấn luyện. K-Fold tốn kém nhưng cho kết quả đánh giá đáng tin cậy."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q42",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng khuyết điểm của K-Fold là không khách quan. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì kết quả phụ thuộc vào cách chia fold. Nếu hên, gặp fold dễ thì điểm cao, xui thì điểm thấp. Nó không ổn định, nên không khách quan."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một phép đo khách quan thì phải như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó phải cho một kết quả duy nhất, không bị ảnh hưởng bởi sự may rủi của việc chọn dữ liệu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu chỉ chia dữ liệu một lần (train-test split), kết quả có duy nhất không?"
+      },
+      {
+        "role": "Student",
+        "text": "Duy nhất cho lần chia đó thôi. Nhưng nếu chia lại ngẫu nhiên kiểu khác, kết quả cũng sẽ khác. Vẫn là may rủi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy K-Fold làm gì với các kết quả từ những lần chia khác nhau đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó lấy trung bình. Nhưng trung bình của nhiều thứ may rủi thì vẫn là may rủi thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tung một đồng xu là may rủi. Tung 100 lần rồi lấy trung bình có đáng tin hơn không?"
+      },
+      {
+        "role": "Student",
+        "text": "À... có, nó sẽ gần với 50/50 hơn. Tức là việc lặp lại nhiều lần giúp giảm yếu tố may rủi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy việc K-Fold lặp lại nhiều lần giúp tăng hay giảm tính khách quan?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó làm tăng tính khách quan. Vậy khuyết điểm chính của việc phải lặp lại nhiều lần đó là gì?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Ban đầu bạn nghĩ K-Fold không khách quan vì phụ thuộc vào cách chia. Giờ bạn thấy chính việc lặp lại nhiều cách chia giúp nó khách quan hơn, nhưng phải trả giá bằng chi phí tính toán."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q43",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng kết quả là của fold tốt nhất. Tại sao lại chọn fold đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì mình chọn fold có kết quả cao nhất. Nó cho thấy khả năng tốt nhất của mô hình mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục đích của việc chia dữ liệu thành 4 fold là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để huấn luyện và kiểm thử mô hình 4 lần trên các tập dữ liệu con khác nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu một lần bạn ngẫu nhiên chia fold và được 99%, có nên báo cáo 99% không?"
+      },
+      {
+        "role": "Student",
+        "text": "Nếu nó xảy ra thì được chứ. Đó là kết quả thực tế mà mô hình đạt được trên fold đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nếu lần chạy sau, fold tốt nhất chỉ 70%. Kết quả nào là 'thật'?"
+      },
+      {
+        "role": "Student",
+        "text": "Hừm... Cái này khó nói. Nhưng kết quả cao hơn vẫn đáng tin hơn chứ?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Tại sao kết quả của một lần chia ngẫu nhiên lại đáng tin hơn các lần khác?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là không... Vậy nếu không lấy kết quả cao nhất, làm sao có một con số đại diện?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Bạn có 4 kết quả từ 4 fold. Làm thế nào để kết hợp chúng thành một số?"
+      },
+      {
+        "role": "Student",
+        "text": "À, mình lấy trung bình cộng của chúng. Vậy là (80+82+86+84)/4 = 83%."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Kết quả K-fold là trung bình để đánh giá ổn định, không phải kết quả của fold may mắn nhất."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q44",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn viết rằng cross-validation (CV) giúp huấn luyện mô hình nhanh hơn. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó chia dữ liệu thành các phần nhỏ hơn. Huấn luyện trên từng phần nhỏ sẽ nhanh hơn là huấn luyện trên cả tập dữ liệu lớn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Huấn luyện một mô hình về cơ bản là làm gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là để máy tính học các tham số từ dữ liệu. Dữ liệu càng nhiều thì học càng lâu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Ok. Với 5-fold CV, mô hình được huấn luyện bao nhiêu lần?"
+      },
+      {
+        "role": "Student",
+        "text": "5 lần. Nhưng mỗi lần chỉ trên 4/5 dữ liệu, nên mỗi lần sẽ nhanh hơn. Tổng lại chắc cũng vậy, hoặc nhanh hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy tổng công việc là 5 lần huấn luyện, mỗi lần trên 80% dữ liệu. Đúng chứ?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng. So với 1 lần trên 100% dữ liệu. Nghe vẫn có vẻ nhanh hơn mà. Vì không bao giờ phải xử lý 100% một lúc."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tổng lượng dữ liệu được xử lý qua tất cả các vòng là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "5 lần nhân với 80%... là 400% tổng dữ liệu? Chờ đã, vậy là nó tính toán nhiều hơn à?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu nó tính toán nhiều hơn, nó có thể nhanh hơn không? Vậy mục đích thật sự là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Không thể nhanh hơn được. Vậy mục đích của nó không phải tốc độ. Chắc là để đánh giá mô hình trên nhiều phần dữ liệu khác nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm lẫn về mục đích. CV làm tăng thời gian huấn luyện để đổi lấy một phép đo hiệu suất đáng tin cậy hơn trên dữ liệu chưa thấy."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q45",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng kiểm định chéo giúp huấn luyện nhanh hơn. Vì sao lại vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó chia nhỏ dữ liệu. Huấn luyện trên các phần nhỏ phải nhanh hơn là huấn luyện trên cả tập dữ liệu lớn chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Với 5-fold cross-validation, mô hình được huấn luyện bao nhiêu lần?"
+      },
+      {
+        "role": "Student",
+        "text": "5 lần. Nhưng mỗi lần là trên tập nhỏ hơn mà, chỉ 4/5 dữ liệu thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "So với việc huấn luyện 1 lần trên toàn bộ 5/5 dữ liệu thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Nhưng 1 lần đó là trên tập rất lớn. 5 lần kia trên tập con, tổng thời gian vẫn có thể nhanh hơn chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử huấn luyện trên 100% dữ liệu mất T giây. Ước tính thời gian cho 5-fold CV?"
+      },
+      {
+        "role": "Student",
+        "text": "Mỗi lần huấn luyện trên 80% dữ liệu, mất khoảng 0.8T. 5 lần sẽ là 5 * 0.8T = 4T. ... Khoan, vậy là lâu hơn gấp 4 lần."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mục đích của nó có phải là tốc độ không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không. Vậy nó làm chậm đi để làm gì? Chắc là để đánh giá mô hình nhiều lần, xem kết quả có ổn định không."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn rằng cross-validation giúp tăng tốc. Thực tế, nó đánh đổi thời gian huấn luyện để có một ước lượng đáng tin cậy hơn về hiệu suất và sự ổn định của mô hình."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q46",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng mô hình chỉ huấn luyện một lần. Vậy tham số `cv=5` có tác dụng gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó chia dữ liệu ra 5 phần để kiểm thử 5 lần thôi. Nhưng mô hình cuối cùng vẫn là một, được huấn luyện trên toàn bộ dữ liệu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục đích chính của một tập kiểm thử là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để đánh giá hiệu năng trên dữ liệu mà mô hình chưa từng thấy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu mô hình đã huấn luyện trên *toàn bộ* dữ liệu, vậy có phần dữ liệu nào nó 'chưa thấy' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có chứ. Khi test trên fold 1, nó 'giả vờ' chưa thấy fold 1. Nhưng mô hình gốc vẫn biết hết. Đây là cách để có 5 điểm số."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đánh giá một mô hình trên dữ liệu nó đã học. Kết quả đó có đáng tin cậy không?"
+      },
+      {
+        "role": "Student",
+        "text": "Hmm... nếu vậy thì điểm số sẽ rất cao và không khách quan. Nhưng chẳng lẽ nó huấn luyện lại 5 lần từ đầu? Tốn kém quá."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử nó huấn luyện lại 5 lần. Mỗi lần trên 4 phần, và kiểm thử trên 1 phần còn lại. Mâu thuẫn kia có được giải quyết không?"
+      },
+      {
+        "role": "Student",
+        "text": "Tức là có 5 mô hình tạm thời để lấy 5 điểm số, chứ không phải một mô hình duy nhất? Vậy cuối cùng ta chỉ có các chỉ số đánh giá?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. `cross_validate` dùng để đánh giá độ ổn định của phương pháp, không phải tạo ra một mô hình cuối. Sai lầm của bạn là cho rằng chỉ có một mô hình duy nhất được huấn luyện trên tất cả dữ liệu."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q47",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "[A] Bạn cho rằng phương pháp này 'đánh giá toàn diện hơn K-Fold'. 'Toàn diện' ở đây nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nghĩa là nó dùng tất cả dữ liệu để đánh giá. K-Fold chỉ dùng một phần để test ở mỗi lần lặp, không phải là toàn bộ."
+      },
+      {
+        "role": "Tutor",
+        "text": "[B] Mục đích cuối cùng của việc đánh giá một mô hình là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để xem nó hoạt động tốt đến đâu. Điểm càng cao càng tốt."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Giả sử mô hình của bạn chỉ đơn giản là ghi nhớ mọi mẫu dữ liệu trong tập train. Nếu bạn test trên chính tập đó, độ chính xác sẽ là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "100%. Vì nó đã thấy tất cả rồi. Điều đó chứng tỏ nó học rất tốt."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Một mô hình đạt 100% trên dữ liệu đã biết. Nếu mình đưa cho nó một dữ liệu mới, chưa từng thấy thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó có thể không đạt 100% nhưng vẫn sẽ tốt. Vì nó đã học 'toàn diện' từ dữ liệu gốc rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Mô hình 'ghi nhớ' đó sẽ làm gì với dữ liệu mới? Nó có quy tắc nào để xử lý không?"
+      },
+      {
+        "role": "Student",
+        "text": "À... Nếu chỉ ghi nhớ thì nó sẽ không biết phải làm gì. Nó sẽ thất bại."
+      },
+      {
+        "role": "Tutor",
+        "text": "[D] Vậy một phép đánh giá đáng tin cậy phải đo lường khả năng ghi nhớ hay khả năng tổng quát hóa?"
+      },
+      {
+        "role": "Student",
+        "text": "Khả năng tổng quát hóa trên dữ liệu mới. Vậy phương pháp này không đánh giá được điều đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "[E] Đúng vậy. 'Test là một phần của Train' chỉ đo khả năng ghi nhớ, dẫn đến điểm số cao giả tạo. Ưu điểm thật sự của nó chỉ nằm ở sự đơn giản."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q48",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng chi phí tính toán cao. Chi phí đó đến từ đâu trong quy trình?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì phải xử lý cả tập dữ liệu lớn hai lần. Một lần để train, một lần để test. Nhân đôi công việc."
+      },
+      {
+        "role": "Tutor",
+        "text": "Việc 'xử lý' để test có giống hệt việc 'xử lý' để train không?"
+      },
+      {
+        "role": "Student",
+        "text": "Về cơ bản là giống chứ. Đều phải chạy thuật toán trên toàn bộ dữ liệu mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Khi train, mô hình có cập nhật trọng số không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có, đó là quá trình học. Còn khi test thì chỉ dự đoán thôi... Nhưng vẫn phải duyệt qua hết dữ liệu mà!"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy việc 'chỉ dự đoán' có tốn kém bằng việc 'học và cập nhật' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Tất nhiên là không bằng, nhưng nếu dữ liệu cực lớn thì nó vẫn đáng kể. Vẫn là một chi phí lớn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy khuyết điểm là 'chi phí lớn', chứ không phải 'chi phí rất cao'?"
+      },
+      {
+        "role": "Student",
+        "text": "Ừ thì... nó không phải là vấn đề chính ạ? Nếu chi phí không phải vấn đề, vậy tại sao không nên làm?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Đó là một câu hỏi hay. Vậy tại sao không nên cho học sinh làm bài kiểm tra khi đã biết trước đề?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì như vậy không công bằng, không đánh giá đúng năng lực. À... em hiểu rồi. Vì mô hình đã 'thấy' dữ liệu đó rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy bạn hãy dùng một từ để mô tả kết quả đánh giá đó."
+      },
+      {
+        "role": "Student",
+        "text": "Không khách quan."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tóm lại, khuyết điểm chính không phải chi phí tính toán, mà là kết quả đánh giá không khách quan do mô hình đã 'học thuộc' dữ liệu."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q49",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn viết rằng K-Fold luôn là lựa chọn tốt nhất. Điều gì khiến nó tốt hơn trong mọi trường hợp?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì K-Fold đánh giá trên toàn bộ dữ liệu, kết quả sẽ khách quan và đáng tin cậy hơn là chỉ chia một lần."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục đích của việc đánh giá mô hình là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để xem mô hình hoạt động tốt đến đâu trên dữ liệu mới. K-Fold cho ước tính ổn định hơn về việc đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử bạn có 10 triệu điểm dữ liệu và dùng 10-fold. Mỗi lần train mô hình mất 1 ngày."
+      },
+      {
+        "role": "Student",
+        "text": "Thì sẽ mất 10 ngày để hoàn thành. Nhưng kết quả sẽ rất chính xác."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu dùng train-test split 80-20 thì sao? Mất bao lâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Mất 1 ngày. Nhưng như vậy là mình chỉ đánh giá trên 2 triệu điểm dữ liệu, không đáng tin bằng K-Fold."
+      },
+      {
+        "role": "Tutor",
+        "text": "Kết quả đánh giá trên 2 triệu điểm dữ liệu có được coi là thiếu tin cậy không?"
+      },
+      {
+        "role": "Student",
+        "text": "Hmm... 2 triệu điểm thì cũng nhiều rồi. Nhưng về lý thuyết, K-Fold vẫn tốt hơn chứ?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy giữa một phương pháp mất 10 ngày và một phương pháp mất 1 ngày cho kết quả đủ tin cậy, bạn chọn cái nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là cái 1 ngày. Vậy ra với dữ liệu lớn, Train-Test split hiệu quả hơn vì chi phí tính toán."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Sai lầm của bạn là tuyệt đối hóa lợi ích của K-Fold mà bỏ qua chi phí. Với dữ liệu lớn, train-test split đủ tin cậy và hiệu quả hơn nhiều."
+      }
+    ]
+  },
+  {
+    "question_id": "ch5_q50",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng nên đánh giá trên tập train để tận dụng tối đa dữ liệu. Tại sao đây là cách làm tốt nhất?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó dùng 100% dữ liệu để học. Càng nhiều dữ liệu thì mô hình càng chính xác chứ sao."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục tiêu cuối cùng của việc đánh giá là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để xem mô hình hoạt động tốt đến đâu. Nếu accuracy trên tập train là 99% thì là mô hình tốt."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử mô hình của bạn chỉ đơn giản là ghi nhớ toàn bộ tập train. Accuracy trên đó là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Là 100%. Quá tốt, nó đã học được hết dữ liệu rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mô hình 'ghi nhớ' đó sẽ dự đoán dữ liệu mới như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là tốt, vì nó đã học rất kỹ từ dữ liệu gốc. Logic của nó phải vững rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Việc ghi nhớ và việc học khái quát có giống nhau không?"
+      },
+      {
+        "role": "Student",
+        "text": "Khác nhau, nhưng để học thì phải nhớ. Một học sinh muốn giỏi cũng phải nhớ nhiều mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một học sinh chỉ thuộc lòng đáp án có giải được bài tập mới không?"
+      },
+      {
+        "role": "Student",
+        "text": "À không... vì họ không thực sự hiểu. Họ chỉ lặp lại cái đã thấy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy để đo lường khả năng 'giải bài tập mới', ta nên làm gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải cho họ làm một bài kiểm tra với những câu hỏi chưa từng gặp... Giống như K-Fold Cross Validation."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Đánh giá trên tập train chỉ đo khả năng ghi nhớ, không đo khả năng tổng quát hóa. K-Fold giúp ước tính hiệu năng trên dữ liệu lạ."
+      }
+    ]
+  }
+]

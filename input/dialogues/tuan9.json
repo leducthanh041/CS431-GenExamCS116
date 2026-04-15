@@ -1,0 +1,2828 @@
+[
+  {
+    "question_id": "ch8_q1",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng động lực chính của CNN là giải quyết vanishing gradient. Vì sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì mạng nơ-ron càng sâu thì gradient càng nhỏ, không học được. CNN là mạng rất sâu nên nó phải giải quyết được việc đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vanishing gradient thường xảy ra ở mạng rất sâu. Một mạng nông thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Mạng nông thì ít bị hơn, nhưng ảnh vốn phức tạp nên phải cần mạng sâu. Nên vẫn là vấn đề đó thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy giả sử chỉ dùng mạng nông cho ảnh. Giữa FCN và CNN, cái nào hiệu quả hơn?"
+      },
+      {
+        "role": "Student",
+        "text": "Tất nhiên là CNN rồi. Nhưng nếu nông, thì vanishing gradient đâu phải là vấn đề chính nữa? Chắc là do CNN nhận diện đặc trưng tốt hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Thử tính số tham số. Ảnh 28x28 vào lớp ẩn 512 neuron. FCN cần bao nhiêu tham số?"
+      },
+      {
+        "role": "Student",
+        "text": "Khoan... 28 * 28 * 512. Rất, rất nhiều. Hơn 400.000."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một con số khổng lồ như vậy gây ra vấn đề gì trước tiên?"
+      },
+      {
+        "role": "Student",
+        "text": "Vấn đề là... quá nhiều tham số thì mô hình sẽ chỉ học thuộc lòng dữ liệu training thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Việc 'học thuộc lòng dữ liệu training' đó gọi là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Overfitting. Vậy ra động lực chính của CNN là giảm tham số để chống overfitting."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tốt. Bạn đã thấy vấn đề cốt lõi không phải vanishing gradient, mà là overfitting do số tham số quá lớn khi dùng mạng NN thông thường cho ảnh."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q2",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn giải thích cách tính ra số tham số được không?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì em lấy 200*200 để có 40K pixel, rồi nhân với 40K nút ẩn. Ra 1.6 tỷ. Rõ ràng rồi mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mỗi tham số bạn tính đại diện cho một kết nối giữa pixel và nút ẩn?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Mỗi pixel nối với mỗi nút ẩn, nên nhân vào là ra tổng số kết nối, tức là tổng số tham số."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét một mạng nhỏ hơn: 2 input, 1 output. Theo công thức của bạn, có bao nhiêu tham số?"
+      },
+      {
+        "role": "Student",
+        "text": "Có 2*1 = 2 tham số. Quá dễ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu cả 2 input đều bằng 0, output của neuron đó bằng bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Output = (input1*w1) + (input2*w2) = 0. Output là 0, có vấn đề gì đâu?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Làm thế nào để neuron đó có thể học cách output ra một giá trị khác 0?"
+      },
+      {
+        "role": "Student",
+        "text": "Ừm... nếu chỉ có các trọng số thì không được. Nó phải... có thêm một cái gì đó không phụ thuộc vào input. Chắc là bias?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy quy tắc chung để tính tổng số tham số cho một lớp là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là (số input * số nút) + (số nút). Em đã bỏ qua cái vế cộng thêm số nút, tức là số bias."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Số tham số gồm cả trọng số kết nối và bias của mỗi nút ẩn. Bạn đã bỏ sót tham số bias."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q3",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói mỗi node ẩn chỉ kết nối với một vùng nhỏ. Vì sao lại vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì xử lý ảnh thì phải tập trung vào từng phần. Kết nối với tất cả pixel thì quá lộn xộn và không hiệu quả."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tên của tầng mạng này là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Tầng fully connected, hay tầng kết nối đầy đủ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'kết nối đầy đủ' có nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nghĩa là nó kết nối... đầy đủ. Nhưng với ảnh thì phải khác, phải hợp lý hơn chứ. Không thể nào là tất cả được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử đầu vào chỉ có 3 điểm, không phải ảnh. Node ẩn sẽ kết nối thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Chỉ 3 điểm thì nó kết nối với cả 3. Nhưng ảnh có hàng nghìn điểm, nó khác."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy quy tắc 'kết nối đầy đủ' thay đổi dựa vào số lượng đầu vào à?"
+      },
+      {
+        "role": "Student",
+        "text": "...Không hẳn. Nhưng theo định nghĩa là vậy thì có vẻ không thực tế lắm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo đúng định nghĩa, mỗi node ẩn trong tầng này kết nối với gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó phải kết nối với tất cả các pixel của ảnh."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn định nghĩa của tầng 'fully connected' với cơ chế của tầng tích chập, nơi mỗi neuron chỉ nhìn vào một vùng nhỏ."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q4",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói CNN dùng kết nối đầy đủ. Tức là mọi pixel nối với mọi node ở lớp sau?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Phải kết nối hết thì mạng mới 'nhìn' được toàn bộ ảnh chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử có ảnh 100x100 pixel. Lớp sau có 1 node. Cần bao nhiêu kết nối?"
+      },
+      {
+        "role": "Student",
+        "text": "100 nhân 100 là 10,000 kết nối. Con số này bình thường."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu lớp sau có 1,000 node thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì 10,000 nhân 1,000 là 10 triệu kết nối. Máy tính hiện nay xử lý được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Với ảnh màu 1024x1024, và 1000 node thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Là 1024x1024x3... nhân 1000. Con số rất lớn. Nhưng đó là cái giá phải trả để có độ chính xác cao."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy để tìm một cạnh thẳng đứng, một node có cần kết nối tới toàn bộ pixel không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Chắc là không. Chỉ cần một vùng nhỏ là đủ. À... tôi thấy vấn đề rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nếu không cần kết nối đầy đủ, thì kết nối thế nào là hiệu quả?"
+      },
+      {
+        "role": "Student",
+        "text": "Chỉ kết nối với các pixel trong một vùng lân cận thôi. Tức là kết nối cục bộ (locally connected)."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Niềm tin sai là nhầm lẫn CNN với mạng nơ-ron truyền thống. CNN dùng kết nối cục bộ để hiệu quả hơn."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q5",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "[A] Bạn nói convolution phi tuyến vì nó đi với ReLU. Vậy bản thân phép convolution thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì nó là một phần của khối đó, nên nó phải phi tuyến. Chúng luôn đi cùng nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "[B] Một phép biến đổi F được gọi là tuyến tính khi nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Khi nó thỏa mãn F(a+b) = F(a) + F(b) và F(c*a) = c*F(a)."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Tốt. Giờ xét F là phép convolution. `Conv(Ảnh A + Ảnh B)` có bằng `Conv(Ảnh A) + Conv(Ảnh B)` không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, vì sau đó còn có ReLU. Kết quả cuối cùng sẽ không bằng nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Mình chỉ hỏi về `Conv`, chưa có ReLU. Chỉ phép nhân và cộng của tích chập thôi."
+      },
+      {
+        "role": "Student",
+        "text": "Nhưng trong thực tế nó luôn đi với ReLU. Tách ra như vậy đâu có ý nghĩa?"
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Vậy nếu mình định nghĩa một layer chỉ có convolution, không gì khác. Layer đó có tuyến tính không?"
+      },
+      {
+        "role": "Student",
+        "text": "... Chắc là có. Vì bản chất nó chỉ là một loạt phép nhân và cộng."
+      },
+      {
+        "role": "Tutor",
+        "text": "[D] Vậy thành phần nào làm cho cả khối (convolution + ReLU) trở nên phi tuyến?"
+      },
+      {
+        "role": "Student",
+        "text": "Là do hàm ReLU. Phép convolution ban đầu vẫn là tuyến tính."
+      },
+      {
+        "role": "Tutor",
+        "text": "[E] Chính xác. Bạn đã nhầm lẫn tính chất của cả khối với phép convolution. Convolution là tuyến tính, ReLU mới là phi tuyến."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q6",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn chọn 'ảnh one-hot'. Bạn nghĩ nó biểu diễn điều gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó biểu diễn lớp của đối tượng. Mỗi kênh đại diện cho một lớp. Rất hợp lý mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, kỹ thuật 'one-hot' dùng để làm gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để mã hóa dữ liệu, và ảnh cũng là dữ liệu. Nên có thể mã hóa ảnh bằng one-hot."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hãy xem xét một bức ảnh màu RGB. Dữ liệu của nó là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là một ma trận 3 chiều, mỗi pixel có 3 giá trị màu Đỏ, Lục, Lam."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Vậy 'one-hot' mô tả giá trị pixel hay mô tả nhãn của ảnh?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó mô tả nhãn, nhưng ở cấp độ pixel. Ví dụ, kênh 'mèo' sẽ sáng lên ở vùng có con mèo. Đó là một loại biểu diễn ảnh."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy cái bạn mô tả là ảnh đầu vào, hay là kết quả một mô hình tạo ra?"
+      },
+      {
+        "role": "Student",
+        "text": "... Chắc là kết quả do mô hình segmentation tạo ra. Nó là một cái mask."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, 'one-hot' là kỹ thuật cho nhãn/mask, hay là một loại ảnh phổ biến?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó là kỹ thuật cho nhãn hoặc mask. Không phải loại ảnh phổ biến như ảnh xám."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Bạn đã nhầm lẫn kỹ thuật mã hóa one-hot cho nhãn với một định dạng ảnh phổ biến."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q7",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ rằng ảnh màu phải lớn hơn ảnh xám về chiều rộng hoặc cao?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Thêm thông tin màu thì ảnh phải lớn hơn chứ, không thì chứa sao được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy \"lớn hơn\" ở đây là về kích thước pixel (width, height)?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc chắn rồi. Một ảnh 100x100 pixel, muốn có màu thì phải tăng số pixel lên."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mình có một ảnh màu 100x100 pixel. Chuyển nó sang ảnh xám. Kích thước giờ là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì nó vẫn là 100x100 pixel, nhưng nó đã mất thông tin màu đi rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng, nó không thay đổi width/height. Vậy thông tin màu đã ở đâu trước khi bị mất?"
+      },
+      {
+        "role": "Student",
+        "text": "Hm... Nếu nó không ở width, không ở height... có lẽ nó được lưu trữ theo cách khác?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Cách khác đó là gì, nếu mỗi pixel vẫn ở đúng vị trí (x, y) của nó?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó... như là một lớp khác chồng lên trên? Mỗi pixel có nhiều giá trị hơn?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Vậy sự khác biệt giữa ảnh xám và ảnh màu không phải là width/height, mà là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là chiều sâu (depth), tức là số kênh màu tại mỗi pixel."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng rồi. Bạn đã nhầm lẫn việc 'thêm thông tin' với việc 'tăng kích thước không gian'."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q8",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng 'epoch' là một chiều của ảnh. Tại sao bạn lại nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì khi huấn luyện, dữ liệu ảnh thay đổi qua mỗi epoch. Nó giống như một trục thời gian của dữ liệu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, 'chiều của dữ liệu' mô tả cái gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó mô tả cấu trúc của dữ liệu. Giống như width, height, channel. Epoch cũng là một phần cấu trúc đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mình có một ảnh JPEG trên máy tính, chưa huấn luyện. Ảnh đó có chiều 'epoch' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chưa có. Nhưng nếu bạn đưa nó vào huấn luyện thì sẽ có. Nó là một chiều tiềm ẩn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy file ảnh gốc trên đĩa cứng có thay đổi sau khi huấn luyện 100 epochs không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không... file gốc vẫn vậy. Nhưng mô hình đã 'thấy' nó 100 lần."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy con số 100 đó mô tả file ảnh hay mô tả quá trình huấn luyện?"
+      },
+      {
+        "role": "Student",
+        "text": "...Nó mô tả quá trình huấn luyện. Vậy 'epoch' không phải là chiều của chính tấm ảnh."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. 'Epoch' là một tham số của quá trình huấn luyện, không phải là một thuộc tính cố hữu của dữ liệu ảnh."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q9",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng CNN là một thứ hoàn toàn khác NN. Vì sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì kiến trúc của chúng khác hẳn. CNN dùng các lớp tích chập và pooling, còn NN thì không."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, một 'Neural Network' được định nghĩa bởi điều gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó được định nghĩa bởi các lớp nơ-ron kết nối với nhau, có trọng số và học được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một đơn vị trong lớp tích chập (convolution) làm gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó dùng một bộ lọc (filter) để trượt trên ảnh và tính toán. Nó không phải là một nơ-ron."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bộ lọc đó có chứa các giá trị có thể học được (trọng số) không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có, nhưng nó là một bộ lọc, một ma trận. Nó khác một nơ-ron đơn lẻ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Kết quả sau khi nhân với bộ lọc đó có đi qua hàm kích hoạt không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Có. Nhưng cách hoạt động tổng thể vẫn khác."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nếu nó có trọng số, có hàm kích hoạt và học được, nó có phải là một dạng nơ-ron không?"
+      },
+      {
+        "role": "Student",
+        "text": "Hmm... nếu xét như vậy thì có lẽ nó là một dạng nơ-ron chuyên biệt. Vậy câu trả lời là 'Có' phải không?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Lỗi sai của bạn là nghĩ CNN và NN là hai loại riêng biệt. Thực chất, CNN là một loại kiến trúc NN, nó vẫn tuân thủ các nguyên tắc cốt lõi: các đơn vị có trọng số, hàm kích hoạt và khả năng học."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q10",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn nói CNN không dùng hàm kích hoạt. Vì sao bạn chắc chắn vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì điểm khác biệt chính là tầng convolution mà. Nếu vẫn dùng hàm kích hoạt như ANN thì đâu còn gọi là khác biệt lớn nữa."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, phép tích chập (convolution) đã thay thế vai trò của hàm kích hoạt?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Tích chập tự nó đã tìm ra đặc trưng, nó là một phép biến đổi phức tạp rồi, không cần thêm hàm kích hoạt nữa."
+      },
+      {
+        "role": "Tutor",
+        "text": "Phép tích chập về bản chất là một chuỗi phép nhân và cộng. Đây là phép toán tuyến tính hay phi tuyến?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó là các phép toán tuyến tính, nhưng cách nó trượt và áp dụng trên toàn ảnh tạo ra kết quả phi tuyến chứ?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu ta chồng 10 tầng chỉ có phép toán tuyến tính, mạng có học được các quan hệ phức tạp không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không. Một chuỗi phép toán tuyến tính gộp lại vẫn chỉ là một phép toán tuyến tính. Nhưng... tích chập phải khác chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy tại sao ANN truyền thống cần hàm kích hoạt?"
+      },
+      {
+        "role": "Student",
+        "text": "Để đưa tính phi tuyến vào, giúp mạng học được các hàm phức tạp. Khoan... vậy là tích chập vẫn là tuyến tính?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy sau khi tích chập thực hiện phép biến đổi tuyến tính, CNN cần gì để học thứ phức tạp hơn?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó... nó cần một hàm kích hoạt, như ReLU, để thêm tính phi tuyến. Giống như ANN."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Lỗi sai của bạn là cho rằng tích chập thay thế hàm kích hoạt. Thực tế, chúng hoạt động cùng nhau: tích chập (tuyến tính) để trích xuất đặc trưng, và hàm kích hoạt (phi tuyến) để mạng có thể học các mẫu phức tạp."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q11",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói tầng fully connected không phải của CNN. Vì sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì fully connected là của mạng nơ-ron thường (MLP). CNN chỉ có convolution và pooling thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một CNN cho bài toán phân loại ảnh. Output cuối cùng là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là một vector xác suất cho các lớp, ví dụ [0.1, 0.9] cho 'mèo' và 'chó'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tầng convolution cuối cùng của CNN tạo ra cái gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Một feature map, là một khối dữ liệu 3D (cao, rộng, kênh)."
+      },
+      {
+        "role": "Tutor",
+        "text": "Làm sao từ một khối 3D đó ra được một vector 1D?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là có một phép biến đổi nào đó. Nhưng FC layer chỉ nhận đầu vào là vector 1D, nên nó không hợp ở đây."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu mình \"duỗi\" (flatten) khối 3D đó thành vector 1D thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Nếu duỗi ra thì có thể đưa vào FC. Nhưng làm vậy thì nó thành mạng MLP rồi, không còn là CNN nữa. Đó là hai thứ riêng biệt."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy kiến trúc \"Conv -> Flatten -> FC\" là MLP hay CNN?"
+      },
+      {
+        "role": "Student",
+        "text": "... Nó có cả hai. Vậy là tầng FC có thể là một phần của kiến trúc CNN."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. CNN dùng tầng convolution để trích xuất đặc trưng. Sau đó thường dùng FC để phân loại dựa trên các đặc trưng đó."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q12",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng pooling là bắt buộc. Vì sao bạn chắc chắn như vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì các kiến trúc kinh điển như LeNet hay AlexNet đều dùng nó. Không có nó thì không phải là CNN chuẩn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mục đích chính của tầng pooling là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để giảm kích thước, giảm số lượng tham số, làm cho mô hình bất biến với dịch chuyển nhỏ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử một convolution có stride bằng 2. Nó có giảm kích thước không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có, nhưng đó là convolution chứ không phải pooling. Các paper gốc đều dùng pooling riêng biệt."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nếu một kiến trúc dùng stride=2 và đạt kết quả tốt, nó có phải CNN không?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó là CNN, nhưng không phải cách 'đúng'. Cách đúng là phải có tầng pooling."
+      },
+      {
+        "role": "Tutor",
+        "text": "'Đúng' ở đây là do LeNet dùng, hay do nó là cách duy nhất?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là... không phải cách duy nhất. Nhưng nó là tiêu chuẩn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, nếu có nhiều cách để đạt mục tiêu, pooling là 'bắt buộc' hay 'một lựa chọn'?"
+      },
+      {
+        "role": "Student",
+        "text": "Là một lựa chọn. Vậy câu trả lời là tùy chọn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn việc nó 'phổ biến' trong các ví dụ đầu tiên với việc nó 'bắt buộc' về mặt kỹ thuật. Pooling là một công cụ, không phải một luật lệ."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q13",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng ReLU nên theo sau flatten. Logic của bạn là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì sau khi flatten, dữ liệu đã sẵn sàng để phân loại. ReLU giúp chuẩn hóa đầu ra trước khi đưa vào softmax."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục đích của hàm ReLU là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là để thêm tính phi tuyến, bằng cách biến các giá trị âm thành 0."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mục đích của tầng convolution là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để trích xuất các đặc trưng như cạnh, góc từ ảnh. Nhưng nó chỉ là phép tính tuyến tính thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu chỉ chồng các tầng convolution, mạng có học được đặc trưng phức tạp không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có chứ, nhiều tầng thì sẽ học được nhiều thứ hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nhiều phép tính tuyến tính chồng lên nhau có tạo ra phi tuyến không?"
+      },
+      {
+        "role": "Student",
+        "text": "… không. Chúng vẫn là một phép tuyến tính tương đương. Vậy là... phải có ReLU ở giữa."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Vậy để trích xuất đặc trưng phi tuyến, ReLU nên ở đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó phải đi ngay sau mỗi tầng convolution để thêm tính phi tuyến cho đặc trưng vừa được tạo ra."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn việc thêm phi tuyến cho đặc trưng (ReLU sau Conv) với việc chuẩn hóa xác suất cuối cùng (Softmax)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q14",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng PCA là một hàm kích hoạt. Nó hoạt động trên đầu vào là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó hoạt động trên dữ liệu đầu ra của lớp trước đó, giống như các hàm kích hoạt khác."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hàm kích hoạt trong một neuron cụ thể, nó nhận đầu vào là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó nhận một giá trị số duy nhất từ neuron đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Được. Giả sử đầu ra của một neuron là số 7. PCA xử lý số 7 này thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "PCA không hoạt động trên một số. Nó cần nhiều dữ liệu để tìm các thành phần chính."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nhưng bạn vừa nói hàm kích hoạt xử lý một số duy nhất từ neuron?"
+      },
+      {
+        "role": "Student",
+        "text": "…Đúng. Nhưng PCA cũng biến đổi dữ liệu mà. Nó phải là một dạng hàm nào đó chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một cái cần cả tập dữ liệu, một cái chỉ cần một số. Chúng có giống nhau không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không. Em hiểu rồi. Phạm vi hoạt động của chúng khác nhau. Vậy PCA không phải hàm kích hoạt."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. PCA là kỹ thuật giảm chiều trên toàn bộ dữ liệu, còn hàm kích hoạt như Sigmoid hoạt động trên từng neuron riêng lẻ."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q15",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn cho rằng 'x*w' là filter. Nhưng w đã là filter rồi, tại sao ký hiệu cần có thêm 'x*'?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì 'x*w' là cách viết đầy đủ thôi. Nó nhấn mạnh là filter 'w' đang được dùng với ảnh 'x'. Về bản chất nó vẫn là filter."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, 'x*w' là một đầu vào của phép toán, đúng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Phép toán cần ảnh và filter, 'x' là ảnh, 'x*w' là cách gọi của filter."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hãy xét phép cộng: 5 + 8. Ở đây, ký hiệu '5 + 8' đại diện cho số 5, hay cho kết quả 13?"
+      },
+      {
+        "role": "Student",
+        "text": "Cái đó là toán học đơn giản, nó ra kết quả. Convolution phức tạp hơn, ký hiệu 'x*w' mô tả hành động, nên nó là filter đang hành động."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu 'x*w' mô tả một hành động, hành động đó có tạo ra sản phẩm không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có chứ, nó tạo ra... một cái output. Chờ đã. Vậy 'x*w' là cái output đó?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy trong convolution, ký hiệu cho cả phép toán nên biểu diễn cái gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó nên biểu diễn kết quả của phép toán. Tức là 'x*w' là kết quả, không phải đầu vào. Kết quả của convolution là feature map."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. 'x' và 'w' là các đầu vào. Ký hiệu 'x*w' biểu diễn toàn bộ phép toán và kết quả của nó, chính là feature map."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q16",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "[A] Bạn nói filter có depth 1. Vậy nó xử lý 3 kênh màu RGB thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì mình áp dụng filter đó 3 lần, một lần cho mỗi kênh R, G, B. Sau đó gộp kết quả lại."
+      },
+      {
+        "role": "Tutor",
+        "text": "[B] Mục đích của việc gộp kết quả sau khi áp dụng riêng lẻ là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để có một feature map cuối cùng. Mình có thể lấy trung bình hoặc cộng 3 kết quả đó lại."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Giả sử filter dùng để phát hiện 'màu tím'. Màu tím cần cả kênh Đỏ và Xanh dương."
+      },
+      {
+        "role": "Student",
+        "text": "Thì filter trên kênh Đỏ sẽ kích hoạt, filter trên kênh Xanh dương cũng sẽ kích hoạt."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Một filter chỉ nhìn kênh Đỏ, làm sao nó biết có sự hiện diện của màu Xanh dương?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó không cần biết. Chỉ cần vùng đó có giá trị Đỏ cao. Tương tự cho Xanh dương. Gộp lại là ra thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Vậy nếu một vùng có Đỏ cao, Xanh dương thấp, và vùng khác có Xanh dương cao, Đỏ thấp thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì... lúc đó việc cộng hay lấy trung bình không thể phân biệt được với màu tím thật. Hừm."
+      },
+      {
+        "role": "Tutor",
+        "text": "[D] Vậy để nhận ra sự kết hợp giữa các kênh, filter cần 'nhìn' thấy bao nhiêu kênh cùng lúc?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó phải nhìn thấy tất cả các kênh của vùng ảnh đó. Tức là depth của filter phải bằng depth của ảnh."
+      },
+      {
+        "role": "Tutor",
+        "text": "[E] Chính xác. Niềm tin sai là filter xử lý từng kênh riêng lẻ. Thực tế, nó phải bao phủ toàn bộ chiều sâu để học các pattern kết hợp giữa các kênh."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q17",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn giải thích được không, vì sao bạn tin rằng kích thước đầu ra vẫn là 28x28?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì phép tích chập chỉ là trượt một cái filter qua ảnh thôi. Nó không cắt hay thay đổi gì cả, nên kích thước phải giữ nguyên."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy vị trí đầu tiên mà tâm của filter 5x5 có thể đặt vào là ở đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Tất nhiên là ở pixel (1,1), góc trên cùng bên trái. Nhưng filter 5x5 thì nó sẽ bị tràn ra ngoài... À không, tâm nó phải đặt ở pixel (3,3) mới bao trọn được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Vậy vị trí cuối cùng mà tâm filter có thể đặt là ở đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì ở pixel (28,28) chứ đâu. Nó trượt đến hết ảnh mà. Nhưng như vậy cũng bị tràn ra ngoài... Logic này có vẻ không ổn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy vị trí xa nhất theo chiều ngang mà tâm filter có thể đến là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để filter không tràn, bên phải nó phải còn 2 pixel. Vậy tâm chỉ có thể đến pixel thứ 26. Tương tự cho chiều dọc. Vậy là từ (3,3) đến (26,26)."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy có bao nhiêu vị trí hợp lệ cho tâm của filter theo mỗi chiều?"
+      },
+      {
+        "role": "Student",
+        "text": "Từ 3 đến 26 là... 24 vị trí. À, vậy kích thước đầu ra là 24x24."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Vậy giờ hãy quay lại câu hỏi ban đầu."
+      },
+      {
+        "role": "Student",
+        "text": "Đáp án là 24x24."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bạn đã nhầm khi cho rằng filter trượt qua không làm thay đổi kích thước. Thực tế, kích thước đầu ra bằng số vị trí mà filter có thể đứng."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q18",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn viết rằng kích thước không gian (W, H) của output không đổi. Cơ sở của suy nghĩ đó là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì convolution chỉ quét qua và tính toán trên ảnh gốc. Nó không cắt xén hay thay đổi kích thước."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một filter FxF 'quét qua' một vùng FxF, nó tạo ra bao nhiêu giá trị?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó tạo ra một giá trị duy nhất, là một pixel của ảnh output."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét ảnh 5x5, filter 3x3, stride 1, không padding. Output là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Vẫn là 5x5 chứ. Nó chỉ làm mờ hay sắc nét hơn thôi, kích thước không đổi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Filter có thể trượt tối đa bao nhiêu bước sang phải từ vị trí đầu?"
+      },
+      {
+        "role": "Student",
+        "text": "Filter là 3 ô. Trượt qua ô 4, 5... chỉ trượt được 2 bước. Nhưng các pixel còn lại tính sao? Logic này không ổn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mỗi vị trí hợp lệ của filter tạo ra một pixel output. Có bao nhiêu vị trí hợp lệ?"
+      },
+      {
+        "role": "Student",
+        "text": "Theo chiều ngang có 3, chiều dọc có 3. Vậy là... 3x3. Kích thước đã thay đổi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, yếu tố nào đã làm thay đổi kích thước output từ 5x5 thành 3x3?"
+      },
+      {
+        "role": "Student",
+        "text": "Là do kích thước của filter (F). Vậy đáp án phải là W' x H' x K, vì W' và H' có thay đổi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Sai lầm là giả định W, H không đổi. Thực tế chúng phụ thuộc vào kích thước filter và stride."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q19",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng 'x' là padding. Tại sao padding lại là một biến chính?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì padding quyết định kích thước output. Nó là một phần của phép tính."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy padding và ảnh đầu vào là một, hay là hai thứ khác nhau?"
+      },
+      {
+        "role": "Student",
+        "text": "Là hai thứ khác nhau. Nhưng padding được thêm vào ảnh trước khi tính."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu mình thực hiện phép convolution mà không dùng padding thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì 'x' bằng 0. Nhưng công thức lúc nào cũng cần có 'x'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một biến luôn có mặt trong phép tính, dù có padding hay không, là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là... ảnh đầu vào. Nó luôn phải có."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy ký hiệu 'x' nên đại diện cho thành phần luôn có mặt đó chứ?"
+      },
+      {
+        "role": "Student",
+        "text": "À, có lý. Vậy 'x' phải là ảnh. Em đã sai khi nghĩ nó là padding."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng rồi. Bạn đã nhầm 'x' là padding. Thực ra 'x' là input (ảnh), còn padding là một siêu tham số riêng."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q20",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn nói kết quả là vector 1D vì có bước flatten. Bước flatten nằm ở đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó nằm sau các tầng convolution. Vì thế output cuối của convolution phải là vector để chuẩn bị."
+      },
+      {
+        "role": "Tutor",
+        "text": "Câu hỏi chỉ hỏi output của tầng convolution. Một filter tạo ra gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Một filter tạo ra một feature map 2D."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nếu dùng 64 filter, ta có 64 feature map. Chúng kết hợp thành vector 1D thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì cứ duỗi thẳng 64 ma trận đó rồi nối đuôi nhau. Vẫn ra vector 1D được mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu làm vậy, thông tin về vị trí (chiều cao, rộng) còn lại không?"
+      },
+      {
+        "role": "Student",
+        "text": "Thông tin đó không quan trọng nữa, vì đã trích xuất đặc trưng rồi. Miễn là có đặc trưng là được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy làm sao tầng pooling tiếp theo biết pixel nào gần pixel nào?"
+      },
+      {
+        "role": "Student",
+        "text": "À... nếu nối đuôi nhau thì pooling sẽ không hoạt động đúng trên không gian được. Đúng là mất thông tin."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy để pooling hoạt động, 64 map này phải được sắp xếp thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải giữ nguyên dạng 2D và xếp chồng lên nhau. Nó sẽ tạo ra một khối 3D."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Lỗi của bạn là nhầm lẫn output của tầng convolution với bước flatten ở cuối kiến trúc."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q21",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn có vẻ đã tính sai. Bạn có thể giải thích cách bạn tính ra 5 không?"
+      },
+      {
+        "role": "Student",
+        "text": "Em lấy từng số trong filter nhân với vùng ảnh tương ứng rồi cộng lại. Em chắc chắn kết quả phải là 5."
+      },
+      {
+        "role": "Tutor",
+        "text": "Được. Ta thử tính lại từng bước nhé. Phép nhân đầu tiên là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là giá trị đầu của filter nhân với giá trị đầu của ảnh. Em không nhớ chính xác số, nhưng kết quả cuối là 5."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử ô đầu của ảnh là 1, ô đầu của filter là 1. Tích là 1. Tám phép nhân còn lại thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Em nhẩm được mà, không cần tính chi tiết. Chắc chắn có những số khác cộng vào để ra 5. Có thể em nhìn nhầm số nào đó thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử filter chỉ có một số 1 ở góc, còn lại là 0 thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Nếu vậy thì... (1x1) rồi cộng với một loạt (số-khác x 0). Mọi thứ khác đều bằng 0. Khoan... vậy kết quả là 1."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy quy trình tính toán đúng nên như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải nhân chính xác từng cặp phần tử tương ứng rồi cộng tất cả các kết quả đó lại. Không được tính nhẩm hay giả định."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Lỗi của bạn là đã quá tự tin vào việc tính nhẩm và giả định sai về giá trị các phần tử, dẫn đến tổng cuối không chính xác."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q22",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn tính ra kết quả là 8. Bạn có thể giải thích cách bạn tính không?"
+      },
+      {
+        "role": "Student",
+        "text": "Em chỉ cộng các số trong vùng 3x3 ở giữa của ảnh gốc. Nó có vài số 1 và 0 nên em cộng lại."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy bạn đang cho rằng filter không tham gia vào việc tính toán?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Filter chỉ là cái để xác định vùng mình đang xem thôi. Giá trị phải lấy từ ảnh gốc chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử vùng ảnh 3x3 đó toàn là số 1, còn filter 3x3 toàn là số 0. Kết quả sẽ là mấy?"
+      },
+      {
+        "role": "Student",
+        "text": "Kết quả phải là 1. Vì giá trị của ảnh là 1. Filter toàn 0 thì không ảnh hưởng gì."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy vai trò của phép nhân trong 'tích chập' là gì, nếu filter không ảnh hưởng?"
+      },
+      {
+        "role": "Student",
+        "text": "…Chắc là để nhấn mạnh một số đặc điểm. Nhưng em vẫn thấy vô lý nếu filter làm kết quả từ 1 thành 0."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu quy tắc là nhân từng phần tử tương ứng rồi cộng lại. Kết quả ví dụ trên là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Nếu nhân từng phần tử... thì (1*0) + (1*0) + ... tất cả đều bằng 0. Tổng là 0. Hóa ra là filter có ảnh hưởng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy giờ hãy áp dụng quy tắc đó cho câu hỏi ban đầu. Kết quả là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Để em tính lại... Nếu nhân từng phần tử của filter với vùng ảnh tương ứng rồi cộng lại, kết quả là 9."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Lỗi sai của bạn là bỏ qua vai trò của filter, chỉ cộng giá trị trên ảnh. Phép tích chập yêu cầu nhân filter với vùng ảnh rồi mới cộng."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q23",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng kích thước không đổi. Tại sao filter lại không ảnh hưởng đến kích thước?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì filter chỉ trượt trên ảnh thôi. Nó không cắt hay xóa pixel nào của ảnh gốc cả. Nên kích thước phải giữ nguyên là 5x5."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mỗi lần filter trượt, nó tạo ra một giá trị duy nhất, đúng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng, nó tính tích chập và cho ra một số cho feature map."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hãy tưởng tượng tâm của filter 3x3. Nó có thể nằm ở mọi ô trong lưới 5x5 không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là có chứ? Nó trượt khắp nơi mà. Sao lại không được?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Thử đặt tâm filter ở ô (1,1) ngoài cùng xem. Điều gì xảy ra?"
+      },
+      {
+        "role": "Student",
+        "text": "Nếu tâm ở đó thì... ồ, phần lớn filter sẽ nằm ngoài ảnh. Không được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy phạm vi di chuyển của tâm filter quyết định điều gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó quyết định kích thước của feature map. Nó không đi hết 5x5 được, chỉ đi được trong một vùng 3x3 ở giữa. Vậy đáp án là 3x3."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Lỗi sai của bạn là cho rằng filter không ảnh hưởng. Thực ra, chính phạm vi di chuyển của filter đã xác định kích thước đầu ra."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q24",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng stride là số lượng filter. Vì sao hai khái niệm này lại là một?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì cả hai đều là siêu tham số dạng số nguyên của lớp convolution. Mình phải chọn cả hai khi thiết kế mạng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đồng ý. Vậy một filter trong lớp conv có nhiệm vụ gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó dùng để phát hiện một đặc trưng nhất định, ví dụ như cạnh, góc, màu sắc..."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu mình dùng 64 filter, feature map đầu ra có bao nhiêu kênh (channels)?"
+      },
+      {
+        "role": "Student",
+        "text": "Tất nhiên là 64 kênh. Mỗi filter tạo ra một kênh."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tốt. Giờ giữ nguyên 64 filter đó. Mình đổi stride từ 1 sang 2. Số kênh đầu ra giờ là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Vẫn là 64 thôi. Việc thay đổi stride không thể làm thay đổi số filter được. Hai cái đó độc lập."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bạn vừa nói chúng độc lập. Vậy stride đã thay đổi điều gì trong feature map?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó... nó làm thay đổi kích thước chiều dài và chiều rộng của feature map. Nó làm giảm kích thước đi. Nhưng chúng vẫn là các con số mình đặt mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy số filter quyết định 'độ sâu', stride quyết định 'kích thước'. Chúng có phải là một không?"
+      },
+      {
+        "role": "Student",
+        "text": "…Không. Chúng kiểm soát hai khía cạnh khác nhau của đầu ra. Vậy stride là cái làm thay đổi kích thước."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Ban đầu bạn nhầm vì chúng đều là siêu tham số. Nhưng stride là bước trượt của filter, ảnh hưởng kích thước không gian, còn số filter quyết định độ sâu của feature map."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q25",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng kết quả là 1x1. Vậy filter 3x3 chỉ đặt được một lần trên ảnh 5x5 à?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Vì stride tăng lên 2, bước nhảy lớn nên nó chỉ đặt được ở trung tâm thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Stride bằng 2 có nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là mỗi lần dịch chuyển, filter sẽ nhảy 2 pixel."
+      },
+      {
+        "role": "Tutor",
+        "text": "Filter 3x3 đặt ở góc trái trên cùng. Nó chiếm các cột 1, 2, 3. Đúng chứ?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nhảy 2 pixel sang phải. Filter giờ chiếm các cột nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ bắt đầu từ cột 3, vậy là chiếm cột 3, 4, 5. Vừa khít."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo chiều ngang, ta vừa đếm được mấy vị trí đặt filter?"
+      },
+      {
+        "role": "Student",
+        "text": "Là 2 vị trí. Nhưng... em vẫn nghĩ stride 2 phải làm nó nhỏ hơn. Logic của em là (5-3)/2 = 1, nên ra 1x1."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tại sao lại có phép cộng 1 trong công thức chuẩn nhỉ?"
+      },
+      {
+        "role": "Student",
+        "text": "Cộng 1... à, là để đếm cả vị trí ban đầu. Nếu có 1 lần nhảy thì sẽ có 2 vị trí. Em hiểu rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy giờ bạn hãy áp dụng lại quy tắc này cho câu hỏi."
+      },
+      {
+        "role": "Student",
+        "text": "Với stride 1, (5-3)/1 + 1 = 3. Với stride 2, (5-3)/2 + 1 = 2. Kích thước đổi từ 3x3 thành 2x2."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Ban đầu bạn đánh giá quá cao tác động của stride. Thực tế, kích thước output là số lần có thể đặt filter, bao gồm cả vị trí đầu tiên."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q26",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ rằng kết quả có thể là 7. Filter lúc đó được đặt ở đâu trên ảnh gốc?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì ở góc dưới bên phải của ảnh. Vì câu hỏi yêu cầu tính phần tử góc dưới phải của feature map mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Stride S=2 có ý nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nghĩa là bộ lọc di chuyển 2 bước. Nhưng nó phải quét hết các vùng để không bỏ sót thông tin chứ?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vị trí đầu tiên của filter là ở góc trên trái. Vị trí ngang tiếp theo ở đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là dịch qua 1 ô thôi. Nếu nhảy 2 ô thì sẽ bỏ lỡ mất một cột pixel, như vậy là sai."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu chỉ dịch 1 ô, vậy con số '2' trong 'stride=2' có tác dụng gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Em nghĩ đó là bước nhảy tối đa, nhưng mình vẫn phải quét hết. Không thể nào lại bỏ qua dữ liệu được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo định nghĩa, từ cột 0, với S=2, filter nhảy tới cột mấy?"
+      },
+      {
+        "role": "Student",
+        "text": "Là cột 2. À... vậy là nó thực sự bỏ qua cột 1. Vị trí ngang thứ hai là ở cột 2."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Bây giờ, áp dụng quy tắc đó cho cả chiều dọc và ngang, vị trí cuối cùng là ở đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Vậy nó là (0,0) -> (0,2) -> (2,0) -> (2,2). Tính ra giá trị ở vùng đó là 5. Em đã sai."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bạn đã cho rằng stride là bước nhảy linh hoạt để quét hết ảnh. Thực tế, nó là một bước nhảy cố định, quyết định vị trí các lần tính."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q27",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ vì sao không padding lại làm tăng số chiều của dữ liệu?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì khi không thêm viền, hệ thống phải xử lý dữ liệu thô, nên nó phức tạp hơn, số chiều tăng lên để chứa thêm thông tin."
+      },
+      {
+        "role": "Tutor",
+        "text": "Số chiều không gian của ảnh được tính bằng gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Bằng chiều rộng nhân với chiều cao."
+      },
+      {
+        "role": "Tutor",
+        "text": "Ảnh 5x5, filter 3x3, không padding. Output sẽ có kích thước bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc vẫn 5x5 chứ. Không padding thì nó phải bù lại bằng cách khác, nếu không sẽ mất thông tin. Sao lại giảm kích thước được?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy filter 3x3 có thể dịch chuyển bao nhiêu vị trí theo chiều ngang trên ảnh 5x5?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó có thể bắt đầu ở cột 1, cột 2, và cột 3. À... nó chỉ dịch được 3 lần. Vậy output chỉ rộng 3 pixel thôi sao?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy khi không padding, kích thước output đã thay đổi thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó bị giảm đi. Vậy có nghĩa là các pixel ở rìa ngoài đã không được tính. Thông tin ở biên bị mất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Ban đầu bạn giả định không padding phải bù đắp bằng cách nào đó. Thực tế, nó làm giảm kích thước, gây mất thông tin ở biên."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q28",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng thêm số 0 sẽ làm mất thông tin. Ý bạn là sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Số 0 là không có gì. Thêm nó vào sẽ làm giảm giá trị của các pixel gốc khi tính toán."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục đích chính của padding trong CNN là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để giữ kích thước của ảnh sau khi tích chập, và để xử lý các pixel ở biên."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét ma trận 1x1 là [5]. Padding 1 lớp bằng số 1, ta được ma trận nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Một ma trận 3x3 toàn số 1, với số 5 ở giữa. Thêm số 1 rõ ràng là thêm thông tin, không phải số 0."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu một kernel 3x3 với toàn giá trị 1 trượt qua ma trận mới đó thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Kết quả sẽ là 5 + 8*1 = 13. Nó đã thay đổi, nhưng đó là mục đích để xử lý biên."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy còn padding bằng 0? Kết quả kernel là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Là 5 + 8*0 = 5... À. Kết quả không thay đổi so với giá trị gốc."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy cách nào đang 'làm mất thông tin' gốc của pixel [5]?"
+      },
+      {
+        "role": "Student",
+        "text": "Là cách thêm số 1... vì nó tạo ra giá trị mới. Còn thêm số 0 thì không. Em hiểu rồi. Vậy zero padding là thêm các số 0 vào biên."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Lỗi sai của bạn là nghĩ số 0 'xóa' thông tin, trong khi thực tế số 1 lại 'thêm' thông tin sai lệch vào phép tính."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q29",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói kết quả là 3x3. Tại sao bộ lọc không làm thay đổi kích thước ảnh?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì filter cũng là 3x3. Nó trượt trên toàn bộ ảnh 3x3 thì kết quả phải giữ nguyên kích thước chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một phép tích chập tạo ra một pixel đầu ra như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó đặt bộ lọc lên một vùng ảnh, nhân các phần tử tương ứng rồi cộng lại."
+      },
+      {
+        "role": "Tutor",
+        "text": "Với ảnh 3x3 và filter 3x3, bộ lọc có thể đặt ở đâu đầu tiên?"
+      },
+      {
+        "role": "Student",
+        "text": "Ở góc trên bên trái, nó sẽ trùm lên toàn bộ ảnh."
+      },
+      {
+        "role": "Tutor",
+        "text": "Sau vị trí đó, bộ lọc có thể trượt sang phải được không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không được. Làm sao trượt được nữa khi nó đã chiếm hết ảnh rồi?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy có tổng cộng bao nhiêu vị trí hợp lệ để đặt bộ lọc?"
+      },
+      {
+        "role": "Student",
+        "text": "...Chắc là chỉ có một vị trí duy nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu mỗi vị trí tạo ra một pixel, vậy kích thước feature map là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Vậy thì nó chỉ là 1x1. Hóa ra không phải lúc nào kích thước cũng giữ nguyên."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nghĩ kích thước không đổi, nhưng thực tế nó phụ thuộc vào số lần bộ lọc có thể trượt."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q30",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "[A] Bạn nghĩ rằng kết quả vẫn là 1x1. Vậy việc thêm padding có ý nghĩa gì không?"
+      },
+      {
+        "role": "Student",
+        "text": "Em nghĩ padding chỉ là bước chuẩn bị, không ảnh hưởng đến kích thước kết quả cuối cùng. Filter vẫn sẽ quét toàn bộ và cho ra một giá trị duy nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "[B] 'Cho ra một giá trị duy nhất'. Đây có phải là một quy tắc luôn đúng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Với một filter thì phải là vậy chứ ạ? Nó tổng hợp thông tin của một vùng thành một điểm đặc trưng mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Hãy thử với một ví dụ khác. Ảnh 10x10, filter 3x3, không padding. Kết quả là 1x1 à?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, trường hợp đó thì không. Nó sẽ là 8x8. Nhưng câu hỏi này là ảnh 3x3, nó đặc biệt hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Vì sao trường hợp ảnh 3x3 lại đặc biệt? Padding (1,1) làm ảnh 3x3 thành kích thước nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Thành 5x5. Nhưng đó chỉ là ảnh đệm. Cái filter quét qua vẫn phải cho ra 1x1 vì thông tin gốc chỉ là 3x3."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Filter trượt trên ảnh đệm 5x5 hay ảnh gốc 3x3?"
+      },
+      {
+        "role": "Student",
+        "text": "...trên ảnh đệm 5x5. Nhưng logic của em là nó phải co lại."
+      },
+      {
+        "role": "Tutor",
+        "text": "[D] Nếu filter 3x3 trượt trên ảnh 5x5 với stride=1, nó có thể đứng ở bao nhiêu vị trí?"
+      },
+      {
+        "role": "Student",
+        "text": "Để em tính... 3 vị trí theo chiều ngang, 3 vị trí theo chiều dọc. Vậy là 9 vị trí, tức là 3x3."
+      },
+      {
+        "role": "Tutor",
+        "text": "[E] Chính xác. Bạn đã thấy lý do logic cũ của mình không áp dụng được chưa? Kích thước đầu ra là số vị trí filter có thể đứng, và padding được thêm vào để giữ nguyên kích thước, không phải để bị bỏ qua."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q31",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng thêm số 0 sẽ giảm độ phức tạp tính toán. Tại sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nhân với 0 là phép tính đơn giản nhất, máy tính có thể bỏ qua, nên tổng thể sẽ nhanh hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Phép tích chập gồm những bước cơ bản nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó trượt một bộ lọc (kernel) qua ảnh, thực hiện phép nhân và cộng tại mỗi vị trí."
+      },
+      {
+        "role": "Tutor",
+        "text": "Sau khi thêm padding, kích thước ảnh đầu vào có thay đổi không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có, ảnh sẽ lớn hơn vì có thêm viền 0 xung quanh."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy kernel phải trượt trên nhiều vị trí hơn hay ít hơn?"
+      },
+      {
+        "role": "Student",
+        "text": "Nhiều hơn. Nhưng nhiều vị trí trong số đó là tính toán với số 0 nên không tốn thời gian."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tổng số phép nhân phải thực hiện là tăng lên hay giảm đi?"
+      },
+      {
+        "role": "Student",
+        "text": "Số phép nhân tổng thể tăng lên vì ảnh lớn hơn. Nhưng không phải vì thế mà nó phức tạp hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'độ phức tạp' là tổng số phép tính hay là độ khó của chúng?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là... tổng số phép tính. Nếu vậy thì padding làm tăng độ phức tạp à? Vô lý."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu nó làm tăng tính toán, vậy mục đích chính của nó là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Có lẽ không phải để giảm tính toán. Vậy có thể là để giữ kích thước đầu ra không đổi?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm padding làm tăng số phép tính với việc giảm chúng. Mục đích chính là duy trì kích thước."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q32",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn viết R(z) = z^2 vì nó là hàm phi tuyến đơn giản. Tại sao sự đơn giản và phi tuyến lại dẫn đến z^2?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì hàm kích hoạt cần phải phi tuyến để mạng học được các đặc trưng phức tạp. Và z^2 là hàm phi tuyến đơn giản nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Được. Vậy mục đích của phi tuyến là để học. Giờ thử với một giá trị đầu vào âm, ví dụ z = -2. R(z) sẽ là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Nếu R(z) = z^2 thì R(-2) = (-2)^2 = 4. Kết quả là số dương, hợp lý mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bây giờ, hãy tính đạo hàm của z^2 tại điểm z = -2. Kết quả là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Đạo hàm của z^2 là 2z. Tại z = -2, đạo hàm là -4. Thì sao ạ? Nó vẫn có đạo hàm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tên của hàm là 'Rectified Linear Unit'. 'Rectified' nghĩa là 'chỉnh lưu'. Chỉnh lưu có nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Em không chắc, nhưng nó không quan trọng bằng việc nó là hàm phi tuyến. z^2 vẫn là ứng viên tốt nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chỉnh lưu dòng điện nghĩa là loại bỏ phần âm. Nếu áp dụng logic đó, R(-2) nên bằng bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Nếu là loại bỏ phần âm... thì nó phải bằng 0. Nhưng z^2 = 4. Vậy logic của em không khớp với tên gọi..."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, hàm nào sẽ cho kết quả bằng 0 với z<0 và giữ nguyên z với z>0?"
+      },
+      {
+        "role": "Student",
+        "text": "Một hàm trả về 0 nếu z âm và z nếu z dương... Đó là max(0, z)."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bạn đã bắt đầu với giả định R(z) = z^2 vì nó phi tuyến đơn giản. Nhưng ta thấy rằng nó không thực hiện chức năng 'chỉnh lưu' (loại bỏ giá trị âm) mà tên gọi ReLU đã gợi ý. Hàm đúng là max(0, z)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q33",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng giá trị âm qua ReLU sẽ thành -1. Vì sao lại là -1?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì đó là cách để biểu thị một giá trị âm. Giống như hàm sign, âm là -1, dương là 1."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy bạn đang cho rằng ReLU và hàm sign là một?"
+      },
+      {
+        "role": "Student",
+        "text": "Không hẳn là một, nhưng chúng hoạt động tương tự cho các giá trị âm. Mục đích là để chuẩn hóa nó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Thử với hai giá trị: -2 và -10. Theo logic của bạn, kết quả là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Cả hai đều là -1. Vì chúng đều là số âm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mạng nơ-ron không phân biệt được -2 và -10 sau khi qua ReLU?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Mạng chỉ cần biết đó là kích hoạt âm thôi. Mất thông tin một chút cũng không sao."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tên của nó là 'Rectified Linear Unit'. Phần 'linear' (tuyến tính) ở đâu nếu nó gộp mọi số âm về -1?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là ở phần dương... Vậy phần âm không phải là -1 à? Thế nó triệt tiêu thông tin âm như thế nào?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Nó triệt tiêu chúng. Cách triệt tiêu đơn giản nhất là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là cho nó bằng 0. À...vậy với giá trị âm, nó sẽ về 0. Với giá trị dương thì giữ nguyên. Đúng không?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm ReLU với hàm sign. ReLU loại bỏ kích hoạt âm bằng cách đưa chúng về 0, không phải -1."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q34",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói kết quả có thể là 3. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì em đếm số lượng giá trị dương trong ma trận đầu vào. Em chắc chắn có 3 số."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hàm ReLU làm gì với một số âm?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó biến số âm thành 0."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một phần tử ở output khác 0 khi nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Khi phần tử tương ứng ở input là số dương. Và em chắc chắn đếm được 3 số dương trong ma trận đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bạn có thể đọc các giá trị trong 'ma trận đầu tiên' đó không?"
+      },
+      {
+        "role": "Student",
+        "text": "Em không có slide ở đây. Nhưng em nhớ rõ ràng nó có 3 giá trị dương, nên đáp án phải là 3 chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử ma trận là [[-5, 8], [-1, -3]]. Output có bao nhiêu phần tử khác 0?"
+      },
+      {
+        "role": "Student",
+        "text": "Áp dụng ReLU sẽ được [[0, 8], [0, 0]]. Vậy là có 1 phần tử khác 0. ... Chắc là em đã nhớ nhầm ma trận rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy số phần tử khác 0 ở output được xác định như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó bằng đúng số phần tử dương trong ma trận gốc. Để em xem lại ma trận trong slide... À, nó chỉ có một số dương thôi. Vậy đáp án là 1."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Lỗi sai đến từ việc nhớ nhầm ma trận đầu vào, không phải do cách hiểu hàm ReLU. Số phần tử khác 0 sau ReLU chính là số phần tử dương của input."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q35",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn giải thích được không, vì sao bạn nghĩ kết quả là 2?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì em nhìn vào ma trận, thấy có 2 giá trị dương. ReLU giữ lại số dương, nên output phải có 2 số khác 0."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hàm ReLU được định nghĩa chính xác là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là `f(x) = max(0, x)`. Nó biến số âm thành 0 và giữ nguyên số dương. Cách của em vẫn đúng mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét ma trận `A = [[-3, 5], [0, -1]]`. Áp dụng cách của bạn xem."
+      },
+      {
+        "role": "Student",
+        "text": "Dễ thôi. Có một số dương là 5, vậy kết quả là 1 phần tử khác 0. Cách của em nhanh hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bây giờ, hãy áp dụng định nghĩa `max(0, x)` cho từng phần tử của A."
+      },
+      {
+        "role": "Student",
+        "text": "max(0, -3)=0, max(0, 5)=5, max(0, 0)=0, max(0, -1)=0. Kết quả là `[[0, 5], [0, 0]]`... Vẫn là 1. Giống nhau cả."
+      },
+      {
+        "role": "Tutor",
+        "text": "Câu hỏi gốc đề cập đến 'ma trận thứ hai'. Có phải bạn đang nhìn đúng ma trận không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chờ đã... có hai ma trận. Em đang nhìn ma trận đầu vào. Để em xem lại ma trận thứ hai... À, nó chỉ có một số dương."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, quy trình đúng để giải bài này nên là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải xác định đúng ma trận được hỏi. Sau đó áp dụng hàm `max(0, x)` cho từng phần tử của ma trận đó, rồi mới đếm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Lỗi của bạn là giả định sai ma trận và dùng quy tắc tắt thay vì định nghĩa hàm."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q36",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn viết rằng mục đích của pooling là tăng độ chính xác. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì trong một mạng neuron, mỗi lớp thêm vào đều phải có mục đích làm mô hình tốt hơn, tức là chính xác hơn chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một lớp 'tốt hơn' có nghĩa là nó phải trực tiếp tăng độ chính xác?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Nếu không thì thêm vào làm gì? Chỉ làm mô hình chậm đi thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Phép max-pooling giữ lại giá trị lớn nhất và bỏ đi các giá trị khác. Đúng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng, nó chắt lọc thông tin quan trọng nhất, nên phải làm mô hình chính xác hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Việc 'bỏ đi thông tin' có luôn đồng nghĩa với tăng độ chính xác không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không phải bỏ đi. Là lọc bỏ nhiễu. Giữ lại cái tinh túy thì kết quả phải tốt hơn chứ. Đó là logic mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu trong vùng 2x2, giá trị lớn nhất lại chính là nhiễu thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "...Đó là trường hợp hiếm. Nhưng mục đích chung vẫn là giúp các tầng sau học tốt hơn, từ đó tăng độ chính xác."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nó giúp các tầng sau bằng cách nào, khi nó vừa làm mất thông tin?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó làm cho đầu vào của tầng sau... nhỏ hơn. À... vậy là nó giảm kích thước."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy giờ hãy thử trả lời lại. Mục đích chính của pooling là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là để giảm kích thước không gian của đặc trưng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Mục đích chính của nó là giảm kích thước. Việc tăng độ chính xác là lợi ích gián tiếp, không phải mục đích trực tiếp của phép toán này."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q37",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Mình thấy kết quả của bạn có số 1 ở ô đầu tiên. Trong vùng [[0, 1], [1, 2]], sao bạn lại chọn số 1?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó là giá trị trung bình, 1 là giá trị đại diện hợp lý cho vùng đó. (0+1+1+2)/4 = 1."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đề bài yêu cầu 'max pooling'. Từ 'max' ở đây có ý nghĩa gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Max pooling là một kỹ thuật pooling thôi. Miễn là mình lấy một giá trị đại diện để giảm kích thước là được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nếu vùng đó là [[100, 1], [2, 3]], bạn sẽ chọn giá trị đại diện nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Tính trung bình thì sẽ là (100+1+2+3)/4 = 26.5. Chắc là 27. Vẫn hợp lý mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu dùng 'average pooling', kết quả là 26.5. Nếu dùng 'max pooling', kết quả là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Nếu là 'max' thì... là 100. Khác biệt quá. Nhưng em nghĩ tùy trường hợp, chọn trung bình sẽ tốt hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bài toán này yêu cầu phương pháp nào một cách cụ thể?"
+      },
+      {
+        "role": "Student",
+        "text": "Yêu cầu 'max pooling'. Vậy là phải lấy giá trị lớn nhất, chứ không phải trung bình. Em hiểu rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy hãy áp dụng lại quy tắc 'lấy giá trị lớn nhất' cho ảnh 4x4 ban đầu."
+      },
+      {
+        "role": "Student",
+        "text": "Vùng đầu tiên max là 2. Vùng hai max là 4. Vùng ba max là 3. Vùng bốn max là 5. Kết quả là [[2, 4], [3, 5]]."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Lỗi sai của bạn là đã áp dụng average pooling thay vì max pooling như đề bài yêu cầu."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q38",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn giải thích cách bạn có được số 2 trong kết quả [[2, 4], [3, 5]] được không?"
+      },
+      {
+        "role": "Student",
+        "text": "Trong vùng 2x2 đầu tiên, 2 là số lớn nhất. Pooling là để lấy giá trị đại diện mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đề bài yêu cầu 'average pooling'. 'Average' có nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là lấy giá trị quan trọng nhất. Ở đây số lớn nhất là quan trọng nhất, nổi bật nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét một vùng khác: [[10, 0], [0, 0]]. Theo cách của bạn, kết quả pooling là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là 10, vì nó lớn nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giá trị trung bình (average) của 10, 0, 0, 0 là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Là (10+0+0+0)/4 = 2.5. Nhưng pooling là để giảm chiều dữ liệu, chọn cái nổi bật nhất chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nếu đề bài là 'max pooling', bạn sẽ làm gì khác biệt không?"
+      },
+      {
+        "role": "Student",
+        "text": "Mình... cũng sẽ lấy số lớn nhất. Hmm... vậy là chúng khác nhau à?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'average pooling' và 'max pooling' khác nhau ở phép toán nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là 'average' phải tính trung bình, còn 'max' mới lấy số lớn nhất. Để mình tính lại."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Bạn đã dùng phương pháp của Max Pooling (lấy giá trị lớn nhất) cho bài toán yêu cầu Average Pooling (tính giá trị trung bình)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q39",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng stride thường bằng 1. Vì sao bạn lại so sánh nó với convolution?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì trong convolution, stride=1 giúp giữ lại nhiều thông tin không gian nhất. Pooling cũng nên làm vậy chứ?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mục đích chính của pooling và convolution có giống nhau không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không hoàn toàn. Pooling là để giảm kích thước và lấy đặc trưng quan trọng nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tốt. Giờ thử nhé. Input 4x4, filter 2x2, stride 1. Output là mấy x mấy?"
+      },
+      {
+        "role": "Student",
+        "text": "Để mình tính... Sẽ là (4-2)/1 + 1 = 3. Output là 3x3. Vẫn giảm được kích thước mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Từ 4x4 xuống 3x3. Vậy nếu input là 10x10, stride 1, output là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Sẽ là 9x9. Nó vẫn hoạt động."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục đích là 'giảm kích thước'. 10x10 xuống 9x9 có hiệu quả không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Chắc là không hiệu quả lắm. Vậy nếu stride bằng filter size thì sao?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Bạn thử tính lại với input 4x4, filter 2x2 và stride bằng 2 xem."
+      },
+      {
+        "role": "Student",
+        "text": "Output sẽ là (4-2)/2 + 1 = 2. Là 2x2. Giảm một nửa. À..."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy là bạn đã thấy. Sai lầm của bạn là áp dụng logic 'bảo toàn' của convolution vào pooling, vốn có mục đích 'giảm chiều'. Để giảm chiều hiệu quả, stride thường bằng filter size."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q40",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng pooling hoạt động phụ thuộc chéo giữa các kênh depth, giống convolution. Tại sao bạn so sánh chúng?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì filter phải xử lý toàn bộ thông tin. Nó phải nhìn qua tất cả các kênh để tổng hợp đặc trưng mạnh nhất chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục đích chính của tầng pooling là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để giảm kích thước không gian và giảm tính toán."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử input có 2 kênh. Kênh 1 có max là 9, kênh 2 có max là 5. Theo logic của bạn, output là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là 9. Lấy giá trị lớn nhất trên tất cả các kênh hiện có."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy output của bạn sau pooling sẽ còn mấy kênh?"
+      },
+      {
+        "role": "Student",
+        "text": "Chỉ còn một kênh thôi. Vì nó đã tổng hợp thông tin từ hai kênh kia rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu pooling luôn tạo ra output một kênh, tầng convolution sau nó sẽ học được gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ học trên kênh tổng hợp đó... Nhưng đúng là các tầng sau cần nhiều kênh để học đặc trưng phức tạp."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy làm thế nào để vừa giảm kích thước, vừa giữ lại thông tin đa kênh cho các tầng sau?"
+      },
+      {
+        "role": "Student",
+        "text": "Có lẽ... pooling không gộp các kênh lại. Có thể nó xử lý trên từng kênh riêng lẻ?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Ban đầu bạn nhầm lẫn vai trò. Convolution kết hợp các kênh, còn pooling giảm kích thước không gian trên mỗi kênh một cách độc lập."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q41",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng flattening là biến 1D thành 3D. Tại sao lại là quá trình 'dựng khối' thay vì 'làm phẳng'?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì trong deep learning, mình thường bắt đầu với dữ liệu thô (1D) rồi xây dựng các cấu trúc phức tạp hơn (3D) để phân tích."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đầu vào của một lớp Fully Connected (FC) thường có dạng gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó phải là một vector 1D. Cái đó thì chắc chắn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Ok. Còn đầu ra của một lớp Convolution (Conv) thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Là một khối 3D, ví dụ 7x7x64. Nhưng nó không liên quan. Flattening là một thao tác riêng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy làm cách nào để kết nối khối 3D từ lớp Conv vào vector 1D của lớp FC?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải có một bước trung gian khác. Flattening là thao tác ngược lại, như em đã nói, từ 1D lên 3D."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy bước trung gian biến 3D thành 1D đó tên là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "…Chắc là một loại reshape nào đó. Em không rõ tên."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy trong một mạng CNN, quá trình duỗi khối 3D thành một vector 1D để đưa vào lớp FC được gọi là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "…À, có lẽ đó chính là flattening. Vậy là nó làm phẳng khối 3D."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Bạn đã nhầm lẫn flattening (3D->1D) với một thao tác reshape (1D->3D). Flattening là bước chuẩn bị đầu vào cho lớp FC."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q42",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói độ dài là 6. Vì sao bạn lại cộng các chiều 2+2+2?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì 'flatten' là làm phẳng. Em có một khối 3 chiều, em trải nó ra thì các cạnh cộng lại thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Theo bạn, 'làm phẳng' có làm mất phần tử nào không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không mất, chỉ là sắp xếp lại thôi. Nhưng em nghĩ cộng lại vẫn đúng logic mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một khối rubik 2x2x2 có tổng cộng bao nhiêu ô vuông nhỏ?"
+      },
+      {
+        "role": "Student",
+        "text": "Có 8 ô. Nhưng đó là rubik, có thể khác với tensor chứ?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu bạn tháo rời 8 ô đó và xếp thành một hàng. Hàng đó dài bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Dài 8. À... vậy thì số phần tử không đổi. Nó phải là tích."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy quy tắc để tính độ dài sau khi flatten là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là lấy tích của các chiều. Với tensor 2x2x2, kết quả phải là 2*2*2 = 8."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Flatten là sắp xếp lại tất cả phần tử thành một chiều. Độ dài chính là tổng số phần tử, tức tích các chiều."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q43",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng Softmax đứng trước Flatten. Tại sao thứ tự đó lại hợp lý?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì mình cần biến giá trị của feature map thành xác suất trước khi kết hợp chúng lại. Flatten sau sẽ tổng hợp các xác suất đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Softmax cần đầu vào dạng gì để hoạt động?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó có thể hoạt động trên một ma trận chứ. Nó sẽ tính xác suất cho từng phần tử trong ma trận đặc trưng đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử feature map là 7x7x256. Softmax lên đó sẽ cho ra cái gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Một ma trận 7x7x256 chứa các xác suất. Mỗi xác suất cho thấy tầm quan trọng của một đặc trưng tại một vị trí."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nhưng bài toán cần 10 xác suất cho 10 lớp, đúng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng, nhưng sau khi có ma trận xác suất, lớp Flatten sẽ duỗi nó ra, rồi một lớp khác sẽ tổng hợp lại thành 10 giá trị."
+      },
+      {
+        "role": "Tutor",
+        "text": "Duỗi một ma trận xác suất có giúp tạo ra 10 xác suất của 10 lớp không?"
+      },
+      {
+        "role": "Student",
+        "text": "Hmm... Chắc là không trực tiếp. Có lẽ logic của mình có vấn đề ở đoạn kết hợp lại."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy để có 10 xác suất cho 10 lớp, khối nào phải đứng ngay trước Softmax?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải là một lớp Fully Connected có 10 neurron. Để có FC thì phải Flatten trước. Vậy thứ tự là Flatten -> FC -> Softmax."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Lỗi sai của bạn là nghĩ Softmax có thể tính xác suất trên feature map. Nó phải hoạt động trên vector logit từ lớp FC."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q44",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng chuẩn hóa Z-score là ý tưởng kế thừa. Nó dùng để làm gì trong NN?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó dùng để chuẩn hóa dữ liệu đầu vào. Không có nó, mạng sẽ hội tụ rất chậm hoặc không ổn định."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy Z-score là một phần của kiến trúc mạng neural sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Nó là một bước không thể thiếu trong quy trình làm việc với NN, nên CNN cũng phải kế thừa nó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu mình có mô hình cây quyết định, mình có dùng Z-score được không?"
+      },
+      {
+        "role": "Student",
+        "text": "Vẫn dùng được, nhưng nó quan trọng với NN hơn. Với NN, nó là gần như bắt buộc."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nó là kỹ thuật chung, hay là ý tưởng kiến trúc của riêng NN?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó là một phần của quy trình huấn luyện NN, nên phải tính là kế thừa chứ. CNN cũng cần quy trình đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Quy trình huấn luyện và kiến trúc mạng, hai thứ này có phải là một không?"
+      },
+      {
+        "role": "Student",
+        "text": "…Chắc là không. Kiến trúc là các lớp, các nơ-ron. Quy trình là các bước để huấn luyện nó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy câu hỏi đang tìm ý tưởng về cấu trúc hay về quy trình chung?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là về cấu trúc. Vậy Z-score không phải. Để em xem lại... Có lẽ là 'Chia sẻ trọng số'?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Bạn đã nhận ra Z-score là một kỹ thuật tiền xử lý, không phải là một nguyên lý kiến trúc được kế thừa."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q45",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong câu hỏi có cả 'gán nhãn' và 'xác định vị trí'. Sao bạn chỉ tập trung vào 'gán nhãn' để kết luận nó là Classification?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì gán nhãn là nhiệm vụ cốt lõi. Việc xác định vị trí chỉ là bước phụ trợ thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy đầu ra của một mô hình Classification thuần túy thường là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là một nhãn, ví dụ 'mèo' hoặc 'chó'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đầu ra đó có chứa tọa độ của một khung bao không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nhưng đó là chi tiết kỹ thuật. Về bản chất, nó phải nhận dạng được đối tượng, tức là Classification."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một công cụ trả về 'mèo' và một công cụ trả về 'mèo' cùng 4 tọa độ. Chúng có phải là một không?"
+      },
+      {
+        "role": "Student",
+        "text": "Cái thứ hai rõ ràng là tiên tiến hơn, nhưng gốc rễ của nó vẫn là Classification. Không có Classification thì làm sao biết đó là mèo để mà vẽ hộp?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu gốc rễ là như nhau, tại sao người ta cần một cái tên khác cho bài toán có thêm tọa độ?"
+      },
+      {
+        "role": "Student",
+        "text": "...Chắc là để phân biệt rõ hơn. Vậy khi có cả nhãn và vị trí của một đối tượng thì gọi là gì?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Hãy thử ghép tên của hai nhiệm vụ đó lại. Gán nhãn và khoanh vùng vị trí."
+      },
+      {
+        "role": "Student",
+        "text": "Classification... và Localization? Vậy đáp án là Classification + Localization."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Classification chỉ gán nhãn. Khi thêm yêu cầu xác định vị trí cho một đối tượng duy nhất, nó trở thành Classification + Localization."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q46",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn có vẻ rất chắc chắn về con số 28x28. Vì sao bạn lại nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì LeNet được tạo ra cho bộ dữ liệu MNIST. Mà MNIST thì ai cũng biết là 28x28."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một kiến trúc mạng chỉ có thể xử lý đúng một kích thước ảnh đó thôi sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Với LeNet và MNIST thì nó là cặp bài trùng rồi. Các ví dụ kinh điển đều dùng 28x28. Logic là vậy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Ok, hãy theo logic đó. Nhìn vào sơ đồ, sau lớp convolution C1, kích thước là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Là 28x28. À không, hình như là 24x24 nếu input là 28x28 và kernel là 5x5... Đúng rồi, (28-5)+1 = 24. Kích thước sau C1 là 24x24."
+      },
+      {
+        "role": "Tutor",
+        "text": "Sơ đồ trong slide hiển thị kích thước sau C1 là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Trong slide... đợi mình xem... nó ghi là 28x28. Sao lạ vậy? Em tính ra 24x24 mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Công thức của bạn đúng. Vậy nếu output C1 là 28x28, vấn đề nằm ở đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc... là do con số input? Nếu output là 28 và kernel là 5, thì (Input - 5) + 1 = 28... Input phải là 32."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo sơ đồ, kích thước input của LeNet là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Theo sơ đồ thì là 32x32. Hóa ra là nó được pad lên."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm lẫn giữa kích thước phổ biến của MNIST (28x28) và kích thước input thực tế của kiến trúc LeNet gốc, vốn đã được pad lên 32x32."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q47",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ kích thước của C1 là 14x14. Logic nào dẫn bạn đến con số này?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì C1 là lớp tích chập đầu tiên. Nó phải giảm kích thước đi đáng kể, gần như một nửa."
+      },
+      {
+        "role": "Tutor",
+        "text": "“Phải giảm kích thước một nửa” là một quy tắc hay một giả định của bạn?"
+      },
+      {
+        "role": "Student",
+        "text": "Đó là cách nó hoạt động mà. Tích chập và pooling đều làm giảm kích thước để trích xuất đặc trưng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Được rồi. Đầu vào của toàn bộ mạng LeNet có kích thước bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Là ảnh 32x32."
+      },
+      {
+        "role": "Tutor",
+        "text": "C1 dùng bộ lọc 5x5, stride 1. Kích thước đầu ra được tính như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Em không nhớ chính xác công thức, nhưng kết quả phải nhỏ hơn 32x32 nhiều. Chắc là 14x14."
+      },
+      {
+        "role": "Tutor",
+        "text": "Công thức là (W-K+2P)/S + 1. Hãy thử áp dụng cho C1."
+      },
+      {
+        "role": "Student",
+        "text": "W=32, K=5, P=0, S=1... Vậy là (32-5)/1 + 1 = 28. Sao lại là 28? Vậy con số 14x14 ở đâu ra?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo sơ đồ LeNet, tầng nào tạo ra đầu ra 14x14?"
+      },
+      {
+        "role": "Student",
+        "text": "À... là tầng S2, tầng pooling ngay sau C1. Vậy C1 là 28x28."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm kích thước của C1 (28x28) với S2 (14x14). Tích chập làm giảm kích thước theo công thức, không phải lúc nào cũng là một nửa."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q48",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn viết S2 có kích thước 28x28. Vì sao bạn lại kết luận như vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì tầng C1 ngay trước nó có 6 feature maps kích thước 28x28. S2 nhận đầu vào từ C1 nên nó phải có kích thước đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chữ 'S' trong S2 là viết tắt của thao tác gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là Subsampling. Nhưng nó chỉ là lấy mẫu thôi, kích thước vẫn là cái nó nhận vào chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục đích chính của Subsampling hay Pooling là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là để giảm số lượng tham số và tính toán. Nhưng nó giảm bằng cách khác, không nhất thiết phải giảm kích thước."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử đầu vào là 4x4. Subsampling 2x2 với stride 2. Đầu ra là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Nếu stride là 2 thì... nó sẽ trượt không chồng lấn. Đầu ra sẽ là 2x2. Nhưng trong LeNet có chắc là stride 2 không?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Kiến trúc LeNet gốc dùng kernel 2x2, stride 2 cho tầng S. Vậy kích thước thay đổi thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nếu vậy thì... đầu vào 28x28 qua S2 sẽ thành 14x14. Em đã nhầm lẫn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy bạn trả lời lại câu hỏi ban đầu xem."
+      },
+      {
+        "role": "Student",
+        "text": "S2 có 6 feature maps kích thước 14x14."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Lỗi sai của bạn là cho rằng kích thước một tầng bằng kích thước đầu vào của nó, mà bỏ qua chức năng làm giảm kích thước của chính tầng đó."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q49",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn nói output của mạng là 84. Cơ sở của bạn là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Tầng F6 có 84 node. Đó là tầng gần cuối cùng, nên output phải là 84."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục tiêu của mạng LeNet này để làm gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để nhận dạng chữ số từ 0 đến 9."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mạng cần phân biệt bao nhiêu loại chữ số?"
+      },
+      {
+        "role": "Student",
+        "text": "10 loại, từ 0 đến 9."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu output là một vector 84 chiều, nó đại diện cho điều gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó là các đặc trưng cuối cùng. 84 là con số quan trọng nhất ở cuối."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tầng nằm ngay sau tầng F6 có bao nhiêu node?"
+      },
+      {
+        "role": "Student",
+        "text": "10 node. Nhưng tầng F6 mới là nơi tính toán chính trước khi ra kết quả."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tại sao lại cần tầng 10 node nếu kết quả đã có ở tầng 84 node?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc để... chọn ra kết quả cuối cùng từ 84 cái đó? Vẫn thấy không hợp lý lắm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy output thực sự của mạng nằm ở đâu, tầng 84 node hay tầng 10 node?"
+      },
+      {
+        "role": "Student",
+        "text": "Output phải là 10, tương ứng với 10 chữ số. Vậy 84 chỉ là trung gian."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Bạn đã nhầm lẫn số node của tầng F6, một tầng đặc trưng, với số node của tầng output cuối cùng (10 node) quyết định lớp đối tượng."
+      }
+    ]
+  },
+  {
+    "question_id": "ch8_q50",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng K-Fold là một ứng dụng của CNN. Tại sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì K-Fold dùng để đánh giá CNN. Không có mô hình CNN thì lấy gì mà đánh giá? Rõ ràng nó là một ứng dụng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, 'ứng dụng' của một mô hình là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là những việc mô hình đó có thể làm được, hoặc những thứ liên quan trực tiếp đến nó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mình có thể dùng K-Fold cho mô hình SVM không?"
+      },
+      {
+        "role": "Student",
+        "text": "Được chứ. K-Fold có thể dùng cho bất kỳ mô hình nào. Nó là một kỹ thuật chung."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy K-Fold cũng là ứng dụng của SVM sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Không... Nhưng với CNN, K-Fold rất quan trọng, không thể thiếu. Nó phải được tính là một ứng dụng liên quan."
+      },
+      {
+        "role": "Tutor",
+        "text": "Việc 'tối ưu learning rate' có quan trọng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Rất quan trọng. Nhưng đó là một kỹ thuật... không phải ứng dụng để giải quyết bài toán."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy sự khác biệt giữa K-Fold và Classification ở đây là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Classification là bài toán, là mục đích cuối cùng. K-Fold chỉ là cách để kiểm tra... À, tôi hiểu rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy trong các lựa chọn, đâu mới là ứng dụng của CNN?"
+      },
+      {
+        "role": "Student",
+        "text": "Là Classification."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn giữa một kỹ thuật đánh giá (K-Fold) và một bài toán ứng dụng mà mô hình giải quyết (Classification)."
+      }
+    ]
+  }
+]

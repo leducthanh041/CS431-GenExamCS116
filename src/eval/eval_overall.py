@@ -15,6 +15,7 @@ Output:
 from __future__ import annotations
 
 import json
+import os
 import sys
 import traceback
 from pathlib import Path
@@ -28,10 +29,21 @@ from common import (
     init_vllm_eval, make_vllm_sampling,
 )
 
+# ── Override EXP_NAME from environment (set by deploy_pipeline.sh) ────────────
+_exp_name = os.environ.get("EXP_NAME", "")
+if _exp_name:
+    Config.EXP_NAME = _exp_name
+    Config.OUTPUT_DIR = Config.PROJECT_ROOT / "output" / Config.EXP_NAME
+    Config.GEN_COT_OUTPUT = Config.OUTPUT_DIR / "06_gen_cot"
+    Config.EVAL_OUTPUT = Config.OUTPUT_DIR / "07_eval"
+    Config.EVAL_IWF_OUTPUT = Config.OUTPUT_DIR / "08_eval_iwf"
+    print(f"[eval_overall] EXP_NAME overridden: {Config.EXP_NAME}")
+
 
 def evaluate_mcq(mcq: dict, llm, SamplingParams) -> dict:
     """
-    Đánh giá 1 MCQ theo 6 checklist criteria.
+    Đánh giá 1 MCQ theo 8 checklist criteria.
+    Bao gồm: no_four_correct_pass + answer_not_in_stem_pass.
     """
     prompt = build_eval_overall_prompt(mcq)
     messages = [{"role": "user", "content": prompt}]
@@ -50,6 +62,8 @@ def evaluate_mcq(mcq: dict, llm, SamplingParams) -> dict:
             "relevance_pass": True,
             "answerability_pass": True,
             "correct_set_pass": True,
+            "no_four_correct_pass": True,
+            "answer_not_in_stem_pass": True,
             "overall_valid": True,
             "fail_reasons": [f"parse_error: {result['error']}"],
             "quality_score": 0.5,
@@ -117,6 +131,14 @@ def run_eval_overall():
     print(f"   Failed: {len(failed)}")
     print(f"   → {passed_file}")
     print(f"   → {failed_file}")
+
+    # ── Release VRAM before next pipeline step ──
+    import gc, torch
+    del llm
+    del SamplingParams
+    gc.collect()
+    torch.cuda.empty_cache()
+    print("  [cleanup] VRAM released")
 
 
 if __name__ == "__main__":

@@ -12,7 +12,7 @@
 # Step 05: P4 — Generate Distractor Candidates
 # Model: Qwen2.5-14B-Instruct (vLLM)
 
-REQUIRED_VRAM=28000
+REQUIRED_VRAM=36000
 
 set -e
 
@@ -20,14 +20,13 @@ module clear -f
 module load slurm/slurm/24.11
 source /datastore/uittogether/tools/miniconda3/etc/profile.d/conda.sh
 
+PROJECT_ROOT="/datastore/uittogether/LuuTru/Thanhld/CS431MCQGen"
+
 unset CUDA_VISIBLE_DEVICES
-CHECK_OUT=$(/usr/local/bin/gpu_check.sh $REQUIRED_VRAM $SLURM_JOB_ID)
+CHECK_OUT=$("$PROJECT_ROOT/scripts/gpu_check.sh" $REQUIRED_VRAM $SLURM_JOB_ID) || true
 EXIT_CODE=$?
 
-if [ $EXIT_CODE -eq 10 ]; then
-    echo "$CHECK_OUT"
-    exit 0
-elif [ $EXIT_CODE -eq 11 ]; then
+if [ $EXIT_CODE -eq 10 ] || [ $EXIT_CODE -eq 11 ]; then
     echo "$CHECK_OUT"
     exit 1
 fi
@@ -40,8 +39,8 @@ export CUDA_MPS_LOG_DIRECTORY=/tmp/nvidia-mps-log-job$SLURM_JOB_ID
 rm -rf $CUDA_MPS_PIPE_DIRECTORY $CUDA_MPS_LOG_DIRECTORY
 mkdir -p $CUDA_MPS_PIPE_DIRECTORY $CUDA_MPS_LOG_DIRECTORY
 export CUDA_VISIBLE_DEVICES=$BEST_GPU
+export PYTORCH_ALLOC_CONF=expandable_segments:True
 
-PROJECT_ROOT="/datastore/uittogether/LuuTru/Thanhld/CS431MCQGen"
 cd "$PROJECT_ROOT"
 export PYTHONPATH="$PROJECT_ROOT"
 
