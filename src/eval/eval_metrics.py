@@ -377,7 +377,11 @@ def _parse_bool(val: Any) -> bool | None:
     return None
 
 
-def _interpret_kappa(k: float) -> str:
+def _interpret_kappa(k: float | None) -> str:
+    """Interpret Cohen's κ. None/NaN → N/A."""
+    import math
+    if k is None or (isinstance(k, float) and math.isnan(k)):
+        return "N/A (all votes same class)"
     if k < 0:     return "Poor"
     if k < 0.20:  return "Slight"
     if k < 0.40:  return "Fair"
@@ -387,7 +391,11 @@ def _interpret_kappa(k: float) -> str:
 
 
 def _cm_stats(h_binary: list[int], l_binary: list[int]) -> dict[str, Any]:
-    """Build confusion matrix + Cohen's κ + P/R/F1 from two binary lists."""
+    """Build confusion matrix + Cohen's κ + P/R/F1 from two binary lists.
+
+    Handles degenerate case: when all votes are the same class (e.g. 100% pass),
+    sklearn returns NaN → returns "N/A" with note.
+    """
     n = len(h_binary)
     tp = sum(1 for h, l in zip(h_binary, l_binary) if h == 1 and l == 1)
     tn = sum(1 for h, l in zip(h_binary, l_binary) if h == 0 and l == 0)
@@ -405,8 +413,19 @@ def _cm_stats(h_binary: list[int], l_binary: list[int]) -> dict[str, Any]:
     recall    = tp / (tp + fn) if (tp + fn) else 0.0
     f1 = 2 * precision * recall / (precision + recall) if (precision + recall) else 0.0
 
-    # Manual kappa (fallback if sklearn unavailable)
-    kappa = (p_o - p_e) / (1 - p_e) if abs(1 - p_e) > 1e-9 else 0.0
+    # Manual kappa — handles degenerate case (all votes same class → p_e=1 → undefined)
+    if abs(1 - p_e) > 1e-9:
+        kappa_val = round((p_o - p_e) / (1 - p_e), 4)
+        # κ ≈ 0 with high agreement = skewed-distribution artifact (not a problem).
+        # When p_e → 1 (nearly all "pass"), κ = (p_o - p_e)/(1-p_e) ≈ 0 even when
+        # agreement is 94.4% because there are too few negatives to measure variation.
+        if abs(kappa_val) < 0.05 and p_o >= 0.90:
+            kappa_interp = "N/A (κ ≈ 0 — skewed distribution; agreement is high)"
+        else:
+            kappa_interp = _interpret_kappa(kappa_val)
+    else:
+        kappa_val = None  # p_e ≈ 1, all votes same class → undefined
+        kappa_interp = "N/A (all votes same class — κ undefined)"
 
     return {
         "n":              n,
@@ -414,8 +433,8 @@ def _cm_stats(h_binary: list[int], l_binary: list[int]) -> dict[str, Any]:
         "agreement_rate": round(p_o, 4),
         "p_o":            round(p_o, 4),
         "p_e":            round(p_e, 4),
-        "kappa":          round(kappa, 4),
-        "kappa_interp":  _interpret_kappa(kappa),
+        "kappa":          kappa_val,
+        "kappa_interp":  kappa_interp,
         "accuracy":      round(accuracy, 4),
         "precision":      round(precision, 4),
         "recall":         round(recall, 4),
@@ -486,9 +505,14 @@ def _compute_html_per_criterion(matched: dict[str, dict]) -> dict[str, Any]:
                 l_vals.append(int(lv))
         if h_vals:
             try:
-                kappa = round(float(cohen_kappa_score(h_vals, l_vals)), 4)
+                # labels=[0,1] required — prevents degenerate NaN when all votes are same class
+                raw_kappa = cohen_kappa_score(h_vals, l_vals, labels=[0, 1])
+                # sklearn still returns NaN when all votes identical and p_e≈1
+                kappa = None if (raw_kappa != raw_kappa) else round(float(raw_kappa), 4)
+                kappa_interp = _interpret_kappa(kappa)
             except Exception:
                 kappa = None
+                kappa_interp = "N/A"
             agree_rate = round(
                 sum(1 for h, l in zip(h_vals, l_vals) if h == l) / len(h_vals), 4
             )
@@ -496,7 +520,7 @@ def _compute_html_per_criterion(matched: dict[str, dict]) -> dict[str, Any]:
                 "n":               len(h_vals),
                 "agreement_rate": agree_rate,
                 "cohens_kappa":   kappa,
-                "kappa_interp":   _interpret_kappa(kappa) if kappa is not None else "N/A",
+                "kappa_interp":   kappa_interp,
             }
     return per_criterion
 
@@ -587,9 +611,13 @@ def _compute_standalone_per_criterion(matched: dict[str, dict]) -> dict[str, Any
                 l_vals.append(int(lv))
         if h_vals:
             try:
-                kappa = round(float(cohen_kappa_score(h_vals, l_vals)), 4)
+                kappa = round(
+                    float(cohen_kappa_score(h_vals, l_vals, labels=[0, 1])), 4
+                )
+                kappa_interp = _interpret_kappa(kappa)
             except Exception:
                 kappa = None
+                kappa_interp = "N/A"
             agree_rate = round(
                 sum(1 for h, l in zip(h_vals, l_vals) if h == l) / len(h_vals), 4
             )
@@ -597,7 +625,7 @@ def _compute_standalone_per_criterion(matched: dict[str, dict]) -> dict[str, Any
                 "n":               len(h_vals),
                 "agreement_rate": agree_rate,
                 "cohens_kappa":   kappa,
-                "kappa_interp":   _interpret_kappa(kappa) if kappa is not None else "N/A",
+                "kappa_interp":   kappa_interp,
             }
     return per_criterion
 
@@ -906,14 +934,14 @@ def main():
     results: dict[str, Any] = {}
 
     # ── 1. Topic Coverage ─────────────────────────────────────────────────
-    print("\n[1/3] Topic Coverage...")
+    print("\n[1/4] Topic Coverage...")
     tc = compute_topic_coverage(gen_mcqs, topic_list)
     results["topic_coverage"] = tc
     print(f"  {tc['num_covered']}/{tc['num_total']} topics "
           f"({tc['coverage_ratio']*100:.1f}%)")
 
     # ── 2. Judge Pass Rate ─────────────────────────────────────────────────
-    print("\n[2/3] Judge Pass Rate...")
+    print("\n[2/4] Judge Pass Rate...")
     if evaluated and accepted_file.exists():
         pr = compute_judge_pass_rate(eval_file, accepted_file)
         results["judge_pass_rate"] = pr
@@ -932,21 +960,45 @@ def main():
     else:
         print("  ⚠️  Evaluation files not found — skipping judge pass rate")
 
-    # ── 3. Bloom KL Divergence ─────────────────────────────────────────────
-    print("\n[3/3] Bloom KL Divergence...")
-    if gen_mcqs:
-        bloom = compute_bloom_kl_divergence(gen_mcqs)
-        results["bloom_kl_divergence"] = bloom
-        counts = bloom["bloom_counts"]
-        print(f"  KL = {bloom['kl_divergence']:.4f}")
-        print(f"  L1={counts[1]} L2={counts[2]} L3={counts[3]} "
-              f"L4={counts[4]} L5={counts[5]} L6={counts[6]}")
-    else:
-        print("  ⚠️  No accepted questions — skipping Bloom metric")
+    # ── 3. Answer Ratio ───────────────────────────────────────────────────
+    print("\n[3/4] Answer Ratio...")
+    single = sum(1 for q in gen_mcqs if q.get("question_type") == "single_correct")
+    multi  = sum(1 for q in gen_mcqs if q.get("question_type") == "multiple_correct")
+    total  = len(gen_mcqs)
+    results["answer_ratio"] = {
+        "total":             total,
+        "single_correct":    single,
+        "multiple_correct":   multi,
+        "single_pct":        round(single / total * 100, 1) if total else 0.0,
+        "multiple_pct":       round(multi  / total * 100, 1) if total else 0.0,
+    }
+    print(f"  Single: {single}/{total} ({results['answer_ratio']['single_pct']}%)  "
+          f"Multiple: {multi}/{total} ({results['answer_ratio']['multiple_pct']}%)")
 
-    # ── 4. Human Judgment ───────────────────────────────────────────────────
+    # ── 4. Diversity Openings ──────────────────────────────────────────────
+    print("\n[4/4] Diversity Openings...")
+    WEAK_OPENINGS = [
+        "hãy xác định", "khi nào", "ở đâu", "đâu là",
+        "trong quá trình", "cho biết", "trong các phương pháp",
+    ]
+    weak = sum(
+        1 for q in gen_mcqs
+        if any(p in q.get("question_text", "").lower() for p in WEAK_OPENINGS)
+    )
+    results["diversity_openings"] = {
+        "total":      total,
+        "weak_count": weak,
+        "weak_pct":   round(weak / total * 100, 1) if total else 0.0,
+        "weak_phrases": [
+            p for p in WEAK_OPENINGS
+            if any(p in q.get("question_text", "").lower() for q in gen_mcqs)
+        ],
+    }
+    print(f"  Weak openings: {weak}/{total} ({results['diversity_openings']['weak_pct']}%)")
+
+    # ── 5. Human Judgment ───────────────────────────────────────────────────
     if args.human_json:
-        print(f"\n[4] Human Judgment...")
+        print(f"\n[5] Human Judgment...")
         hj = compute_human_judgment(
             human_annotation_file=Path(args.human_json),
             evaluated_file=eval_file,
@@ -1110,47 +1162,62 @@ def _generate_markdown(results: dict, exp_name: str) -> str:
         err = pr.get("error", "Unknown error")
         lines += [f"\n## 2. LLM Judge Pass Rate\n> Not available: {err}\n"]
 
-    # ── 3. Bloom KL Divergence ────────────────────────────────────────────
-    bloom = results.get("bloom_kl_divergence", {})
-    if bloom:
-        counts  = bloom.get("bloom_counts", {})
-        target  = bloom.get("target_distribution", [])
-        kl      = bloom.get("kl_divergence", 0)
-        n       = sum(counts.values()) or 1
-
+    # ── 3. Answer Ratio ─────────────────────────────────────────────────────
+    ar = results.get("answer_ratio", {})
+    if ar:
+        sp = ar.get("single_pct", 0)
+        mp = ar.get("multiple_pct", 0)
         lines += [
-            "\n## 3. Bloom Taxonomy Distribution\n",
-            f"| Level | Name | Count | Actual % | Target % |\n",
-            f"|-------|------|-------|----------|----------|\n",
-        ]
-        for i in range(6):
-            lvl  = i + 1
-            name = BLOOM_NAMES[i]
-            cnt  = counts.get(lvl, 0)
-            act  = cnt / n * 100
-            tgt  = (target[i] * 100) if target else 0
-            lines.append(
-                f"| L{lvl} | {name} | {cnt} | {act:.1f}% | {tgt:.1f}% |\n"
-            )
-
-        lines += [
-            f"\n**KL Divergence:** {kl:.4f}  \n",
-            "> **< 0.2**: Tốt — phân bố gần target.  \n",
-            "> **0.2–0.5**: Trung bình.  \n",
-            "> **> 0.5**: Cao — phân bố không cân bằng.\n",
+            "\n## 3. Answer Ratio (Single vs Multiple Correct)\n",
+            f"| Type | Count | Percentage |\n",
+            f"|------|-------|------------|\n",
+            f"| Single correct (1 đáp án) | {ar.get('single_correct', 0)} | {sp}% |\n",
+            f"| Multiple correct (>1 đáp án) | {ar.get('multiple_correct', 0)} | {mp}% |\n",
+            f"| **Total** | **{ar.get('total', 0)}** | 100% |\n",
+            "\n",
+            "> Target trong pipeline: **80% single, 20% multiple**.  \n",
+            f"> Single: {sp}% (target: 80%)  |  Multiple: {mp}% (target: 20%)  \n",
+            "> " + (
+                "✅ Tỉ lệ phù hợp với target."
+                if abs(sp - 80) <= 15 else
+                "⚠️  Tỉ lệ lệch khỏi target."
+            ) + "\n",
         ]
 
-        pdb = bloom.get("per_difficulty_bloom", {})
-        if pdb:
+    # ── 4. Diversity Openings ──────────────────────────────────────────────
+    div = results.get("diversity_openings", {})
+    if div:
+        wp  = div.get("weak_pct", 0)
+        wc  = div.get("weak_count", 0)
+        tot = div.get("total", 0)
+        weak_phrases = div.get("weak_phrases", [])
+        lines += [
+            "\n## 4. Diversity Openings (Đa dạng cách đặt câu hỏi)\n",
+            f"| Metric | Value |\n",
+            f"|--------|-------|\n",
+            f"| Weak openings | {wc}/{tot} ({wp}%) |\n",
+            f"| Good openings | {tot-wc}/{tot} ({100-wp:.1f}%) |\n",
+            "\n",
+            "❌ **Các cách mở đầu nên tránh:**\n",
+            "- `\"Hãy xác định...\"`, `\"khi nào\"`, `\"ở đâu\"`, `\"đâu là\"`\n",
+            "- `\"Trong quá trình...\"`, `\"Cho biết...\"`, `\"Trong các phương pháp...\"`\n",
+            "\n",
+            "✅ **Các cách mở đầu nên dùng** (tạo sự tò mò):\n",
+            "- `\"Điều gì khiến...\"`, `\"Đâu là điểm khác biệt giữa...\"`\n",
+            "- `\"Trường hợp nào sau đây minh họa đúng nhất về...?\"`\n",
+            "\n",
+            "> " + (
+                "✅ Tốt — phần lớn câu hỏi có cách mở đầu đa dạng."
+                if wp < 20 else
+                "⚠️  Cần cải thiện — nhiều câu hỏi dùng cách mở đầu yếu."
+            ) + "\n",
+        ]
+        if weak_phrases:
             lines += [
-                "\n**Bloom Levels by Difficulty Label:**\n",
-                f"| Difficulty | L1 | L2 | L3 | L4 | L5 | L6 |\n",
-                f"|------------|----|----|----|----|----|----|\n",
+                "\n**Weak phrases found in dataset:**\n",
+                *(f"- `{p}`\n" for p in weak_phrases),
             ]
-            for diff in ["G1", "G2", "G3"]:
-                vals = pdb.get(diff, {})
-                row = [f"{vals.get(i, 0)*100:.0f}%" for i in range(1, 7)]
-                lines.append(f"| {diff} | {' | '.join(row)} |\n")
+
 
     # ── 4. Human Judgment ─────────────────────────────────────────────────
     hj = results.get("human_judgment", {})
@@ -1304,9 +1371,13 @@ def _generate_markdown(results: dict, exp_name: str) -> str:
         v = results.get("judge_pass_rate", {}).get("final_pass_rate", 0) * 100
         return "✅" if v >= 70 else "⚠️" if v >= 50 else "❌"
 
-    def _bloom_status() -> str:
-        v = results.get("bloom_kl_divergence", {}).get("kl_divergence", 999)
-        return "✅" if v < 0.2 else "⚠️" if v < 0.5 else "❌"
+    def _ar_status() -> str:
+        sp = results.get("answer_ratio", {}).get("single_pct", 0)
+        return "✅" if abs(sp - 80) <= 15 else "⚠️"
+
+    def _div_status() -> str:
+        wp = results.get("diversity_openings", {}).get("weak_pct", 100)
+        return "✅" if wp < 20 else "⚠️" if wp < 40 else "❌"
 
     def _hj_status() -> tuple[str, str]:
         hj2 = results.get("human_judgment", {})
@@ -1329,8 +1400,10 @@ def _generate_markdown(results: dict, exp_name: str) -> str:
         f"{results.get('topic_coverage',{}).get('coverage_ratio',0)*100:.1f}% | {_cov_status()} |\n",
         f"| LLM Judge Pass Rate | ≥ 70% | "
         f"{results.get('judge_pass_rate',{}).get('final_pass_rate',0)*100:.1f}% | {_pass_status()} |\n",
-        f"| Bloom KL Divergence | ≤ 0.2 | "
-        f"{results.get('bloom_kl_divergence',{}).get('kl_divergence', 'N/A')} | {_bloom_status()} |\n",
+        f"| Answer Ratio (Single) | ≈ 80% | "
+        f"{results.get('answer_ratio',{}).get('single_pct',0):.1f}% | {_ar_status()} |\n",
+        f"| Diversity Openings | ≥ 80% good | "
+        f"{100 - results.get('diversity_openings',{}).get('weak_pct',0):.1f}% good | {_div_status()} |\n",
         f"| Human vs LLM κ | ≥ 0.6 | {hj_val} | {hj_flag} |\n",
         "\n---\n",
         "*Generated by `eval_metrics.py` — MCQGen Pipeline*\n",

@@ -1,0 +1,2884 @@
+[
+  {
+    "question_id": "ch6_q1",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn viết rằng học không giám sát là học ánh xạ tới đầu ra có nhãn. Nhãn đó từ đâu mà có?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì nó phải có chứ ạ. Máy học phải có mục tiêu, mục tiêu đó chính là nhãn. Có thể nhãn được ẩn đi hoặc máy tự suy ra."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, 'nhãn' trong học có giám sát là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là giá trị đúng được gán cho dữ liệu từ trước. Ví dụ ảnh con mèo có nhãn là 'mèo'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Được. Giờ mình có 10.000 bài báo không nhãn. Máy nhóm chúng thành 5 chủ đề. 'Chủ đề 1' có phải là nhãn có từ trước không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không có từ trước, nhưng sau khi máy chạy xong thì nó là nhãn. Mỗi bài báo thuộc một chủ đề. Vẫn là ánh xạ từ đầu vào đến đầu ra có nhãn thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nhãn này tồn tại trước hay sau khi mô hình học?"
+      },
+      {
+        "role": "Student",
+        "text": "... Sau khi mô hình học. Nhưng nó vẫn là một cái nhãn xác định."
+      },
+      {
+        "role": "Tutor",
+        "text": "So với nhãn 'mèo' có từ trước, sự khác biệt cốt lõi ở đây là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Một cái có sẵn để kiểm tra đúng sai, một cái là kết quả do máy tạo ra... Vậy là nó không học ánh xạ tới nhãn có sẵn, mà là tìm ra cấu trúc?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Vậy với câu hỏi ban đầu, bạn sẽ chọn lại đáp án nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Học phân bố của dữ liệu để biểu diễn dữ liệu hiệu quả hơn. Vì việc nhóm chủ đề chính là tìm ra cách phân bố của các bài báo."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tóm lại, bạn đã nhầm lẫn giữa 'nhãn có sẵn' (giám sát) và 'kết quả do mô hình tạo ra' (không giám sát). Nhiệm vụ của nó không phải dự đoán nhãn, mà là khám phá cấu trúc."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q2",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói học không giám sát cần biến y. Biến y đó đại diện cho điều gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là cái mình cần dự đoán. Không có nó thì làm sao máy học được? Phải có mục tiêu chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục tiêu của việc 'gom cụm khách hàng' là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là để chia khách hàng thành các nhóm. Ví dụ nhóm VIP, nhóm tiềm năng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy biến 'y' (tên nhóm) có tồn tại trước khi học không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không có sẵn, nhưng thuật toán sẽ tạo ra nó. Vẫn là phải có một mục tiêu để học theo."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu y chưa có, dữ liệu đầu vào của bạn chỉ có đặc trưng (x) phải không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng, chỉ có thông tin khách hàng. Nhưng mục tiêu vẫn là tìm ra nhóm, vậy cái 'nhóm' đó là y."
+      },
+      {
+        "role": "Tutor",
+        "text": "So với bài toán giá nhà, biến 'y' (giá) có sẵn trong dữ liệu huấn luyện không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có, phải có giá của các nhà cũ để học. Còn bài gom cụm thì... nó không có sẵn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy dựa vào đó, phát biểu nào đúng về dữ liệu cho học không giám sát?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó không cần gán nhãn cho dữ liệu, không cần biến mục tiêu y có sẵn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm rằng mọi bài toán đều cần biến mục tiêu định trước. Học không giám sát tự tìm cấu trúc từ dữ liệu không có nhãn."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q3",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn viết rằng mô hình bắt buộc phải có nhãn để 'học'. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì 'học' là phải biết mình đúng hay sai. Nhãn là đáp án để mô hình so sánh và sửa lỗi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, 'học' luôn luôn là quá trình so sánh với một đáp án có sẵn?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Không có đáp án thì lấy gì làm cơ sở để học?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Tưởng tượng mình có 1000 ảnh động vật không tên. Máy tính có thể nhóm chúng thành các cụm giống nhau không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không thể, vì nó không biết đâu là 'chó', đâu là 'mèo'. Nó không có nhãn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nó không cần biết tên. Nó chỉ cần nhóm ảnh có đặc điểm tương tự lại với nhau được không?"
+      },
+      {
+        "role": "Student",
+        "text": "Kể cả nhóm được thì cũng vô dụng nếu không gọi được tên. Cuối cùng vẫn phải có nhãn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Việc nhóm các ảnh giống nhau lại có phải là một dạng 'tìm ra quy luật' không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Có lẽ. Nhưng đó là quy luật về sự tương đồng, không phải quy luật để dự đoán nhãn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy có tồn tại một kiểu học không cần nhãn cho trước không? Quay lại câu hỏi ban đầu."
+      },
+      {
+        "role": "Student",
+        "text": "Vậy học không giám sát... là không cần gán nhãn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn rằng mọi kiểu 'học' đều phải giống nhau. Học không giám sát là tìm ra cấu trúc ẩn, không phải đối chiếu với nhãn có sẵn."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q4",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói hồi quy tuyến tính tìm 'mối quan hệ'. Cụ thể là mối quan hệ giữa cái gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì giữa các biến trong dữ liệu. Ví dụ, mối quan hệ giữa diện tích nhà và giá nhà. Nó tìm ra một quy luật, đó là học không giám sát."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, học không giám sát định nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là tìm ra cấu trúc hoặc quy luật ẩn trong dữ liệu mà không cần con người can thiệp."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu mình chỉ đưa bạn dữ liệu diện tích nhà, bạn có chạy hồi quy tuyến tính để dự đoán giá được không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, tất nhiên phải có cả cột giá nhà thì mới 'học' được mối quan hệ chứ. Nhưng mục tiêu vẫn là tìm quy luật mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Cột 'giá nhà' đó có trước khi bạn chạy thuật toán không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có. Nhưng nó là một phần của dữ liệu thôi. Thuật toán tự tìm ra đường thẳng, con người đâu có vẽ đường thẳng đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy giữa việc cần 'giá nhà' và việc không cần gì cả, loại nào cần giám sát hơn?"
+      },
+      {
+        "role": "Student",
+        "text": "… Chắc là loại cần 'giá nhà'. Vì mình phải có 'đáp án' trước để nó học theo."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy hồi quy tuyến tính thuộc nhóm nào? Và tại sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó thuộc học có giám sát. Vì nó yêu cầu phải có dữ liệu nhãn (giá nhà) để tìm ra quy luật dự đoán."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Sai lầm của bạn là nghĩ rằng mọi thuật toán 'tìm quy luật' đều là không giám sát, trong khi điểm mấu chốt là nó có cần 'đáp án' cho trước hay không."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q5",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói 8.8 là loại giỏi. Giả định của bạn là điểm số có ý nghĩa cố định đúng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Theo thang điểm thông thường, trên 8.0 là giỏi rồi. 8.8 chắc chắn là giỏi."
+      },
+      {
+        "role": "Tutor",
+        "text": "“Thang điểm thông thường” đó đến từ đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì là quy định chung, hoặc quy ước của trường học. Ai cũng biết mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét một lớp học đặc biệt, tất cả học sinh đều là thiên tài. Điểm trung bình của lớp là 9.5."
+      },
+      {
+        "role": "Student",
+        "text": "Thì sao ạ? An được 8.8, vẫn là trên 8.0, vẫn là giỏi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy trong lớp thiên tài đó, An có điểm 8.8 là người có điểm thấp nhất. An vẫn giỏi?"
+      },
+      {
+        "role": "Student",
+        "text": "Nghe hơi mâu thuẫn... nhưng nếu theo quy tắc cứng thì vẫn là giỏi. Điểm số là điểm số."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mục đích xếp loại là gì, nếu một người 'giỏi' lại là người kém nhất?"
+      },
+      {
+        "role": "Student",
+        "text": "Mục đích là để so sánh... Chắc là... quy tắc cứng không phải lúc nào cũng đúng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy để biết 8.8 là giỏi hay không, ta cần biết thêm điều gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Cần biết điểm của những người khác trong lớp. Tức là cần biết phân bố dữ liệu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Điểm số 8.8 không có ý nghĩa tuyệt đối. Nó chỉ có ý nghĩa khi đặt trong bối cảnh phân bố của cả tập dữ liệu."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q6",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng chuẩn hóa là giải pháp bắt buộc cho mọi bài toán. Tại sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó làm cho các feature có cùng một thang đo. Không chuẩn hóa, mô hình sẽ bị thiên vị. Đó là quy tắc cơ bản mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục đích chính của chuẩn hóa có phải là để so sánh không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Để đưa mọi thứ về một mặt bằng chung. Không làm vậy thì so sánh sao được?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét dữ liệu nhiệt độ: [0, 10, 100]. 100 độ là điểm sôi của nước. Sau khi chuẩn hóa, giá trị đó còn là 100 không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nó sẽ thành một giá trị khác, có thể là 1 hoặc hơn. Nhưng nó vẫn là giá trị lớn nhất, vị trí tương đối không đổi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nhưng ý nghĩa vật lý 'nước đang sôi' có còn được giữ lại không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Ý nghĩa vật lý thì mất đi, nhưng trong mô hình, nó vẫn là điểm dữ liệu cực biên."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy việc xem phân bố gốc giúp ta giữ lại ý nghĩa gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Giúp giữ lại ý nghĩa thực tế của con số... Vậy việc nhìn vào phân bố là để biết khi nào không nên chuẩn hóa."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhận ra việc chuẩn hóa là một công cụ, không phải luật lệ. Đôi khi, ý nghĩa của một giá trị trong phân bố gốc mới là điều quan trọng."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q7",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ rằng lặp lại dữ liệu là một cách biểu diễn. Việc này mang lại lợi ích gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó nhấn mạnh tầm quan trọng của dữ liệu đó. Càng lặp lại nhiều, máy tính càng 'chú ý' đến nó hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục tiêu của 'biểu diễn dữ liệu' là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là để máy tính có thể xử lý được. Lặp lại dữ liệu thì vẫn xử lý được, chỉ là tốn thêm dung lượng thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử có 1 triệu học sinh, bạn lặp lại mỗi người 10 lần. Dữ liệu này có thêm thông tin *mới* không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không có thông tin mới, nhưng bộ dữ liệu lớn hơn. Chẳng phải dữ liệu càng lớn thì mô hình càng chính xác sao?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy việc lặp lại chỉ tăng kích thước, không tăng thông tin? Giữa 'thêm thông tin' và 'tăng kích thước', cái nào quan trọng hơn?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là... thêm thông tin. Nhưng nếu không lặp lại, sao biết dữ liệu nào quan trọng?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một cách biểu diễn tốt nên tóm tắt, hay chỉ làm dữ liệu phình to ra?"
+      },
+      {
+        "role": "Student",
+        "text": "Nên tóm tắt để tìm ra cái cốt lõi... À, vậy là phải tìm ra đặc trưng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Vậy trong các đáp án, lựa chọn nào đang làm việc đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Đặc trưng học lực theo nhóm. Vì nó đang tóm tắt, phân nhóm dữ liệu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Lỗi sai của bạn là nhầm lẫn giữa việc tăng dung lượng và biểu diễn hiệu quả. Biểu diễn hiệu quả là trích xuất thông tin, không phải nhân bản dữ liệu thô."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q8",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng nhóm dữ liệu xong phải khôi phục được y như cũ?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc chắn rồi. Nếu không khôi phục được thì thông tin sai lệch hết à?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, mục đích của việc 'đại diện' cho một nhóm là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là để tóm tắt, nhưng phải giữ được bản chất gốc, không được mất mát."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mình có 5 số: 1, 2, 3, 7, 12. Trung bình cộng của chúng là 5."
+      },
+      {
+        "role": "Student",
+        "text": "Đúng, thì sao ạ?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Số 5 có 'đại diện' cho nhóm số đó không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có, nó là giá trị trung tâm. Nhưng đây chỉ là một phép tính thôi, không phải cách nhóm dữ liệu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Từ con số 5, bạn khôi phục lại 5 số gốc được không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không. Đó là lý do em nói cách này làm mất thông tin. Nó không phải là một cách biểu diễn tốt."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy tại sao người ta vẫn dùng điểm trung bình để so sánh các lớp học?"
+      },
+      {
+        "role": "Student",
+        "text": "Để... so sánh tổng quan thôi. Nhưng nó không chính xác tuyệt đối."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy từ nhiều điểm của cả lớp về một điểm trung bình. Mục đích là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để dễ so sánh, giảm bớt sự phức tạp... À, là giảm chiều dữ liệu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Ban đầu bạn nghĩ nhóm dữ liệu phải bảo toàn 100%. Nhưng thực tế, việc đánh đổi thông tin chi tiết để có cái nhìn tổng quan chính là một mục đích, gọi là giảm chiều dữ liệu."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q9",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ thuật toán tự tạo ra nhãn 'yếu' và 'xuất sắc' à?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Dựa trên dữ liệu, nó phân nhóm và đặt tên luôn cho cụm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Học không giám sát có nhãn cho trước không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nên nó mới phải tự tạo ra nhãn 'xuất sắc' chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Máy tính hiểu từ 'xuất sắc' nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó không hiểu từ, nhưng nó thấy nhóm đó có điểm trung bình cao nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Ai quyết định 'điểm cao' tương ứng với từ 'xuất sắc'?"
+      },
+      {
+        "role": "Student",
+        "text": "Thuật toán chứ ai. Nó so sánh các cụm và gán nhãn cho cụm tốt nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu có hai cụm điểm rất cao, gần bằng nhau thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "...Thì nó có thể gọi là 'xuất sắc 1', 'xuất sắc 2'? Em không chắc."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hay thuật toán chỉ gán ID như 'Cụm 0', 'Cụm 1' thôi?"
+      },
+      {
+        "role": "Student",
+        "text": "Có lẽ... rồi người dùng nhìn vào 'Cụm 0' thấy toàn điểm cao nên tự gọi nó là 'xuất sắc'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy các tên gọi đó thực chất là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là cách minh họa bằng khái niệm đời sống. Thực tế là cluster ID."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Tên gọi là cách con người diễn giải. Thuật toán chỉ tạo ra các cụm số hóa."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q10",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng gom nhóm là để dự đoán một giá trị liên tục. Vì sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì kết quả của một bài toán phải là một con số cụ thể. Giống như dự đoán giá nhà hay doanh thu vậy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một 'giá trị liên tục' có đặc điểm gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là một số có thể nhận vô số giá trị trong một khoảng, như 2.5, 2.51, hay 2.511..."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử mình có dữ liệu khách hàng. Thuật toán gom họ thành 3 nhóm A, B, C. Nhóm 'A' có phải giá trị liên tục không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nhưng chắc chắn 'A' đại diện cho một giá trị nào đó, ví dụ 'mức chi tiêu trung bình' của nhóm. Vẫn là một con số."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy kết quả cuối cùng thuật toán trả về là nhãn 'A' hay là con số 'mức chi tiêu trung bình'?"
+      },
+      {
+        "role": "Student",
+        "text": "Là... nhãn A, nhưng nó ngầm hiểu là con số đó. Không có số thì làm sao so sánh, đánh giá được?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mục tiêu chính là tìm ra các nhãn 'A', 'B', 'C' hay tìm ra một con số cụ thể?"
+      },
+      {
+        "role": "Student",
+        "text": "...Chắc là tìm ra các nhãn đó. Con số chỉ là để mô tả nhóm sau khi đã có thôi. Giờ thì mình đã thấy sự khác biệt."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy bạn hãy thử trả lời lại câu hỏi ban đầu xem."
+      },
+      {
+        "role": "Student",
+        "text": "Gom nhóm là... gom các đối tượng theo từng cụm sao cho chúng tương đồng nhau hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn gom nhóm (tạo ra các cụm/nhãn) với hồi quy (dự đoán một giá trị số liên tục)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q11",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng các đối tượng trong cụm phải khác nhau hoàn toàn. Vì sao lại vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Nếu chúng giống nhau thì gom lại làm gì? Mục đích là để phân loại, thấy được sự đa dạng của dữ liệu chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, mục tiêu của 'gom cụm' là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là để sắp xếp dữ liệu. Nhóm những thứ khác biệt vào một chỗ để dễ quản lý, dễ so sánh sự khác biệt đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hãy tưởng tượng một giỏ trái cây. Mình có 5 quả táo và 5 quả cam."
+      },
+      {
+        "role": "Student",
+        "text": "Vâng, em hiểu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Để tạo 2 cụm, bạn sẽ xếp chúng vào 2 giỏ riêng như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì một giỏ táo, một giỏ cam. Nhưng đó là vì chúng khác loại. Logic của em vẫn đúng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy các quả trong 'giỏ táo' giống nhau hơn hay khác nhau hơn một quả cam?"
+      },
+      {
+        "role": "Student",
+        "text": "... Giống nhau hơn. Nhưng ý em là chúng không cần phải giống hệt nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nguyên tắc gom cụm là tối đa hóa sự khác biệt hay tương đồng trong cụm?"
+      },
+      {
+        "role": "Student",
+        "text": "Là tối đa hóa sự tương đồng trong cụm và khác biệt với cụm khác. Giờ thì em thấy vấn đề rồi. Vậy đáp án đúng là..."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Lỗi sai của bạn là nghĩ rằng gom cụm là để nhóm những thứ khác nhau. Thực ra, ta nhóm những thứ tương đồng lại với nhau."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q12",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong các thuật toán gom nhóm, vì sao bạn lại nghĩ đến Cây quyết định (Decision Tree)?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó chia dữ liệu thành các nhóm ở các nút lá. Mỗi nút lá là một nhóm. Rõ ràng là đang gom nhóm mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Để huấn luyện một Cây quyết định, dữ liệu đầu vào cần có gì đặc biệt?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là các thuộc tính thôi. Giống như mọi thuật toán khác, cần có dữ liệu để học."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nếu mình có dữ liệu khách hàng nhưng không có nhãn. K-Means có chạy được không?"
+      },
+      {
+        "role": "Student",
+        "text": "Được, nó sẽ tự chia thành k cụm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Cũng bộ dữ liệu đó, Cây quyết định có chạy được không? Nó sẽ dự đoán cái gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Không chạy được... Nhưng đó chỉ là vấn đề kỹ thuật. Về bản chất, nếu có đủ dữ liệu, nó vẫn tạo ra các nhóm ở nút lá."
+      },
+      {
+        "role": "Tutor",
+        "text": "Cái 'đủ dữ liệu' mà bạn nói có bao gồm 'nhãn' được định nghĩa trước không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Có. Cây quyết định cần nhãn. Còn K-Means thì không."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy thuật toán nào thực sự làm nhiệm vụ 'gom nhóm' để khám phá cấu trúc dữ liệu?"
+      },
+      {
+        "role": "Student",
+        "text": "Là K-Means, vì nó không cần biết trước nhóm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Cây quyết định là phân lớp, nó cần dữ liệu có nhãn. K-Means là gom nhóm, nó tự tìm ra các cụm trong dữ liệu chưa có nhãn."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q13",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ Hồi quy tuyến tính (Linear Regression) gom nhóm dữ liệu như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó vẽ một đường thẳng đi qua đám điểm. Các điểm gần đường đó là một nhóm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mục tiêu của 'gom nhóm' là tìm ra một đường thẳng sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Không hẳn, nhưng nó vẫn là một cách nhóm các điểm có chung xu hướng lại."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử có 100 điểm. K-Means với k=3 cho ra mấy nhóm?"
+      },
+      {
+        "role": "Student",
+        "text": "Cho ra 3 nhóm. Mỗi điểm sẽ được gán vào 1 trong 3 nhóm đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy Hồi quy tuyến tính gán 100 điểm đó vào mấy nhóm?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó không gán... nhưng đường thẳng đại diện cho một nhóm chính. Các điểm khác là nhiễu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Gom nhóm là 'gán nhãn nhóm' hay 'tìm một đường đại diện'?"
+      },
+      {
+        "role": "Student",
+        "text": "Là... gán nhãn nhóm. Hồi quy tuyến tính không làm việc đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy bạn hãy thử trả lời lại câu hỏi ban đầu."
+      },
+      {
+        "role": "Student",
+        "text": "Được rồi. Hồi quy tuyến tính không phải gom nhóm. Em sẽ xem lại các lựa chọn khác. Chắc là Spectral clustering."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tóm lại: bạn đã nhầm mục tiêu của Hồi quy (dự đoán giá trị) với Gom nhóm (gán nhãn)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q14",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn cho rằng font chữ và màu sắc ảnh hưởng đến việc chọn thuật toán. Tại sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì mục tiêu cuối cùng là phải trình bày cho người khác xem. Một kết quả gom nhóm có font chữ, màu sắc đẹp sẽ dễ hiểu hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục tiêu 'dễ trình bày' và mục tiêu 'tìm ra cụm có ý nghĩa' có giống nhau không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chúng liên quan chứ. Nếu cụm tìm ra mà không trình bày đẹp được thì cũng vô dụng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nếu có hai bộ dữ liệu y hệt nhau, một cái trình bày trên slide màu xanh, một cái trên slide màu vàng. Bạn có dùng hai thuật toán khác nhau không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, dữ liệu giống hệt thì thuật toán phải giống chứ. Nhưng nếu kết quả ra không hợp với màu slide thì em sẽ phải chỉnh lại."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy việc 'chỉnh lại' đó là thay đổi thuật toán, hay chỉ thay đổi cách tô màu kết quả?"
+      },
+      {
+        "role": "Student",
+        "text": "Chỉ thay đổi cách tô màu thôi... nhưng em vẫn thấy nó quan trọng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử thuật toán A tìm ra 3 nhóm khách hàng tiềm năng, nhưng màu sắc mặc định xấu. Thuật toán B tìm ra 5 nhóm vô nghĩa, nhưng màu sắc rất đẹp. Bạn chọn kết quả nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Em... phải chọn thuật toán A. Vì kết quả có ý nghĩa quan trọng hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy yếu tố cốt lõi để chọn giữa thuật toán A và B là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là... kết quả nó tạo ra có phù hợp với dữ liệu và mục tiêu của mình không."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Việc lựa chọn thuật toán phải dựa trên bản chất dữ liệu và mục tiêu phân tích. Còn việc trình bày chỉ là bước làm đẹp cho kết quả sau cùng."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q15",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "[A] Bạn nghĩ K-Means bắt đầu bằng việc ước lượng ma trận hiệp phương sai. Tại sao nó lại là bước đầu tiên?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó mô tả hình dạng và sự phân tán của dữ liệu. Phải biết hình dạng thì mới phân cụm chính xác được."
+      },
+      {
+        "role": "Tutor",
+        "text": "[B] Để tính ma trận hiệp phương sai cho một cụm, bạn cần những gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Cần các điểm thuộc cụm đó. Nhưng mình có thể tính cho toàn bộ dữ liệu trước mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Nếu tính trên toàn bộ dữ liệu, ma trận đó mô tả K cụm hay một khối dữ liệu chung?"
+      },
+      {
+        "role": "Student",
+        "text": "Một khối chung, nhưng nó cho biết hướng phân bố chính. Từ đó có thể đặt tâm cụm thông minh hơn là ngẫu nhiên."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Vậy thuật toán có còn là K-Means nguyên bản không?"
+      },
+      {
+        "role": "Student",
+        "text": "Vẫn là K-Means thôi, chỉ là bước khởi tạo tốt hơn. Khởi tạo ngẫu nhiên nghe rất hên xui."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Ở bước 0, khi chưa có cụm, K-Means làm sao sử dụng ma trận hiệp phương sai này?"
+      },
+      {
+        "role": "Student",
+        "text": "Ừm... có lẽ nó không dùng trực tiếp. Nhưng biết nó vẫn tốt hơn chứ?"
+      },
+      {
+        "role": "Tutor",
+        "text": "[D] Vậy nếu không dùng ma trận đó, K-Means cần điều gì tối thiểu để có thể gán điểm vào các cụm?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là... vị trí của các tâm cụm? Để có cái mà tính khoảng cách."
+      },
+      {
+        "role": "Tutor",
+        "text": "[E] Chính xác. Sai lầm của bạn là áp dụng ý tưởng của thuật toán khác (như GMM) vào K-Means. K-Means chỉ cần vị trí tâm để bắt đầu, nên bước đầu tiên của nó là khởi tạo các tâm đó."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q16",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói điểm được gán vào trọng tâm xa nhất. Mục đích của việc này là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để tối đa hóa sự tách biệt giữa các cụm. Các cụm càng xa nhau càng tốt."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mục tiêu K-Means là làm các cụm khác nhau, hay làm điểm trong cụm giống nhau?"
+      },
+      {
+        "role": "Student",
+        "text": "Cả hai chứ? Nhưng việc tách biệt các cụm có vẻ quan trọng hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét 2 trọng tâm: 10 và 100. Điểm dữ liệu 11 sẽ được gán vào đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Vào 100, vì nó xa hơn. Đây chính là cách tạo ra sự tách biệt."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy điểm 11 rất gần 10 lại thuộc cụm của 100. Cụm đó có 'chặt chẽ' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không... nó rất lỏng lẻo. Điểm ở một nơi, trọng tâm ở nơi khác. Nhưng nếu không làm vậy sao tách biệt được?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy để một cụm 'chặt chẽ', ta nên gán các điểm vào đó theo quy tắc nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là gán chúng vào trọng tâm gần nhất. Em hiểu rồi, ưu tiên là sự đồng nhất trong cụm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Sai lầm của bạn là ưu tiên sự tách biệt giữa các cụm hơn sự đồng nhất trong một cụm."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q17",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ K-Means dừng khi không còn mẫu nào. Tại sao thuật toán lại hết mẫu?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì thuật toán chạy qua từng mẫu, gán nó vào cụm. Khi đã gán hết tất cả các mẫu rồi thì không còn gì để làm, nên nó dừng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Sau khi gán một mẫu vào cụm ở vòng 1, mẫu đó đi đâu ở vòng 2?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó đã được xử lý rồi thì thôi chứ ạ. Vòng 2 sẽ xử lý các mẫu còn lại. Nếu không còn mẫu nào chưa được xử lý thì dừng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tập dữ liệu đầu vào có thay đổi sau mỗi vòng lặp không?"
+      },
+      {
+        "role": "Student",
+        "text": "Dữ liệu gốc thì không, nhưng thuật toán phải theo dõi các điểm đã được gán chứ. Sao có thể gán đi gán lại một điểm mãi được?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nếu một điểm bị gán sai ở vòng 1, làm sao để sửa lại nó?"
+      },
+      {
+        "role": "Student",
+        "text": "À... Chắc là nó phải xem xét lại? Nhưng nếu xem xét lại tất cả thì sẽ lặp vô hạn sao?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Điều gì thay đổi sau mỗi vòng lặp khiến việc gán lại có thể khác đi?"
+      },
+      {
+        "role": "Student",
+        "text": "Là... các trọng tâm cụm ạ. Chúng được tính lại. Vậy nếu trọng tâm không thay đổi nữa thì việc gán cũng sẽ không thay đổi. Lúc đó thì dừng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy hãy trả lời lại câu hỏi ban đầu. K-Means dừng khi nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Quá trình của K-Means được lặp lại cho đến khi các trọng tâm không thay đổi nữa."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Nhầm lẫn của bạn là nghĩ thuật toán 'tiêu thụ' dữ liệu. Thực ra nó chỉ lặp lại việc gán và cập nhật trọng tâm trên toàn bộ dữ liệu."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q18",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn viết rằng K-Means không cần biết trước số cụm K. Sao thuật toán lại bắt đầu chạy được?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì nó tự tìm ra mà. Nó sẽ nhóm các điểm gần nhau lại, đến khi nào tối ưu thì dừng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bước đầu tiên của K-Means là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là khởi tạo các tâm cụm (centroid) ngẫu nhiên. Chính vì ngẫu nhiên nên không cần biết trước."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mình cần khởi tạo bao nhiêu tâm cụm ngẫu nhiên?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì... một số lượng nào đó. Thuật toán sẽ tự điều chỉnh sau. Em nghĩ con số ban đầu không quan trọng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy với 1000 điểm dữ liệu, mình khởi tạo 2 tâm hay 200 tâm? Cái gì quyết định con số này?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc phải có một con số chứ nhỉ... Nếu không có thì làm sao máy tính biết phải tạo mấy tâm. Nhưng em nhớ có thuật toán không cần mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy K-Means có cần con số đó không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có vẻ là có. Vậy cái em nhớ chắc là của thuật toán khác. Vậy ưu điểm của K-Means là 'đơn giản, dễ cài đặt'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng rồi. Bạn đã nhầm lẫn việc K-Means cần cung cấp tham số K là một nhược điểm, không phải ưu điểm."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q19",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải của bạn, bạn nhấn mạnh về tốc độ. Vậy giữa 'chậm' và 'không thể chạy được', cái nào tệ hơn?"
+      },
+      {
+        "role": "Student",
+        "text": "Tất nhiên là 'không thể chạy được'. Nhưng K-Means vẫn chạy được mà, chỉ là nó chậm thôi. Nên em nghĩ 'chậm' là khuyết điểm thực tế của nó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy K-Means cần thông tin gì để bắt đầu chạy?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó cần dữ liệu và số cụm K. Ai cũng biết mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu bạn có dữ liệu, nhưng mình không cho bạn biết K. Thuật toán có bắt đầu được không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không... nhưng trong thực tế mình có thể thử vài giá trị K khác nhau. Vấn đề vẫn là tốc độ khi thử nhiều lần."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy vấn đề gốc là 'tốc độ' hay là 'không biết K'?"
+      },
+      {
+        "role": "Student",
+        "text": "Vẫn là tốc độ. Vì nếu nó siêu nhanh, em có thể thử K từ 1 đến 1000 mà không tốn thời gian. Việc phải thử nhiều K chỉ làm vấn đề tốc độ tệ hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử có thuật toán B siêu nhanh, nhưng nếu bạn đưa sai K, kết quả sẽ vô nghĩa. Vấn đề của B là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là nó đòi hỏi K phải đúng... Chờ đã. Vậy vấn đề của K-Means cũng tương tự. Nó không chạy được nếu không có K."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Vậy đâu là một khuyết điểm mang tính cấu trúc của thuật toán này?"
+      },
+      {
+        "role": "Student",
+        "text": "Là nó bắt buộc phải biết trước số lượng cụm K. Nếu không có K, mọi thứ khác đều vô nghĩa."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Tốc độ là một vấn đề về hiệu năng, nhưng việc phải biết trước K là một hạn chế về mặt cấu trúc và điều kiện tiên quyết."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q20",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn viết rằng K-Means không cần chọn số cụm K. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó là thuật toán phân cụm tự động. Nó phải tự biết tìm ra bao nhiêu cụm là tối ưu chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy chữ 'K' trong tên thuật toán 'K-Means' có ý nghĩa gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Em nghĩ nó chỉ là một ký hiệu, hoặc tên viết tắt. Nó không có nghĩa là mình phải cung cấp số K."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử mình chạy thuật toán này hai lần trên cùng một bộ dữ liệu. Kết quả có giống nhau không?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải giống nhau chứ. Nếu không thì thuật toán này không đáng tin cậy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu lần đầu mình muốn có 2 cụm, lần sau muốn 8 cụm. Thuật toán có tự điều chỉnh không?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ phớt lờ yêu cầu đó và tìm ra số cụm tối ưu của dữ liệu thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Thư viện scikit-learn có hàm `KMeans(n_clusters=...)`. Tham số `n_clusters` đó dùng để làm gì?"
+      },
+      {
+        "role": "Student",
+        "text": "...Chắc để ép thuật toán ra đúng số cụm đó. Vậy là... nó không tự tìm được K à?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy yếu tố nào quyết định số cụm mà K-Means sẽ tạo ra?"
+      },
+      {
+        "role": "Student",
+        "text": "Là do người dùng phải cung cấp tham số K. Phát biểu ban đầu của em sai rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Bạn đã nhầm lẫn rằng K-Means có thể tự tìm K. Thực tế, đó là một tham số đầu vào bắt buộc."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q21",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng K-Means luôn tìm ra cực đại toàn cục. Cực đại của cái gì vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Cực đại của 'độ tốt' của việc phân cụm. Thuật toán tối ưu phải tìm ra giải pháp tốt nhất, tức là cực đại."
+      },
+      {
+        "role": "Tutor",
+        "text": "K-Means đo 'độ tốt' bằng cách nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Bằng khoảng cách. Nó cố gắng làm cho các điểm trong cùng một cụm gần nhau nhất có thể."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy để các điểm 'gần nhau', tổng khoảng cách cần lớn hay nhỏ?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải... nhỏ chứ. Nhưng nó vẫn phải tìm ra giá trị nhỏ nhất toàn cục, không thể nào khác được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét 4 điểm trên một đường thẳng: 1, 2, 9, 10. K=2. Nếu tâm khởi tạo ở 1.5 và 9.5?"
+      },
+      {
+        "role": "Student",
+        "text": "Quá dễ. Kết quả sẽ là cụm (1, 2) và cụm (9, 10). Đây là kết quả tối ưu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Giờ nếu tâm khởi tạo ở 3 và 4 thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Khởi tạo như vậy thì ngớ ngẩn. Nhưng thuật toán sẽ tự điều chỉnh. Tâm sẽ di chuyển về phía các điểm và vẫn ra kết quả đúng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hãy chạy bước đầu tiên. Điểm 9 gần tâm 3 hay 4 hơn?"
+      },
+      {
+        "role": "Student",
+        "text": "Gần tâm 4 hơn. Vậy cụm sẽ là (1,2) và (9,10)? Khoan... Điểm 9 gần tâm 4, điểm 10 cũng gần tâm 4. Vậy cụm là (1,2) và (9,10). Vẫn đúng mà?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Điểm 2 gần tâm 3 hay 4? Tâm 3 cách nó 1 đơn vị, tâm 4 cách nó 2. Vậy điểm 2 thuộc về tâm 3. Còn điểm 9 thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Điểm 9 cách tâm 4 là 5, cách tâm 3 là 6. Vậy nó thuộc về tâm 4. Cụm là (1,2) và (9,10)... Ơ, từ từ, tôi tính nhầm. Điểm 2 gần tâm 3. Điểm 1 gần tâm 3. Điểm 9 gần tâm 4. Điểm 10 gần tâm 4. Đúng rồi mà. Vẫn là (1,2) và (9,10) chứ?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Khoan. Giả sử tâm khởi tạo ở 1 và 8. Điểm 9 sẽ thuộc cụm nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Điểm 9 sẽ thuộc cụm có tâm là 8. Cụm kia là (1,2). Sau đó tâm sẽ cập nhật... Nó sẽ bị kẹt ở một kết quả không tối ưu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, trạng thái 'bị kẹt' nhưng ổn định đó gọi là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là... cực tiểu cục bộ. Vì nó tối ưu trong một phạm vi nhỏ nhưng không phải là tốt nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tóm lại, K-Means cố gắng tối thiểu hóa tổng khoảng cách. Vì cách khởi tạo, nó có thể hội tụ về một giải pháp 'tốt' nhưng không phải 'tốt nhất', đó là cực tiểu cục bộ, không phải cực đại toàn cục."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q22",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn cho rằng K-Means chỉ gặp vấn đề với dữ liệu 2 chiều. Tại sao lại là 2 chiều?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì trong các ví dụ minh họa, người ta thường dùng dữ liệu 2 chiều để chỉ ra lúc nào K-Means thất bại. Với nhiều chiều hơn, nó sẽ có nhiều thông tin hơn để phân cụm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy với dữ liệu 3 chiều, K-Means luôn hoạt động tốt hơn 2 chiều sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Thêm một chiều không gian sẽ giúp phân tách các cụm dễ hơn, không bị chồng chéo như trong mặt phẳng 2D."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tưởng tượng hai cụm dữ liệu 3D. Cụm thứ nhất là một đường xoắn ốc, cụm thứ hai nằm gọn bên trong nó. K-Means có phân biệt được không?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó là 3D mà. Miễn là chúng không chạm vào nhau, K-Means vẫn sẽ tìm được tâm và phân cụm được. Có thể cần nhiều lần lặp hơn thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tâm (centroid) của một cụm hình xoắn ốc sẽ nằm ở đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ nằm ở... trung tâm của vòng xoắn. Chắc là một điểm trong không gian trống."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy điểm đó có đại diện tốt cho cụm hình xoắn ốc không?"
+      },
+      {
+        "role": "Student",
+        "text": "À... không. Nó còn không thuộc cụm đó. Tâm của cụm bên trong cũng sẽ ở gần đó. Chúng sẽ bị lẫn vào nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy vấn đề cốt lõi là do số chiều hay do hình dạng của cụm?"
+      },
+      {
+        "role": "Student",
+        "text": "Là do hình dạng. Em đã hiểu. Vậy đáp án đúng là dữ liệu có phân bố phức tạp, không phải dạng hình cầu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Sai lầm của bạn là cho rằng số chiều là yếu tố quyết định, trong khi K-Means thất bại vì giả định các cụm phải có dạng hình cầu."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q23",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng DBSCAN dựa trên nhãn lớp. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì phải có nhãn thì thuật toán mới biết cách gom các điểm đúng vào một cụm chứ ạ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục tiêu của 'phân loại' và 'phân cụm' có giống nhau không?"
+      },
+      {
+        "role": "Student",
+        "text": "Khác nhau. Phân loại là gán nhãn, phân cụm là gom nhóm. Nhưng vẫn cần nhãn để kiểm tra xem nó gom đúng không."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử bạn có dữ liệu vị trí các ngôi sao. Chúng có nhãn 'chòm sao' sẵn không?"
+      },
+      {
+        "role": "Student",
+        "text": "Dạ không có. Nhưng khi phân cụm, mục tiêu của mình là tìm ra các chòm sao mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy thuật toán dựa vào đâu để nhóm chúng nếu không có nhãn cho trước?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó phải tự tìm ra. Nhưng nó vẫn cần một cơ sở nào đó, nếu không có nhãn thì sao nó biết điểm nào nên đi với điểm nào?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Thay vì 'nhãn', nó có thể dựa trên mối quan hệ nào giữa các điểm sao đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là khoảng cách? Những ngôi sao ở gần nhau thì tạo thành một cụm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Việc các điểm 'ở gần nhau' và 'tụ tập đông đúc' mô tả khái niệm gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó... mô tả mật độ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, bạn hãy trả lời lại câu hỏi ban đầu. DBSCAN dựa trên gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Dạ, DBSCAN dựa trên mật độ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Lỗi sai của bạn là nhầm lẫn phân cụm (tìm cấu trúc ẩn) với phân loại (học từ nhãn có sẵn)."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q24",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "[A] Bạn nói DBSCAN gom nhóm theo 'giá trị đầu ra'. Giá trị đó từ đâu mà có?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì các điểm trong cùng một cụm phải có cùng một giá trị đầu ra, giống như kết quả của một phép tính nào đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "[B] Vậy DBSCAN là thuật toán học có giám sát phải không?"
+      },
+      {
+        "role": "Student",
+        "text": "Em nghĩ vậy... nó phải dựa vào một cái nhãn hoặc giá trị có sẵn để gom nhóm chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Giả sử mình có tọa độ các vụ tai nạn, không có thông tin nào khác. DBSCAN có dùng được không?"
+      },
+      {
+        "role": "Student",
+        "text": "Được chứ ạ. Nó sẽ tìm ra các điểm có 'giá trị đầu ra' giống nhau. Có thể là một mã vùng ẩn nào đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mã vùng đó do mình cung cấp, hay thuật toán tự tìm ra?"
+      },
+      {
+        "role": "Student",
+        "text": "Thuật toán phải tự tìm ra chứ. Nhưng để gom được thì kết quả cuối của các điểm đó phải giống nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu thuật toán chưa chạy, làm sao nó biết 'kết quả cuối' để bắt đầu gom nhóm?"
+      },
+      {
+        "role": "Student",
+        "text": "Chỗ này em hơi rối... Vậy là nó không dùng giá trị có sẵn sao? Vậy nó dựa vào cái gì?"
+      },
+      {
+        "role": "Tutor",
+        "text": "[D] Chính xác. Nếu không có giá trị cho trước, nó có thể dựa vào đặc tính nào của chính các điểm đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Có lẽ là... vị trí của chúng? Các điểm ở gần nhau thì vào một cụm?"
+      },
+      {
+        "role": "Tutor",
+        "text": "[E] Đúng vậy. Bạn đã nhầm lẫn vì cho rằng DBSCAN cần một 'giá trị đầu ra' có trước, vốn là đặc điểm của học có giám sát. Thực tế, nó tạo ra cụm dựa trên mật độ và khoảng cách."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q25",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng learning rate là tham số của DBSCAN. Nó dùng để làm gì trong thuật toán này vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì để mô hình học. Thuật toán ML nào cũng cần tốc độ học để cập nhật và tìm ra kết quả tốt nhất chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Quá trình 'cập nhật' mà bạn nói, nó diễn ra như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ tính toán lỗi, rồi điều chỉnh các tham số của nó. Learning rate quyết định bước điều chỉnh đó nhanh hay chậm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Được rồi. Giờ hãy nghĩ về DBSCAN. Nó bắt đầu với một điểm, bước tiếp theo là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó tìm các điểm lân cận trong một bán kính nhất định."
+      },
+      {
+        "role": "Tutor",
+        "text": "Việc 'tìm lân cận' đó có phải là một quá trình 'điều chỉnh tham số' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không hẳn, nhưng nó là một phần của quá trình học. Chắc chắn phải có gì đó được tối ưu chứ, nếu không sao gọi là học được?"
+      },
+      {
+        "role": "Tutor",
+        "text": "DBSCAN có tính 'hàm lỗi' (loss function) để rồi giảm dần nó qua các bước không?"
+      },
+      {
+        "role": "Student",
+        "text": "Em không chắc... Nhưng không có learning rate thì làm sao nó biết khi nào nên dừng, hay học thế nào cho đúng?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một thuật toán cần 'learning rate' khi nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Khi... nó cần cập nhật tham số lặp đi lặp lại để giảm lỗi. DBSCAN... nó không làm vậy. Nó chỉ xác định các điểm một lần. Vậy là em sai."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Learning rate dành cho các mô hình tối ưu lặp lại. DBSCAN là thuật toán dựa trên mật độ, không có quá trình đó."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q26",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn dùng từ 'centroid'. Vì sao bạn nghĩ nó đúng với DBSCAN?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì centroid là trung tâm của một cụm. Các điểm ở xa thì cũng là một dạng trung tâm của vùng trống đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Theo K-Means, một centroid đại diện cho cái gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó đại diện cho trung bình của tất cả các điểm trong một cụm. Nó là trái tim của cụm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Ok. Giờ xét một điểm duy nhất, cách xa mọi cụm khác. Nó có điểm nào xung quanh không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nó đứng một mình. Nhưng chính vì thế nó là 'trung tâm' của sự cô lập đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một 'trung tâm' của một điểm duy nhất có ý nghĩa không?"
+      },
+      {
+        "role": "Student",
+        "text": "…Chắc là không. Nhưng nó vẫn phải được gán nhãn gì đó chứ?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Vậy một cái tên mô tả sự 'không thuộc về cụm nào' thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "À... Có lẽ là một điểm nhiễu, một điểm ngoại lai. Tức là 'noise'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Centroid là tâm của một cụm điểm, còn điểm đơn lẻ ở vùng mật độ thấp trong DBSCAN được gọi là noise."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q27",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "[A] Bạn nói DBSCAN đơn giản hơn K-Means về tham số. Vì sao lại thế?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó không cần biết trước số cụm. K-Means phải đoán `k`, rất phiền. DBSCAN chỉ cần `epsilon` và `minPts` là chạy được."
+      },
+      {
+        "role": "Tutor",
+        "text": "[B] Vậy `epsilon` và `minPts` có ý nghĩa gì trong thuật toán?"
+      },
+      {
+        "role": "Student",
+        "text": "Là bán kính và số điểm tối thiểu để tạo thành một cụm. Mấy cái này chỉ cần đặt giá trị vào là xong."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Nếu bạn chọn `epsilon` quá lớn, điều gì sẽ xảy ra với các cụm?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì... chắc là nhiều điểm sẽ thuộc vào một cụm hơn. Nhưng vẫn tốt hơn là phải đoán `k`."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Nếu lớn đến mức mọi điểm đều là hàng xóm của nhau thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Vậy thì tất cả sẽ thành một cụm duy nhất. Nhưng không ai lại chọn `epsilon` ngớ ngẩn như vậy cả."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Vậy việc chọn một giá trị `epsilon` 'không ngớ ngẩn' có đơn giản không?"
+      },
+      {
+        "role": "Student",
+        "text": "... Chắc là không. Nó ảnh hưởng trực tiếp đến số cụm được hình thành. Việc chọn sai cũng tệ như đoán sai `k`."
+      },
+      {
+        "role": "Tutor",
+        "text": "[D] Vậy, khi so sánh với K-Means, ưu điểm cốt lõi của DBSCAN là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là nó không cần biết trước số cụm. Còn việc tinh chỉnh tham số của nó cũng phức tạp theo cách riêng."
+      },
+      {
+        "role": "Tutor",
+        "text": "[E] Chính xác. Ưu điểm là không cần `k`, nhưng sự đơn giản đó được đánh đổi bằng độ nhạy của `epsilon` và `minPts`."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q28",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng DBSCAN bắt buộc phải biết trước số cụm K. Tại sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy ạ. Thuật toán phân cụm nào cũng phải biết chia thành mấy cụm chứ?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy trong DBSCAN, tham số K được dùng để làm gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để nó biết khi nào cần dừng lại và tạo ra đúng K cụm như mình muốn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hãy nhìn vào các tham số của DBSCAN: eps và minPts. K nằm ở đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Có thể nó là một tham số ẩn hoặc được suy ra. Nhưng chắc chắn phải có."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử không có K. Thuật toán chỉ dựa vào eps và minPts. Nó có chạy được không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không thể nào. Nếu không có K, nó sẽ không biết mục tiêu là bao nhiêu cụm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Thuật toán chỉ tìm các điểm lõi và mở rộng ra. Quá trình đó có cần biết tổng số cụm không?"
+      },
+      {
+        "role": "Student",
+        "text": "…Chắc là không. Vậy số cụm là kết quả chứ không phải đầu vào."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Vậy khuyết điểm thực sự của nó liên quan đến tham số nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là eps và minPts. Nếu mật độ không đều thì nó sẽ không hiệu quả."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn việc phải cung cấp K của K-Means với DBSCAN. Khuyết điểm của DBSCAN là không hiệu quả với dữ liệu có mật độ biến động."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q29",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Trong lời giải, bạn cho rằng DBSCAN cần biết trước số cụm. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó là thuật toán phân cụm. Mục tiêu là chia dữ liệu thành K cụm, nên phải có K chứ ạ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy trong K-Means, tham số K dùng để làm gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để khai báo cho thuật toán biết mình muốn tìm chính xác bao nhiêu cụm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tốt. Còn hai tham số chính của DBSCAN là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là epsilon và MinPts. Nhưng nó vẫn phải có cách nào đó để biết K, không thì làm sao nó chạy được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu ta chạy DBSCAN và nó tìm ra 5 cụm. Sau đó, ta thay đổi epsilon một chút và nó tìm ra 3 cụm. Vậy số K ban đầu là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "...Thì tức là mình chọn epsilon và MinPts sai. Mình phải chọn làm sao để nó ra đúng số cụm mình muốn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy là bạn đang 'chọn' kết quả, hay thuật toán đang 'tìm' kết quả?"
+      },
+      {
+        "role": "Student",
+        "text": "Là... thuật toán đang tìm kết quả. Số cụm là đầu ra, không phải đầu vào."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy giờ bạn hãy trả lời lại câu hỏi ban đầu. Điểm khác biệt nổi bật là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "DBSCAN không cần biết trước số cụm. K-Means thì có."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm lẫn khi cho rằng DBSCAN cần tham số K đầu vào như K-Means. Thực tế, số cụm trong DBSCAN là kết quả được khám phá."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q30",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ vì sao dữ liệu có nhiều điểm tập trung lại làm DBSCAN kém hiệu quả?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì khi các điểm quá gần nhau, thuật toán sẽ không phân biệt được các cụm riêng lẻ. Nó sẽ gộp tất cả thành một cụm lớn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục tiêu của DBSCAN là tìm kiếm vùng có mật độ cao, đúng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng, nhưng 'cao' vừa phải thôi. Nếu quá tập trung thì nó sẽ bị 'lóa', không còn phân biệt được nữa. Mọi thứ đều là điểm lõi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hãy tưởng tượng hai cụm hình tròn, rất đặc, nằm cách xa nhau. DBSCAN sẽ xử lý thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Với tình huống đó thì chắc nó sẽ gộp mỗi hình tròn thành một cụm. Nhưng đây là trường hợp lý tưởng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy vấn đề nằm ở 'tập trung' hay ở 'cách xa nhau'?"
+      },
+      {
+        "role": "Student",
+        "text": "Cả hai. Nhưng nếu không có khoảng cách, mà hai cụm đó chồng lên nhau một chút, nó sẽ gộp thành một. Chứng tỏ mật độ cao là vấn đề."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giờ tưởng tượng một cụm rất đặc và một cụm khác thưa hơn. Một bộ tham số có tìm được cả hai không?"
+      },
+      {
+        "role": "Student",
+        "text": "À... Nếu tham số cho cụm đặc thì sẽ bỏ sót cụm thưa. Nếu cho cụm thưa thì cụm đặc có thể bị gộp lại."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy đâu là điểm yếu thực sự của DBSCAN trong tình huống này?"
+      },
+      {
+        "role": "Student",
+        "text": "Là khi mật độ của các cụm khác nhau, hay là 'mật độ biến động'. Nó không xử lý tốt được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Điểm yếu của DBSCAN không phải là mật độ cao, mà là khi mật độ không đồng đều giữa các cụm."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q31",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn viết rằng chuẩn hóa làm việc chọn epsilon cố định không hiệu quả. Tại sao bạn lại nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì chuẩn hóa làm thay đổi khoảng cách giữa các điểm. Một epsilon cố định sẽ không còn đúng với dữ liệu gốc nữa."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục đích chính của việc chuẩn hóa dữ liệu là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để đưa các cột về cùng một thang đo. Nhưng như vậy là làm sai lệch cấu trúc dữ liệu ban đầu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử có 2 chiều: tuổi (1-100) và lương (1000-100000). Epsilon=50 có ý nghĩa gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ bắt các điểm gần nhau theo tuổi, nhưng gần như vô dụng với lương. Khoảng cách sẽ bị chiều lương lấn át hoàn toàn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nếu không chuẩn hóa, làm sao chọn một epsilon duy nhất cho cả hai?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì không thể chọn. Rõ ràng là chuẩn hóa làm cho việc chọn epsilon trở nên phức tạp hơn. Nó làm hỏng dữ liệu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu chuẩn hóa cả hai về [0,1], epsilon=0.1 thì sao? Nó có so sánh được không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có thể so sánh được... nhưng khoảng cách đã bị thay đổi. Em vẫn thấy việc đó không đáng tin cậy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy chuẩn hóa giúp hay cản trở việc chọn một epsilon có ý nghĩa?"
+      },
+      {
+        "role": "Student",
+        "text": "... Có vẻ là giúp. Vậy thì khi nào epsilon cố định mới thật sự không hiệu quả? Chắc là khi mật độ cụm khác nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tóm lại, lỗi sai của bạn là cho rằng chuẩn hóa là vấn đề. Thực tế, vấn đề cốt lõi là khi một epsilon không thể phù hợp với các vùng có mật độ khác nhau."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q32",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói K-Means bắt cụm không hình cầu tốt hơn. Tại sao lại vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó tìm tâm và gán các điểm gần nhất. Cách đó hiệu quả cho mọi hình dạng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục tiêu của K-Means là tối thiểu hóa đại lượng nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Khoảng cách từ điểm đến tâm cụm. Càng gần tâm thì càng thuộc về cụm đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tưởng tượng hai cụm hình trăng lưỡi liềm lồng vào nhau. K-Means sẽ đặt tâm ở đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ đặt một tâm vào giữa mỗi hình lưỡi liềm thôi, có gì đâu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy các điểm ở đầu nhọn của lưỡi liềm thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Các điểm đó sẽ được gán cho tâm gần nó hơn... có thể là tâm của cụm kia?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy kết quả cuối cùng có còn là hai hình lưỡi liềm không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Chắc là không. Nó sẽ cắt mỗi lưỡi liềm ra làm đôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy thuật toán dựa vào khoảng cách tới tâm phù hợp với hình dạng nào nhất?"
+      },
+      {
+        "role": "Student",
+        "text": "Hình dạng mà mọi điểm đều gần tâm... như hình tròn, hình cầu. Giờ thì mình đã hiểu câu hỏi. Đáp án là DBSCAN."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Sai lầm là cho rằng 'tìm tâm' hiệu quả với mọi hình dạng. K-Means bị giới hạn bởi giả định về cụm hình cầu."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q33",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng K-Means luôn phù hợp hơn. Dựa vào đâu bạn kết luận vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì K-Means là thuật toán cơ bản và phổ biến nhất. Nó hiệu quả trong hầu hết các trường hợp."
+      },
+      {
+        "role": "Tutor",
+        "text": "K-Means xác định một cụm dựa trên tiêu chí nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó dựa trên khoảng cách đến tâm cụm (centroid). Các điểm gần một tâm sẽ thuộc cụm đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hãy tưởng tượng hai vòng tròn đồng tâm. Một nhỏ, một lớn bao ngoài."
+      },
+      {
+        "role": "Student",
+        "text": "Vâng, em hình dung được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Với 2 tâm cụm, K-Means sẽ phân chia các điểm thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ chia không gian thành hai nửa. Một nửa vòng trong và nửa vòng ngoài sẽ thuộc cụm 1. Phần còn lại thuộc cụm 2."
+      },
+      {
+        "role": "Tutor",
+        "text": "Kết quả đó có thể hiện hai vòng tròn riêng biệt không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nhưng nó đã phân cụm được dữ liệu. Nó vẫn hoạt động đúng theo logic của nó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mục tiêu là phân cụm, hay phân cụm đúng hình dạng thực tế?"
+      },
+      {
+        "role": "Student",
+        "text": "... Chắc là phải đúng hình dạng. Vậy là K-Means không làm được việc này."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy với dữ liệu vòng tròn đồng tâm, K-Means có phải lựa chọn hợp lý không?"
+      },
+      {
+        "role": "Student",
+        "text": "Dạ không. Vì nó giả định các cụm phải có dạng hình cầu quanh tâm."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Hạn chế của K-Means là giả định cụm hình cầu. DBSCAN thì không, nên phù hợp hơn cho hình dạng phức tạp."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q34",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "[A] Bạn viết K-Means không cần tham số. Vì sao bạn nghĩ như vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì K là số cụm mình muốn tìm. Nó là mục tiêu chứ không phải tham số thuật toán."
+      },
+      {
+        "role": "Tutor",
+        "text": "[B] Vậy theo bạn, tham số của thuật toán là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là những thứ máy tính tự điều chỉnh, như learning rate. K là mình đưa vào từ đầu."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Nếu mình không cho bạn biết K, bạn có chạy được thuật toán K-Means không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nhưng đó là do thiếu đầu vào, chứ không phải do thiếu tham số. Nó giống như không có dữ liệu vậy."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Giả sử bạn chạy với K=3 và K=10. Kết quả phân cụm có giống nhau không?"
+      },
+      {
+        "role": "Student",
+        "text": "Tất nhiên là khác nhau. Nhưng đó là do mình thay đổi mục tiêu mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Một giá trị bạn phải chọn, và việc thay đổi nó làm thay đổi kết quả. Đó là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "…Chắc là một tham số. Nhưng em vẫn thấy nó khác các tham số khác."
+      },
+      {
+        "role": "Tutor",
+        "text": "[D] Vậy K-Means có cần một giá trị đầu vào là K để chạy không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có. Vậy ưu điểm của nó không phải là không cần tham số. Nó hiệu quả với dữ liệu lớn."
+      },
+      {
+        "role": "Tutor",
+        "text": "[E] Đúng vậy. Bạn đã nhầm lẫn 'tham số' với 'tham số tự điều chỉnh'. K là một tham số mà người dùng phải cung cấp."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q35",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng 'giảm chiều' là 'tăng số chiều'. Vì sao bạn nghĩ vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó là một thuật ngữ kỹ thuật. Em nghĩ nó không có nghĩa đen, mà mang một ý nghĩa đặc biệt, ngược lại."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trong tiếng Việt, từ 'giảm' thường có nghĩa là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là làm cho ít đi. Nhưng đây là khoa học dữ liệu, em nghĩ nó phải khác biệt."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo logic đó, 'giảm tốc độ' có nghĩa là đi nhanh hơn không?"
+      },
+      {
+        "role": "Student",
+        "text": "So sánh này không hợp lý lắm. Tốc độ và chiều dữ liệu là hai thứ hoàn toàn khác nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Khái niệm thì khác nhau. Nhưng từ 'giảm' thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Em vẫn thấy nó có thể mang nghĩa đặc biệt. Có thể 'giảm' sự mơ hồ bằng cách 'tăng' số chiều cho rõ ràng hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một bộ dữ liệu có 10 cột. Sau khi 'giảm chiều', nó còn mấy cột?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải... ít hơn 10 chứ. À, logic của em có vấn đề rồi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy 'giảm chiều' có thể nào làm tăng số chiều lên được không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không thể. Vậy giảm chiều là quá trình chuyển dữ liệu sang không gian có ít chiều hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn vì cho rằng thuật ngữ kỹ thuật phải có nghĩa ngược. Thực chất, 'giảm chiều' mô tả đúng hành động của nó là làm số chiều ít đi."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q36",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "(A) Bạn cho rằng dữ liệu mới phải giống hệt dữ liệu gốc. Vì sao lại cần 'giống hệt'?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nếu không giống hệt, nghĩa là thông tin đã sai lệch. Kết quả phân tích sẽ không còn chính xác nữa."
+      },
+      {
+        "role": "Tutor",
+        "text": "(B) Vậy 'giảm chiều' có nghĩa là gì nếu kết quả cuối cùng phải y hệt ban đầu?"
+      },
+      {
+        "role": "Student",
+        "text": "Em không rõ, nhưng nếu dữ liệu bị mất mát thì nó trở nên vô dụng. Dữ liệu phải chính xác tuyệt đối."
+      },
+      {
+        "role": "Tutor",
+        "text": "(C) Một bức ảnh 2D chụp một người 3D. Bức ảnh có 'giống hệt' người đó không?"
+      },
+      {
+        "role": "Student",
+        "text": "Tất nhiên là không. Đó là ảnh, còn đây là dữ liệu. Dữ liệu khoa học đòi hỏi sự chính xác, không thể so sánh với ảnh được."
+      },
+      {
+        "role": "Tutor",
+        "text": "(C) Giả sử có 1000 đặc điểm về một người. Mình chỉ dùng 2 đặc điểm chiều cao và cân nặng để nhận diện. Dữ liệu đó có 'chính xác tuyệt đối' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nó thiếu rất nhiều thông tin. Nhưng... người ta vẫn dùng để tính BMI hay gì đó mà. Nó vẫn có ích."
+      },
+      {
+        "role": "Tutor",
+        "text": "(C) Vậy mục tiêu của việc chỉ dùng chiều cao và cân nặng là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là để... tính toán một thứ cụ thể, dù đã bỏ qua các thông tin khác. Mục tiêu không phải là tái tạo lại toàn bộ người đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "(D) Vậy mục tiêu của giảm chiều nói chung là gì? Áp dụng lại logic vừa rồi."
+      },
+      {
+        "role": "Student",
+        "text": "Là giữ lại những thứ có ý nghĩa cho một mục đích nào đó, dù phải chấp nhận mất thông tin không liên quan. Giống như đáp án B."
+      },
+      {
+        "role": "Tutor",
+        "text": "(E) Chính xác. Giảm chiều là chấp nhận mất mát thông tin để giữ lại các tính chất có ý nghĩa nhất trong không gian ít chiều hơn."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q37",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói Decision Tree giảm chiều dữ liệu. Nó thực hiện việc đó như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó chọn ra các đặc trưng quan trọng nhất để phân chia. Những đặc trưng không được dùng coi như bị loại bỏ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy mục tiêu chính của Decision Tree là 'loại bỏ đặc trưng' sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Không hẳn, nhưng đó là một kết quả. Ta chỉ cần quan tâm ít đặc trưng hơn, đó chính là giảm chiều rồi còn gì?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử một Decision Tree dùng tất cả các đặc trưng. Nó còn giảm chiều không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đó là trường hợp xấu. Một cây tốt sẽ không dùng hết. Nên thực tế nó vẫn giúp mình chọn lọc và giảm bớt sự phức tạp."
+      },
+      {
+        "role": "Tutor",
+        "text": "Output của thuật toán PCA là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là một bộ dữ liệu mới, có số chiều ít hơn bộ dữ liệu gốc."
+      },
+      {
+        "role": "Tutor",
+        "text": "Thế còn output của một Decision Tree là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là... một dự đoán cho dữ liệu đầu vào."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một bên tạo ra 'dữ liệu mới', một bên tạo ra 'dự đoán'. Chúng có cùng bản chất không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không. Vậy Decision Tree là mô hình dự đoán, nó chỉ có thể được dùng để lựa chọn đặc trưng, chứ bản thân nó không phải thuật toán giảm chiều."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Bạn đã nhầm lẫn giữa việc 'dùng một mô hình để chọn đặc trưng' và 'thuật toán giảm chiều' - một thuật toán chuyên biến đổi dữ liệu."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q38",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng PCA loại bỏ chiều có phương sai lớn nhất. Vì sao lại vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì phương sai lớn nghĩa là dữ liệu biến động mạnh, không ổn định. Loại bỏ nó sẽ giúp mô hình tốt hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục tiêu chính của PCA là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là giảm chiều dữ liệu, loại bỏ thông tin không cần thiết để giữ lại những gì quan trọng nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hãy tưởng tượng một chiều dữ liệu mà tất cả giá trị đều bằng nhau. Phương sai của nó bằng bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Bằng không. Nó không có biến động nào cả."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chiều đó có chứa thông tin để phân biệt các điểm dữ liệu không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nó hoàn toàn vô dụng. Nhưng chiều có phương sai lớn nhất mới là vấn đề, nó giống như nhiễu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một bên là 'hoàn toàn vô dụng', một bên là 'giống như nhiễu'. PCA nên bỏ cái nào để mất ít thông tin hơn?"
+      },
+      {
+        "role": "Student",
+        "text": "... Chắc là cái 'hoàn toàn vô dụng'. Tức là chiều có phương sai bằng không, hoặc rất nhỏ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy quay lại câu hỏi ban đầu, chiều dữ liệu nào có thể loại bỏ?"
+      },
+      {
+        "role": "Student",
+        "text": "Là chiều có phương sai nhỏ nhất, hay chiều ít biến động."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. PCA giữ lại các chiều có phương sai lớn vì chúng chứa nhiều thông tin nhất, và loại bỏ các chiều có phương sai nhỏ."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q39",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn cho rằng cột Văn bị loại vì là dữ liệu danh mục. Cột đó đang chứa số hay chữ?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó chứa số, nhưng em nghĩ nó biểu diễn cho một danh mục. PCA chỉ xử lý số thực, nên phải loại nó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Mục tiêu chính của thuật toán PCA là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để giảm chiều dữ liệu, tìm ra các đặc trưng chính."
+      },
+      {
+        "role": "Tutor",
+        "text": "PCA tìm ra đặc trưng chính dựa trên yếu tố nào của dữ liệu?"
+      },
+      {
+        "role": "Student",
+        "text": "Dựa trên sự biến thiên. Cột nào biến thiên nhiều thì quan trọng. Nhưng cột Văn là danh mục nên không tính."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử cột Văn đó có giá trị là [8, 8, 8, 8]. Độ biến thiên của nó là bao nhiêu?"
+      },
+      {
+        "role": "Student",
+        "text": "Tất nhiên là 0 rồi, vì tất cả đều là 8. Nó không hề thay đổi."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một cột có độ biến thiên bằng 0 thì đóng góp bao nhiêu thông tin cho PCA?"
+      },
+      {
+        "role": "Student",
+        "text": "À... nó không đóng góp chút thông tin nào về sự khác biệt giữa các điểm dữ liệu cả."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy bây giờ, bạn hãy trả lời lại câu hỏi. Vì sao cột Văn bị loại bỏ?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì cột đó có độ lệch bằng 0, tức là phương sai bằng 0, không có sự biến thiên."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhận ra vấn đề. Cột bị loại vì không có phương sai, chứ không phải vì bản chất danh mục."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q40",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ việc xóa 1 cột trong 4 cột không phải là giảm 25% dữ liệu. Tại sao lại vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó còn tùy thuộc vào cột đó chứa gì. Nếu cột đó không quan trọng, thì sao lại tính là 25% được? Lượng dữ liệu mất đi phải ít hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy theo bạn, 'dữ liệu' ở đây là gì? Là số cột hay nội dung bên trong?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải là nội dung chứ. Một cột toàn số 0 thì xóa đi đâu có mất nhiều dữ liệu bằng cột chứa thông tin quan trọng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Xét một ví dụ khác nhé. Mình có 4 cái hộp, trong đó 1 hộp rỗng. Mình vứt cái hộp rỗng đi. Mình đã vứt đi bao nhiêu phần trăm số hộp?"
+      },
+      {
+        "role": "Student",
+        "text": "Là 1/4, tức 25% số hộp. Nhưng nó là hộp rỗng, nên thực chất đâu có mất gì."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bạn thấy có sự khác biệt nào giữa câu hỏi về 'số hộp' và 'giá trị bên trong' không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có. Một cái là đếm số lượng, một cái là xem xét giá trị. ... A, vậy câu hỏi gốc chỉ đang hỏi về số lượng cột thôi à?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy khi câu hỏi chỉ nói về việc xóa 1 trong 4 cột, cách tính tỷ lệ đúng là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là lấy (1 cột bị xóa / 4 cột tổng) * 100% = 25%. Em đã hiểu. Vậy câu hỏi chỉ đơn giản là về tỷ lệ số lượng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Lỗi sai của bạn là đã đánh đồng 'số lượng cột dữ liệu' với 'lượng thông tin' mà cột đó chứa. Câu hỏi này chỉ hỏi về số lượng."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q41",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói PCA có thể đảo ngược hoàn toàn. Dựa vào đâu bạn kết luận như vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì PCA là một phép biến đổi ma trận. Nếu có ma trận biến đổi thì sẽ có ma trận nghịch đảo để quay lại."
+      },
+      {
+        "role": "Tutor",
+        "text": "Phép biến đổi của PCA cụ thể là gì? Nó làm gì với dữ liệu?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó chiếu dữ liệu lên các trục chính (principal components) để tạo ra tọa độ mới."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử ta có 3 chiều và giảm còn 2 chiều. Thông tin từ chiều thứ ba đi đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó không mất đi. Nó được 'nén' vào 2 chiều mới. Miễn là mình giữ lại các ma trận, mình có thể tính ngược lại."
+      },
+      {
+        "role": "Tutor",
+        "text": "Bạn đã bỏ đi vector riêng ứng với chiều thứ ba. Làm sao nhân ngược lại với thứ không có?"
+      },
+      {
+        "role": "Student",
+        "text": "Nhưng... các vector riêng kia đã chứa phần lớn thông tin rồi. Phép toán là xác định mà, cứ áp dụng công thức ngược là được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một điểm 2D mới có thể là hình chiếu của bao nhiêu điểm 3D cũ?"
+      },
+      {
+        "role": "Student",
+        "text": "Chỉ một chứ? À... có thể nhiều. Một đường thẳng trong không gian 3D có thể chiếu thành một điểm 2D."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy, khi ta bỏ bớt dù chỉ một chiều, điều gì chắc chắn bị mất đi?"
+      },
+      {
+        "role": "Student",
+        "text": "Thông tin. Thông tin của chiều bị loại bỏ. Vậy nên không thể khôi phục lại chính xác được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Niềm tin của bạn sai ở chỗ cho rằng thông tin được 'nén' mà không mất. Thực tế, PCA giảm chiều bằng cách loại bỏ thông tin, nên không thể đảo ngược hoàn toàn."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q42",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói PCA tìm nhãn mới. Nhãn đó giúp ta phân loại dữ liệu đúng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Nó gom các điểm dữ liệu tương tự vào một nhóm, rồi gán cho một nhãn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy kết quả của PCA cho mỗi điểm dữ liệu là một cái tên, như 'nhóm A' à?"
+      },
+      {
+        "role": "Student",
+        "text": "Chính xác. Hoặc là một con số đại diện cho nhóm, như 1, 2, 3."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một điểm dữ liệu có thể có kết quả PCA là [0.75, -1.4] không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không thể. Nhãn sao lại là số thực được? Phải là số nguyên hoặc một cái tên chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "Thực tế, kết quả PCA.transform() lại thường là các số thực. Điều này mâu thuẫn gì với logic của bạn?"
+      },
+      {
+        "role": "Student",
+        "text": "Chờ đã... Nếu nó trả về số thực, nó không phải là nhãn. Vậy nó là gì?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu không phải nhãn, vậy một cặp số thực như [0.75, -1.4] thường đại diện cho gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó giống như tọa độ của một điểm trong một hệ trục nào đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy PCA tạo ra tọa độ mới hay nhãn mới? Quay lại câu hỏi ban đầu."
+      },
+      {
+        "role": "Student",
+        "text": "Nó tạo ra một không gian mới với các tọa độ mới. Vậy đáp án là 'Không gian con tuyến tính mới'."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Bạn đã nhầm lẫn PCA tạo ra nhãn (giống K-Means), nhưng thực ra nó tạo ra một không gian tọa độ mới."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q43",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn viết rằng PCA nên tối thiểu hóa phương sai. Vì sao làm vậy lại tốt cho dữ liệu?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó làm dữ liệu gọn hơn. Tối thiểu hóa phương sai là loại bỏ sự khác biệt, làm cho các điểm gần nhau hơn, dễ phân tích hơn."
+      },
+      {
+        "role": "Tutor",
+        "text": "Phương sai đo lường điều gì trong một tập dữ liệu?"
+      },
+      {
+        "role": "Student",
+        "text": "Sự phân tán của dữ liệu quanh giá trị trung bình. Phương sai cao nghĩa là dữ liệu trải rộng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu một tập dữ liệu có phương sai bằng 0, nó trông như thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Tất cả các điểm dữ liệu đều giống hệt nhau. Chúng chập lại thành một điểm duy nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy tập dữ liệu đó có chứa thông tin gì hữu ích không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nó không có thông tin gì cả. Nhưng mục tiêu của PCA là giảm chiều, không phải là làm mất hết thông tin."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu mục tiêu là giữ thông tin, ta nên giữ hay loại bỏ phương sai?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải loại bỏ phương sai không cần thiết, tức là nhiễu. Giữ lại cái cốt lõi. Tối thiểu hóa phương sai là làm điều đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử ta có một chiều mới chứa 99% phương sai. Chiều đó là thông tin hay nhiễu?"
+      },
+      {
+        "role": "Student",
+        "text": "Chờ đã... Nếu nó chiếm 99% sự thay đổi của dữ liệu, nó phải là thông tin quan trọng chứ. Vậy... logic của em sai ở đâu đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy để giữ lại nhiều thông tin nhất, ta nên chọn chiều có phương sai thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải chọn chiều có phương sai lớn nhất. Tức là PCA phải tối đa hóa phương sai."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm lẫn việc giảm phương sai với việc loại bỏ thông tin. PCA giữ lại các chiều có phương sai lớn nhất vì chúng chứa nhiều thông tin nhất."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q44",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn viết PCA bắt cấu trúc phi tuyến tốt. Cơ sở nào cho thấy điều này vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "PCA tìm các thành phần chính, là hướng biến thiên lớn nhất của dữ liệu. Cấu trúc nào mà chẳng có hướng biến thiên."
+      },
+      {
+        "role": "Tutor",
+        "text": "Trong PCA, 'hướng biến thiên lớn nhất' được đo bằng gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Bằng phương sai. Nó tìm một trục thẳng sao cho phương sai của các điểm khi chiếu lên đó là lớn nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Tưởng tượng dữ liệu là một đường cong hình chữ S. Trục phương sai lớn nhất sẽ nằm đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là một đường chéo, nối hai đầu của chữ S để bắt được nhiều phương sai nhất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu chiếu mọi điểm trên chữ S lên đường chéo đó thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì các điểm sẽ được sắp xếp trên đường thẳng đó. Nó vẫn là một cách biểu diễn dữ liệu mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Các điểm ở hai đầu và điểm ở giữa của chữ S, sau khi chiếu, vị trí của chúng thay đổi thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Ừm... các điểm ở hai đầu sẽ bị chiếu vào gần nhau. Còn các điểm ở khúc giữa cũng bị chiếu vào đó. Cấu trúc chữ S biến mất."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy PCA thực sự hiệu quả với cấu trúc dữ liệu dạng nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó chỉ hiệu quả khi cấu trúc dữ liệu vốn đã gần giống một đường thẳng hoặc một siêu phẳng. Tức là cấu trúc tuyến tính. Ưu điểm của nó là nhanh."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm lẫn PCA, một phương pháp tuyến tính, với các phương pháp có thể xử lý cấu trúc phức tạp, phi tuyến. Ưu điểm của nó chính là tốc độ do bản chất tuyến tính."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q45",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói PCA không ổn định do có yếu tố ngẫu nhiên. Yếu tố ngẫu nhiên đó nằm ở đâu trong thuật toán?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì trong quá trình tính toán của nó. Hầu hết các thuật toán ML đều có bước khởi tạo ngẫu nhiên để tìm lời giải mà."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy bước 'khởi tạo ngẫu nhiên' của PCA là bước nào?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là bước tìm các trục chính. Nó phải xuất phát từ một vector ngẫu nhiên nào đó rồi tinh chỉnh dần để tối ưu phương sai."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu chạy PCA hai lần trên cùng một bộ dữ liệu, kết quả có khác nhau không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc chắn là có. Vì nó ngẫu nhiên nên mỗi lần chạy sẽ ra một chút khác biệt, đó là lý do nó không ổn định."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy sự khác biệt đó đến từ đâu? Từ ma trận hiệp phương sai hay từ việc tính vector riêng?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là từ việc tính vector riêng. Máy tính không thể tính chính xác tuyệt đối, và có thể thuật toán bên trong nó có khởi tạo ngẫu nhiên."
+      },
+      {
+        "role": "Tutor",
+        "text": "Phép tính vector riêng cho một ma trận cho trước có phải là một phép toán tất định không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Em không chắc. Nhưng nếu nó không ngẫu nhiên, tại sao người ta lại bàn về sự không ổn định của các thuật toán?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nếu PCA là tất định, 'không ổn định do ngẫu nhiên' có phải là một khuyết điểm của nó không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là không... Nếu vậy thì đó không phải là khuyết điểm. Vậy khuyết điểm thực sự của nó là gì?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Suy luận của bạn đã đúng. Lỗi sai của bạn là giả định PCA có bước ngẫu nhiên như K-Means. Thực tế, PCA là thuật toán tất định."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q46",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn lập luận rằng PCA hợp với dữ liệu danh mục thuần túy. Tại sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì PCA giúp tìm ra các đặc trưng ẩn. Dữ liệu danh mục cũng có đặc trưng ẩn."
+      },
+      {
+        "role": "Tutor",
+        "text": "PCA tìm đặc trưng đó bằng cách nào? Nó thực hiện phép toán gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó đo lường phương sai và hiệp phương sai của dữ liệu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Thử tính phương sai của cột ['Hà Nội', 'Đà Nẵng', 'Cần Thơ'] xem."
+      },
+      {
+        "role": "Student",
+        "text": "Cái đó... không tính trực tiếp được. Nhưng ý tưởng là nó vẫn tìm được mẫu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu không tính được, PCA lấy gì để hoạt động?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là nó có cách biến đổi ngầm? Em nghĩ thuật toán phải xử lý được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy trung bình của 'Hà Nội' và 'Đà Nẵng' là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Không có ý nghĩa. Có lẽ em đã nhầm. Nó không thể tính toán trên chữ được."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy để các phép toán của PCA có nghĩa, dữ liệu phải có dạng gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải là dạng số. Các phép tính toán học phải áp dụng được trên đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng. Lỗi sai của bạn là cho rằng PCA có thể hoạt động trên dữ liệu danh mục thuần túy, trong khi nó đòi hỏi dữ liệu số để tính toán."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q47",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nói t-SNE tuyến tính vì nó giống PCA. Điểm giống đó là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Cả hai đều dùng để giảm chiều dữ liệu. Mà PCA là tuyến tính, nên em nghĩ t-SNE cũng vậy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một phép biến đổi tuyến tính bảo toàn đặc tính nào của dữ liệu?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó bảo toàn cấu trúc toàn cục. Ví dụ như khoảng cách tương đối giữa các điểm ở xa nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giả sử có ba điểm A, B, C rất xa nhau. t-SNE có đảm bảo bảo toàn khoảng cách giữa chúng không?"
+      },
+      {
+        "role": "Student",
+        "text": "Có chứ. Nó là thuật toán giảm chiều, nó phải cố giữ lại cấu trúc ban đầu chứ ạ?"
+      },
+      {
+        "role": "Tutor",
+        "text": "Hãy xem một bộ dữ liệu hình xoắn ốc (Swiss Roll). t-SNE và PCA sẽ xử lý nó thế nào?"
+      },
+      {
+        "role": "Student",
+        "text": "PCA sẽ thất bại, nó sẽ chiếu các lớp xoắn ốc chồng lên nhau. Còn t-SNE sẽ gỡ được nó ra thành một mặt phẳng."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy t-SNE có 'bảo toàn cấu trúc toàn cục' như bạn nói không?"
+      },
+      {
+        "role": "Student",
+        "text": "À... nó đã thay đổi hoàn toàn khoảng cách giữa các điểm ở hai đầu xoắn ốc. Nó chỉ giữ khoảng cách gần."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy một phương pháp phá vỡ cấu trúc toàn cục có thể gọi là tuyến tính không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nó không thể là tuyến tính. Vậy t-SNE là phi tuyến tính."
+      },
+      {
+        "role": "Tutor",
+        "text": "Đúng vậy. Lỗi sai của bạn là đồng nhất t-SNE với PCA vì cùng mục đích, trong khi cơ chế của chúng khác nhau. PCA tuyến tính, t-SNE phi tuyến."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q48",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "Bạn nghĩ rằng t-SNE dùng để dự đoán giá trị liên tục. Vì sao vậy?"
+      },
+      {
+        "role": "Student",
+        "text": "Vì nó sắp xếp các điểm dữ liệu lại. Nhìn vào đó mình có thể thấy xu hướng, giống như hồi quy."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một mô hình hồi quy dùng để làm gì với một điểm dữ liệu mới?"
+      },
+      {
+        "role": "Student",
+        "text": "Để dự đoán giá trị đầu ra cho điểm dữ liệu mới đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "Giờ bạn có một điểm dữ liệu mới. t-SNE 'dự đoán' gì cho điểm đó?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó sẽ đặt điểm đó vào vị trí tương ứng trên biểu đồ. Vị trí đó chính là dự đoán."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nó 'đặt vào' hay bạn phải chạy lại thuật toán với toàn bộ dữ liệu?"
+      },
+      {
+        "role": "Student",
+        "text": "Phải chạy lại. Nhưng chạy lại xong thì vẫn có vị trí, vẫn là một dạng dự đoán."
+      },
+      {
+        "role": "Tutor",
+        "text": "Một mô hình dự đoán có cần tính toán lại từ đầu với mọi điểm dữ liệu mới không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Không. Vậy nó không phải là mô hình dự đoán theo nghĩa thông thường."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy nếu không phải để dự đoán, mục đích chính của việc 'sắp xếp lại' đó là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Để nhìn xem các điểm dữ liệu có gom cụm, xem chúng liên quan thế nào trong không gian 2D/3D. Tức là để trực quan hóa."
+      },
+      {
+        "role": "Tutor",
+        "text": "Chính xác. Bạn đã nhầm t-SNE với một mô hình dự đoán. Mục đích chính của nó là trực quan hóa, không phải dự đoán trên dữ liệu mới."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q49",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "[A] Bạn nói t-SNE 'giữ nguyên vector và đổi tên cột'. Ý bạn là nó chọn ra vài cột từ dữ liệu gốc?"
+      },
+      {
+        "role": "Student",
+        "text": "Đúng vậy. Ví dụ có 100 cột, nó sẽ tìm 2 cột quan trọng nhất và giữ lại, rồi đặt tên là t-SNE-1, t-SNE-2."
+      },
+      {
+        "role": "Tutor",
+        "text": "[B] Vậy giá trị của một điểm dữ liệu trong không gian 2D mới có giống hệt giá trị ở 2 cột đó không?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc chắn rồi. Nó chỉ là chọn lọc và đổi tên thôi mà, vector phải được giữ nguyên chứ."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Nếu có 2 điểm rất gần nhau ở 100 chiều, nhưng sự gần gũi đó lại thể hiện ở 98 cột kia thì sao?"
+      },
+      {
+        "role": "Student",
+        "text": "Thì t-SNE sẽ không chọn 2 cột ban đầu. Nó đủ thông minh để chọn 2 cột khác thể hiện sự gần gũi đó."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Vậy để 'chọn' được 2 cột 'thông minh', nó có cần xem xét cả 100 cột không?"
+      },
+      {
+        "role": "Student",
+        "text": "Tất nhiên là có, nó phải so sánh để biết cột nào tốt nhất. Nhưng cuối cùng nó chỉ giữ lại 2 cột thôi."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Nếu giá trị mới phụ thuộc vào cả 100 cột cũ, nó có còn là 'giữ nguyên' 2 cột nào đó không?"
+      },
+      {
+        "role": "Student",
+        "text": "...Chắc là không. Vậy là nó tạo ra 2 cột mới hoàn toàn, dựa trên thông tin từ 100 cột cũ?"
+      },
+      {
+        "role": "Tutor",
+        "text": "[D] Chính xác. Vậy mục tiêu của việc tạo ra 2 cột mới đó là gì? Quay lại câu hỏi ban đầu nhé."
+      },
+      {
+        "role": "Student",
+        "text": "Là... để tạo ra một không gian mới mà ở đó các điểm gần nhau trong không gian cũ vẫn gần nhau. Chắc là đáp án về 'phân phối xác suất tương tự'."
+      },
+      {
+        "role": "Tutor",
+        "text": "[E] Đúng. Lỗi sai của bạn là nghĩ t-SNE chỉ chọn lọc cột. Thực chất, nó tạo ra một biểu diễn mới để bảo toàn cấu trúc lân cận của dữ liệu."
+      }
+    ]
+  },
+  {
+    "question_id": "ch6_q50",
+    "dialogue": [
+      {
+        "role": "Tutor",
+        "text": "[A] Bạn nói PCA và t-SNE đều giảm chiều. Vậy chúng có thể thay thế cho nhau không?"
+      },
+      {
+        "role": "Student",
+        "text": "Về cơ bản là có. t-SNE cho kết quả trông 'đẹp' hơn, các cụm tách bạch hơn, nhưng cùng mục đích cả."
+      },
+      {
+        "role": "Tutor",
+        "text": "[B] PCA cố gắng bảo toàn điều gì trong dữ liệu gốc?"
+      },
+      {
+        "role": "Student",
+        "text": "Nó giữ lại các hướng có phương sai lớn nhất. Về cơ bản là giữ lại sự phân tán của dữ liệu."
+      },
+      {
+        "role": "Tutor",
+        "text": "[C] Tưởng tượng một dải giấy cuộn tròn như một chiếc bánh Swiss roll. Phương sai lớn nhất nằm ở đâu?"
+      },
+      {
+        "role": "Student",
+        "text": "Chắc là theo trục của cuộn giấy. Nhưng PCA sẽ chiếu bẹt nó ra thành một hình chữ nhật đặc."
+      },
+      {
+        "role": "Tutor",
+        "text": "Vậy cấu trúc 'cuộn' có được giữ lại không?"
+      },
+      {
+        "role": "Student",
+        "text": "Không, nhưng đó là trường hợp cực đoan. Với dữ liệu phân cụm thông thường, PCA vẫn hoạt động tốt."
+      },
+      {
+        "role": "Tutor",
+        "text": "Nếu dữ liệu có cấu trúc 'cong' chứ không phải 'cuộn' thì sao? PCA có đáng tin không?"
+      },
+      {
+        "role": "Student",
+        "text": "PCA vẫn sẽ tìm hướng phương sai lớn nhất. Hướng đó vẫn là thông tin quan trọng nhất của dữ liệu."
+      },
+      {
+        "role": "Tutor",
+        "text": "Hướng đó có giữ được thứ tự các điểm trên đường cong không?"
+      },
+      {
+        "role": "Student",
+        "text": "... Chắc là không. Các điểm ở hai đầu đường cong có thể bị chiếu lại gần nhau."
+      },
+      {
+        "role": "Tutor",
+        "text": "[D] Vậy khả năng nhận ra và 'gỡ' các cấu trúc cong hay cuộn đó là gì?"
+      },
+      {
+        "role": "Student",
+        "text": "Là khả năng bắt được cấu trúc phi tuyến. PCA không làm được điều đó. t-SNE thì có."
+      },
+      {
+        "role": "Tutor",
+        "text": "[E] Chính xác. Lỗi sai là cho rằng chúng có thể thay thế nhau. PCA chỉ thấy cấu trúc tuyến tính qua phương sai, còn t-SNE có thể bảo toàn cấu trúc cục bộ để tái tạo lại cấu trúc phi tuyến tổng thể."
+      }
+    ]
+  }
+]

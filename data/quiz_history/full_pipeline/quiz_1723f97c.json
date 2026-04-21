@@ -1,0 +1,295 @@
+{
+  "session_id": "quiz_1723f97c",
+  "exp_name": "full_pipeline",
+  "timestamp": "2026-04-15T19:19:06.052637",
+  "total": 21,
+  "correct": 2,
+  "accuracy": 0.09523809523809523,
+  "results": [
+    {
+      "question_id": "cs116_ch02_0",
+      "topic_id": "ch02_t01",
+      "topic_name": "NumPy",
+      "user_answer": [
+        "C"
+      ],
+      "correct_answers": [
+        "A"
+      ],
+      "is_correct": false,
+      "difficulty": "G1"
+    },
+    {
+      "question_id": "cs116_ch02_0",
+      "topic_id": "ch02_t04",
+      "topic_name": "Scikit-learn",
+      "user_answer": [
+        "C"
+      ],
+      "correct_answers": [
+        "C"
+      ],
+      "is_correct": true,
+      "difficulty": "G2"
+    },
+    {
+      "question_id": "cs116_ch02_1",
+      "topic_id": "ch02_t04",
+      "topic_name": "Scikit-learn",
+      "user_answer": [
+        "B"
+      ],
+      "correct_answers": [
+        "A"
+      ],
+      "is_correct": false,
+      "difficulty": "G2"
+    },
+    {
+      "question_id": "cs116_02_02",
+      "topic_id": "ch02_t04",
+      "topic_name": "Scikit-learn",
+      "user_answer": [
+        "C"
+      ],
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ],
+      "is_correct": false,
+      "difficulty": "G2"
+    },
+    {
+      "question_id": "cs116_ch03_0",
+      "topic_id": "ch03_t01",
+      "topic_name": "Pipeline",
+      "user_answer": [
+        "C"
+      ],
+      "correct_answers": [
+        "A"
+      ],
+      "is_correct": false,
+      "difficulty": "G2"
+    },
+    {
+      "question_id": "cs116_ch03_0",
+      "topic_id": "ch03_t02",
+      "topic_name": "Exploratory Data Analysis",
+      "user_answer": [
+        "C"
+      ],
+      "correct_answers": [
+        "A"
+      ],
+      "is_correct": false,
+      "difficulty": "G1"
+    },
+    {
+      "question_id": "cs116_ch04_0",
+      "topic_id": "ch04_t01",
+      "topic_name": "Missing Data",
+      "user_answer": [
+        "B"
+      ],
+      "correct_answers": [
+        "A"
+      ],
+      "is_correct": false,
+      "difficulty": "G2"
+    },
+    {
+      "question_id": "cs116_04_01",
+      "topic_id": "ch04_t01",
+      "topic_name": "Missing Data",
+      "user_answer": [
+        "B"
+      ],
+      "correct_answers": [
+        "A",
+        "B",
+        "D"
+      ],
+      "is_correct": false,
+      "difficulty": "G2"
+    },
+    {
+      "question_id": "cs116_ch04_0",
+      "topic_id": "ch04_t02",
+      "topic_name": "Outlier Detection",
+      "user_answer": [
+        "B"
+      ],
+      "correct_answers": [
+        "A"
+      ],
+      "is_correct": false,
+      "difficulty": "G2"
+    },
+    {
+      "question_id": "cs116_4_1",
+      "topic_id": "ch04_t02",
+      "topic_name": "Outlier Detection",
+      "user_answer": [
+        "C"
+      ],
+      "correct_answers": [
+        "A",
+        "B",
+        "D"
+      ],
+      "is_correct": false,
+      "difficulty": "G2"
+    },
+    {
+      "question_id": "cs116_ch05_0",
+      "topic_id": "ch05_t01",
+      "topic_name": "Classification Metrics",
+      "user_answer": [
+        "D"
+      ],
+      "correct_answers": [
+        "A"
+      ],
+      "is_correct": false,
+      "difficulty": "G2"
+    },
+    {
+      "question_id": "cs116_ch05_1",
+      "topic_id": "ch05_t01",
+      "topic_name": "Classification Metrics",
+      "user_answer": [
+        "A"
+      ],
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ],
+      "is_correct": false,
+      "difficulty": "G2"
+    },
+    {
+      "question_id": "cs116_05_0",
+      "topic_id": "ch05_t03",
+      "topic_name": "Cross-validation",
+      "user_answer": [
+        "C"
+      ],
+      "correct_answers": [
+        "A"
+      ],
+      "is_correct": false,
+      "difficulty": "G2"
+    },
+    {
+      "question_id": "cs116_ch06_0",
+      "topic_id": "ch06_t01",
+      "topic_name": "Clustering",
+      "user_answer": [
+        "C"
+      ],
+      "correct_answers": [
+        "A"
+      ],
+      "is_correct": false,
+      "difficulty": "G2"
+    },
+    {
+      "question_id": "cs116_ch06_01",
+      "topic_id": "ch06_t01",
+      "topic_name": "Clustering",
+      "user_answer": [
+        "C"
+      ],
+      "correct_answers": [
+        "A",
+        "B",
+        "D"
+      ],
+      "is_correct": false,
+      "difficulty": "G2"
+    },
+    {
+      "question_id": "cs116_07a_0",
+      "topic_id": "ch07a_t02",
+      "topic_name": "Regularization",
+      "user_answer": [
+        "B"
+      ],
+      "correct_answers": [
+        "A"
+      ],
+      "is_correct": false,
+      "difficulty": "G3"
+    },
+    {
+      "question_id": "cs116_ch07b_0",
+      "topic_id": "ch07b_t03",
+      "topic_name": "SVM",
+      "user_answer": [
+        "B"
+      ],
+      "correct_answers": [
+        "A"
+      ],
+      "is_correct": false,
+      "difficulty": "G3"
+    },
+    {
+      "question_id": "cs116_ch07b_1",
+      "topic_id": "ch07b_t03",
+      "topic_name": "SVM",
+      "user_answer": [
+        "B"
+      ],
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ],
+      "is_correct": false,
+      "difficulty": "G3"
+    },
+    {
+      "question_id": "cs116_08_0",
+      "topic_id": "ch08_t02",
+      "topic_name": "CNN",
+      "user_answer": [
+        "C"
+      ],
+      "correct_answers": [
+        "A"
+      ],
+      "is_correct": false,
+      "difficulty": "G3"
+    },
+    {
+      "question_id": "cs116_ch09_0",
+      "topic_id": "ch09_t01",
+      "topic_name": "Grid Search",
+      "user_answer": [
+        "C"
+      ],
+      "correct_answers": [
+        "C"
+      ],
+      "is_correct": true,
+      "difficulty": "G2"
+    },
+    {
+      "question_id": "cs116_ch11_0",
+      "topic_id": "ch11_t01",
+      "topic_name": "Model Serving",
+      "user_answer": [
+        "C"
+      ],
+      "correct_answers": [
+        "B"
+      ],
+      "is_correct": false,
+      "difficulty": "G2"
+    }
+  ]
+}

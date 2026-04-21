@@ -23,7 +23,7 @@ cd "$PROJECT_ROOT"
 export PYTHONPATH="$PROJECT_ROOT"
 
 # Default experiment
-EXP_NAME=""
+EXP_NAME="full_pipeline"
 OUTPUT_DIR=""
 HUMAN_CSV="${2:-}"
 

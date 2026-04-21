@@ -12,7 +12,7 @@
 # Step 03: P1 — Generate Stem + Key
 # Model: Qwen2.5-14B-Instruct (vLLM)
 
-REQUIRED_VRAM=33000
+REQUIRED_VRAM=36000
 
 set -e
 

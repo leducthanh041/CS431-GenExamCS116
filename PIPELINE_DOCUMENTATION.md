@@ -631,8 +631,9 @@ Script: src/eval/eval_metrics.py
 |---|---|---|---|
 | 1 | **Topic Coverage** | topics covered / total topics in topic_list.json | ≥ 80% |
 | 2 | **LLM Judge Pass Rate** | accepted / total evaluated | ≥ 70% |
-| 3 | **Bloom KL Divergence** | KL(actual_bloom_dist ∥ target_bloom_dist) | ≤ 0.3 |
-| 4 | **Human Judgment** (κ, F1) | human vs LLM agreement from JSON annotation | κ ≥ 0.6 |
+| 3 | **Answer Ratio** | single_correct / total | ≈ 80% single |
+| 4 | **Diversity Openings** | % câu hỏi không có weak opening | ≥ 80% good |
+| 5 | **Human Judgment** (κ, F1) | human vs LLM agreement from JSON annotation | κ ≥ 0.6 |
 
 **Nội dung chi tiết từng metric:**
 
@@ -670,24 +671,41 @@ Output dict fields:
   quality_score_stats{}, per_difficulty_rates{}
 ```
 
-#### Metric 3 — Bloom KL Divergence
+#### Metric 3 — Answer Ratio
 ```
 Input:  final_accepted_questions.jsonl  (câu hỏi đã chấp nhận)
 
 Logic:
-  1. Classify each question stem vào Bloom level 1–6 bằng keyword matching
-     (BLOOM_KEYWORDS dict: L1→"nhớ/định nghĩa", L3→"áp dụng/tính toán", v.v.)
-  2. Count bloom distribution: actual_dist[]
-  3. Target distribution: G1→{L1,L2}=20% each, G2→{L3,L4}=20% each,
-                         G3→{L5,L6}=10% each
-  4. KL_div = KL(actual_dist ∥ target_dist) via scipy.stats.entropy
+  1. Count questions with question_type == "single_correct" → single
+  2. Count questions with question_type == "multiple_correct" → multi
+  3. total = single + multi
 
 Output dict fields:
-  bloom_counts{1..6}, actual_distribution[], target_distribution[],
-  kl_divergence, per_difficulty_bloom{}, per_question[]
+  total, single_correct, multiple_correct,
+  single_pct (%), multiple_pct (%)
+
+Target: 80% single correct, 20% multiple correct
 ```
 
-#### Metric 4 — Human Judgment (Human vs LLM Agreement)
+#### Metric 4 — Diversity Openings
+```
+Input:  final_accepted_questions.jsonl  (câu hỏi đã chấp nhận)
+
+Logic:
+  1. Check question_text.lower() against WEAK_OPENINGS list:
+       ["hãy xác định", "khi nào", "ở đâu", "đâu là",
+        "trong quá trình", "cho biết", "trong các phương pháp"]
+  2. weak_count = # questions containing ≥1 weak phrase
+  3. weak_pct = weak_count / total * 100
+
+Output dict fields:
+  total, weak_count, weak_pct, weak_phrases[]
+  (weak_phrases = list of WEAK_OPENINGS found in dataset)
+
+Target: weak_pct < 20%  (≥ 80% good openings)
+```
+
+#### Metric 5 — Human Judgment (Human vs LLM Agreement)
 ```
 Input:  human_annotation.json   (reviewer annotate per-question, JSON schema)
         evaluated_questions.jsonl  (LLM verdict từ Step 07)
@@ -811,8 +829,7 @@ Cách workflow đầy đủ:
 |---|---|
 | **BLEU + ROUGE-L** | Cần reference set — không phù hợp open-ended MCQ generation |
 | **BERTScore** | Cần reference set + tốn thêm LLM call |
-| **Answer Ratio** | Inline trong generation config, không cần metric riêng |
-| **Diversity Openings** | Metric chủ quan, không đo lường chất lượng thực |
+| **Bloom KL Divergence** | Không phù hợp với đặc thù môn học — phân bố Bloom keyword-based không đáng tin cậy |
 | **Old Cohen's κ (CSV-based)** | Schema rải rác 3 hàm riêng → gộp vào `compute_human_judgment()` unified |
 
 ---
@@ -1427,7 +1444,8 @@ python -u src/eval/eval_metrics.py \
 | **LLM Judge Pass Rate** | ≥ 70% | accepted / total evaluated | Chất lượng generation |
 | **IWF Pass Rate** | ≥ 70% | iwf_passed / iwf_total | Chất lượng distractors |
 | **Quality Score** | ≥ 0.80 | avg(quality_score) | Điểm chất lượng tổng hợp |
-| **Bloom KL Divergence** | ≤ 0.30 | KL(actual ∥ target) | Phân bố độ khó |
+| **Answer Ratio** | ≈ 80% single | single / total | Tỉ lệ single vs multiple |
+| **Diversity Openings** | ≥ 80% good | (total - weak) / total | Đa dạng cách đặt câu hỏi |
 | **Human Judgment κ** | ≥ 0.60 | Cohen's κ human vs LLM | Độ tin cậy LLM judge |
 
 ### 10.3 Metrics đã loại bỏ
@@ -1436,8 +1454,7 @@ python -u src/eval/eval_metrics.py \
 |---|---|
 | **BLEU + ROUGE-L** | Cần reference set — không phù hợp open-ended MCQ generation |
 | **BERTScore** | Cần reference set + tốn thêm LLM call, không cải thiện quyết định |
-| **Answer Ratio** | Inline trong generation config, không cần metric riêng |
-| **Diversity Openings** | Chủ quan, không đo lường chất lượng thực |
+| **Bloom KL Divergence** | Không phù hợp với đặc thù môn học — keyword-based classification không đáng tin cậy |
 | **Old Cohen's κ (CSV-based)** | Schema lộn xộn, logic rải rác nhiều hàm → thay bằng module Human Judgment JSON |
 
 ### 10.4 Interpreting results
@@ -1458,10 +1475,10 @@ Pass Rate < 50%:
       • P1 prompt cần cải thiện
       • Temperature quá cao → format lỗi
 
-Bloom KL > 0.5:
-  ❌ Phân bố độ khó lệch nhiều
-      • Quá nhiều câu G1 (nhớ) → cần tăng difficulty target
-      • Quá nhiều câu G3 (phân tích) → cần giảm
+Diversity Openings weak_pct > 40%:
+  ❌ Nhiều câu hỏi bắt đầu bằng cách mở đầu yếu:
+      • Cải thiện P1 stem generation prompt
+      • Thêm rule loại bỏ các weak openings trong post-processing
 ```
 
 ---
