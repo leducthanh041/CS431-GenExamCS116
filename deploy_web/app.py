@@ -136,8 +136,9 @@ def list_experiments() -> list[dict]:
 
 # ── Issue #2: per-step output validators ──────────────────────────────────────
 STEP_OUTPUT_FILES = {
-    # step_num: (output_dir_name, expected_jsonl_name)
-    2: ("02_retrieval", "all_retrieval_results.jsonl"),
+    # step_num: (output_dir_name, expected_jsonl_name_or_glob_pattern)
+    # For step 2: many per-topic files (e.g. ch04_t01.jsonl) — use glob
+    2: ("02_retrieval", "*.jsonl"),           # any .jsonl in the dir = valid
     3: ("03_gen_stem", "all_p1_results.jsonl"),
     4: ("04_gen_refine", "all_refined_results.jsonl"),
     5: ("05_gen_distractors", "all_candidates_results.jsonl"),
@@ -154,12 +155,40 @@ def _validate_step_output(exp_dir: Path, step_num: int) -> tuple[bool, int]:
     Returns (is_valid, item_count).
     - is_valid=True: output exists, non-empty, all lines are parseable JSON
     - is_valid=False: missing / empty / partially corrupted
+
+    Supports glob patterns (e.g. "*.jsonl") for steps with per-topic files.
     """
     if step_num not in STEP_OUTPUT_FILES:
         return True, 0  # unknown step, assume OK
-    dir_name, file_name = STEP_OUTPUT_FILES[step_num]
-    fpath = exp_dir / dir_name / file_name
+    dir_name, pattern = STEP_OUTPUT_FILES[step_num]
+    step_dir = exp_dir / dir_name
 
+    if not step_dir.exists():
+        return False, 0
+
+    # Handle glob patterns (step 2: many per-topic .jsonl files)
+    if "*" in pattern:
+        files = sorted(step_dir.glob(pattern))
+        if not files:
+            return False, 0
+        total_count = 0
+        for fpath in files:
+            if fpath.stat().st_size == 0:
+                return False, 0  # one empty file → invalid
+            try:
+                with open(fpath, encoding="utf-8") as f:
+                    for line in f:
+                        line = line.strip()
+                        if not line:
+                            continue
+                        json.loads(line)
+                        total_count += 1
+            except (json.JSONDecodeError, OSError):
+                return False, total_count
+        return total_count > 0, total_count
+
+    # Exact filename
+    fpath = step_dir / pattern
     if not fpath.exists() or fpath.stat().st_size == 0:
         return False, 0
 
@@ -192,26 +221,84 @@ def _get_valid_steps(exp_dir: Path, step_dirs_map: dict) -> tuple[list[int], dic
             valid_steps.append(step_num)
     return valid_steps, counts
 
-def load_exp_mcqs(exp_name: str) -> tuple[list[dict], str]:
-    """Load final MCQs for an experiment. Returns (mcqs, path_note)."""
-    output_dir = PIPELINE_ROOT / "output" / exp_name
-    for final_name in ["08_eval_iwf/final_accepted_questions.jsonl",
-                       "08_eval_iwf/evaluated_questions.jsonl",
-                       "08_eval_iwf/final_rejected_questions.jsonl"]:
-        fpath = output_dir / final_name
-        if fpath.exists():
-            mcqs = []
-            with open(fpath, encoding="utf-8") as f:
-                for line in f:
-                    line = line.strip()
-                    if line:
-                        try:
-                            mcqs.append(json.loads(line))
-                        except Exception:
-                            pass
-            path_note = fpath.name
-            return mcqs, path_note
-    return [], ""
+def load_explanations(exp_name: str) -> dict[str, dict]:
+    """
+    Load explanations.jsonl → dict keyed by question_id.
+    Each value is the FULL record (top-level keys: explanation, sources, sources_used, etc.).
+    Returns {} if file missing or invalid.
+    """
+    path = PIPELINE_ROOT / "output" / exp_name / "09_explain" / "explanations.jsonl"
+    if not path.exists() or path.stat().st_size == 0:
+        return {}
+    explanations: dict[str, dict] = {}
+    try:
+        with open(path, encoding="utf-8") as f:
+            for line in f:
+                line = line.strip()
+                if not line:
+                    continue
+                record = json.loads(line)
+                q_id = record.get("question_id", "")
+                if q_id:
+                    explanations[q_id] = record
+    except (json.JSONDecodeError, OSError):
+        pass
+    return explanations
+
+
+def merge_mcqs_with_explanations(mcqs: list[dict], explanations: dict[str, dict]) -> list[dict]:
+    """
+    Join MCQ list with explanation data by question_id.
+    Injects explanation fields directly into each MCQ dict for the renderer.
+
+    Actual structure in explanations.jsonl (full record):
+      {
+        "question_id": "cs116_04_0",
+        "explanation": {
+          "question_motivation": "...",
+          "correct_answer_rationale": "...",
+          "distractor_explanations": {"B": "...", ...},
+          "knowledge_context": {...},
+          "sources_used": [{"type":"slide","url":"",...}, {"type":"video","url":"...",...}]
+        },
+        "sources": [{"type":"slide",...}, {"type":"video",...}]   ← flat list
+      }
+
+    Renderer expects:  top-level keys: explanation (dict), sources (list),
+                       slide_citations, video_citations
+    """
+    enriched = []
+    for mcq in mcqs:
+        q_id = mcq.get("question_id", "")
+        record = explanations.get(q_id, {})
+        if record:
+            enriched_mcq = dict(mcq)
+            # explanation field = the nested explanation dict
+            exp_dict = record.get("explanation", {})
+            enriched_mcq["explanation"] = exp_dict
+            # sources_used + sources → collect all into flat sources list for renderer
+            sources_used = exp_dict.get("sources_used", []) if isinstance(exp_dict, dict) else []
+            sources_flat = record.get("sources", [])
+            enriched_mcq["sources"] = sources_used + sources_flat
+            # Split into slide / video citations for dedicated rendering
+            if isinstance(exp_dict, dict):
+                enriched_mcq["distractor_explanations"] = exp_dict.get("distractor_explanations", {})
+                enriched_mcq["slide_citations"] = [
+                    s for s in sources_used
+                    if isinstance(s, dict) and s.get("type") == "slide"
+                ]
+                enriched_mcq["video_citations"] = [
+                    s for s in sources_used
+                    if isinstance(s, dict) and s.get("type") == "video"
+                ]
+            else:
+                enriched_mcq["distractor_explanations"] = {}
+                enriched_mcq["slide_citations"] = []
+                enriched_mcq["video_citations"] = []
+            enriched.append(enriched_mcq)
+        else:
+            enriched.append(mcq)
+    return enriched
 
 def get_exp_log(exp_name: str) -> str:
     """Find and return last ~50 lines of deploy_pipeline log for this exp."""
@@ -309,6 +396,146 @@ echo "STEP {step_num} done"
             pass
         return False, str(e), ""
 
+def cancel_slurm_job(job_id: str) -> tuple[bool, str]:
+    """Cancel a running SLURM job. Returns (ok, message)."""
+    if not job_id:
+        return False, "No job ID provided"
+    try:
+        result = subprocess.run(
+            ["scancel", job_id],
+            capture_output=True, text=True, timeout=15,
+        )
+        if result.returncode == 0:
+            return True, f"Job {job_id} cancelled"
+        else:
+            return False, f"scancel failed: {result.stderr}"
+    except subprocess.TimeoutExpired:
+        return False, "scancel timed out"
+    except Exception as e:
+        return False, str(e)
+
+
+def submit_full_pipeline_slurm(exp_name: str) -> tuple[bool, str, str]:
+    """Submit the full pipeline (02-09) as a single SLURM job. Returns (ok, msg, job_id)."""
+    script = DEPLOY_SCRIPTS / "deploy_pipeline.sh"
+    if not script.exists():
+        return False, f"Script not found: {script}", ""
+
+    try:
+        result = subprocess.run(
+            ["sbatch", "--parsable", str(script)],
+            capture_output=True, text=True, timeout=30,
+            env={**os.environ, "EXP_NAME": exp_name},
+        )
+        if result.returncode == 0:
+            job_id = result.stdout.strip().split(";")[0].strip()
+            return True, f"Full pipeline job {job_id} submitted", job_id
+        else:
+            return False, f"sbatch failed: {result.stderr}", ""
+    except subprocess.TimeoutExpired:
+        return False, "sbatch timed out", ""
+    except Exception as e:
+        return False, str(e), ""
+
+
+def poll_full_pipeline_until_done(
+    job_id: str,
+    exp_name: str,
+    log_container,
+    progress_bar,
+    status_text,
+    step_status_container,
+):
+    """Poll full pipeline SLURM job, update UI, stop on cancel."""
+    ALL_STEPS = [2, 3, 4, 5, 6, 7, 8, 9]
+    STEP_WEIGHTS = {
+        2: 12, 3: 25, 4: 38, 5: 50, 6: 62, 7: 75, 8: 88, 9: 95,
+    }
+    log_path = LOG_DIR / f"deploy_pipeline_{job_id}.out"
+    log_pos = 0
+    log_lines = []
+    last_step = 0
+    cancelled = False
+
+    while True:
+        # ── Check cancellation ───────────────────────────────────────────────
+        # (We check st.session_state in the calling block; here we just poll state)
+        # ── Job state ────────────────────────────────────────────────────────
+        state = "UNKNOWN"
+        try:
+            r = subprocess.run(
+                ["squeue", "-j", job_id, "-o", "%T", "--noheader"],
+                capture_output=True, text=True, timeout=10,
+            )
+            if r.returncode == 0 and r.stdout.strip():
+                state = r.stdout.strip().upper()
+        except Exception:
+            pass
+
+        icon_map = {
+            "RUNNING": "🟢", "PENDING": "🟡", "COMPLETED": "✅",
+            "FAILED": "❌", "CANCELLED": "🚫",
+        }
+        icon = icon_map.get(state, "⚪")
+        status_text.info(f"{icon} Full Pipeline — Job `{job_id}` — {state}")
+
+        # ── Tail log ─────────────────────────────────────────────────────────
+        if log_path.exists():
+            try:
+                with open(log_path, "r", encoding="utf-8", errors="replace") as f:
+                    f.seek(log_pos)
+                    new_lines = f.readlines()
+                    log_pos = f.tell()
+                for raw_line in new_lines:
+                    line = raw_line.strip()
+                    if not line:
+                        continue
+                    log_lines.append(line)
+                    # Detect step transitions: "STEP 02: ..."
+                    import re as _re
+                    m = _re.search(r"STEP\s+(\d+)\s*[:\-]?\s*(.+)", line)
+                    if m:
+                        s_num = int(m.group(1))
+                        if s_num != last_step and s_num in ALL_STEPS:
+                            last_step = s_num
+                            step_status_container.info(
+                                f"⚡ Step {s_num}: {m.group(2).strip()}"
+                            )
+            except Exception:
+                pass
+
+        if len(log_lines) > 500:
+            log_lines = log_lines[-500:]
+
+        # ── Progress ─────────────────────────────────────────────────────────
+        if state == "RUNNING":
+            pct = STEP_WEIGHTS.get(last_step, 5)
+            progress_bar.progress(
+                pct / 100,
+                text=f"Full Pipeline — Step {last_step or '?'}: Running..."
+            )
+        elif state == "PENDING":
+            progress_bar.progress(0.02, text="Full Pipeline — Waiting for GPU...")
+        elif state in ("COMPLETED", "FAILED", "CANCELLED"):
+            progress_bar.progress(1.0, text=f"Job {state}")
+            # Bug fix: rerun immediately so grid refreshes right away
+            time.sleep(1)
+            st.rerun()
+            return state, last_step
+
+        # ── Update log display ────────────────────────────────────────────────
+        log_container.text_area(
+            "📋 Full Pipeline Log",
+            value="\n".join(log_lines[-200:]),
+            height=240,
+            disabled=True,
+            key=f"full_log_{job_id}_{log_pos}",
+        )
+        time.sleep(12)
+
+    return state, last_step
+
+
 def check_slurm_available() -> bool:
     try:
         r = subprocess.run(["sinfo", "--version"], capture_output=True, timeout=5)
@@ -317,8 +544,17 @@ def check_slurm_available() -> bool:
         return False
 
 def poll_job_until_done(job_id: str, step_num: int, exp_name: str,
-                        log_container, progress_bar, status_text):
-    """Poll squeue + tail log, update Streamlit widgets in place."""
+                        log_container, progress_bar, status_text,
+                        full_pipeline: bool = False):
+    """
+    Poll squeue + tail log until job completes.
+    Returns final state string: COMPLETED / FAILED / CANCELLED.
+
+    full_pipeline=True: do NOT call st.rerun() on completion
+    → Just return the state, let the full pipeline block handle advancement.
+    This is critical: st.rerun() inside a while loop spins forever
+    because Streamlit blocks the while loop until the next user interaction.
+    """
     step_pct = {
         2: 12, 3: 25, 4: 38, 5: 50, 6: 62, 7: 75, 8: 88, 9: 95,
     }
@@ -350,37 +586,51 @@ def poll_job_until_done(job_id: str, step_num: int, exp_name: str,
             try:
                 with open(log_path, "r", encoding="utf-8", errors="replace") as f:
                     f.seek(log_pos)
-                    new_lines = [l.strip() for l in f.readlines() if l.strip()]
+                    new_lines = f.readlines()
                     log_pos = f.tell()
             except Exception:
                 pass
 
-        log_lines.extend(new_lines)
+        for raw_line in new_lines:
+            line = raw_line.strip()
+            if line:
+                log_lines.append(line)
         if len(log_lines) > 500:
             log_lines = log_lines[-500:]
 
         # Progress
         pct = step_pct.get(step_num, 10)
         if state == "RUNNING":
-            progress_bar.progress(pct / 100, text=f"Step {step_num}: {STEP_META[step_num]['name']} — {state}")
+            progress_bar.progress(pct / 100, text=f"Step {step_num}: {STEP_META[step_num]['name']} — Running")
         elif state == "PENDING":
             progress_bar.progress(0.05, text="Waiting for GPU allocation...")
         elif state in ("COMPLETED", "FAILED", "CANCELLED"):
             progress_bar.progress(1.0, text=f"Job {state}")
-            break
+            # Clear step_running so grid shows fresh status
+            st.session_state.step_running = 0
+            if "_recheck_versions" not in st.session_state:
+                st.session_state._recheck_versions = {}
+            for sn in STEP_OUTPUT_FILES:
+                st.session_state._recheck_versions.pop(sn, None)
+            # KEY FIX: if in full pipeline mode, just return (don't st.rerun)
+            # st.rerun() blocks the while loop until user interaction — causes infinite loops
+            if full_pipeline:
+                return state
+            # Per-step mode: st.rerun so grid refreshes immediately
+            time.sleep(1)
+            st.rerun()
+            return state
 
         # Update log
         iteration += 1
         log_container.text_area(
-            "📋 Step Log",
+            "Log",
             value="\n".join(log_lines[-200:]),
-            height=240,
+            height=200,
             disabled=True,
             key=f"log_s{step_num}_{job_id}_{iteration}",
         )
         time.sleep(12)
-
-    return state
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -395,6 +645,10 @@ for key, default in [
     # Issue #3 fix: explicit flag so we never touch text_input value involuntarily
     ("_new_exp_typed", ""),
     ("_form_submitted", False),
+    # New: Full pipeline sequential tracking
+    ("_full_next_step", None),   # next step to run (2..9), None = idle
+    ("_full_exp_name", ""),     # experiment name for the full pipeline run
+    ("_trigger_full_refresh", False),  # flag: poll done → trigger st.rerun via button
 ]:
     if key not in st.session_state:
         st.session_state[key] = default
@@ -412,6 +666,13 @@ with col_logo:
 # ── Issue #3 fix: stable new-exp form that NEVER refreshes the text field ──
 experiments = list_experiments()
 exp_options = [e["name"] for e in experiments]
+
+# Resolve current experiment — available to ALL sections (Topic Editor, Pipeline, Results)
+exp_name = st.session_state.current_exp
+exp_obj = next((e for e in experiments if e["name"] == exp_name), None)
+done_steps = exp_obj["done_steps"] if exp_obj else []
+step_counts = exp_obj.get("step_counts", {}) if exp_obj else {}
+is_running = st.session_state.step_running > 0
 
 with col_exp:
     with st.form("new_exp_form", clear_on_submit=False):
@@ -527,14 +788,188 @@ if st.session_state.topic_edit_mode:
 # STEP-BY-STEP EXECUTION
 # ═══════════════════════════════════════════════════════════════════════════════
 
-exp_name = st.session_state.current_exp
-exp_obj = next((e for e in experiments if e["name"] == exp_name), None)
-done_steps = exp_obj["done_steps"] if exp_obj else []
-is_running = st.session_state.step_running > 0
+# exp_name already resolved at top of module (after experiment form)
 
-st.markdown(f"### ⚡ Pipeline — `{exp_name}`")
+# Track which steps have been manually re-checked this session
+if "_recheck_versions" not in st.session_state:
+    st.session_state._recheck_versions = {}
+
+# ── Full Pipeline + Control Bar ───────────────────────────────────────────────
+# Two modes: per-step (step_running) OR full sequential (_full_next_step)
+is_full_running = bool(st.session_state.get("_full_next_step") and st.session_state.get("_full_exp_name") == exp_name)
+
+if exp_name:
+    ctrl_col1, ctrl_col2, ctrl_col3 = st.columns([1, 1, 4])
+    with ctrl_col1:
+        st.markdown("**Controls**")
+
+    with ctrl_col2:
+        if is_full_running:
+            if st.button("Stop", key="stop_full", use_container_width=True):
+                st.session_state._full_next_step = None
+                st.session_state._full_exp_name  = ""
+                st.rerun()
+        else:
+            if st.button("Run Full (02-09)", key="run_full", use_container_width=True):
+                st.session_state._full_next_step = 2
+                st.session_state._full_exp_name   = exp_name
+                st.rerun()
+
+    with ctrl_col3:
+        if is_full_running:
+            next_s = st.session_state._full_next_step
+            st.info(f"Full pipeline: Step {next_s} - {STEP_META[next_s]['name']}")
+        else:
+            st.caption("Run individual steps or click 'Run Full' for 02-09 sequentially.")
+
+    # ── Visible Refresh button (manual + auto-triggered after each step) ──────
+    # IMPORTANT: clear the flag FIRST on this render so it only fires ONCE.
+    # After JS reload: page renders fresh, flag=False → no infinite reload loop.
+    _pending = st.session_state.get("_trigger_full_refresh", False)
+    if _pending:
+        st.session_state._trigger_full_refresh = False  # clear BEFORE JS fires
+
+    if _pending:
+        st.info("⏳ Pipeline step done — auto-refreshing...")
+
+    if st.button("🔄 Refresh", key="manual_refresh_btn", use_container_width=False):
+        st.rerun()
+
+    # Auto-reload via JS only when a pipeline step just completed.
+    # Flag is already cleared above → reload fires at most ONCE per step.
+    if _pending:
+        import streamlit.components.v1 as components
+        components.html(
+            "<script>setTimeout(function(){parent.location.reload();}, 500);</script>",
+            height=0, scrolling=False,
+        )
+
+st.markdown("---")
+
+# Full pipeline execution:
+# - Submit step via submit_step_slurm()
+# - Poll DIRECTLY with full_pipeline=True (poll returns, does NOT st.rerun)
+# - On COMPLETED: advance _full_next_step, st.rerun() ONCE
+# - On FAILED/CANCELLED: stop
+# - Grid shows per-step status; full panel shows current step + log
+#
+# IMPORTANT: poll_job_until_done(..., full_pipeline=True) returns state
+#            WITHOUT calling st.rerun(). This lets the full pipeline block
+#            advance to next step after each completion.
+
+if is_full_running:
+    step_running = st.session_state._full_next_step
+
+    # Show current step header + progress
+    st.markdown(f"### Full Pipeline - Step {step_running}: {STEP_META[step_running]['name']}")
+    progress_bar = st.progress(0.02, text="Submitting...")
+    status_text  = st.empty()
+    log_container = st.empty()
+
+    ok, msg, job_id = submit_step_slurm(step_running, exp_name)
+
+    if ok and job_id:
+        # Poll until done — full_pipeline=True means poll returns without st.rerun
+        state = poll_job_until_done(
+            job_id=job_id, step_num=step_running, exp_name=exp_name,
+            log_container=log_container, progress_bar=progress_bar, status_text=status_text,
+            full_pipeline=True,
+        )
+
+        # Job is done
+        if state == "COMPLETED":
+            next_step = (step_running + 1) if step_running < 9 else None
+            if next_step is None:
+                st.session_state._full_next_step = None
+                st.session_state._full_exp_name   = ""
+                st.success("Full pipeline completed!")
+            else:
+                st.session_state._full_next_step = next_step
+        else:
+            st.session_state._full_next_step = None
+            st.session_state._full_exp_name = ""
+            st.error(f"Step {step_running} failed: {state}")
+
+        # KEY: set refresh flag, then use button to trigger st.rerun()
+        # st.rerun() inside while loop is the bug — using button click instead
+        st.session_state._trigger_full_refresh = True
+    else:
+        st.session_state._full_next_step = None
+        st.session_state._full_exp_name = ""
+        st.error(f"Submit failed: {msg}")
+        st.session_state._trigger_full_refresh = True
+
+st.markdown("---")
+
+
+
+
+# ── Per-step run panel (disabled when full pipeline is active) ─────────────────
+# Full pipeline takes exclusive control; per-step panel does NOT run during full pipeline
+is_step_running = st.session_state.step_running > 0 and not is_full_running
+
+if is_step_running:
+    step_running = st.session_state.step_running
+    st.markdown(f"#### Step {step_running}: {STEP_META[step_running]['name']}")
+
+    progress_bar = st.progress(0, text="Submitting...")
+    status_text = st.empty()
+    log_container = st.empty()
+
+    ok, msg, job_id = submit_step_slurm(step_running, exp_name)
+
+    if ok and job_id:
+        state = poll_job_until_done(
+            job_id=job_id, step_num=step_running, exp_name=exp_name,
+            log_container=log_container, progress_bar=progress_bar, status_text=status_text,
+            full_pipeline=False,
+        )
+        if state == "COMPLETED":
+            st.session_state.step_running = 0
+            st.success(f"Step {step_running} completed!")
+        else:
+            st.error(f"Step {step_running} failed: {state}")
+            st.session_state.step_running = 0
+        st.rerun()
+    else:
+        st.error(f"Submit failed: {msg}")
+        st.session_state.step_running = 0
+        st.rerun()
+
+st.markdown("---")
 
 # ── Step grid ──────────────────────────────────────────────────────────────────
+# State logic (mutually exclusive per step):
+#   is_valid           → green card ✅ + "🔁 Chạy lại"
+#   dir exists+incomplete → amber card ⚠️ + "🔍 Kiểm tra lại"
+#   not started        → gray card ⬜ + "▶️ Chạy"
+#   is_running         → yellow card ⏳  (block per-step buttons while any step is running)
+
+# When full pipeline runs: track _full_next_step; per-step buttons show "⏳ Full đang chạy"
+ALL_STEPS = [2, 3, 4, 5, 6, 7, 8, 9]
+
+# Resolve step status fresh each render (no caching of dir_exists/file_size)
+def _step_status(step_num):
+    step_dir = PIPELINE_ROOT / "output" / exp_name / STEP_OUTPUT_FILES[step_num][0]
+    dir_exists = step_dir.exists()
+    pattern = STEP_OUTPUT_FILES[step_num][1]
+    if "*" in pattern:
+        files = list(step_dir.glob(pattern)) if dir_exists else []
+        file_exists = bool(files)
+        file_size = sum(f.stat().st_size for f in files) if files else 0
+    else:
+        fpath = step_dir / pattern
+        file_exists = fpath.exists()
+        file_size = fpath.stat().st_size if file_exists else 0
+    is_valid = step_num in done_steps
+    item_count = step_counts.get(step_num, 0)
+    cached = st.session_state._recheck_versions.get(step_num)
+    if cached is not None:
+        item_count = cached
+    return dir_exists, file_exists, file_size, is_valid, item_count
+
+# is_full_running already resolved above from session state
+
 rows = [(2, 3), (4, 5), (6, 7), (8, 9)]
 
 for row_steps in rows:
@@ -544,30 +979,70 @@ for row_steps in rows:
 
     for i, step_num in enumerate(row_steps):
         meta = STEP_META[step_num]
-        is_done = step_num in done_steps
+        dir_exists, file_exists, file_size, is_valid, item_count = _step_status(step_num)
         is_this_running = st.session_state.step_running == step_num
 
         with cols[i + 1]:
-            bg = "#f0fdf4" if is_done else ("#fef9c3" if is_this_running else "#f9fafb")
-            border = "#22c55e" if is_done else ("#eab308" if is_this_running else "#e5e7eb")
-            icon = "✅" if is_done else ("⏳" if is_this_running else "⬜")
+            # ── Card (always rendered once) ──────────────────────────────────────
+            if is_this_running:
+                bg, border, icon = "#fef9c3", "#eab308", "⏳"
+                status = "Đang chạy..."
+            elif is_valid:
+                bg, border, icon = "#f0fdf4", "#22c55e", "✅"
+                status = f"Done — {item_count} items" if item_count else "Done"
+            elif dir_exists and file_size > 0:
+                bg, border, icon = "#fffbeb", "#f59e0b", "⚠️"
+                status = f"Incomplete — {item_count} items" if item_count else "⚠️ Incomplete"
+            else:
+                bg, border, icon = "#f9fafb", "#e5e7eb", "⬜"
+                status = "Chưa chạy"
 
             st.markdown(f"""
             <div style="background:{bg};border:2px solid {border};border-radius:10px;
                         padding:10px;margin:4px 0">
               <div style="font-weight:700;font-size:13px;color:#374151">{icon} {meta["label"]}</div>
               <div style="font-size:11px;color:#6b7280;margin-top:2px">{meta["name"]}</div>
+              <div style="font-size:10px;color:#9ca3af;margin-top:1px">{status}</div>
             </div>
             """, unsafe_allow_html=True)
 
-            if not is_done and not is_running:
-                if st.button(f"▶️ Chạy", key=f"run_{step_num}", use_container_width=True):
-                    st.session_state.step_running = step_num
-                    st.rerun()
-            elif is_done:
-                if st.button(f"🔁 Chạy lại", key=f"rerun_{step_num}", use_container_width=True):
-                    st.session_state.step_running = step_num
-                    st.rerun()
+            # ── Button (one per step, mutually exclusive) ──────────────────────
+            if is_this_running:
+                pass  # running → no action button
+            elif is_valid:
+                if is_full_running:
+                    st.button(f"⏳ Full đang chạy", key=f"b_{step_num}_locked",
+                              disabled=True, use_container_width=True)
+                else:
+                    if st.button(f"🔁 Chạy lại", key=f"b_{step_num}_rerun",
+                                 use_container_width=True):
+                        st.session_state.step_running = step_num
+                        st.rerun()
+            elif dir_exists and file_size > 0:
+                if is_full_running:
+                    st.button(f"⏳ Full đang chạy", key=f"b_{step_num}_locked",
+                              disabled=True, use_container_width=True)
+                else:
+                    if st.button(f"🔍 Kiểm tra lại", key=f"b_{step_num}_recheck",
+                                 use_container_width=True):
+                        is_v, cnt = _validate_step_output(
+                            PIPELINE_ROOT / "output" / exp_name, step_num
+                        )
+                        st.session_state._recheck_versions[step_num] = cnt
+                        if is_v:
+                            st.success(f"✅ Step {step_num} hợp lệ: {cnt} items")
+                        else:
+                            st.warning(f"⚠️ Step {step_num} chưa hợp lệ: {cnt} items. Cần chạy lại.")
+                        st.rerun()
+            else:
+                if is_full_running:
+                    st.button(f"⏳ Full đang chạy", key=f"b_{step_num}_locked",
+                              disabled=True, use_container_width=True)
+                elif not is_running:
+                    if st.button(f"▶️ Chạy", key=f"b_{step_num}_run",
+                                 use_container_width=True):
+                        st.session_state.step_running = step_num
+                        st.rerun()
 
 # ── Step run panel ─────────────────────────────────────────────────────────────
 if is_running:
@@ -610,7 +1085,10 @@ st.markdown("---")
 st.markdown("### 📊 Kết quả — Preview")
 
 if exp_obj and exp_obj["mcqs"]:
-    mcqs = exp_obj["mcqs"]
+    # Bug fix: join explanations into MCQs so render_mcq_card shows them
+    explanations = load_explanations(exp_name)
+    mcqs = merge_mcqs_with_explanations(exp_obj["mcqs"], explanations)
+    has_explanations = bool(explanations)
     stats = stats_summary(mcqs)
     st.markdown(render_stats_html(stats), unsafe_allow_html=True)
 
@@ -659,11 +1137,16 @@ with st.expander("📁 Lịch sử Experiments", expanded=False):
         for exp in experiments[:15]:
             done = sorted(exp["done_steps"])
             mtime = exp["mtime"].strftime("%d/%m/%Y %H:%M")
+            step_counts = exp.get("step_counts", {})
             with st.container():
                 c1, c2, c3 = st.columns([3, 1, 1])
                 with c1:
                     badge = "✅" if exp["mcq_count"] > 0 else "⬜"
-                    st.markdown(f"{badge} **`{exp['name']}`** — {mtime}")
+                    # Show item counts for key steps
+                    counts_str = ""
+                    if step_counts.get(8):
+                        counts_str = f" **(IWF: {step_counts[8]})**"
+                    st.markdown(f"{badge} **`{exp['name']}`** — {mtime}{counts_str}")
                 with c2:
                     st.markdown(f"Steps: {done if done else '—'}")
                 with c3:
@@ -671,7 +1154,9 @@ with st.expander("📁 Lịch sử Experiments", expanded=False):
                         st.session_state.current_exp = exp["name"]
                         st.rerun()
                 if exp["mcqs"]:
-                    stats = stats_summary(exp["mcqs"])
+                    exp_explanations = load_explanations(exp["name"])
+                    exp_mcqs = merge_mcqs_with_explanations(exp["mcqs"], exp_explanations)
+                    stats = stats_summary(exp_mcqs)
                     st.markdown(render_stats_html(stats), unsafe_allow_html=True)
                 st.markdown("---")
     else:

@@ -199,7 +199,7 @@ def embed_and_store(chunks: list[dict]) -> list[dict]:
 
     # ─── Embedding model ──────────────────────────────────────────
     print("  🔄 Loading BGE-m3 embedding model...")
-    model = SentenceTransformer("BAAI/bge-m3")
+    model = SentenceTransformer("BAAI/bge-m3", device="cpu")
     texts = [c["text"][:2000] for c in chunks]
     print(f"  🔄 Embedding {len(texts)} chunks...")
     embeddings = model.encode(texts, batch_size=32, show_progress_bar=True)

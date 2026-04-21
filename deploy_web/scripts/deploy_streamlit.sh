@@ -7,7 +7,7 @@
 #SBATCH --cpus-per-task=2
 #SBATCH --mem=8G
 #SBATCH --time=08:00:00
-#SBATCH --gres=mps:l40:1
+#SBATCH --gres=mps:a100:1
 #SBATCH --open-mode=append
 
 # ═══════════════════════════════════════════════════════════════════

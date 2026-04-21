@@ -23,7 +23,8 @@ cd "$PROJECT_ROOT"
 export PYTHONPATH="$PROJECT_ROOT"
 
 # Default experiment
-EXP_NAME="${1:-exp_03_test_15q}"
+EXP_NAME="full_pipeline"
+OUTPUT_DIR=""
 HUMAN_CSV="${2:-}"
 
 echo "🚀 Job $SLURM_JOB_ID — Step 10: Eval Metrics | exp=$EXP_NAME"
@@ -33,12 +34,12 @@ if [ -n "$HUMAN_CSV" ]; then
     python -u src/eval/eval_metrics.py \
         --exp "$EXP_NAME" \
         --human-csv "$HUMAN_CSV" \
-        --output "output/$EXP_NAME/metrics_report.json"
+        --output "$OUTPUT_DIR"
 else
     echo "▶️  Running metrics (no human labels)"
     python -u src/eval/eval_metrics.py \
         --exp "$EXP_NAME" \
-        --output "output/$EXP_NAME/metrics_report.json"
+        --output "$OUTPUT_DIR"
 fi
 
 echo "✅ Step 10 done"

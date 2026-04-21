@@ -23,7 +23,7 @@ import json
 import sys
 from pathlib import Path
 from typing import Any
-
+from sentence_transformers import SentenceTransformer
 # ── Setup ────────────────────────────────────────────────────────────────────
 import sys as _sys
 from pathlib import Path as _Path
@@ -56,8 +56,7 @@ def _get_chromadb():
 
 
 def _get_embedder():
-    from sentence_transformers import SentenceTransformer
-    return SentenceTransformer("BAAI/bge-m3")
+    return SentenceTransformer("BAAI/bge-m3",  device="cpu")
 
 
 # ── Constants ────────────────────────────────────────────────────────────────
@@ -189,8 +188,11 @@ class HybridRetriever:
 
         print("  Loading ChromaDB concept collection...")
         chromadb = _get_chromadb()
+        print(f"  Connecting to ChromaDB at {self.chroma_dir}...")
         client = chromadb.PersistentClient(path=str(self.chroma_dir))
+        print("  Accessing 'concept_chunks' collection...")
         self._chroma_collection = client.get_or_create_collection("concept_chunks")
+        print("  ✅ ChromaDB collection ready")
         self._embedder = _get_embedder()
         print("  ✅ ChromaDB + BGE-m3 loaded")
 

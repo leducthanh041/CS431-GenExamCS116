@@ -21,7 +21,7 @@ from typing import Any
 
 class Config:
     # ⚠️  Đặt tên experiment tại đây — mỗi lần chạy pipeline nên đổi tên
-    EXP_NAME = "exp_03_test_15q"  # Mini test: 15 câu, focus ch04/ch07b/ch08
+    EXP_NAME = "hello"  # Mini test: 15 câu, focus ch04/ch07b/ch08
 
     # ─── Paths (tự động tính từ vị trí file này) ───────────────────
     PROJECT_ROOT = Path(__file__).resolve().parent.parent
@@ -62,6 +62,7 @@ class Config:
     EVAL_OUTPUT       = OUTPUT_DIR / "07_eval"
     EVAL_IWF_OUTPUT   = OUTPUT_DIR / "08_eval_iwf"
     EXPLAIN_OUTPUT    = OUTPUT_DIR / "09_explain"
+    EXPLAIN_OUTPUT    = OUTPUT_DIR / "09_explain"
     FINAL_OUTPUT      = OUTPUT_DIR / "final"
 
     # Logs
@@ -87,7 +88,7 @@ class Config:
 
     # ─── Generation settings ──────────────────────────────────────────
     NUM_CANDIDATE_DISTRACTORS  = 6
-    SINGLE_CORRECT_RATIO       = 0.8   # 80% single, 20% multiple (target ~5-7/30)
+    SINGLE_CORRECT_RATIO       = 0.6   # 80% single, 20% multiple (target ~5-7/30)
     RETRY_ON_FAILURE           = 2
 
     # ─── Evaluation thresholds ────────────────────────────────────────
@@ -113,6 +114,7 @@ class Config:
             Config.GEN_COT_OUTPUT,
             Config.EVAL_OUTPUT,
             Config.EVAL_IWF_OUTPUT,
+            Config.EXPLAIN_OUTPUT,
             Config.EXPLAIN_OUTPUT,
             Config.FINAL_OUTPUT,
             Config.LOG_DIR,
@@ -191,6 +193,7 @@ Bạn có kiến thức về {COURSE_KNOWLEDGE_SCOPE}.
 Bạn đang biên soạn câu hỏi cho sinh viên đại học để dùng trong đề thi hoặc bộ câu ôn tập cuối kỳ.
 
 [HARD CONSTRAINTS — BẮT BUỘC TUÂN THỦ tuyệt đối]
+[HARD CONSTRAINTS — BẮT BUỘC TUÂN THỦ tuyệt đối]
 - Câu hỏi phải bằng tiếng Việt.
 - Câu hỏi phải phù hợp với ngữ cảnh ra đề cho sinh viên đại học.
 - Câu hỏi phải bám sát context và style đề thi đã cung cấp.
@@ -203,9 +206,16 @@ Bạn đang biên soạn câu hỏi cho sinh viên đại học để dùng tron
   **KHÔNG ĐƯỢC tự ý đổi loại câu hỏi sang loại khác.**
 - Nếu là "single_correct" → stem phải có nhãn [Một đáp án đúng].
 - Nếu là "multiple_correct" → stem phải có nhãn [Nhiều đáp án đúng].
+- **TUYỆT ĐỐI: Loại câu hỏi phải là "{question_type_target}" cho câu này.**
+  Nếu question_type_target = "single_correct" → câu này phải có ĐÚNG 1 đáp án đúng.
+  Nếu question_type_target = "multiple_correct" → câu này phải có ĐÚNG {correct_answer_count_target} đáp án đúng.
+  **KHÔNG ĐƯỢC tự ý đổi loại câu hỏi sang loại khác.**
+- Nếu là "single_correct" → stem phải có nhãn [Một đáp án đúng].
+- Nếu là "multiple_correct" → stem phải có nhãn [Nhiều đáp án đúng].
 - Nếu context không đủ thông tin thì phải từ chối sinh câu hỏi.
 - Không sinh distractor ở bước này.
 
+[STRICT RULE — CÂU HỎI KHÔNG ĐƯỢC CHỨA ĐÁP ÁN
 [STRICT RULE — CÂU HỎI KHÔNG ĐƯỢC CHỨA ĐÁP ÁN
 - **TUYỆT ĐỐI KHÔNG** được ghi đáp án đúng (hoặc một phần nội dung của đáp án đúng) vào trong question_text / stem.
 - Ví dụ SAI: "Phương pháp nào sau đây KHÔNG thuộc kỹ thuật ensemble: Boosting, Bagging, Random Forest, hoặc SVM?" ← đã ghi đáp án đúng (Boosting, Bagging, Random Forest) vào stem!
@@ -213,6 +223,35 @@ Bạn đang biên soạn câu hỏi cho sinh viên đại học để dùng tron
 - **CHỈ MÔ TẢ CHỦ ĐỀ / VẤN ĐỀ** trong stem, ví dụ: "Phương pháp nào sau đây không thuộc nhóm kỹ thuật ensemble learning?" ← KHÔNG liệt kê đáp án trong stem.
 - **Lưu ý quan trọng**: Nếu câu hỏi có dạng liệt kê (i)(ii)(iii)(iv) trong stem, bạn phải di chuyển toàn bộ các mục (i)(ii)(iii)(iv) vào phần OPTIONS (A/B/C/D), KHÔNG giữ chúng trong stem.
 
+[DIVERSITY RULE — TRÁNH CÁC CÁCH MỞ ĐẦU YẾU, TẠO SỰ TÒ MÒ]
+- **Mỗi câu hỏi phải có cách mô tả ĐA DẠNG, không bắt đầu bằng cùng một từ/cụm từ.**
+- **CÁC TỪ/CỤM TỪ SAU ĐÂY TUYỆT ĐỐI KHÔNG được dùng làm mở đầu câu hỏi:**
+  - ❌ "Hãy xác định..." (quá chung chung, gợi nhớ bài kiểm tra)
+  - ❌ "khi" (thường dẫn đến câu hỏi dài, không rõ ràng)
+  - ❌ "đâu" (câu hỏi mơ hồ, không đủ thông tin)
+  - ❌ "Trong quá trình..." (quá dài, không cần thiết)
+  - ❌ "Khi xây dựng..." / "Khi huấn luyện..." (lặp, không tạo tò mò)
+  - ❌ "Trong các phương pháp..." (lặp, quá generic)
+  - ❌ "Trong các kỹ thuật..." (tương tự)
+  - ❌ "Cho biết..." (lặp, không tạo hứng thú)
+- **ƯU TIÊN các cách mở đầu TẠO SỰ TÒ MÒ, học thuật, đúng kiểu đề thi:**
+  - ✅ "Điều gì khiến..." (gợi sự tò mò)
+  - ✅ "Đâu là điểm khác biệt giữa... và...?" (so sánh, phổ biến trong đề thi)
+  - ✅ "Nếu phải chọn giữa... và..., bạn sẽ ưu tiên điều gì?" (tình huống thực tế ngắn)
+  - ✅ "Một mô hình có đặc điểm... sẽ hoạt động ra sao khi...?" (áp dụng kiến thức)
+  - ✅ "Trường hợp nào sau đây minh họa đúng nhất về...?" (nhận định đúng sai)
+  - ✅ "Điều kiện tiên quyết để... hoạt động hiệu quả là gì?" (điều kiện)
+  - ✅ "Sau khi áp dụng..., kết quả mong đợi là gì?" (dự đoán)
+  - ✅ "Quan sát đoạn code sau, output nào phù hợp nhất?" (code-based)
+  - ✅ "Nếu thay đổi tham số... thì điều gì sẽ xảy ra với...?" (phân tích)
+  - ✅ "Vai trò chính của... trong kiến trúc này là gì?" (vai trò/thành phần)
+  - ✅ "Nhận định nào sau đây là chính xác nhất về...?" (đánh giá)
+  - ✅ "Mục đích chính của... là gì?" (mục đích)
+  - ✅ "Tính chất nào giúp phân biệt... với...?" (so sánh tính chất)
+  - ✅ "Phương pháp nào..." (cổ điển, dùng được nhưng tránh lặp)
+  - ✅ "Câu lệnh nào..." / "Hàm nào..." (code-based)
+- **Nếu batch có nhiều câu hỏi, mỗi câu phải dùng cách mở đầu KHÁC NHAU từ danh sách ưu tiên.**
+- **KHÔNG bắt đầu 2 câu liên tiếp bằng cùng một cụm từ.**
 [DIVERSITY RULE — TRÁNH CÁC CÁCH MỞ ĐẦU YẾU, TẠO SỰ TÒ MÒ]
 - **Mỗi câu hỏi phải có cách mô tả ĐA DẠNG, không bắt đầu bằng cùng một từ/cụm từ.**
 - **CÁC TỪ/CỤM TỪ SAU ĐÂY TUYỆT ĐỐI KHÔNG được dùng làm mở đầu câu hỏi:**
@@ -282,8 +321,14 @@ HƯỚNG DẪN NGHIÊM NGẶT: Trường "question_type" trong JSON output phả
   - Nếu mục tiêu là "single_correct" → question_type phải là "single_correct"
   - Nếu mục tiêu là "multiple_correct" → question_type phải là "multiple_correct"
   Sai: question_type ghi "single_correct" nhưng thực tế câu có 3 đáp án đúng.
+HƯỚNG DẪN NGHIÊM NGẶT: Trường "question_type" trong JSON output phải KHỚP CHÍNH XÁC với "Loại câu hỏi mục tiêu cho câu này" ở trên:
+  - Nếu mục tiêu là "single_correct" → question_type phải là "single_correct"
+  - Nếu mục tiêu là "multiple_correct" → question_type phải là "multiple_correct"
+  Sai: question_type ghi "single_correct" nhưng thực tế câu có 3 đáp án đúng.
 {{
   "draft_question_id": "<string>",
+  "question_text": "<string — BẮT BUỘC phải có nhãn phù hợp: [Một đáp án đúng] hoặc [Nhiều đáp án đúng]>",
+  "question_type": "{question_type_target}",
   "question_text": "<string — BẮT BUỘC phải có nhãn phù hợp: [Một đáp án đúng] hoặc [Nhiều đáp án đúng]>",
   "question_type": "{question_type_target}",
   "correct_answers_content": [
@@ -292,10 +337,12 @@ HƯỚNG DẪN NGHIÊM NGẶT: Trường "question_type" trong JSON output phả
     "<đáp án đúng 3 nếu có>"
   ],
   "correct_answer_count": {correct_answer_count_target},
+  "correct_answer_count": {correct_answer_count_target},
   "topic": "<string>",
   "subtopic": "<string>",
   "difficulty_label": "<string>",
   "used_concept_chunk_ids": ["<chunk_id_1>", "<chunk_id_2>"],
+  "sources": [],
   "sources": [],
   "style_alignment_note": "<ngắn gọn, nêu vì sao câu này phù hợp với ngữ cảnh đề thi>",
   "stem_has_answer": false,
@@ -977,45 +1024,50 @@ def make_vllm_sampling(temperature: float, max_tokens: int) -> dict[str, Any]:
         "max_tokens": max_tokens,
     }
 
+#def _get_dynamic_gpu_utilization(model_name: str = "Qwen2.5-14B-Instruct") -> float:
+#    try:
+#        import subprocess
+#        gpu_id = os.environ.get("CUDA_VISIBLE_DEVICES", "0").split(",")[0]
+#        result = subprocess.run(
+#            ["nvidia-smi", "--query-gpu=memory.total,memory.free",
+#             "--format=csv,noheader,nounits", "-i", gpu_id],
+#            capture_output=True, text=True, timeout=5
+#        )
+#        if result.returncode == 0:
+#            lines = result.stdout.strip().split("\n")
+#            if lines:
+#                parts = lines[0].split(",")
+#                if len(parts) >= 2:
+#                    total_mb = int(parts[0].strip())
+#                    free_mb = int(parts[1].strip())
+#                    # Dùng 70% free VRAM, giữ 30% buffer
+#                    util = (free_mb * 0.70) / total_mb
+#                    util = round(max(0.50, min(0.70, util)), 2)
+#                    print(f"[vLLM GPU] GPU {gpu_id}: {free_mb}/{total_mb} MiB free | "
+#                          f"Utilization: {util}")
+#                    return util
+#    except Exception as e:
+#        print(f"[vLLM GPU] Could not query VRAM: {e}")
+#    return 0.60
 
 def _get_dynamic_gpu_utilization(model_name: str = "Qwen2.5-14B-Instruct") -> float:
-    """Tự động detect VRAM free trên GPU 0 và tính gpu_memory_utilization an toàn.
-
-    Trả về utilization phù hợp với tình trạng thực tế của GPU:
-    - Qwen 14B cần ~28 GiB cho model weights + overhead
-    - Gemma 12B cần ~24 GiB cho model weights + overhead
-    - Luôn giữ lại ≥20% VRAM free cho PyTorch fragmented memory
-    """
     try:
-        import subprocess
-        result = subprocess.run(
-            ["nvidia-smi", "--query-gpu=memory.total,memory.free",
-             "--format=csv,noheader,nounits", "-i", "0"],
-            capture_output=True, text=True, timeout=5
-        )
-        if result.returncode == 0:
-            lines = result.stdout.strip().split("\n")
-            if lines:
-                parts = lines[0].split(",")
-                if len(parts) >= 2:
-                    total_mb = int(parts[0].strip())
-                    free_mb = int(parts[1].strip())
-                    # Model estimates (approximate, include activation overhead)
-                    if "Qwen" in model_name:
-                        model_mb = 28_000   # ~28 GiB for Qwen 14B
-                    else:
-                        model_mb = 24_000   # ~24 GiB for Gemma 12B
-                    # Target: reserve 20% free, rest for model+KvCache
-                    safe_util = (free_mb - model_mb) / total_mb
-                    # Clamp to [0.50, 0.72]; never go below 0.50
-                    util = round(max(0.50, min(0.72, safe_util)), 2)
-                    print(f"[vLLM GPU] Detected GPU VRAM: {free_mb}/{total_mb} MiB free | "
-                          f"Model estimate: {model_mb} MiB | Utilization: {util}")
-                    return util
+        import torch
+        if not torch.cuda.is_available():
+            return 0.60
+        device = torch.device("cuda:0")
+        total = torch.cuda.get_device_properties(device).total_mem / 1024**2  # MiB
+        free, _ = torch.cuda.mem_get_info(device)
+        free_mb = free / 1024**2
+        # Dùng free VRAM trừ 3GB buffer, chia cho total
+        util = (free_mb - 3000) / total
+        util = round(max(0.50, min(0.90, util)), 2)
+        print(f"[vLLM GPU] CUDA device 0: {free_mb:.0f}/{total:.0f} MiB free | "
+              f"Utilization: {util}")
+        return util
     except Exception as e:
         print(f"[vLLM GPU] Could not query VRAM: {e}")
-    return 0.60  # fallback conservative
-
+    return 0.60
 
 def init_vllm_gen() -> Any:
     """Khởi tạo vLLM cho generation model (Qwen2.5-14B-Instruct)."""
@@ -1029,8 +1081,8 @@ def init_vllm_gen() -> Any:
         model=str(Config.MODEL_GEN),
         tensor_parallel_size=Config.GEN_TP,
         trust_remote_code=True,
-        gpu_memory_utilization=0.72,
-        max_model_len=4096,
+        gpu_memory_utilization=0.40,
+        max_model_len=8192,
         # enforce_eager=True,            # tắt CUDA graph → tránh OOM khi warm-up
     )
     return llm, SamplingParams
@@ -1048,8 +1100,8 @@ def init_vllm_eval() -> Any:
         model=str(Config.MODEL_EVAL),
         tensor_parallel_size=Config.EVAL_TP,
         trust_remote_code=True,
-        gpu_memory_utilization=0.72,
-        max_model_len=4096,
+        gpu_memory_utilization=0.40,
+        max_model_len=8192,
         # enforce_eager=True,
     )
     return llm, SamplingParams

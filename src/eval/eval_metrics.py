@@ -1,28 +1,49 @@
 """
 eval_metrics.py — Quantitative Evaluation Metrics for MCQ Generation
 =====================================================================
-Implements 5 metrics for MCQ pipeline quality assessment.
+Implements 3 core metrics + human judgment comparison.
 
-Metrics (no reference set required):
+Core metrics (automatic, no reference set required):
   1. Topic Coverage                (vs topic_list.json)
   2. LLM Judge Pass Rate           (from 07_eval + 08_eval_iwf output)
   3. Bloom Distribution KL Div.   (vs target G1→L1/L2, G2→L3+L4, G3→L5+L6)
-  4. Answer Ratio                  (single vs multiple correct)
-  5. Diversity Openings            (avoid weak/banned question openings)
 
-Human Review:
-  - compute_human_agreement_from_csv()   (Cohen's κ: human vs LLM judge accept/reject)
-  - compute_inter_rater_kappa()           (Cohen's κ: detailed per-criterion)
+Human Judgment module:
+  4. Human vs LLM Agreement       (per-question JSON annotation → agreement metrics)
+
+Supported human annotation file formats:
+  A. render_review_html.py export (verdicts{} per question_id):
+     {
+       "annotator": "Nguyen Van A",
+       "timestamp": "2026-04-15T...",
+       "total_annotated": 10,
+       "verdicts": {
+         "<question_id>": { "format_pass": true, "overall_valid": true, ... }
+       }
+     }
+  B. Standalone annotation JSON (questions{} with criteria{}):
+     {
+       "annotator": "...",
+       "date": "2026-04-15",
+       "questions": {
+         "<question_id>": {
+           "overall_judgment": "accept",
+           "criteria": { ... },
+           "distractor_quality": { ... },
+           "notes": "..."
+         }
+       }
+     }
 
 Dependencies:
-  pip install scikit-learn numpy scipy
+  pip install numpy scipy scikit-learn
 """
 
 from __future__ import annotations
 
 import json
+import os
 import sys
-import re
 from pathlib import Path
 from typing import Any
 
@@ -31,225 +52,69 @@ import numpy as np
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 from common import Config, load_jsonl
 
-
-# ==============================================================================
-# 1. BLEU + ROUGE-L
-# ==============================================================================
-
-def compute_bleu_rouge(gen_mcqs: list[dict], ref_mcqs: list[dict]) -> dict[str, Any]:
-    """
-    Compute BLEU-1/2/4 and ROUGE-L between generated and reference MCQs.
-    Match by topic name. Reference set: trusted_quiz items (10 questions).
-
-    Returns per-question scores + aggregate mean/std.
-    """
-    try:
-        from sacrebleu import sentence_bleu
-        from rouge_score import rouge_scorer
-    except ImportError:
-        return {
-            "error": "sacrebleu or rouge-score not installed. Run: pip install sacrebleu rouge-score",
-            "per_question": [],
-            "bleu1_mean": None, "bleu1_std": None,
-            "bleu2_mean": None, "bleu2_std": None,
-            "bleu4_mean": None, "bleu4_std": None,
-            "rouge_l_mean": None, "rouge_l_std": None,
-        }
-
-    # Build topic → ref stems mapping
-    ref_by_topic: dict[str, list[str]] = {}
-    for r in ref_mcqs:
-        t = r.get("topic", "").strip()
-        if t:
-            ref_by_topic.setdefault(t, []).append(r["question_text"])
-
-    scorer = rouge_scorer.RougeScorer(["rougeL"], use_stemmer=True)
-    results: list[dict] = []
-
-    for gen in gen_mcqs:
-        topic = (gen.get("topic") or "").strip()
-        refs = ref_by_topic.get(topic, [])
-        if not refs:
-            continue
-
-        hyp = gen["question_text"]
-        bleu_scores: dict[str, float] = {}
-        rouge_scores: list[float] = []
-
-        for ref in refs:
-            for n in [1, 2, 4]:
-                key = f"bleu{n}"
-                if key not in bleu_scores or bleu_scores[key] == 0:
-                    score = sentence_bleu(hyp, [ref], tokenize="13a", max_order=n).score / 100
-                    bleu_scores[key] = max(bleu_scores.get(key, 0), score)
-            rouge = scorer.score(ref, hyp)["rougeL"].fmeasure
-            rouge_scores.append(rouge)
-
-        results.append({
-            "question_id": gen.get("question_id", "unknown"),
-            "topic":        topic,
-            "bleu1":        bleu_scores.get("bleu1"),
-            "bleu2":        bleu_scores.get("bleu2"),
-            "bleu4":        bleu_scores.get("bleu4"),
-            "rouge_l":      max(rouge_scores) if rouge_scores else None,
-        })
-
-    if not results:
-        return {
-            "note": "No topic-matched reference questions found. BLEU/ROUGE not computed.",
-            "per_question": [],
-            "bleu1_mean": None, "bleu1_std": None,
-            "bleu2_mean": None, "bleu2_std": None,
-            "bleu4_mean": None, "bleu4_std": None,
-            "rouge_l_mean": None, "rouge_l_std": None,
-        }
-
-    def _agg(key: str) -> tuple[float, float]:
-        vals = [r[key] for r in results if r.get(key) is not None]
-        return (float(np.mean(vals)), float(np.std(vals))) if vals else (None, None)
-
-    b1_m, b1_s = _agg("bleu1")
-    b2_m, b2_s = _agg("bleu2")
-    b4_m, b4_s = _agg("bleu4")
-    rl_m,  rl_s = _agg("rouge_l")
-
-    return {
-        "per_question": results,
-        "bleu1_mean": b1_m,  "bleu1_std": b1_s,
-        "bleu2_mean": b2_m,  "bleu2_std": b2_s,
-        "bleu4_mean": b4_m,  "bleu4_std": b4_s,
-        "rouge_l_mean": rl_m, "rouge_l_std": rl_s,
-        "n_matched": len(results),
-        "note": f"Matched {len(results)} generated questions with {len(ref_by_topic)} reference topics",
-    }
+# ── Override EXP_NAME from environment (set by pipeline script) ───────────────
+_exp_name = os.environ.get("EXP_NAME", "")
+if _exp_name:
+    Config.EXP_NAME = _exp_name
+    Config.OUTPUT_DIR = Config.PROJECT_ROOT / "output" / Config.EXP_NAME
+    Config.EVAL_OUTPUT = Config.OUTPUT_DIR / "07_eval"
+    Config.EVAL_IWF_OUTPUT = Config.OUTPUT_DIR / "08_eval_iwf"
+    Config.EXPLAIN_OUTPUT = Config.OUTPUT_DIR / "09_explain"
+    print(f"[eval_metrics] EXP_NAME overridden: {Config.EXP_NAME}")
 
 
 # ==============================================================================
-# 2. BERTScore
-# ==============================================================================
-
-def compute_bertscore(gen_mcqs: list[dict], ref_mcqs: list[dict]) -> dict[str, Any]:
-    """
-    Compute BERTScore precision/recall/F1 using multilingual BERT.
-    Match by topic. Reference: trusted_quiz items.
-
-    Returns aggregate P/R/F1 mean across matched questions.
-    """
-    try:
-        from bert_score import get_bertscore
-    except ImportError:
-        return {
-            "error": "bert-score not installed. Run: pip install bert-score",
-            "bertscore_precision_mean": None,
-            "bertscore_recall_mean":    None,
-            "bertscore_f1_mean":         None,
-        }
-
-    # Build topic → ref stems mapping
-    ref_by_topic: dict[str, list[str]] = {}
-    for r in ref_mcqs:
-        t = r.get("topic", "").strip()
-        if t:
-            ref_by_topic.setdefault(t, []).append(r["question_text"])
-
-    hyps, refs, ids, topics = [], [], [], []
-    for gen in gen_mcqs:
-        topic = (gen.get("topic") or "").strip()
-        matched_refs = ref_by_topic.get(topic, [])
-        if matched_refs:
-            hyps.append(gen["question_text"])
-            refs.append(matched_refs[0])   # best-match ref
-            ids.append(gen.get("question_id", "unknown"))
-            topics.append(topic)
-
-    if not hyps:
-        return {
-            "note": "No topic-matched reference questions found. BERTScore not computed.",
-            "bertscore_precision_mean": None,
-            "bertscore_recall_mean":    None,
-            "bertscore_f1_mean":         None,
-        }
-
-    P, R, F1 = get_bertscore(
-        hyps, refs,
-        lang="multilingual",
-        model_type="bert-base-multilingual-cased",
-        rescale_with_baseline=True,
-    )
-
-    P_l = P.tolist()
-    R_l = R.tolist()
-    F1_l = F1.tolist()
-
-    return {
-        "per_question": [
-            {"question_id": ids[i], "topic": topics[i],
-             "precision": P_l[i], "recall": R_l[i], "f1": F1_l[i]}
-            for i in range(len(ids))
-        ],
-        "bertscore_precision_mean": float(np.mean(P_l)),
-        "bertscore_recall_mean":    float(np.mean(R_l)),
-        "bertscore_f1_mean":         float(np.mean(F1_l)),
-        "bertscore_precision_std":  float(np.std(P_l)),
-        "bertscore_recall_std":     float(np.std(R_l)),
-        "bertscore_f1_std":          float(np.std(F1_l)),
-        "n_matched": len(hyps),
-    }
-
-
-# ==============================================================================
-# 3. Topic Coverage
+# 1. Topic Coverage
 # ==============================================================================
 
 def compute_topic_coverage(
     gen_mcqs: list[dict],
-    topic_list: dict,
+    topic_list: list[dict],
 ) -> dict[str, Any]:
     """
     Compute topic coverage: what % of topics in topic_list.json
     have at least one generated MCQ.
     """
-    # Topics from generated MCQs
     gen_topics: set[str] = set()
     for q in gen_mcqs:
-        t = (q.get("topic") or q.get("_meta", {}).get("topic_name", "") or "").strip()
+        t = (q.get("topic")
+             or q.get("_meta", {}).get("topic_name", "")
+             or "").strip()
         if t:
             gen_topics.add(t)
 
-    # Topics from topic_list.json (list of chapters)
     ref_topics: set[str] = set()
-    for ch in topic_list:  # topic_list is a list, not dict
+    for ch in topic_list:
         for t in ch.get("topics", []):
             ref_topics.add(t["topic_name"])
 
     covered = gen_topics & ref_topics
     missing = ref_topics - gen_topics
 
-    # Also check per-chapter coverage
-    chapter_coverage: dict[str, dict] = {}
-    for ch in topic_list:  # list
+    chapter_coverage: dict[str, dict[str, Any]] = {}
+    for ch in topic_list:
         ch_name = ch.get("chapter_name", ch.get("chapter_id", "?"))
         ch_topics = {t["topic_name"] for t in ch.get("topics", [])}
         ch_covered = ch_topics & gen_topics
         chapter_coverage[ch_name] = {
             "covered": sorted(ch_covered),
             "missing": sorted(ch_topics - gen_topics),
-            "ratio": len(ch_covered) / len(ch_topics) if ch_topics else 0,
+            "ratio": len(ch_covered) / len(ch_topics) if ch_topics else 0.0,
         }
 
     return {
-        "coverage_ratio":   len(covered) / len(ref_topics) if ref_topics else 0,
+        "coverage_ratio":   len(covered) / len(ref_topics) if ref_topics else 0.0,
         "topics_covered":   sorted(covered),
         "topics_missing":   sorted(missing),
         "num_covered":      len(covered),
         "num_total":        len(ref_topics),
-        "extra_topics":     sorted(gen_topics - ref_topics),  # topics in gen but not in list
+        "extra_topics":     sorted(gen_topics - ref_topics),
         "chapter_coverage": chapter_coverage,
     }
 
 
 # ==============================================================================
-# 4. LLM Judge Pass Rate
+# 2. LLM Judge Pass Rate
 # ==============================================================================
 
 def compute_judge_pass_rate(
@@ -257,107 +122,138 @@ def compute_judge_pass_rate(
     iwf_file: Path,
 ) -> dict[str, Any]:
     """
-    Aggregate pass/reject rates from the existing pipeline outputs:
-    - 07_eval: evaluated_questions.jsonl (pass/fail on 6 criteria)
-    - 08_eval_iwf: final_accepted_questions.jsonl (final accepted after IWF)
+    Aggregate pass/reject rates from pipeline evaluation outputs:
+      - 07_eval: evaluated_questions.jsonl  (8-criteria Gemma-3-12b evaluation)
+      - 08_eval_iwf: final_accepted_questions.jsonl  (IWF distractor filter)
 
-    Returns per-criterion pass rates and overall rates.
+    Returns per-criterion pass rates, overall rates, and quality score stats.
     """
     if not evaluated_file.exists():
         return {"error": f"File not found: {evaluated_file}"}
     if not iwf_file.exists():
         return {"error": f"File not found: {iwf_file}"}
 
-    evaluated = load_jsonl(evaluated_file)
+    evaluated    = load_jsonl(evaluated_file)
     iwf_accepted = load_jsonl(iwf_file)
 
-    # Overall final pass rate
     total_evaluated = len(evaluated)
-    total_accepted = len(iwf_accepted)
-    total_rejected = total_evaluated - total_accepted
-    final_pass_rate = total_accepted / total_evaluated if total_evaluated else 0
+    total_accepted  = len(iwf_accepted)
+    total_rejected   = total_evaluated - total_accepted
+    final_pass_rate  = total_accepted / total_evaluated if total_evaluated else 0.0
 
-    # Per-criterion pass rate from 07_eval
-    criteria = [
+    # ── Per-criterion pass rate (8 criteria) ─────────────────────────────────
+    all_criteria = [
         "format_pass", "language_pass", "grammar_pass",
         "relevance_pass", "answerability_pass", "correct_set_pass",
+        "no_four_correct_pass", "answer_not_in_stem_pass",
     ]
     criterion_rates: dict[str, float] = {}
-    for c in criteria:
-        passed = sum(1 for q in evaluated if q.get("evaluation", {}).get(c, False))
-        criterion_rates[c] = passed / total_evaluated if total_evaluated else 0
+    for c in all_criteria:
+        passed = sum(
+            1 for q in evaluated
+            if q.get("evaluation", {}).get(c, False)
+        )
+        criterion_rates[c] = passed / total_evaluated if total_evaluated else 0.0
 
-    # IWF pass rate
+    # ── IWF pass rate ────────────────────────────────────────────────────────
     iwf_passed = sum(
         1 for q in iwf_accepted
         if q.get("distractor_evaluation", {}).get("overall_distractor_quality_pass", False)
     )
     iwf_total = len(iwf_accepted)
-    iwf_pass_rate = iwf_passed / iwf_total if iwf_total else 0
+    iwf_pass_rate = iwf_passed / iwf_total if iwf_total else 0.0
 
-    # Quality score stats
-    scores = [q.get("evaluation", {}).get("quality_score") for q in evaluated
-              if q.get("evaluation", {}).get("quality_score") is not None]
-    score_stats = {
-        "quality_score_mean":   float(np.mean(scores)) if scores else None,
-        "quality_score_std":   float(np.std(scores))  if scores else None,
-        "quality_score_median": float(np.median(scores)) if scores else None,
-        "quality_score_min":    float(np.min(scores))  if scores else None,
-        "quality_score_max":    float(np.max(scores))  if scores else None,
-    }
+    # ── IWF per-type pass rate ─────────────────────────────────────────────
+    iwf_types = [
+        "plausible_distractor", "vague_terms", "grammar_clue",
+        "absolute_terms", "distractor_length", "k_type_combination",
+    ]
+    iwf_type_rates: dict[str, float] = {}
+    for iwf_type in iwf_types:
+        passed = sum(
+            1 for q in iwf_accepted
+            if q.get("distractor_evaluation", {}).get(iwf_type, True) is True
+        )
+        iwf_type_rates[iwf_type] = passed / iwf_total if iwf_total else 0.0
+
+    # ── Quality score stats ─────────────────────────────────────────────────
+    scores = [
+        q.get("evaluation", {}).get("quality_score")
+        for q in evaluated
+        if q.get("evaluation", {}).get("quality_score") is not None
+    ]
+    score_stats: dict[str, Any] = {}
+    if scores:
+        score_stats = {
+            "mean":   round(float(np.mean(scores)), 4),
+            "std":    round(float(np.std(scores)),  4),
+            "median": round(float(np.median(scores)), 4),
+            "min":    round(float(np.min(scores)),  4),
+            "max":    round(float(np.max(scores)),  4),
+        }
+
+    # ── Per-difficulty pass rate ──────────────────────────────────────────
+    diff_rates: dict[str, dict[str, float]] = {}
+    for diff in ["G1", "G2", "G3"]:
+        diff_qs        = [q for q in evaluated
+                          if q.get("difficulty_label", q.get("_meta", {}).get("difficulty", "")) == diff]
+        diff_accepted = [q for q in iwf_accepted
+                         if q.get("difficulty_label", q.get("_meta", {}).get("difficulty", "")) == diff]
+        n_eval = len(diff_qs)
+        n_acc  = len(diff_accepted)
+        diff_rates[diff] = {
+            "evaluated": n_eval,
+            "accepted":   n_acc,
+            "pass_rate":  n_acc / n_eval if n_eval else 0.0,
+        }
 
     return {
-        "final_pass_rate":   final_pass_rate,
-        "total_evaluated":   total_evaluated,
-        "total_accepted":    total_accepted,
-        "total_rejected":    total_rejected,
-        "iwf_pass_rate":     iwf_pass_rate,
-        "iwf_passed":        iwf_passed,
-        "iwf_total":          iwf_total,
-        "criterion_pass_rates": criterion_rates,
-        "quality_score_stats":  score_stats,
+        "final_pass_rate":       final_pass_rate,
+        "total_evaluated":      total_evaluated,
+        "total_accepted":        total_accepted,
+        "total_rejected":        total_rejected,
+        "criterion_pass_rates":  criterion_rates,
+        "iwf_pass_rate":         iwf_pass_rate,
+        "iwf_passed":            iwf_passed,
+        "iwf_total":             iwf_total,
+        "iwf_type_pass_rates":   iwf_type_rates,
+        "quality_score_stats":   score_stats,
+        "per_difficulty_rates":  diff_rates,
     }
 
 
 # ==============================================================================
-# 5. Bloom Distribution KL Divergence
+# 3. Bloom Distribution KL Divergence
 # ==============================================================================
 
-# Bloom's Taxonomy Vietnamese keywords for classification
 BLOOM_KEYWORDS: dict[int, list[str]] = {
-    # Level 1 — Remember
     1: ["nhớ", "định nghĩa", "liệt kê", "trình bày", "nêu", "cho biết",
         "thuộc tính", "công thức", "hàm", "lệnh", " cú pháp", "là gì"],
-    # Level 2 — Understand
     2: ["giải thích", "ví dụ", "so sánh", "phân biệt", "tổng hợp",
         "mô tả", "trình bày", "tại sao", "như thế nào", "hoạt động"],
-    # Level 3 — Apply
     3: ["áp dụng", "sử dụng", "thực hiện", "tính toán", "viết code",
         "chạy", "kết quả", "đầu ra", "đầu vào", "giá trị"],
-    # Level 4 — Analyze
     4: ["phân tích", "tại sao", "lỗi", "sai", "đúng", "so sánh",
         "đánh giá", "hiệu suất", "độ phức tạp", "cách cải thiện"],
-    # Level 5 — Evaluate
     5: ["đánh giá", "lựa chọn", "tốt nhất", "hiệu quả nhất", "nên",
         "không nên", "ưu nhược điểm", "so sánh và chọn"],
-    # Level 6 — Create
     6: ["thiết kế", "xây dựng", "cải tiến", "đề xuất", "tạo ra",
         "lập trình", "phát triển", "viết chương trình"],
 }
 
-# Target distribution: G1→L1+L2, G2→L3+L4, G3→L5+L6
 BLOOM_TARGET: dict[int, float] = {
-    1: 0.20,  # G1: 40% total
+    1: 0.20,
     2: 0.20,
-    3: 0.20,  # G2: 40% total
+    3: 0.20,
     4: 0.20,
-    5: 0.10,  # G3: 20% total
+    5: 0.10,
     6: 0.10,
 }
+BLOOM_NAMES = ["Remember", "Understand", "Apply", "Analyze", "Evaluate", "Create"]
 
 
 def _classify_bloom(text: str) -> int:
-    """Classify text into Bloom level (1-6) using keyword matching."""
+    """Classify question stem into Bloom level (1-6) via keyword matching."""
     text_lower = text.lower()
     scores: dict[int, float] = {i: 0 for i in range(1, 7)}
     for level, keywords in BLOOM_KEYWORDS.items():
@@ -365,297 +261,629 @@ def _classify_bloom(text: str) -> int:
             if kw in text_lower:
                 scores[level] += 1
     best = max(scores, key=scores.get)
-    # Fallback to G2→L3-L4 mapping if no keywords found
-    return best if scores[best] > 0 else 3
+    return best if scores[best] > 0 else 3  # fallback → L3
 
 
 def compute_bloom_kl_divergence(gen_mcqs: list[dict]) -> dict[str, Any]:
     """
     Classify each question into Bloom level via keyword matching.
-    Compute actual vs target distribution, then KL divergence.
-
-    Target: G1→{L1,L2}, G2→{L3,L4}, G3→{L5,L6}
+    Compute KL(actual ‖ target) where target encodes G1→L1+L2, G2→L3+L4, G3→L5+L6.
     """
     try:
-        from scipy.stats import entropy
+        from scipy.stats import entropy as _entropy
     except ImportError:
-        # Fallback: manual KL
-        def entropy_simple(p, q):
-            return sum(pi * (np.log(pi) - np.log(qi + 1e-9))
-                       for pi, qi in zip(p, q) if pi > 0)
-        _entropy = entropy_simple
-    else:
-        _entropy = entropy
+        def _entropy(p, q):
+            return sum(
+                pi * (np.log(pi) - np.log(qi + 1e-9))
+                for pi, qi in zip(p, q) if pi > 0
+            )
 
     bloom_counts: dict[int, int] = {i: 0 for i in range(1, 7)}
-    per_question: list[dict] = []
+    per_question: list[dict[str, Any]] = []
 
     for q in gen_mcqs:
         stem = q.get("question_text", "")
-        diff = q.get("difficulty_label", q.get("_meta", {}).get("difficulty", "G2"))
+        diff = (
+            q.get("difficulty_label")
+            or q.get("_meta", {}).get("difficulty", "G2")
+        )
         level = _classify_bloom(stem)
         bloom_counts[level] += 1
         per_question.append({
             "question_id": q.get("question_id", "unknown"),
-            "difficulty": diff,
+            "difficulty":  diff,
             "bloom_level": level,
-            "bloom_name": ["Remember", "Understand", "Apply", "Analyze", "Evaluate", "Create"][level - 1],
+            "bloom_name":  BLOOM_NAMES[level - 1],
         })
 
     n = len(gen_mcqs) or 1
     actual = np.array([bloom_counts[i] + 1e-9 for i in range(1, 7)])
     actual = actual / actual.sum()
-
     target = np.array([BLOOM_TARGET[i] for i in range(1, 7)])
-
     kl_div = float(_entropy(actual, target))
 
     # Per-difficulty distribution
     diff_bloom: dict[str, dict[int, float]] = {}
     for diff in ["G1", "G2", "G3"]:
         diff_qs = [pq for pq in per_question if pq["difficulty"] == diff]
-        cnt = {i: 0 for i in range(1, 7)}
+        cnt: dict[int, int] = {i: 0 for i in range(1, 7)}
         for pq in diff_qs:
             cnt[pq["bloom_level"]] += 1
         tot = len(diff_qs) or 1
         diff_bloom[diff] = {i: cnt[i] / tot for i in range(1, 7)}
 
     return {
-        "per_question": per_question,
-        "bloom_counts": bloom_counts,
-        "actual_distribution": actual.tolist(),
+        "per_question":         per_question,
+        "bloom_counts":         bloom_counts,
+        "actual_distribution":  actual.tolist(),
         "target_distribution": target.tolist(),
-        "kl_divergence":       kl_div,
+        "kl_divergence":       round(kl_div, 6),
         "per_difficulty_bloom": diff_bloom,
-        "note": "Bloom levels classified via keyword matching. KL target: G1→{L1,L2}, G2→{L3,L4}, G3→{L5,L6}",
+        "note": "Bloom levels classified via keyword matching. "
+                "Target: G1→{L1,L2}, G2→{L3,L4}, G3→{L5+L6}",
     }
 
 
 # ==============================================================================
-# 6. Cohen's κ — Human vs LLM Judge
+# 4. Human Judgment — Agreement vs LLM Judge
+# ==============================================================================
+#
+# Supports TWO annotation file formats:
+#   A. render_review_html.py export  (verdicts{} per question_id)
+#   B. Standalone annotation JSON    (questions{} with per-criterion structure)
+#
+# Agreement computed:
+#   1. Overall accept/reject: Cohen's κ + confusion matrix + P/R/F1
+#   2. Per-criterion (6–8 criteria): Cohen's κ + agreement rate
+#   3. IWF overall (if available): Cohen's κ + confusion matrix
+#   4. IWF per-type (if available): pass rate per IWF flaw type
 # ==============================================================================
 
-def compute_inter_rater_kappa(
-    annotation_file: Path,
-    llm_results_file: Path,
-) -> dict[str, Any]:
+# Criteria from HTML export (render_review_html.py)
+HTML_EVAL_CRITERIA = [
+    "format_pass", "language_pass", "grammar_pass",
+    "relevance_pass", "answerability_pass", "correct_set_pass",
+    "overall_valid",
+]
+
+# Criteria for standalone annotation format
+ANN_CRITERIA = [
+    "format_pass", "language_pass", "grammar_pass",
+    "relevance_pass", "answerability_pass", "correct_set_pass",
+    "no_four_correct_pass", "answer_not_in_stem_pass",
+]
+
+IWF_TYPES = [
+    "plausible_distractor", "vague_terms", "grammar_clue",
+    "absolute_terms", "distractor_length", "k_type_combination",
+]
+
+_JUDGMENT_TRUE  = {True, "true", "accept", "pass"}
+_JUDGMENT_FALSE = {False, "false", "reject", "fail"}
+
+
+def _parse_bool(val: Any) -> bool | None:
+    """Parse annotation value → Python bool. None if indeterminate."""
+    if val is None:
+        return None
+    if isinstance(val, bool):
+        return val
+    if isinstance(val, str):
+        low = val.lower().strip()
+        if low in _JUDGMENT_TRUE:
+            return True
+        if low in _JUDGMENT_FALSE:
+            return False
+    return None
+
+
+def _interpret_kappa(k: float | None) -> str:
+    """Interpret Cohen's κ. None/NaN → N/A."""
+    import math
+    if k is None or (isinstance(k, float) and math.isnan(k)):
+        return "N/A (all votes same class)"
+    if k < 0:     return "Poor"
+    if k < 0.20:  return "Slight"
+    if k < 0.40:  return "Fair"
+    if k < 0.60:  return "Moderate"
+    if k < 0.80:  return "Substantial"
+    return "Almost Perfect"
+
+
+def _cm_stats(h_binary: list[int], l_binary: list[int]) -> dict[str, Any]:
+    """Build confusion matrix + Cohen's κ + P/R/F1 from two binary lists.
+
+    Handles degenerate case: when all votes are the same class (e.g. 100% pass),
+    sklearn returns NaN → returns "N/A" with note.
     """
-    Compute Cohen's κ between human annotations and Gemma-3-12b-it judge.
-
-    annotation_file: JSON with structure {"verdicts": {qid: {criterion: bool}}}
-    llm_results_file: evaluated_questions.jsonl
-
-    Returns per-criterion κ + overall κ.
-    """
-    try:
-        from sklearn.metrics import cohen_kappa_score
-    except ImportError:
-        return {"error": "scikit-learn not installed. Run: pip install scikit-learn"}
-
-    if not annotation_file.exists():
-        return {"error": f"Annotation file not found: {annotation_file}"}
-    if not llm_results_file.exists():
-        return {"error": f"LLM results file not found: {llm_results_file}"}
-
-    with open(annotation_file, encoding="utf-8") as f:
-        annotations = json.load(f)
-
-    verdicts: dict[str, dict] = annotations.get("verdicts", {})
-    if not verdicts:
-        return {"error": "No verdicts found in annotation file"}
-
-    annotator = annotations.get("annotator", "unknown")
-
-    # Load LLM results → dict keyed by question_id
-    llm_results_list = load_jsonl(llm_results_file)
-    llm_by_id: dict[str, dict] = {q.get("question_id", f"q{i}"): q.get("evaluation", {})
-                                  for i, q in enumerate(llm_results_list)}
-
-    # Match question IDs
-    criteria = [
-        "format_pass", "language_pass", "grammar_pass",
-        "relevance_pass", "answerability_pass", "correct_set_pass",
-        "overall_valid",
-    ]
-
-    kappas: dict[str, Any] = {}
-    per_q: list[dict] = []
-
-    for qid, human_v in verdicts.items():
-        if qid not in llm_by_id:
-            continue
-        llm_v = llm_by_id[qid]
-        q_result: dict[str, Any] = {"question_id": qid}
-        for c in criteria:
-            h = human_v.get(c)
-            g = llm_v.get(c)
-            if h is not None and g is not None:
-                q_result[f"human_{c}"] = h
-                q_result[f"llm_{c}"]   = g
-                q_result[f"agree_{c}"] = (h == g)
-        per_q.append(q_result)
-
-        for c in criteria:
-            h = human_v.get(c)
-            g = llm_v.get(c)
-            if h is not None and g is not None:
-                kappas.setdefault(c, {"human": [], "llm": []})
-                kappas[c]["human"].append(int(h))
-                kappas[c]["llm"].append(int(g))
-
-    # Compute κ per criterion
-    criterion_kappas: dict[str, float] = {}
-    agreement_rates: dict[str, float] = {}
-
-    for c in criteria:
-        if c in kappas and kappas[c]["human"]:
-            pairs = [(h, g) for h, g in zip(kappas[c]["human"], kappas[c]["llm"])]
-            agree = sum(1 for h, g in pairs if h == g) / len(pairs)
-            kappa = float(cohen_kappa_score(
-                [p[0] for p in pairs],
-                [p[1] for p in pairs],
-            ))
-            criterion_kappas[c] = round(kappa, 4)
-            agreement_rates[c] = round(agree, 4)
-
-    # Overall κ (all criteria pooled)
-    all_h, all_g = [], []
-    for c in criteria:
-        if c in kappas and kappas[c]["human"]:
-            all_h.extend(kappas[c]["human"])
-            all_g.extend(kappas[c]["llm"])
-
-    overall_kappa = float(cohen_kappa_score(all_h, all_g)) if all_h else None
-    overall_agreement = sum(1 for h, g in zip(all_h, all_g) if h == g) / len(all_h) if all_h else None
-
-    # κ interpretation
-    def interpret_kappa(k: float) -> str:
-        if k < 0:    return "Poor"
-        if k < 0.20: return "Slight"
-        if k < 0.40: return "Fair"
-        if k < 0.60: return "Moderate"
-        if k < 0.80: return "Substantial"
-        return "Almost Perfect"
-
-    return {
-        "annotator":        annotator,
-        "n_questions":      len(per_q),
-        "overall_kappa":    round(overall_kappa, 4) if overall_kappa is not None else None,
-        "overall_agreement": round(overall_agreement, 4) if overall_agreement is not None else None,
-        "overall_interpretation": interpret_kappa(overall_kappa) if overall_kappa is not None else None,
-        "per_criterion": {
-            c: {
-                "kappa": criterion_kappas.get(c),
-                "agreement": agreement_rates.get(c),
-                "interpretation": interpret_kappa(criterion_kappas.get(c, -1)),
-            }
-            for c in criteria
-        },
-        "per_question": per_q,
-    }
-
-
-# ==============================================================================
-# 7. Human Labels CSV — Simple Accept/Reject vs LLM Judge
-# ==============================================================================
-
-def compute_human_agreement_from_csv(
-    human_csv: Path,
-    llm_results_file: Path,
-) -> dict[str, Any]:
-    """
-    Simple human vs LLM agreement using only accept/reject per question.
-
-    human_csv format (2 columns, no header):
-        question_id,human_label
-        ch04_t01_q0,accept
-        ch04_t01_q1,reject
-
-    human_label values: accept | reject (case-insensitive)
-
-    llm_results_file: evaluated_results.jsonl — uses "accepted" field
-
-    Computes: Agreement rate, Confusion matrix, Cohen's Kappa,
-              Accuracy, Precision, Recall, F1
-    """
-    try:
-        from sklearn.metrics import cohen_kappa_score
-    except ImportError:
-        return {"error": "scikit-learn not installed. Run: pip install scikit-learn"}
-
-    # Load human labels
-    human_labels: dict[str, int] = {}  # qid → 1 (accept) / 0 (reject)
-    with open(human_csv, encoding="utf-8") as f:
-        for line in f:
-            line = line.strip()
-            if not line or line.startswith("question_id"):
-                continue
-            parts = line.split(",")
-            if len(parts) < 2:
-                continue
-            qid = parts[0].strip()
-            label = parts[1].strip().lower()
-            human_labels[qid] = 1 if label == "accept" else 0
-
-    # Load LLM results
-    llm_results_list = load_jsonl(llm_results_file)
-    llm_by_id: dict[str, bool] = {}
-    for q in llm_results_list:
-        qid = q.get("question_id", "")
-        llm_by_id[qid] = q.get("accepted", False)
-
-    # Match
-    matched = [(qid, human_labels[qid], bool(llm_by_id.get(qid, False)))
-               for qid in human_labels if qid in llm_by_id]
-
-    if not matched:
-        return {
-            "error": (f"No matching question_ids found. "
-                      f"Human CSV has {len(human_labels)} entries, "
-                      f"LLM file has {len(llm_by_id)} entries. "
-                      f"Check that question_ids match.")
-        }
-
-    h_binary = [m[1] for m in matched]
-    l_binary = [m[2] for m in matched]
-    n = len(matched)
-
-    agree = sum(1 for h, l in zip(h_binary, l_binary) if h == l)
+    n = len(h_binary)
     tp = sum(1 for h, l in zip(h_binary, l_binary) if h == 1 and l == 1)
     tn = sum(1 for h, l in zip(h_binary, l_binary) if h == 0 and l == 0)
     fp = sum(1 for h, l in zip(h_binary, l_binary) if h == 0 and l == 1)
     fn = sum(1 for h, l in zip(h_binary, l_binary) if h == 1 and l == 0)
+    agree = tp + tn
+    p_o = agree / n if n else 0.0
 
-    po = agree / n
-    pe = (((tp + fp) / n) * ((tp + fn) / n)
-          + ((fn + tn) / n) * ((fp + tn) / n))
-    kappa = (po - pe) / (1 - pe) if (1 - pe) > 1e-9 else 0.0
+    p_e_num = ((tp + fp) * (tp + fn) + (fn + tn) * (fp + tn))
+    p_e_den = n * n
+    p_e = p_e_num / p_e_den if p_e_den else 0.0
 
-    accuracy  = agree / n
-    precision = tp / (tp + fp) if (tp + fp) > 0 else 0.0
-    recall    = tp / (tp + fn) if (tp + fn) > 0 else 0.0
-    f1 = 2 * precision * recall / (precision + recall) if (precision + recall) > 0 else 0.0
+    accuracy   = agree / n if n else 0.0
+    precision  = tp / (tp + fp) if (tp + fp) else 0.0
+    recall    = tp / (tp + fn) if (tp + fn) else 0.0
+    f1 = 2 * precision * recall / (precision + recall) if (precision + recall) else 0.0
 
-    def _ki(k: float) -> str:
-        if k < 0:    return "Poor"
-        if k < 0.20: return "Slight"
-        if k < 0.40: return "Fair"
-        if k < 0.60: return "Moderate"
-        if k < 0.80: return "Substantial"
-        return "Almost Perfect"
+    # Manual kappa — handles degenerate case (all votes same class → p_e=1 → undefined)
+    if abs(1 - p_e) > 1e-9:
+        kappa_val = round((p_o - p_e) / (1 - p_e), 4)
+        # κ ≈ 0 with high agreement = skewed-distribution artifact (not a problem).
+        # When p_e → 1 (nearly all "pass"), κ = (p_o - p_e)/(1-p_e) ≈ 0 even when
+        # agreement is 94.4% because there are too few negatives to measure variation.
+        if abs(kappa_val) < 0.05 and p_o >= 0.90:
+            kappa_interp = "N/A (κ ≈ 0 — skewed distribution; agreement is high)"
+        else:
+            kappa_interp = _interpret_kappa(kappa_val)
+    else:
+        kappa_val = None  # p_e ≈ 1, all votes same class → undefined
+        kappa_interp = "N/A (all votes same class — κ undefined)"
 
     return {
-        "metric": "human_llm_agreement",
-        "n_matched": n,
-        "agreement_rate": f"{agree/n*100:.1f}%",
-        "confusion_matrix": {"TP": tp, "TN": tn, "FP": fp, "FN": fn},
-        "cohens_kappa": round(kappa, 4),
-        "accuracy":  round(accuracy,  4),
-        "precision": round(precision, 4),
-        "recall":    round(recall,    4),
-        "f1_score":  round(f1,        4),
-        "kappa_interpretation": _ki(kappa),
+        "n":              n,
+        "TP": tp, "TN": tn, "FP": fp, "FN": fn,
+        "agreement_rate": round(p_o, 4),
+        "p_o":            round(p_o, 4),
+        "p_e":            round(p_e, 4),
+        "kappa":          kappa_val,
+        "kappa_interp":  kappa_interp,
+        "accuracy":      round(accuracy, 4),
+        "precision":      round(precision, 4),
+        "recall":         round(recall, 4),
+        "f1_score":       round(f1, 4),
     }
+
+
+# ── Format detection ─────────────────────────────────────────────────────────
+
+def _detect_format(annotations: dict) -> str:
+    """Detect annotation format: 'html_export', 'standalone', or 'unknown'."""
+    if "verdicts" in annotations:
+        return "html_export"
+    if "questions" in annotations:
+        return "standalone"
+    return "unknown"
+
+
+# ── HTML export format handlers ──────────────────────────────────────────────
+
+def _compute_html_overall(matched: dict[str, dict]) -> dict[str, Any]:
+    """
+    Compute overall accept/reject agreement from HTML export verdicts.
+
+    Human overall:
+      - Explicit overall_valid vote if present
+      - Otherwise majority vote across the 6 criteria
+    LLM overall: overall_valid from Step 07 eval
+    """
+    h_overall: list[int] = []
+    l_overall: list[int] = []
+
+    for qid, m in matched.items():
+        votes    = m["votes"]
+        llm_eval = m["llm_eval"]
+
+        hv = _parse_bool(votes.get("overall_valid"))
+        if hv is None:
+            cvs = [_parse_bool(votes.get(c)) for c in HTML_EVAL_CRITERIA[:-1]]
+            cvs = [v for v in cvs if v is not None]
+            hv = (sum(cvs) >= len(cvs) / 2) if cvs else None
+
+        lv = _parse_bool(llm_eval.get("overall_valid"))
+
+        if hv is not None and lv is not None:
+            h_overall.append(int(hv))
+            l_overall.append(int(lv))
+
+    return _cm_stats(h_overall, l_overall) if h_overall else {}
+
+
+def _compute_html_per_criterion(matched: dict[str, dict]) -> dict[str, Any]:
+    """Per-criterion κ + agreement from HTML export."""
+    try:
+        from sklearn.metrics import cohen_kappa_score
+    except ImportError:
+        return {}
+
+    per_criterion: dict[str, Any] = {}
+    for criterion in HTML_EVAL_CRITERIA:
+        h_vals: list[int] = []
+        l_vals: list[int] = []
+        for qid, m in matched.items():
+            hv = _parse_bool(m["votes"].get(criterion))
+            lv = _parse_bool(m["llm_eval"].get(criterion))
+            if hv is not None and lv is not None:
+                h_vals.append(int(hv))
+                l_vals.append(int(lv))
+        if h_vals:
+            try:
+                # labels=[0,1] required — prevents degenerate NaN when all votes are same class
+                raw_kappa = cohen_kappa_score(h_vals, l_vals, labels=[0, 1])
+                # sklearn still returns NaN when all votes identical and p_e≈1
+                kappa = None if (raw_kappa != raw_kappa) else round(float(raw_kappa), 4)
+                kappa_interp = _interpret_kappa(kappa)
+            except Exception:
+                kappa = None
+                kappa_interp = "N/A"
+            agree_rate = round(
+                sum(1 for h, l in zip(h_vals, l_vals) if h == l) / len(h_vals), 4
+            )
+            per_criterion[criterion] = {
+                "n":               len(h_vals),
+                "agreement_rate": agree_rate,
+                "cohens_kappa":   kappa,
+                "kappa_interp":   kappa_interp,
+            }
+    return per_criterion
+
+
+def _build_html_per_question_detail(matched: dict[str, dict]) -> list[dict[str, Any]]:
+    """Build per-question detail list from HTML export format."""
+    rows: list[dict[str, Any]] = []
+    for qid, m in matched.items():
+        votes    = m["votes"]
+        llm_eval = m["llm_eval"]
+
+        hv_overall = _parse_bool(votes.get("overall_valid"))
+        if hv_overall is None:
+            cvs = [_parse_bool(votes.get(c)) for c in HTML_EVAL_CRITERIA[:-1]]
+            cvs = [v for v in cvs if v is not None]
+            hv_overall = (sum(cvs) >= len(cvs) / 2) if cvs else None
+
+        lv_overall = _parse_bool(llm_eval.get("overall_valid"))
+        overall_match = (
+            (hv_overall == lv_overall)
+            if (hv_overall is not None and lv_overall is not None) else None
+        )
+
+        criterion_detail: dict[str, Any] = {}
+        criterion_mismatches: list[str] = []
+        for c in HTML_EVAL_CRITERIA:
+            hv = _parse_bool(votes.get(c))
+            lv = _parse_bool(llm_eval.get(c))
+            match = (hv == lv) if (hv is not None and lv is not None) else None
+            criterion_detail[c] = {"human": hv, "llm": lv, "match": match}
+            if match is False:
+                criterion_mismatches.append(c)
+
+        has_disagreement = (overall_match is False or bool(criterion_mismatches))
+
+        rows.append({
+            "question_id":          qid,
+            "overall_match":       overall_match,
+            "human_overall":       hv_overall,
+            "llm_overall":         lv_overall,
+            "criteria":            criterion_detail,
+            "criteria_mismatches": criterion_mismatches,
+            "iwf_mismatches":      [],
+            "has_disagreement":    has_disagreement,
+        })
+    return rows
+
+
+# ── Standalone annotation format handlers ───────────────────────────────────
+
+def _compute_standalone_overall(matched: dict[str, dict]) -> dict[str, Any]:
+    """Overall accept/reject from standalone annotation (overall_judgment field)."""
+    h_overall: list[int] = []
+    l_overall: list[int] = []
+
+    for qid, m in matched.items():
+        hv = _parse_bool(m["ann"].get("overall_judgment"))
+        # LLM: IWF verdict if available, else Step07 overall_valid
+        llm_iwf_v = m["llm_iwf"].get("overall_distractor_quality_pass") if m["llm_iwf"] else None
+        lv = _parse_bool(llm_iwf_v)
+        if lv is None:
+            lv = _parse_bool(m["llm_eval"].get("overall_valid"))
+
+        if hv is not None and lv is not None:
+            h_overall.append(int(hv))
+            l_overall.append(int(lv))
+
+    return _cm_stats(h_overall, l_overall) if h_overall else {}
+
+
+def _compute_standalone_per_criterion(matched: dict[str, dict]) -> dict[str, Any]:
+    """Per-criterion agreement from standalone annotation."""
+    try:
+        from sklearn.metrics import cohen_kappa_score
+    except ImportError:
+        return {}
+
+    per_criterion: dict[str, Any] = {}
+    for criterion in ANN_CRITERIA:
+        h_vals: list[int] = []
+        l_vals: list[int] = []
+        for qid, m in matched.items():
+            criteria_data = m["ann"].get("criteria", {}) if isinstance(m["ann"], dict) else {}
+            hv = _parse_bool(criteria_data.get(criterion))
+            lv = _parse_bool(m["llm_eval"].get(criterion))
+            if hv is not None and lv is not None:
+                h_vals.append(int(hv))
+                l_vals.append(int(lv))
+        if h_vals:
+            try:
+                kappa = round(
+                    float(cohen_kappa_score(h_vals, l_vals, labels=[0, 1])), 4
+                )
+                kappa_interp = _interpret_kappa(kappa)
+            except Exception:
+                kappa = None
+                kappa_interp = "N/A"
+            agree_rate = round(
+                sum(1 for h, l in zip(h_vals, l_vals) if h == l) / len(h_vals), 4
+            )
+            per_criterion[criterion] = {
+                "n":               len(h_vals),
+                "agreement_rate": agree_rate,
+                "cohens_kappa":   kappa,
+                "kappa_interp":   kappa_interp,
+            }
+    return per_criterion
+
+
+def _compute_standalone_iwf(matched: dict[str, dict]) -> tuple[dict[str, Any], dict[str, Any]]:
+    """IWF overall + per-type agreement from standalone annotation."""
+    try:
+        from sklearn.metrics import cohen_kappa_score
+    except ImportError:
+        return {}, {}
+
+    # IWF overall
+    h_iwf: list[int] = []
+    l_iwf: list[int] = []
+    for qid, m in matched.items():
+        dq = m["ann"].get("distractor_quality", {}) if isinstance(m["ann"], dict) else {}
+        hv = _parse_bool(dq.get("iwf_overall"))
+        lv = _parse_bool(m["llm_iwf"].get("overall_distractor_quality_pass"))
+        if hv is not None and lv is not None:
+            h_iwf.append(int(hv))
+            l_iwf.append(int(lv))
+    iwf_overall_stats = _cm_stats(h_iwf, l_iwf) if h_iwf else {}
+
+    # IWF per-type
+    iwf_per_type: dict[str, Any] = {}
+    for iwf_type in IWF_TYPES:
+        h_vals: list[int] = []
+        l_vals: list[int] = []
+        for qid, m in matched.items():
+            dq = m["ann"].get("distractor_quality", {}) if isinstance(m["ann"], dict) else {}
+            hv = _parse_bool(dq.get(iwf_type))
+            lv = _parse_bool(m["llm_iwf"].get(iwf_type))
+            if hv is not None and lv is not None:
+                h_vals.append(int(hv))
+                l_vals.append(int(lv))
+        if h_vals:
+            agree = round(
+                sum(1 for h, l in zip(h_vals, l_vals) if h == l) / len(h_vals), 4
+            )
+            tp = sum(1 for h, l in zip(h_vals, l_vals) if h == 1 and l == 1)
+            iwf_per_type[iwf_type] = {
+                "n":                len(h_vals),
+                "agreement_rate":   agree,
+                "human_pass_rate":  round(sum(h_vals) / len(h_vals), 4),
+                "llm_pass_rate":    round(sum(l_vals) / len(l_vals), 4),
+                "both_pass_count":  tp,
+            }
+
+    return iwf_overall_stats, iwf_per_type
+
+
+def _build_standalone_per_question_detail(matched: dict[str, dict]) -> list[dict[str, Any]]:
+    """Build per-question detail list from standalone annotation format."""
+    rows: list[dict[str, Any]] = []
+    for qid, m in matched.items():
+        ann       = m["ann"]
+        llm_ev    = m["llm_eval"]
+        llm_iwf_q = m["llm_iwf"]
+
+        # Overall
+        hv_overall = _parse_bool(ann.get("overall_judgment"))
+        lv_overall = _parse_bool(
+            llm_iwf_q.get("overall_distractor_quality_pass", False)
+            if llm_iwf_q else llm_ev.get("overall_valid")
+        )
+        overall_match = (
+            (hv_overall == lv_overall)
+            if (hv_overall is not None and lv_overall is not None) else None
+        )
+
+        # Per criterion
+        criteria_data = ann.get("criteria", {}) if isinstance(ann, dict) else {}
+        criterion_detail: dict[str, Any] = {}
+        criterion_mismatches: list[str] = []
+        for c in ANN_CRITERIA:
+            hv = _parse_bool(criteria_data.get(c))
+            lv = _parse_bool(llm_ev.get(c))
+            match = (hv == lv) if (hv is not None and lv is not None) else None
+            criterion_detail[c] = {"human": hv, "llm": lv, "match": match}
+            if match is False:
+                criterion_mismatches.append(c)
+
+        # IWF detail
+        dq_data = ann.get("distractor_quality", {}) if isinstance(ann, dict) else {}
+        iwf_detail: dict[str, Any] = {}
+        iwf_mismatches: list[str] = []
+        for iwf_type in IWF_TYPES:
+            hv = _parse_bool(dq_data.get(iwf_type))
+            lv = _parse_bool(llm_iwf_q.get(iwf_type))
+            match = (hv == lv) if (hv is not None and lv is not None) else None
+            iwf_detail[iwf_type] = {"human": hv, "llm": lv, "match": match}
+            if match is False:
+                iwf_mismatches.append(iwf_type)
+
+        has_disagreement = (
+            overall_match is False
+            or bool(criterion_mismatches)
+            or bool(iwf_mismatches)
+        )
+
+        rows.append({
+            "question_id":          qid,
+            "overall_match":       overall_match,
+            "human_overall":       hv_overall,
+            "llm_overall":         lv_overall,
+            "criteria":            criterion_detail,
+            "iwf_detail":          iwf_detail,
+            "criteria_mismatches": criterion_mismatches,
+            "iwf_mismatches":      iwf_mismatches,
+            "notes":               ann.get("notes", "") if isinstance(ann, dict) else "",
+            "has_disagreement":   has_disagreement,
+        })
+    return rows
+
+
+# ── Main human judgment entry point ──────────────────────────────────────────
+
+def compute_human_judgment(
+    human_annotation_file: Path,
+    evaluated_file: Path,
+    iwf_file: Path,
+    output_path: Path | None = None,
+) -> dict[str, Any]:
+    """
+    Compare human judgments against LLM judge decisions.
+    Supports two annotation file formats:
+      A. HTML export from render_review_html.py  (verdicts{} per question)
+      B. Standalone annotation JSON  (questions{} with criteria{})
+
+    Args:
+        human_annotation_file: JSON annotation from human reviewer
+        evaluated_file:        07_eval/evaluated_questions.jsonl
+        iwf_file:              08_eval_iwf/final_accepted_questions.jsonl
+        output_path:           Where to save comparison JSON
+                              (default: annotation_file.with_llm_comparison.json)
+
+    Returns dict with sections:
+      - meta: annotator, date, n_annotated, n_matched, format
+      - overall: Cohen's κ + CM for accept/reject overall
+      - per_criterion: per-criterion κ + agreement
+      - iwf_overall: Cohen's κ + CM for distractor quality
+      - iwf_per_type: pass rate per IWF flaw type
+      - per_question: matched questions with human + LLM verdicts
+      - disagreement_analysis: list of questions with mismatches
+      - disagreement_summary: count of mismatches per criterion
+    """
+    # ── Load inputs ───────────────────────────────────────────────────────────
+    if not human_annotation_file.exists():
+        return {"error": f"Annotation file not found: {human_annotation_file}"}
+    if not evaluated_file.exists():
+        return {"error": f"Evaluated file not found: {evaluated_file}"}
+    if not iwf_file.exists():
+        return {"error": f"IWF file not found: {iwf_file}"}
+
+    with open(human_annotation_file, encoding="utf-8") as f:
+        annotations = json.load(f)
+
+    evaluated = load_jsonl(evaluated_file)
+    iwf_qs    = load_jsonl(iwf_file)
+
+    # Build LLM lookup: question_id → eval fields
+    llm_eval: dict[str, dict[str, Any]] = {
+        q.get("question_id", f"q{i}"): q.get("evaluation", {})
+        for i, q in enumerate(evaluated)
+    }
+    llm_iwf: dict[str, dict[str, Any]] = {
+        q.get("question_id", f"q{i}"): q.get("distractor_evaluation", {})
+        for i, q in enumerate(iwf_qs)
+    }
+
+    # ── Detect format ─────────────────────────────────────────────────────────
+    fmt = _detect_format(annotations)
+    annotator          = annotations.get("annotator", "unknown")
+    timestamp_or_date = annotations.get("timestamp", "") or annotations.get("date", "")
+
+    if fmt == "html_export":
+        verdicts = annotations.get("verdicts", {})
+        matched = {
+            qid: {"votes": votes, "llm_eval": llm_eval.get(qid, {}),
+                  "llm_iwf": llm_iwf.get(qid, {})}
+            for qid, votes in verdicts.items()
+        }
+        n_annotated         = len(verdicts)
+        n_unmatched          = sum(1 for qid in verdicts
+                                   if not llm_eval.get(qid) and not llm_iwf.get(qid))
+        per_question_detail = _build_html_per_question_detail(matched)
+        overall_stats       = _compute_html_overall(matched)
+        per_criterion       = _compute_html_per_criterion(matched)
+        iwf_overall         = {}
+        iwf_per_type        = {}
+
+    elif fmt == "standalone":
+        questions = annotations.get("questions", {})
+        matched = {
+            qid: {"ann": ann, "llm_eval": llm_eval.get(qid, {}),
+                  "llm_iwf": llm_iwf.get(qid, {})}
+            for qid, ann in questions.items()
+            if llm_eval.get(qid) or llm_iwf.get(qid)
+        }
+        n_annotated  = len(questions)
+        n_unmatched  = len(questions) - len(matched)
+        per_question_detail = _build_standalone_per_question_detail(matched)
+        overall_stats       = _compute_standalone_overall(matched)
+        per_criterion       = _compute_standalone_per_criterion(matched)
+        iwf_overall, iwf_per_type = _compute_standalone_iwf(matched)
+
+    else:
+        return {
+            "error": (
+                f"Unknown annotation format. "
+                f"Expected 'verdicts'{{}} (HTML export) or 'questions'{{}} (standalone). "
+                f"Keys found: {list(annotations.keys())}"
+            )
+        }
+
+    # ── Meta ────────────────────────────────────────────────────────────────
+    meta: dict[str, Any] = {
+        "annotator":    annotator,
+        "date":         timestamp_or_date,
+        "format":       fmt,
+        "n_annotated":  n_annotated,
+        "n_matched":    len(matched),
+        "n_unmatched":  n_unmatched,
+    }
+
+    # ── Disagreement analysis ───────────────────────────────────────────────
+    disagreements      = [d for d in per_question_detail if d.get("has_disagreement")]
+    disagreement_summary: dict[str, int] = {}
+    for d in per_question_detail:
+        for cm in d.get("criteria_mismatches", []):
+            disagreement_summary[cm] = disagreement_summary.get(cm, 0) + 1
+        for im in d.get("iwf_mismatches", []):
+            key = f"iwf_{im}"
+            disagreement_summary[key] = disagreement_summary.get(key, 0) + 1
+
+    # ── Assemble result ─────────────────────────────────────────────────────
+    result: dict[str, Any] = {
+        "meta":                  meta,
+        "overall":               overall_stats,
+        "per_criterion":        per_criterion,
+        "iwf_overall":          iwf_overall,
+        "iwf_per_type":        iwf_per_type,
+        "per_question":          per_question_detail,
+        "disagreement_analysis": disagreements,
+        "disagreement_summary":  disagreement_summary,
+    }
+
+    # ── Save ────────────────────────────────────────────────────────────────
+    out_path = (
+        output_path
+        or human_annotation_file.with_name(
+            human_annotation_file.stem + "_with_llm_comparison.json"
+        )
+    )
+    with open(out_path, "w", encoding="utf-8") as f:
+        json.dump(result, f, indent=2, ensure_ascii=False)
+    print(f"  ✅ Human judgment saved → {out_path}")
+    return result
 
 
 # ==============================================================================
@@ -665,20 +893,34 @@ def compute_human_agreement_from_csv(
 def main():
     import argparse
 
-    parser = argparse.ArgumentParser(description="Run MCQGen evaluation metrics")
-    parser.add_argument("--exp", required=True, help="Experiment name (e.g. exp_03_test_15q)")
-    parser.add_argument("--human-csv", default=None,
-                        help="CSV: question_id,human_label (accept/reject)")
-    parser.add_argument("--output", default=None, help="Save JSON output to file")
+    parser = argparse.ArgumentParser(
+        description="Run MCQGen evaluation metrics (core + human judgment)"
+    )
+    parser.add_argument(
+        "--exp", required=True,
+        help="Experiment name (e.g. exp_03_test_15q)"
+    )
+    parser.add_argument(
+        "--human-json",
+        help=(
+            "Path to human annotation JSON. "
+            "Supports render_review_html.py export (verdicts{}) "
+            "or standalone annotation (questions{})"
+        )
+    )
+    parser.add_argument(
+        "--output",
+        help="Save JSON output to this path (default: output/{EXP}/metrics_report.json)"
+    )
     args = parser.parse_args()
 
-    exp_dir = Config.PROJECT_ROOT / "output" / args.exp
+    exp_dir       = Config.PROJECT_ROOT / "output" / args.exp
     accepted_file = exp_dir / "08_eval_iwf" / "final_accepted_questions.jsonl"
-    eval_file = exp_dir / "07_eval" / "evaluated_questions.jsonl"
-    topic_file = Config.TOPIC_LIST_FILE
+    eval_file     = exp_dir / "07_eval" / "evaluated_questions.jsonl"
+    topic_file    = Config.TOPIC_LIST_FILE
 
-    gen_mcqs   = load_jsonl(accepted_file) if accepted_file.exists() else []
-    evaluated  = load_jsonl(eval_file) if eval_file.exists() else []
+    gen_mcqs  = load_jsonl(accepted_file) if accepted_file.exists() else []
+    evaluated = load_jsonl(eval_file)        if eval_file.exists()        else []
     try:
         with open(topic_file, encoding="utf-8") as f:
             topic_list = json.load(f)
@@ -691,398 +933,478 @@ def main():
 
     results: dict[str, Any] = {}
 
-    # 1. Topic Coverage
-    print("\n[1/5] Topic Coverage...")
+    # ── 1. Topic Coverage ─────────────────────────────────────────────────
+    print("\n[1/4] Topic Coverage...")
     tc = compute_topic_coverage(gen_mcqs, topic_list)
     results["topic_coverage"] = tc
-    print(f"  {tc['num_covered']}/{tc['num_total']} topics covered "
+    print(f"  {tc['num_covered']}/{tc['num_total']} topics "
           f"({tc['coverage_ratio']*100:.1f}%)")
 
-    # 2. Judge Pass Rate
-    print("\n[2/5] Judge Pass Rate...")
-    if evaluated and gen_mcqs:
+    # ── 2. Judge Pass Rate ─────────────────────────────────────────────────
+    print("\n[2/4] Judge Pass Rate...")
+    if evaluated and accepted_file.exists():
         pr = compute_judge_pass_rate(eval_file, accepted_file)
         results["judge_pass_rate"] = pr
         if "error" not in pr:
             print(f"  Accepted: {pr['total_accepted']}/{pr['total_evaluated']} "
                   f"({pr['final_pass_rate']*100:.1f}%)")
+            if pr.get("quality_score_stats"):
+                qs = pr["quality_score_stats"]
+                print(f"  Quality score: mean={qs['mean']}  std={qs['std']}  "
+                      f"median={qs['median']}")
+            if pr.get("iwf_pass_rate") is not None:
+                print(f"  IWF pass rate: {pr['iwf_passed']}/{pr['iwf_total']} "
+                      f"({pr['iwf_pass_rate']*100:.1f}%)")
+        else:
+            print(f"  ⚠️  {pr['error']}")
+    else:
+        print("  ⚠️  Evaluation files not found — skipping judge pass rate")
 
-    # 3. Bloom KL Divergence
-    print("\n[3/5] Bloom Distribution KL...")
-    bloom = compute_bloom_kl_divergence(gen_mcqs)
-    results["bloom_kl_divergence"] = bloom
-    print(f"  KL: {bloom['kl_divergence']:.4f}  Counts: {bloom['bloom_counts']}")
-
-    # 4. Answer Ratio (single vs multiple)
-    print("\n[4/5] Answer Ratio...")
+    # ── 3. Answer Ratio ───────────────────────────────────────────────────
+    print("\n[3/4] Answer Ratio...")
     single = sum(1 for q in gen_mcqs if q.get("question_type") == "single_correct")
     multi  = sum(1 for q in gen_mcqs if q.get("question_type") == "multiple_correct")
     total  = len(gen_mcqs)
     results["answer_ratio"] = {
-        "total": total,
-        "single_correct": single,
-        "multiple_correct": multi,
-        "single_pct": round(single/total*100, 1) if total else 0,
-        "multiple_pct": round(multi/total*100, 1) if total else 0,
+        "total":             total,
+        "single_correct":    single,
+        "multiple_correct":   multi,
+        "single_pct":        round(single / total * 100, 1) if total else 0.0,
+        "multiple_pct":       round(multi  / total * 100, 1) if total else 0.0,
     }
     print(f"  Single: {single}/{total} ({results['answer_ratio']['single_pct']}%)  "
           f"Multiple: {multi}/{total} ({results['answer_ratio']['multiple_pct']}%)")
 
-    # 5. Diversity Openings
-    print("\n[5/5] Diversity Openings...")
-    avoid = ["hãy xác định", "khi nào", "ở đâu", "đâu là",
-             "trong quá trình", "cho biết", "trong các phương pháp"]
-    weak = sum(1 for q in gen_mcqs
-               if any(p in q.get("question_text", "").lower() for p in avoid))
+    # ── 4. Diversity Openings ──────────────────────────────────────────────
+    print("\n[4/4] Diversity Openings...")
+    WEAK_OPENINGS = [
+        "hãy xác định", "khi nào", "ở đâu", "đâu là",
+        "trong quá trình", "cho biết", "trong các phương pháp",
+    ]
+    weak = sum(
+        1 for q in gen_mcqs
+        if any(p in q.get("question_text", "").lower() for p in WEAK_OPENINGS)
+    )
     results["diversity_openings"] = {
-        "total": total,
+        "total":      total,
         "weak_count": weak,
-        "weak_pct": round(weak/total*100, 1) if total else 0,
+        "weak_pct":   round(weak / total * 100, 1) if total else 0.0,
+        "weak_phrases": [
+            p for p in WEAK_OPENINGS
+            if any(p in q.get("question_text", "").lower() for q in gen_mcqs)
+        ],
     }
     print(f"  Weak openings: {weak}/{total} ({results['diversity_openings']['weak_pct']}%)")
 
-    # Human vs LLM (CSV)
-    if args.human_csv:
-        print(f"\n[6/6] Human vs LLM Agreement...")
-        ha = compute_human_agreement_from_csv(Path(args.human_csv), eval_file)
-        results["human_llm_agreement"] = ha
-        if "error" not in ha:
-            print(f"  κ={ha['cohens_kappa']} ({ha['kappa_interpretation']})  "
-                  f"Agree={ha['agreement_rate']}  F1={ha['f1_score']}")
-            cm = ha["confusion_matrix"]
-            print(f"  TP={cm['TP']} TN={cm['TN']} FP={cm['FP']} FN={cm['FN']}")
+    # ── 5. Human Judgment ───────────────────────────────────────────────────
+    if args.human_json:
+        print(f"\n[5] Human Judgment...")
+        hj = compute_human_judgment(
+            human_annotation_file=Path(args.human_json),
+            evaluated_file=eval_file,
+            iwf_file=accepted_file,
+        )
+        results["human_judgment"] = hj
+        if "error" not in hj:
+            meta = hj.get("meta", {})
+            fmt_label = {
+                "html_export": "render_review_html.py export",
+                "standalone":  "Standalone annotation JSON",
+            }.get(meta.get("format", ""), meta.get("format", "unknown"))
+            print(f"  Format: {fmt_label} | "
+                  f"annotated={meta.get('n_annotated', 0)}  "
+                  f"matched={meta.get('n_matched', 0)}")
+            overall = hj.get("overall", {})
+            if overall:
+                print(f"  Overall κ={overall.get('kappa', 'N/A')} "
+                      f"({overall.get('kappa_interp', '')})")
+                print(f"  Agreement: {overall.get('agreement_rate', 0)*100:.1f}%  "
+                      f"F1={overall.get('f1_score', 0):.4f}")
+                cm = overall.get("TP", 0), overall.get("TN", 0), \
+                     overall.get("FP", 0), overall.get("FN", 0)
+                print(f"  CM: TP={cm[0]} TN={cm[1]} FP={cm[2]} FN={cm[3]}")
+            iwf_o = hj.get("iwf_overall", {})
+            if iwf_o:
+                print(f"  IWF κ={iwf_o.get('kappa', 'N/A')} "
+                      f"({iwf_o.get('kappa_interp', '')})")
+            if hj.get("disagreement_summary"):
+                print(f"  Top disagreements:")
+                for k, v in sorted(hj["disagreement_summary"].items(),
+                                   key=lambda x: -x[1])[:5]:
+                    print(f"    {k}: {v}")
         else:
-            print(f"  Error: {ha['error']}")
+            print(f"  ⚠️  {hj['error']}")
 
     print("\n" + "=" * 60)
 
-    if args.output:
-        out_path = Path(args.output)
-        with open(out_path, "w", encoding="utf-8") as f:
-            json.dump(results, f, indent=2, ensure_ascii=False)
-        print(f"✅ Saved: {out_path}")
+    # ── Save ───────────────────────────────────────────────────────────────
+    out_path = (
+        Path(args.output) if args.output
+        else exp_dir / "metrics_report.json"
+    )
+    out_path.parent.mkdir(parents=True, exist_ok=True)
 
-        md_path = out_path.with_suffix(".md")
-        md_report = generate_metrics_markdown(results, args.exp)
-        with open(md_path, "w", encoding="utf-8") as f:
-            f.write(md_report)
-        print(f"✅ Markdown report: {md_path}")
-    else:
-        print(json.dumps(results, indent=2, ensure_ascii=False))
+    with open(out_path, "w", encoding="utf-8") as f:
+        json.dump(results, f, indent=2, ensure_ascii=False)
+    print(f"✅ Metrics saved → {out_path}")
+
+    md_path = out_path.with_suffix(".md")
+    md_report = _generate_markdown(results, args.exp)
+    with open(md_path, "w", encoding="utf-8") as f:
+        f.write(md_report)
+    print(f"✅ Markdown report → {md_path}")
 
 
-def generate_metrics_markdown(results: dict, exp_name: str) -> str:
-    """
-    Generate a markdown explanation report for the metrics.
-    Explains WHY each metric matters and interprets the results.
-    """
+# ==============================================================================
+# Markdown report generator
+# ==============================================================================
+
+def _generate_markdown(results: dict, exp_name: str) -> str:
+    """Generate self-contained markdown report."""
     import datetime
 
-    lines = [
+    lines: list[str] = [
         f"# MCQGen Pipeline — Metrics Report\n",
-        f"**Experiment:** `{exp_name}`\n",
-        f"**Generated:** {datetime.date.today().strftime('%Y-%m-%d')}\n",
+        f"**Experiment:** `{exp_name}`  \n",
+        f"**Generated:** {datetime.date.today().strftime('%Y-%m-%d')}  \n",
         "---\n",
     ]
 
-    # ── 1. Topic Coverage ─────────────────────────────────────────────────
+    # ── 1. Topic Coverage ──────────────────────────────────────────────────
     tc = results.get("topic_coverage", {})
+    cov_pct = tc.get("coverage_ratio", 0) * 100
     lines += [
         "## 1. Topic Coverage\n",
-        "| Metric | Value |\n",
-        "|--------|-------|\n",
-        f"| Topics covered | {tc.get('num_covered', 0)}/{tc.get('num_total', 0)} |\n",
-        f"| Coverage rate | {tc.get('coverage_ratio', 0)*100:.1f}% |\n",
-        "\n### Tại sao dùng metric này?\n",
-        "Topic Coverage đo **độ rộng của chương trình giảng dạy** — tỉ lệ các mục tiêu học tập\n",
-        "trong `topic_list.json` có ít nhất 1 câu hỏi generated.\n",
-        "Coverage thấp có nghĩa một số phần của môn học **không có câu hỏi**, tạo ra khoảng trống\n",
-        "trong đánh giá sinh viên.\n",
-        "\n### Cách đọc kết quả\n",
-        "> Coverage **≥ 80%**: Tốt — phần lớn các topics đều được đánh giá.\n",
-        "> Coverage **< 60%**: Cần xem lại `topic_list.json` và generation config — có thể pipeline\n",
-        "> đang bỏ qua topics do `num_questions` thấp hoặc retrieval kém.\n",
+        f"| Metric | Value |\n",
+        f"|--------|-------|\n",
+        f"| Topics covered | {tc.get('num_covered', 0)} / {tc.get('num_total', 0)} |\n",
+        f"| Coverage rate | **{cov_pct:.1f}%** |\n",
+        "\n",
+        "> **≥ 80%**: Tốt — phần lớn topics được đánh giá.  \n",
+        "> **< 60%**: Cần xem lại `topic_list.json` và generation config.\n",
     ]
     if tc.get("topics_missing"):
         lines += [
-            "\n### Topics bị thiếu\n",
-            "> " + ", ".join(tc["topics_missing"]) + "\n",
+            "\n**Topics bị thiếu:**\n",
+            *(f"- {t}\n" for t in tc["topics_missing"]),
         ]
 
     # ── 2. Judge Pass Rate ────────────────────────────────────────────────
     pr = results.get("judge_pass_rate", {})
-    if "error" not in pr:
+    if "error" not in pr and pr:
+        pass_pct = pr.get("final_pass_rate", 0) * 100
         lines += [
             "\n## 2. LLM Judge Pass Rate\n",
-            "| Metric | Value |\n",
-            "|--------|-------|\n",
-            f"| Đã evaluate | {pr.get('total_evaluated', 0)} |\n",
-            f"| **Accepted** | **{pr.get('total_accepted', 0)} ({pr.get('final_pass_rate',0)*100:.1f}%)** |\n",
+            f"| Metric | Value |\n",
+            f"|--------|-------|\n",
+            f"| Evaluated | {pr.get('total_evaluated', 0)} |\n",
+            f"| **Accepted** | **{pr.get('total_accepted', 0)} ({pass_pct:.1f}%)** |\n",
             f"| Rejected | {pr.get('total_rejected', 0)} |\n",
-            "\n### Tại sao dùng metric này?\n",
-            "LLM judge (Gemma-3-12b-it) đánh giá mỗi câu hỏi qua **6 tiêu chí**:\n",
-            "1. **Format** — cấu trúc MCQ đúng (4 options, field đáp án)\n",
-            "2. **Language** — tiếng Việt tự nhiên, không lỗi ngữ pháp\n",
-            "3. **Relevance** — câu hỏi phù hợp với topic context\n",
-            "4. **Answerability** — câu hỏi đủ rõ ràng để trả lời\n",
-            "5. **Correct answer quality** — đáp án đúng chính xác\n",
-            "6. **Distractor quality** — các options sai có vẻ hợp lý nhưng sai rõ ràng\n",
-            "\n### Cách đọc kết quả\n",
-            "> Pass rate **≥ 70%**: Pipeline chất lượng tốt.\n",
-            "> Pass rate **50–70%**: Trung bình — vấn đề thường gặp: distractors yếu hoặc\n",
-            "> poor alignment với course material.\n",
-            "> Pass rate **< 50%**: Pipeline cần tuning — có thể stem generation hoặc\n",
-            "> distractor generation cần cải thiện.\n",
+            f"| IWF pass | {pr.get('iwf_passed', 0)} / {pr.get('iwf_total', 0)} "
+            f"({(pr.get('iwf_pass_rate', 0) or 0)*100:.1f}%) |\n",
+            "\n",
+            "> **≥ 70%**: Pipeline chất lượng tốt.  \n",
+            "> **50–70%**: Trung bình — distractors yếu hoặc poor alignment.  \n",
+            "> **< 50%**: Pipeline cần tuning.\n",
         ]
-        if pr.get("iwf_total"):
+
+        qs = pr.get("quality_score_stats", {})
+        if qs:
             lines += [
-                "\n### Distractor Quality (IWF Filter)\n",
-                "| Metric | Value |\n",
-                "|--------|-------|\n",
-                f"| Passed IWF | {pr.get('iwf_passed',0)}/{pr.get('iwf_total',0)} ({pr.get('iwf_pass_rate',0)*100:.1f}%) |\n",
-                "\nIWF (Item Writing Flaws) kiểm tra distractor quality:\n",
-                "- **Not plausibly wrong** — distractors quá dễ loại bỏ\n",
-                "- **Overlapping with correct** — distractors chồng lấn với đáp án đúng\n",
-                "- **Grammatically inconsistent** — cách viết option không khớp với stem\n",
-                "- **Too similar to each other** — distractors thiếu discrimination power\n",
+                f"\n**Quality Score:** mean={qs.get('mean','N/A')}  "
+                f"std={qs.get('std','N/A')}  "
+                f"median={qs.get('median','N/A')}  "
+                f"range=[{qs.get('min','?')}, {qs.get('max','?')}]\n",
             ]
+
         cr = pr.get("criterion_pass_rates", {})
         if cr:
             lines += [
-                "\n### Per-Criterion Pass Rates\n",
-                "| Criterion | Pass Rate |\n",
-                "|-----------|----------|\n",
+                "\n**Per-Criterion Pass Rates:**\n",
+                f"| Criterion | Pass Rate |\n",
+                f"|-----------|----------|\n",
             ]
             for c, rate in cr.items():
                 label = c.replace("_pass", "").replace("_", " ").title()
                 lines.append(f"| {label} | {rate*100:.1f}% |\n")
+
+        iwf_tr = pr.get("iwf_type_pass_rates", {})
+        if iwf_tr:
+            lines += [
+                "\n**IWF Distractor Quality Pass Rates:**\n",
+                f"| IWF Type | Pass Rate |\n",
+                f"|----------|----------|\n",
+            ]
+            iwf_labels = {
+                "plausible_distractor": "Plausible Distractor",
+                "vague_terms":          "Vague Terms",
+                "grammar_clue":         "Grammar Clue",
+                "absolute_terms":       "Absolute Terms",
+                "distractor_length":     "Distractor Length",
+                "k_type_combination":    "K-Type Combination",
+            }
+            for k, v in iwf_tr.items():
+                lines.append(f"| {iwf_labels.get(k, k)} | {v*100:.1f}% |\n")
+
+        dr = pr.get("per_difficulty_rates", {})
+        if dr:
+            lines += [
+                "\n**Per-Difficulty Pass Rates:**\n",
+                f"| Difficulty | Evaluated | Accepted | Pass Rate |\n",
+                f"|------------|----------|---------|----------|\n",
+            ]
+            for diff, stats in dr.items():
+                lines.append(
+                    f"| {diff} | {stats['evaluated']} | "
+                    f"{stats['accepted']} | {stats['pass_rate']*100:.1f}% |\n"
+                )
     else:
-        lines += [f"\n## 2. Judge Pass Rate\n> Not available: {pr.get('error')}\n"]
+        err = pr.get("error", "Unknown error")
+        lines += [f"\n## 2. LLM Judge Pass Rate\n> Not available: {err}\n"]
 
-    # ── 3. Bloom Distribution ─────────────────────────────────────────────
-    bloom = results.get("bloom_kl_divergence", {})
-    if bloom:
-        counts = bloom.get("bloom_counts", {})
-        target = bloom.get("target_distribution", [])
-        kl = bloom.get("kl_divergence", 0)
-        names = ["Remember", "Understand", "Apply", "Analyze", "Evaluate", "Create"]
-        n = sum(counts.values()) or 1
-
-        lines += [
-            "\n## 3. Bloom Taxonomy Distribution\n",
-            "| Level | Name | Count | Actual % | Target % |\n",
-            "|-------|------|-------|----------|----------|\n",
-        ]
-        for i in range(6):
-            level = i + 1
-            name = names[i]
-            cnt = counts.get(level, 0)
-            act_pct = cnt / n * 100
-            tgt_pct = (target[i] * 100) if target else 0
-            lines.append(f"| L{level} | {name} | {cnt} | {act_pct:.1f}% | {tgt_pct:.1f}% |\n")
-
-        lines += [
-            f"\n**KL Divergence:** {kl:.4f}  (thấp hơn = gần target hơn)\n",
-            "\n### Tại sao dùng Bloom Taxonomy?\n",
-            "Bloom's Taxonomy phân loại câu hỏi theo **độ phức tạp nhận thức**:\n",
-            "| Level | Cognitive Skill | Example Verb |\n",
-            "|-------|----------------|-------------|\n",
-            "| L1 Remember | Recall facts | nhớ, liệt kê, định nghĩa |\n",
-            "| L2 Understand | Explain concepts | giải thích, so sánh, mô tả |\n",
-            "| L3 Apply | Use knowledge | áp dụng, tính toán, sử dụng |\n",
-            "| L4 Analyze | Draw connections | phân tích, so sánh, đánh giá |\n",
-            "| L5 Evaluate | Justify decisions | đánh giá, lựa chọn, phê phán |\n",
-            "| L6 Create | Produce new work | thiết kế, xây dựng, đề xuất |\n",
-            "\n### Tại sao dùng KL Divergence?\n",
-            "KL divergence đo **mức độ lệch** phân bố thực tế so với target.\n",
-            "- Target: G1 (dễ) → L1+L2, G2 (vừa) → L3+L4, G3 (khó) → L5+L6\n",
-            "- KL **< 0.2**: Tốt — phân bố gần với kỳ vọng chương trình.\n",
-            "- KL **0.2–0.5**: Trung bình — một số Bloom levels thiếu hoặc thừa.\n",
-            "- KL **> 0.5**: Cao — quá nhiều câu hỏi ở một số Bloom levels.\n",
-            "\n### Cách đọc kết quả\n",
-            f"> KL = {kl:.4f}: " + (
-                "✅ Tốt — phân bố gần target."
-                if kl < 0.2 else
-                "⚠️  Trung bình — một số Bloom levels thiếu/thừa."
-                if kl < 0.5 else
-                "❌ Cao — phân bố Bloom không cân bằng."
-            ) + "\n",
-        ]
-
-    # ── 4. Answer Ratio ─────────────────────────────────────────────────────
+    # ── 3. Answer Ratio ─────────────────────────────────────────────────────
     ar = results.get("answer_ratio", {})
     if ar:
-        single_pct = ar.get("single_pct", 0)
-        multi_pct  = ar.get("multiple_pct", 0)
+        sp = ar.get("single_pct", 0)
+        mp = ar.get("multiple_pct", 0)
         lines += [
-            "\n## 4. Answer Ratio (Single vs Multiple)\n",
+            "\n## 3. Answer Ratio (Single vs Multiple Correct)\n",
             f"| Type | Count | Percentage |\n",
-            "|--------|-------|------------|\n",
-            f"| Single correct (1 đáp án) | {ar.get('single_correct', 0)} | {single_pct}% |\n",
-            f"| Multiple correct (>1 đáp án) | {ar.get('multiple_correct', 0)} | {multi_pct}% |\n",
+            f"|------|-------|------------|\n",
+            f"| Single correct (1 đáp án) | {ar.get('single_correct', 0)} | {sp}% |\n",
+            f"| Multiple correct (>1 đáp án) | {ar.get('multiple_correct', 0)} | {mp}% |\n",
             f"| **Total** | **{ar.get('total', 0)}** | 100% |\n",
-            "\n### Tại sao dùng metric này?\n",
-            "Tỉ lệ single vs multiple answer ảnh hưởng đến **độ khó và tính thực tế** của đề thi:\n",
-            "- Câu single correct: thường dễ hơn, phù hợp G1/G2\n",
-            "- Câu multiple correct: đòi hỏi hiểu sâu hơn, phù hợp G2/G3\n",
-            "\n### Target trong pipeline\n",
-            "- **80% single correct** → đảm bảo đề thi không quá khó\n",
-            "- **20% multiple correct** → đảm bảo có câu hỏi nâng cao (5-7/30 câu)\n",
-            "\n### Cách đọc kết quả\n",
-            f"> Single: {single_pct}% (target: 80%)  |  Multiple: {multi_pct}% (target: 20%)\n",
+            "\n",
+            "> Target trong pipeline: **80% single, 20% multiple**.  \n",
+            f"> Single: {sp}% (target: 80%)  |  Multiple: {mp}% (target: 20%)  \n",
             "> " + (
                 "✅ Tỉ lệ phù hợp với target."
-                if abs(single_pct - 80) <= 15 else
+                if abs(sp - 80) <= 15 else
                 "⚠️  Tỉ lệ lệch khỏi target."
             ) + "\n",
         ]
 
-    # ── 5. Diversity Openings ─────────────────────────────────────────────
+    # ── 4. Diversity Openings ──────────────────────────────────────────────
     div = results.get("diversity_openings", {})
     if div:
-        weak_pct = div.get("weak_pct", 0)
-        weak_cnt = div.get("weak_count", 0)
-        total    = div.get("total", 0)
+        wp  = div.get("weak_pct", 0)
+        wc  = div.get("weak_count", 0)
+        tot = div.get("total", 0)
+        weak_phrases = div.get("weak_phrases", [])
         lines += [
-            "\n## 5. Diversity Openings (Đa dạng cách đặt câu hỏi)\n",
+            "\n## 4. Diversity Openings (Đa dạng cách đặt câu hỏi)\n",
             f"| Metric | Value |\n",
-            "|--------|-------|\n",
-            f"| Weak openings | {weak_cnt}/{total} ({weak_pct}%) |\n",
-            "\n### Tại sao dùng metric này?\n",
-            "Câu hỏi bắt đầu bằng các cụm từ yếu gây **nhàm chán và thiếu tò mò** cho người học:\n",
-            "❌ Các cách mở đầu **nên tránh**:\n",
-            "- \"Hãy xác định...\", \"khi nào\", \"ở đâu\", \"đâu là\"\n",
-            "- \"Trong quá trình...\", \"Cho biết...\", \"Trong các phương pháp...\"\n",
-            "\n✅ Các cách mở đầu **nên dùng** (tạo sự tò mò):\n",
-            "- \"Điều gì khiến...\", \"Đâu là điểm khác biệt giữa...\"\n",
-            "- \"Nếu phải chọn giữa... và..., bạn sẽ ưu tiên điều gì?\"\n",
-            "- \"Một mô hình có đặc điểm... sẽ hoạt động ra sao khi...?\"\n",
-            "- \"Trường hợp nào sau đây minh họa đúng nhất về...?\"\n",
-            "\n### Cách đọc kết quả\n",
-            f"> Weak openings: {weak_pct}% \n",
+            f"|--------|-------|\n",
+            f"| Weak openings | {wc}/{tot} ({wp}%) |\n",
+            f"| Good openings | {tot-wc}/{tot} ({100-wp:.1f}%) |\n",
+            "\n",
+            "❌ **Các cách mở đầu nên tránh:**\n",
+            "- `\"Hãy xác định...\"`, `\"khi nào\"`, `\"ở đâu\"`, `\"đâu là\"`\n",
+            "- `\"Trong quá trình...\"`, `\"Cho biết...\"`, `\"Trong các phương pháp...\"`\n",
+            "\n",
+            "✅ **Các cách mở đầu nên dùng** (tạo sự tò mò):\n",
+            "- `\"Điều gì khiến...\"`, `\"Đâu là điểm khác biệt giữa...\"`\n",
+            "- `\"Trường hợp nào sau đây minh họa đúng nhất về...?\"`\n",
+            "\n",
             "> " + (
                 "✅ Tốt — phần lớn câu hỏi có cách mở đầu đa dạng."
-                if weak_pct < 20 else
+                if wp < 20 else
                 "⚠️  Cần cải thiện — nhiều câu hỏi dùng cách mở đầu yếu."
             ) + "\n",
         ]
+        if weak_phrases:
+            lines += [
+                "\n**Weak phrases found in dataset:**\n",
+                *(f"- `{p}`\n" for p in weak_phrases),
+            ]
 
-    # ── 6. Human vs LLM Agreement ────────────────────────────────────────
-    ha = results.get("human_llm_agreement", {})
-    if "error" not in ha:
-        cm = ha.get("confusion_matrix", {})
+
+    # ── 4. Human Judgment ─────────────────────────────────────────────────
+    hj = results.get("human_judgment", {})
+    if hj and "error" not in hj:
+        meta = hj.get("meta", {})
+        fmt_label = {
+            "html_export": "render_review_html.py export (`verdicts{}`)",
+            "standalone":  "Standalone annotation JSON (`questions{}`)",
+        }.get(meta.get("format", ""), meta.get("format", "unknown"))
+
         lines += [
-            "\n## 6. Human vs LLM Judge Agreement\n",
-            "| Metric | Value | Interpretation |\n",
-            "|--------|-------|---------------|\n",
-            f"| Questions labeled | {ha.get('n_matched', 0)} | Human vs LLM both rated |\n",
-            f"| **Cohen's κ** | **{ha.get('cohens_kappa', 0)}** | {ha.get('kappa_interpretation','')} |\n",
-            f"| Agreement rate | {ha.get('agreement_rate', '')} | Both agree |\n",
-            f"| Accuracy | {ha.get('accuracy',0)} | Overall correct match |\n",
-            f"| Precision | {ha.get('precision',0)} | LLM accepts what human accepts |\n",
-            f"| Recall | {ha.get('recall',0)} | Human accepts what LLM accepts |\n",
-            f"| **F1 Score** | **{ha.get('f1_score',0)}** | Harmonic mean of P & R |\n",
-            "\n### Confusion Matrix\n",
-            "| | LLM Accept | LLM Reject |\n",
-            "|---|---|---|\n",
-            f"| Human Accept | TP={cm.get('TP',0)} | FN={cm.get('FN',0)} |\n",
-            f"| Human Reject | FP={cm.get('FP',0)} | TN={cm.get('TN',0)} |\n",
-            "\n### Tại sao dùng Cohen's Kappa?\n",
-            "Cohen's κ đo **độ đồng thuận giữa hai người đánh giá** (human và LLM judge),\n",
-            "ngoài yếu tố ngẫu nhiên:\n",
-            "- κ > 0.8: Almost perfect\n",
-            "- κ 0.6–0.8: Substantial\n",
-            "- κ 0.4–0.6: Moderate\n",
-            "- κ < 0.4: Fair / Poor (LLM judge có thể không align với human judgment)\n",
-            "\n### Tại sao dùng F1 Score?\n",
-            "F1 cân bằng **precision** (LLM tránh false accepts?) và **recall**\n",
-            "(LLM nhận ra tất cả câu hỏi hợp lệ?).\n",
-            "Dùng vì accept/reject là bài toán **classification không cân bằng**.\n",
-            "\n### Cách đọc kết quả\n",
-            f"> κ = {ha.get('cohens_kappa', 0)} ({ha.get('kappa_interpretation','')}):\n",
-            f"> " + (
-                "✅ LLM judge align tốt với human judgment — dùng được để filtering."
-                if ha.get('cohens_kappa', 0) >= 0.6 else
-                "⚠️  LLM judge align một phần với humans — nên review thủ công các câu borderline."
-                if ha.get('cohens_kappa', 0) >= 0.4 else
-                "❌ LLM judge lệch đáng kể với human judgment — cần xem lại criteria."
-            ) + "\n",
-            f"\n**Human accepts:** {ha.get('human_accepts',0)}  |  **Human rejects:** {ha.get('human_rejects',0)}\n",
-            f"**LLM accepts:** {ha.get('llm_accepts',0)}  |  **LLM rejects:** {ha.get('llm_rejects',0)}\n",
+            "\n## 4. Human Judgment vs LLM Judge\n",
+            f"| Metric | Value |\n",
+            f"|--------|-------|\n",
+            f"| Annotator | {meta.get('annotator', 'N/A')} |\n",
+            f"| Date | {meta.get('date', 'N/A')} |\n",
+            f"| Format | {fmt_label} |\n",
+            f"| Annotated | {meta.get('n_annotated', 0)} |\n",
+            f"| Matched | {meta.get('n_matched', 0)} |\n",
+            f"| Unmatched | {meta.get('n_unmatched', 0)} |\n",
         ]
+
+        overall = hj.get("overall", {})
+        if overall:
+            lines += [
+                "\n### Overall Accept/Reject Agreement\n",
+                f"| Metric | Value |\n",
+                f"|--------|-------|\n",
+                f"| Cohen's κ | **{overall.get('kappa', 'N/A')}** "
+                f"({overall.get('kappa_interp', '')}) |\n",
+                f"| Agreement rate | {overall.get('agreement_rate', 0)*100:.1f}% |\n",
+                f"| Accuracy | {overall.get('accuracy', 0)*100:.1f}% |\n",
+                f"| Precision | {overall.get('precision', 0)*100:.1f}% |\n",
+                f"| Recall | {overall.get('recall', 0)*100:.1f}% |\n",
+                f"| F1 Score | **{overall.get('f1_score', 0)*100:.1f}%** |\n",
+                f"| P_e (chance) | {overall.get('p_e', 'N/A')} |\n",
+                "\n**Confusion Matrix:**\n",
+                f"| | LLM Accept | LLM Reject |\n",
+                f"|---|---|---|\n",
+                f"| Human Accept | {overall.get('TP', 0)} | {overall.get('FN', 0)} |\n",
+                f"| Human Reject | {overall.get('FP', 0)} | {overall.get('TN', 0)} |\n",
+            ]
+
+        iwf_o = hj.get("iwf_overall", {})
+        if iwf_o:
+            lines += [
+                "\n### IWF Distractor Quality Agreement\n",
+                f"| Metric | Value |\n",
+                f"|--------|-------|\n",
+                f"| Cohen's κ | **{iwf_o.get('kappa', 'N/A')}** "
+                f"({iwf_o.get('kappa_interp', '')}) |\n",
+                f"| Agreement rate | {iwf_o.get('agreement_rate', 0)*100:.1f}% |\n",
+                f"| F1 Score | {iwf_o.get('f1_score', 0)*100:.1f}% |\n",
+            ]
+
+        pc = hj.get("per_criterion", {})
+        if pc:
+            display_criteria = (
+                HTML_EVAL_CRITERIA
+                if meta.get("format") == "html_export"
+                else ANN_CRITERIA
+            )
+            lines += [
+                "\n### Per-Criterion Agreement\n",
+                f"| Criterion | N | Agreement | Cohen's κ | Interpretation |\n",
+                f"|-----------|---|-----------|------------|---------------|\n",
+            ]
+            for c in display_criteria:
+                s = pc.get(c, {})
+                label = c.replace("_pass", "").replace("_", " ").title()
+                lines.append(
+                    f"| {label} | {s.get('n','?')} | "
+                    f"{s.get('agreement_rate',0)*100:.1f}% | "
+                    f"{s.get('cohens_kappa', 'N/A')} | "
+                    f"{s.get('kappa_interp', 'N/A')} |\n"
+                )
+
+        iwf_pt = hj.get("iwf_per_type", {})
+        if iwf_pt:
+            lines += [
+                "\n### IWF Per-Type Pass Rates\n",
+                f"| IWF Type | N | Human Pass | LLM Pass | Agreement |\n",
+                f"|----------|---|-----------|----------|------------|\n",
+            ]
+            iwf_labels = {
+                "plausible_distractor": "Plausible",
+                "vague_terms":         "Vague Terms",
+                "grammar_clue":         "Grammar Clue",
+                "absolute_terms":       "Absolute Terms",
+                "distractor_length":    "Length",
+                "k_type_combination":   "K-Type",
+            }
+            for k in IWF_TYPES:
+                s = iwf_pt.get(k, {})
+                lines.append(
+                    f"| {iwf_labels.get(k, k)} | {s.get('n','?')} | "
+                    f"{s.get('human_pass_rate',0)*100:.1f}% | "
+                    f"{s.get('llm_pass_rate',0)*100:.1f}% | "
+                    f"{s.get('agreement_rate',0)*100:.1f}% |\n"
+                )
+
+        ds = hj.get("disagreement_summary", {})
+        if ds:
+            lines += [
+                "\n### Disagreement Summary (top mismatches)\n",
+                f"| Criterion / IWF | Mismatches |\n",
+                f"|-----------------|------------|\n",
+            ]
+            for k, v in sorted(ds.items(), key=lambda x: -x[1])[:8]:
+                lines.append(f"| {k} | {v} |\n")
+
+        disagreements = hj.get("disagreement_analysis", [])
+        if disagreements:
+            lines += [
+                f"\n### Disagreement Detail ({len(disagreements)} questions)\n",
+            ]
+            for d in disagreements[:10]:
+                flag = "✅ Match" if d.get("overall_match") else "❌ Mismatch"
+                lines += [
+                    f"- **`{d['question_id']}`**  \n",
+                    f"  - Overall: {flag}  \n",
+                ]
+                if d.get("criteria_mismatches"):
+                    lines.append(
+                        f"  - Criteria mismatches: {', '.join(d['criteria_mismatches'])}  \n"
+                    )
+                if d.get("iwf_mismatches"):
+                    lines.append(
+                        f"  - IWF mismatches: {', '.join(d['iwf_mismatches'])}  \n"
+                    )
+                if d.get("notes"):
+                    lines.append(f"  - Notes: {d['notes']}  \n")
     else:
+        hj_err = (hj or {}).get("error", "Human judgment not computed.")
         lines += [
-            "\n## 6. Human vs LLM Judge Agreement\n",
-            f"> Chưa tính: {ha.get('error')}\n",
-            "> Để enable metric này, tạo file CSV `--human-csv` theo format:\n",
-            "```\n",
-            "question_id,human_label\n",
-            "ch04_t01_q0,accept\n",
-            "ch04_t01_q1,reject\n",
-            "```\n",
+            "\n## 4. Human Judgment vs LLM Judge\n",
+            f"> Not available: {hj_err}\n",
+            "> Run with `--human-json path/to/annotation.json` to compute.\n",
+            "\n",
+            "> Supported formats:\n",
+            ">   A. **HTML export** → `render_review_html.py` → `verdicts{}`  \n",
+            ">   B. **Standalone JSON** → `questions{}` with per-criterion structure\n",
         ]
 
-    # ── Footer ─────────────────────────────────────────────────────────────
+    # ── Summary table ─────────────────────────────────────────────────────
+    def _cov_status() -> str:
+        v = results.get("topic_coverage", {}).get("coverage_ratio", 0) * 100
+        return "✅" if v >= 80 else "⚠️" if v >= 60 else "❌"
+
+    def _pass_status() -> str:
+        v = results.get("judge_pass_rate", {}).get("final_pass_rate", 0) * 100
+        return "✅" if v >= 70 else "⚠️" if v >= 50 else "❌"
+
+    def _ar_status() -> str:
+        sp = results.get("answer_ratio", {}).get("single_pct", 0)
+        return "✅" if abs(sp - 80) <= 15 else "⚠️"
+
+    def _div_status() -> str:
+        wp = results.get("diversity_openings", {}).get("weak_pct", 100)
+        return "✅" if wp < 20 else "⚠️" if wp < 40 else "❌"
+
+    def _hj_status() -> tuple[str, str]:
+        hj2 = results.get("human_judgment", {})
+        if "error" in hj2 or not hj2:
+            return "N/A", "⚠️"
+        k = hj2.get("overall", {}).get("kappa", 0)
+        return (
+            f"{k:.4f}" if k else "N/A",
+            "✅" if k >= 0.6 else "⚠️" if k >= 0.4 else "❌",
+        )
+
+    hj_val, hj_flag = _hj_status()
+
     lines += [
         "\n---\n",
         "## Summary\n",
-        "| Metric | Target | Result | Status |\n",
-        "|--------|-------|--------|--------|\n",
-    ]
-
-    def _status(key: str, threshold: float, higher: bool = True) -> str:
-        if key == "topic_coverage":
-            v = results.get("topic_coverage", {}).get("coverage_ratio", 0) * 100
-        elif key == "judge_pass":
-            v = results.get("judge_pass_rate", {}).get("final_pass_rate", 0) * 100
-        elif key == "bloom_kl":
-            v = results.get("bloom_kl_divergence", {}).get("kl_divergence", 999)
-            higher = False
-        elif key == "answer_ratio":
-            v = results.get("answer_ratio", {}).get("single_pct", 0)
-        elif key == "diversity":
-            v = 100 - results.get("diversity_openings", {}).get("weak_pct", 100)
-        elif key == "cohens_kappa":
-            v = results.get("human_llm_agreement", {}).get("cohens_kappa", 0)
-        else:
-            v = 0.0
-        if higher:
-            return "✅" if v >= threshold else "⚠️" if v >= threshold * 0.75 else "❌"
-        else:
-            return "✅" if v <= threshold else "⚠️" if v <= threshold * 2 else "❌"
-
-    rows = [
-        ("Topic Coverage",         "topic_coverage", "≥ 80%",  80,  True),
-        ("LLM Judge Pass Rate",    "judge_pass",     "≥ 70%",  70,  True),
-        ("Bloom KL Div.",          "bloom_kl",       "≤ 0.3",  0.3, False),
-        ("Answer Ratio (Single)",   "answer_ratio",   "≈ 80%",  65,  True),
-        ("Diversity Openings",      "diversity",      "≥ 80%",  80,  True),
-        ("Cohen's κ (human vs LLM)","cohens_kappa",   "≥ 0.6",  0.6, True),
-    ]
-    for label, key, target, threshold, higher in rows:
-        ar2 = results.get("answer_ratio", {})
-        val_str = ""
-        if key == "topic_coverage":
-            v = results.get("topic_coverage", {}).get("coverage_ratio", 0) * 100
-            val_str = f"{v:.1f}%"
-        elif key == "judge_pass":
-            v = results.get("judge_pass_rate", {}).get("final_pass_rate", 0) * 100
-            val_str = f"{v:.1f}%"
-        elif key == "bloom_kl":
-            v = results.get("bloom_kl_divergence", {}).get("kl_divergence", 0)
-            val_str = f"{v:.4f}"
-        elif key == "answer_ratio":
-            v = ar2.get("single_pct", 0)
-            val_str = f"{v:.1f}% single"
-        elif key == "diversity":
-            v = 100 - results.get("diversity_openings", {}).get("weak_pct", 0)
-            val_str = f"{v:.1f}% good"
-        elif key == "cohens_kappa":
-            v = results.get("human_llm_agreement", {}).get("cohens_kappa", 0)
-            val_str = f"{v:.4f}" if v else "N/A"
-        lines.append(f"| {label} | {target} | {val_str} | {_status(key, threshold, higher)} |\n")
-
-    lines += [
+        f"| Metric | Target | Result | Status |\n",
+        f"|--------|-------|--------|--------|\n",
+        f"| Topic Coverage | ≥ 80% | "
+        f"{results.get('topic_coverage',{}).get('coverage_ratio',0)*100:.1f}% | {_cov_status()} |\n",
+        f"| LLM Judge Pass Rate | ≥ 70% | "
+        f"{results.get('judge_pass_rate',{}).get('final_pass_rate',0)*100:.1f}% | {_pass_status()} |\n",
+        f"| Answer Ratio (Single) | ≈ 80% | "
+        f"{results.get('answer_ratio',{}).get('single_pct',0):.1f}% | {_ar_status()} |\n",
+        f"| Diversity Openings | ≥ 80% good | "
+        f"{100 - results.get('diversity_openings',{}).get('weak_pct',0):.1f}% good | {_div_status()} |\n",
+        f"| Human vs LLM κ | ≥ 0.6 | {hj_val} | {hj_flag} |\n",
         "\n---\n",
         "*Generated by `eval_metrics.py` — MCQGen Pipeline*\n",
     ]

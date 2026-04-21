@@ -1,6 +1,6 @@
 """
 mcq_renderer.py — Render MCQ JSONL → beautiful HTML
-====================================================
+=====================================================
 Dùng trong Streamlit để hiển thị câu hỏi đẹp.
 """
 
@@ -11,25 +11,16 @@ from typing import Any
 
 
 def render_mcq_card(mcq: dict, index: int | None = None) -> str:
-    """
-    Render 1 MCQ dict → HTML string for st.markdown().
-    Shows: question text, options, correct answers, topic, difficulty.
-    """
-    q_id     = mcq.get("question_id", f"q{(index+1) if index is not None else '?'}")
-    q_text   = mcq.get("question_text", mcq.get("refined_question_text", ""))
-    q_type   = mcq.get("question_type", "single_correct")
-    options  = mcq.get("options", {})
-    correct  = mcq.get("correct_answers", mcq.get("correct_answer_labels", []))
-    topic    = mcq.get("topic", "")
+    q_id       = mcq.get("question_id", f"q{(index+1) if index is not None else '?'}")
+    q_text     = mcq.get("question_text", mcq.get("refined_question_text", ""))
+    q_type     = mcq.get("question_type", "single_correct")
+    options    = mcq.get("options", {})
+    correct    = mcq.get("correct_answers", mcq.get("correct_answer_labels", []))
+    topic      = mcq.get("topic", "")
     difficulty = mcq.get("difficulty_label", mcq.get("difficulty", "G2"))
 
-    # Type label
-    type_label = (
-        "✅ [Nhiều đáp án đúng]" if q_type == "multiple_correct"
-        else "✅ [Một đáp án đúng]"
-    )
+    type_label = "✅ [Nhiều đáp án đúng]" if q_type == "multiple_correct" else "✅ [Một đáp án đúng]"
 
-    # Status badge
     status = mcq.get("status", "unknown")
     if status == "accepted":
         badge = '<span style="background:#22c55e;color:white;padding:2px 8px;border-radius:12px;font-size:12px">✅ Accepted</span>'
@@ -38,11 +29,9 @@ def render_mcq_card(mcq: dict, index: int | None = None) -> str:
     else:
         badge = ""
 
-    # Difficulty badge
     diff_color = {"G1": "#3b82f6", "G2": "#f59e0b", "G3": "#ef4444"}.get(difficulty, "#6b7280")
     diff_badge = f'<span style="background:{diff_color};color:white;padding:2px 8px;border-radius:12px;font-size:12px">{difficulty}</span>'
 
-    # Options
     option_labels = ["A", "B", "C", "D"]
     option_rows = []
     for lbl in option_labels:
@@ -59,10 +48,9 @@ def render_mcq_card(mcq: dict, index: int | None = None) -> str:
             f'<span style="font-weight:700;color:{span_color}">{lbl}.</span>'
             f'<span>{text}</span></div>'
         )
-
     options_html = "\n".join(option_rows)
 
-    # Evaluation result (if available)
+    # Evaluation
     eval_html = ""
     if "evaluation" in mcq:
         ev = mcq["evaluation"]
@@ -88,46 +76,24 @@ def render_mcq_card(mcq: dict, index: int | None = None) -> str:
             f'</div></details>'
         )
 
-    # IWF result
-    iwf_html = ""
-    if "distractor_evaluation" in mcq:
-        iwf = mcq["distractor_evaluation"]
-        iwf_pass = iwf.get("overall_distractor_quality_pass", True)
-        bad = iwf.get("bad_options", [])
-        iwf_color = "#22c55e" if iwf_pass else "#ef4444"
-        iwf_text = "✅ IWF OK" if iwf_pass else f"❌ IWF issues: {', '.join(bad)}"
-        iwf_html = (
-            f'<div style="margin-top:6px;font-size:13px">'
-            f'<span style="color:{iwf_color}">{iwf_text}</span>'
-            f'</div>'
-        )
-
-    # Explanation — handle both string and dict (from step 09 explanations.jsonl)
+    # Explanation
     explanation_html = ""
     raw_exp = mcq.get("explanation", "")
     if raw_exp:
         if isinstance(raw_exp, dict):
-            # Full structured explanation with 4 sections
-            sections: list[str] = []
-
+            sections = []
             if raw_exp.get("question_motivation"):
                 sections.append(
                     f'<div style="margin-bottom:10px">'
-                    f'<div style="font-weight:600;color:#1e40af;font-size:13px;margin-bottom:4px">'
-                    f'🎯 Motivation</div>'
-                    f'<div style="font-size:14px;line-height:1.6">{raw_exp["question_motivation"]}</div>'
-                    f'</div>'
+                    f'<div style="font-weight:600;color:#1e40af;font-size:13px;margin-bottom:4px">🎯 Motivation</div>'
+                    f'<div style="font-size:14px;line-height:1.6">{raw_exp["question_motivation"]}</div></div>'
                 )
-
             if raw_exp.get("correct_answer_rationale"):
                 sections.append(
                     f'<div style="margin-bottom:10px">'
-                    f'<div style="font-weight:600;color:#16a34a;font-size:13px;margin-bottom:4px">'
-                    f'✅ Correct Answer Rationale</div>'
-                    f'<div style="font-size:14px;line-height:1.6">{raw_exp["correct_answer_rationale"]}</div>'
-                    f'</div>'
+                    f'<div style="font-weight:600;color:#16a34a;font-size:13px;margin-bottom:4px">✅ Correct Answer Rationale</div>'
+                    f'<div style="font-size:14px;line-height:1.6">{raw_exp["correct_answer_rationale"]}</div></div>'
                 )
-
             distractor_exps = raw_exp.get("distractor_explanations", {})
             if isinstance(distractor_exps, dict) and distractor_exps:
                 distractor_rows = []
@@ -141,12 +107,9 @@ def render_mcq_card(mcq: dict, index: int | None = None) -> str:
                 if distractor_rows:
                     sections.append(
                         f'<div style="margin-bottom:10px">'
-                        f'<div style="font-weight:600;color:#dc2626;font-size:13px;margin-bottom:4px">'
-                        f'❌ Distractor Rationales</div>'
-                        + "".join(distractor_rows) +
-                        f'</div>'
+                        f'<div style="font-weight:600;color:#dc2626;font-size:13px;margin-bottom:4px">❌ Distractor Rationales</div>'
+                        + "".join(distractor_rows) + '</div>'
                     )
-
             if raw_exp.get("knowledge_context"):
                 kc = raw_exp["knowledge_context"]
                 kc_parts = []
@@ -159,117 +122,76 @@ def render_mcq_card(mcq: dict, index: int | None = None) -> str:
                 if kc_parts:
                     sections.append(
                         f'<div style="margin-bottom:10px">'
-                        f'<div style="font-weight:600;color:#7c3aed;font-size:13px;margin-bottom:4px">'
-                        f'📖 Knowledge Context</div>'
-                        + "".join(kc_parts) +
-                        f'</div>'
+                        f'<div style="font-weight:600;color:#7c3aed;font-size:13px;margin-bottom:4px">📖 Knowledge Context</div>'
+                        + "".join(kc_parts) + '</div>'
                     )
-
             if sections:
                 explanation_html = (
                     f'<details open style="margin-top:8px">'
-                    f'<summary style="cursor:pointer;font-size:13px;color:#3b82f6;font-weight:600">'
-                    f'💡 Explanation</summary>'
+                    f'<summary style="cursor:pointer;font-size:13px;color:#3b82f6;font-weight:600">💡 Explanation</summary>'
                     f'<div style="padding:10px;background:#eff6ff;border-radius:6px;margin-top:4px;'
                     f'border-left:3px solid #3b82f6;font-size:14px;line-height:1.6">'
-                    + "".join(sections) +
-                    f'</div></details>'
+                    + "".join(sections) + '</div></details>'
                 )
         else:
-            # Plain string explanation
             explanation_html = (
                 f'<details style="margin-top:8px">'
                 f'<summary style="cursor:pointer;font-size:13px;color:#3b82f6">💡 Explanation</summary>'
                 f'<div style="padding:10px;background:#eff6ff;border-radius:6px;margin-top:4px;'
-                f'border-left:3px solid #3b82f6;font-size:14px;line-height:1.6">'
-                f'{raw_exp}</div></details>'
+                f'border-left:3px solid #3b82f6;font-size:14px;line-height:1.6">{raw_exp}</div></details>'
             )
 
-    # Sources (slide + video citations from step 09)
-    # Render as organized section with slides and YouTube videos clickable
+    # Sources
     raw_sources = mcq.get("sources", [])
-
-    slide_items: list[str] = []
-    video_items: list[str] = []
-    other_items: list[str] = []
-
+    slide_items, video_items, other_items = [], [], []
     for src in raw_sources:
         src_type = src.get("type", "")
         description = src.get("description", "")
         url = src.get("url", "")
         page = src.get("page", "")
-
         if src_type == "slide":
-            # Clean description — strip emoji prefix if present
             desc = description.split("—", 1)[-1].strip() if description else ""
             page_str = f"trang {page}" if page else ""
             label = f"📄 Slide {page}" + (f": {desc}" if desc else "")
             slide_items.append(label)
-
         elif src_type == "video":
-            # Extract YouTube URL for clickable link
-            yt_url = ""
-            if url:
-                yt_url = url
-                # Make sure it's a proper YouTube URL (not just a base)
-                if not yt_url.startswith("http"):
-                    yt_url = ""
-            if yt_url:
-                display = "▶️ Xem video bài giảng"
+            if url and url.startswith("http"):
                 video_items.append(
-                    f'<a href="{yt_url}" target="_blank" style="color:#ef4444;font-size:13px">'
-                    f'{display} ↗</a>'
+                    f'<a href="{url}" target="_blank" style="color:#ef4444;font-size:13px">▶️ Xem video bài giảng ↗</a>'
                 )
             elif description:
                 video_items.append(f'<span style="color:#6b7280;font-size:12px">🎬 {description}</span>')
-
         elif description:
-            label = description
             if url:
-                other_items.append(
-                    f'<a href="{url}" target="_blank" style="color:#3b82f6">{label}</a>'
-                )
+                other_items.append(f'<a href="{url}" target="_blank" style="color:#3b82f6">{description}</a>')
             else:
-                other_items.append(f'<span style="color:#6b7280">{label}</span>')
+                other_items.append(f'<span style="color:#6b7280">{description}</span>')
 
-    # Build sources section only if we have content
-    sources_parts: list[str] = []
+    sources_parts = []
     if slide_items:
         sources_parts.append(
             f'<div style="margin-bottom:6px">'
             f'<span style="font-weight:600;font-size:12px;color:#374151">📄 Tài liệu slide:</span><br>'
             + "<br>".join(f'<span style="font-size:12px">• {s}</span>' for s in slide_items[:5])
-            + f'</div>'
+            + '</div>'
         )
     if video_items:
-        sources_parts.append(
-            f'<div style="margin-bottom:6px">'
-            + "<br>".join(f'<span style="font-size:12px">{v}</span>' for v in video_items[:3])
-            + f'</div>'
-        )
+        sources_parts.append("<br>".join(f'<span style="font-size:12px">{v}</span>' for v in video_items[:3]))
     if other_items:
-        sources_parts.append(
-            f'<div>' + "<br>".join(other_items) + f'</div>'
-        )
+        sources_parts.append("<br>".join(other_items))
 
     sources_html = ""
     if sources_parts:
         sources_html = (
             f'<div style="margin-top:10px;padding:10px;background:#f8fafc;border-radius:8px;'
             f'border:1px solid #e2e8f0">'
-            f'<div style="font-weight:600;font-size:13px;color:#374151;margin-bottom:6px">'
-            f'📚 Trích dẫn & Tài liệu tham khảo</div>'
-            + "".join(sources_parts) +
-            f'</div>'
+            f'<div style="font-weight:600;font-size:13px;color:#374151;margin-bottom:6px">📚 Trích dẫn & Tài liệu tham khảo</div>'
+            + "".join(sources_parts) + '</div>'
         )
-
-    # No separate distractor_exp_html — already rendered inside structured explanation above
 
     html = f"""
 <div style="background:white;border-radius:12px;border:1px solid #e5e7eb;
             padding:16px;margin:12px 0;font-family:Segoe UI,sans-serif;max-width:800px">
-
-  <!-- Header -->
   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:6px">
     <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap">
       <strong style="font-size:15px;color:#374151">{q_id}</strong>
@@ -281,22 +203,10 @@ def render_mcq_card(mcq: dict, index: int | None = None) -> str:
       {badge}
     </div>
   </div>
-
-  <!-- Question text -->
-  <div style="font-size:15px;line-height:1.6;margin-bottom:12px;color:#1f2937;white-space:pre-wrap">
-    {q_text}
-  </div>
-
-  <!-- Options -->
+  <div style="font-size:15px;line-height:1.6;margin-bottom:12px;color:#1f2937;white-space:pre-wrap">{q_text}</div>
   <div style="margin-bottom:8px">{options_html}</div>
-
-  <!-- Correct answers reveal -->
-  <div style="font-size:13px;color:#6b7280;margin-top:8px">
-    <strong>Đáp án:</strong> {", ".join(correct)}
-  </div>
-
+  <div style="font-size:13px;color:#6b7280;margin-top:8px"><strong>Đáp án:</strong> {", ".join(correct)}</div>
   {eval_html}
-  {iwf_html}
   {explanation_html}
   {sources_html}
 </div>
@@ -305,15 +215,12 @@ def render_mcq_card(mcq: dict, index: int | None = None) -> str:
 
 
 def render_mcq_list(mcqs: list[dict]) -> str:
-    """Render list of MCQs as a batch HTML."""
     if not mcqs:
         return '<p style="color:#6b7280;font-size:14px">Chưa có câu hỏi nào.</p>'
-    cards = [render_mcq_card(mcq, i) for i, mcq in enumerate(mcqs)]
-    return "\n".join(cards)
+    return "\n".join(render_mcq_card(mcq, i) for i, mcq in enumerate(mcqs))
 
 
 def stats_summary(mcqs: list[dict]) -> dict[str, Any]:
-    """Compute summary statistics from a list of MCQ dicts."""
     if not mcqs:
         return {"total": 0, "accepted": 0, "rejected": 0, "pass_rate": 0.0,
                 "single_correct": 0, "multiple_correct": 0,
@@ -322,9 +229,8 @@ def stats_summary(mcqs: list[dict]) -> dict[str, Any]:
     total = len(mcqs)
     accepted = sum(1 for m in mcqs if m.get("status") == "accepted")
     rejected = sum(1 for m in mcqs if m.get("status") == "rejected")
-
     single = sum(1 for m in mcqs if m.get("question_type") == "single_correct")
-    multi   = sum(1 for m in mcqs if m.get("question_type") == "multiple_correct")
+    multi = sum(1 for m in mcqs if m.get("question_type") == "multiple_correct")
 
     diffs = {"G1": 0, "G2": 0, "G3": 0}
     for m in mcqs:
@@ -332,27 +238,18 @@ def stats_summary(mcqs: list[dict]) -> dict[str, Any]:
         if d in diffs:
             diffs[d] += 1
 
-    quality_scores = []
-    for m in mcqs:
-        ev = m.get("evaluation", {})
-        if ev and "quality_score" in ev:
-            quality_scores.append(ev["quality_score"])
+    quality_scores = [m.get("evaluation", {}).get("quality_score", 0) for m in mcqs if m.get("evaluation")]
     avg_q = sum(quality_scores) / len(quality_scores) if quality_scores else 0.0
 
     return {
-        "total": total,
-        "accepted": accepted,
-        "rejected": rejected,
+        "total": total, "accepted": accepted, "rejected": rejected,
         "pass_rate": accepted / total * 100 if total > 0 else 0,
-        "single_correct": single,
-        "multiple_correct": multi,
-        **diffs,
-        "avg_quality": avg_q,
+        "single_correct": single, "multiple_correct": multi,
+        **diffs, "avg_quality": avg_q,
     }
 
 
 def render_stats_html(stats: dict) -> str:
-    """Render stats dict → HTML badge row."""
     return f"""
 <div style="display:flex;flex-wrap:wrap;gap:12px;margin:12px 0">
   <div style="background:#f3f4f6;border-radius:8px;padding:10px 16px;text-align:center;min-width:80px">
