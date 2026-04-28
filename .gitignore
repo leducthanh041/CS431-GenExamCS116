@@ -82,3 +82,7 @@ credentials/
 # ---
 video
 tieplm
+.codex
+
+AGENTS.md
+test.md

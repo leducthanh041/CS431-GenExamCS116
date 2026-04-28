@@ -4,9 +4,9 @@
     "chapter_name": "Popular Libraries",
     "topics": [
       {
-        "topic_id": "ch02_t01",
-        "topic_name": "NumPy",
-        "difficulty": "G1",
+        "topic_id": "ch02_t04",
+        "topic_name": "Scikit-learn",
+        "difficulty": "G2",
         "num_questions": 1
       }
     ]

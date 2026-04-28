@@ -1,49 +1,26 @@
 """
 eval_metrics.py — Quantitative Evaluation Metrics for MCQ Generation
 =====================================================================
-Implements 3 core metrics + human judgment comparison.
+Implements 4 evaluation metrics for the MCQ generation pipeline.
 
 Core metrics (automatic, no reference set required):
   1. Topic Coverage                (vs topic_list.json)
-  2. LLM Judge Pass Rate           (from 07_eval + 08_eval_iwf output)
-  3. Bloom Distribution KL Div.   (vs target G1→L1/L2, G2→L3+L4, G3→L5+L6)
-
-Human Judgment module:
-  4. Human vs LLM Agreement       (per-question JSON annotation → agreement metrics)
-
-Supported human annotation file formats:
-  A. render_review_html.py export (verdicts{} per question_id):
-     {
-       "annotator": "Nguyen Van A",
-       "timestamp": "2026-04-15T...",
-       "total_annotated": 10,
-       "verdicts": {
-         "<question_id>": { "format_pass": true, "overall_valid": true, ... }
-       }
-     }
-  B. Standalone annotation JSON (questions{} with criteria{}):
-     {
-       "annotator": "...",
-       "date": "2026-04-15",
-       "questions": {
-         "<question_id>": {
-           "overall_judgment": "accept",
-           "criteria": { ... },
-           "distractor_quality": { ... },
-           "notes": "..."
-         }
-       }
-     }
+  2. Answer Ratio                  (single-correct vs multiple-correct)
+  3. Diversity Openings            (entropy-based diversity of opening signatures)
+  4. Fleiss's Kappa                (agreement among 4 human reviewers on overall_valid)
 
 Dependencies:
-  pip install numpy scipy scikit-learn
+  pip install numpy
 """
 
 from __future__ import annotations
 
 import json
 import os
+import re
 import sys
+import unicodedata
+from collections import Counter
 from pathlib import Path
 from typing import Any
 
@@ -61,6 +38,17 @@ if _exp_name:
     Config.EVAL_IWF_OUTPUT = Config.OUTPUT_DIR / "08_eval_iwf"
     Config.EXPLAIN_OUTPUT = Config.OUTPUT_DIR / "09_explain"
     print(f"[eval_metrics] EXP_NAME overridden: {Config.EXP_NAME}")
+
+
+DEFAULT_HUMAN_REVIEW_FILENAMES = [
+    "Nguyen_review.json",
+    "Phuong_review.json",
+    "Thanh_review.json",
+    "Thanhhn_review.json",
+]
+
+OPENING_SIGNATURE_TOKENS = 3
+_TOKEN_EDGE_RE = re.compile(r"(^[^\w]+|[^\w]+$)", flags=re.UNICODE)
 
 
 # ==============================================================================
@@ -114,7 +102,130 @@ def compute_topic_coverage(
 
 
 # ==============================================================================
-# 2. LLM Judge Pass Rate
+# 2. Answer Ratio
+# ==============================================================================
+
+def compute_answer_ratio(gen_mcqs: list[dict]) -> dict[str, Any]:
+    """Compute the single-correct vs multiple-correct answer ratio."""
+    single = sum(1 for q in gen_mcqs if q.get("question_type") == "single_correct")
+    multi = sum(1 for q in gen_mcqs if q.get("question_type") == "multiple_correct")
+    total = len(gen_mcqs)
+    return {
+        "total": total,
+        "single_correct": single,
+        "multiple_correct": multi,
+        "single_pct": round(single / total * 100, 1) if total else 0.0,
+        "multiple_pct": round(multi / total * 100, 1) if total else 0.0,
+    }
+
+
+# ==============================================================================
+# 3. Diversity Openings
+# ==============================================================================
+
+def _normalize_opening_text(text: str) -> str:
+    """Normalize Vietnamese question text for robust prefix matching."""
+    text = unicodedata.normalize("NFKC", text or "").lower().strip()
+    tokens: list[str] = []
+    for raw_token in text.split():
+        token = _TOKEN_EDGE_RE.sub("", raw_token)
+        if token:
+            tokens.append(token)
+    return " ".join(tokens)
+
+
+def _extract_opening_signature(text: str, num_tokens: int = OPENING_SIGNATURE_TOKENS) -> str:
+    """Return a short normalized opening signature from the first N tokens."""
+    tokens = _normalize_opening_text(text).split()
+    return " ".join(tokens[:num_tokens])
+
+
+def compute_diversity_openings(gen_mcqs: list[dict]) -> dict[str, Any]:
+    """
+    Compute opening diversity with an entropy-based score over opening signatures.
+
+    We define an opening signature as the first few normalized tokens of the
+    question stem. Diversity is then measured as the normalized Shannon entropy
+    of the signature distribution:
+
+      H = -sum_i p_i log2 p_i
+      H_norm = H / log2(K)
+
+    where p_i is the empirical frequency of opening signature i and K is the
+    number of distinct signatures.
+
+    Supporting diagnostics:
+      - top opening signatures (first 3 tokens)
+      - effective number of openings (2^H)
+      - repetition rate of opening signatures
+
+    This is an entropy-based evaluation metric rather than a training loss.
+    It avoids a brittle manually curated list of weak openings while still
+    directly targeting concentration vs spread in how questions begin.
+    """
+    opening_counter: Counter[str] = Counter()
+    per_question: list[dict[str, Any]] = []
+
+    for q in gen_mcqs:
+        question_id = q.get("question_id", "unknown")
+        question_text = q.get("question_text", "") or ""
+        signature = _extract_opening_signature(question_text)
+
+        if signature:
+            opening_counter[signature] += 1
+
+        per_question.append({
+            "question_id": question_id,
+            "opening_signature": signature,
+        })
+
+    total = len(gen_mcqs)
+    repeated_count = sum(max(count - 1, 0) for count in opening_counter.values())
+
+    entropy = 0.0
+    normalized_entropy = 0.0
+    effective_num_openings = 0.0
+    if opening_counter:
+        counts = np.array(list(opening_counter.values()), dtype=float)
+        probs = counts / counts.sum()
+        entropy = float(-np.sum(probs * np.log2(probs + 1e-12)))
+        effective_num_openings = float(2 ** entropy)
+        max_entropy = float(np.log2(len(probs))) if len(probs) > 1 else 0.0
+        if max_entropy > 0:
+            normalized_entropy = entropy / max_entropy
+        elif total:
+            normalized_entropy = 0.0
+
+    top_openings = [
+        {
+            "opening": opening,
+            "count": count,
+            "pct": round(count / total * 100, 1) if total else 0.0,
+        }
+        for opening, count in opening_counter.most_common(10)
+    ]
+
+    return {
+        "total": total,
+        "opening_diversity_pct": round(normalized_entropy * 100, 1) if total else 0.0,
+        "unique_opening_signatures": len(opening_counter),
+        "opening_entropy": round(entropy, 4),
+        "normalized_opening_entropy": round(normalized_entropy, 4),
+        "effective_num_openings": round(effective_num_openings, 4),
+        "repeated_opening_count": repeated_count,
+        "repetition_rate_pct": round(repeated_count / total * 100, 1) if total else 0.0,
+        "top_openings": top_openings,
+        "per_question": per_question,
+        "note": (
+            "Primary score = opening_diversity_pct = normalized Shannon entropy "
+            "over opening-signature frequencies. Higher scores mean opening forms "
+            "are distributed more evenly instead of concentrating on a few repeated templates."
+        ),
+    }
+
+
+# ==============================================================================
+# Legacy metric retained for backward compatibility
 # ==============================================================================
 
 def compute_judge_pass_rate(
@@ -223,7 +334,7 @@ def compute_judge_pass_rate(
 
 
 # ==============================================================================
-# 3. Bloom Distribution KL Divergence
+# Legacy metric: Bloom Distribution KL Divergence
 # ==============================================================================
 
 BLOOM_KEYWORDS: dict[int, list[str]] = {
@@ -325,7 +436,7 @@ def compute_bloom_kl_divergence(gen_mcqs: list[dict]) -> dict[str, Any]:
 
 
 # ==============================================================================
-# 4. Human Judgment — Agreement vs LLM Judge
+# Legacy metric: Human Judgment — Agreement vs LLM Judge
 # ==============================================================================
 #
 # Supports TWO annotation file formats:
@@ -375,6 +486,223 @@ def _parse_bool(val: Any) -> bool | None:
         if low in _JUDGMENT_FALSE:
             return False
     return None
+
+
+def resolve_human_review_files(spec: str | None = None) -> list[Path]:
+    """
+    Resolve the review files used for Fleiss's kappa.
+
+    Supported inputs:
+      - None: use the 4 default review files next to this script
+      - comma-separated list of JSON paths
+      - a directory containing *_review.json files
+      - a single file path inside a review directory
+    """
+    review_dir = Path(__file__).resolve().parent
+    default_paths = [review_dir / name for name in DEFAULT_HUMAN_REVIEW_FILENAMES]
+
+    if not spec:
+        return default_paths
+
+    parts = [Path(part.strip()).expanduser() for part in spec.split(",") if part.strip()]
+    if len(parts) > 1:
+        return parts
+
+    target = parts[0]
+    if target.is_dir():
+        discovered = sorted(target.glob("*_review.json"))
+        return discovered or default_paths
+
+    sibling_reviews = sorted(target.parent.glob("*_review.json"))
+    if sibling_reviews:
+        ordered_default = [path for path in default_paths if path in sibling_reviews]
+        extras = [path for path in sibling_reviews if path not in ordered_default]
+        return ordered_default + extras
+
+    return [target]
+
+
+def _extract_reviewer_votes(annotations: dict[str, Any]) -> dict[str, dict[str, bool | None]]:
+    """Normalize supported review JSON formats into {question_id: {criterion: bool}}."""
+    fmt = _detect_format(annotations)
+    normalized: dict[str, dict[str, bool | None]] = {}
+
+    if fmt == "html_export":
+        for qid, verdicts in annotations.get("verdicts", {}).items():
+            normalized[qid] = {
+                criterion: _parse_bool(verdicts.get(criterion))
+                for criterion in HTML_EVAL_CRITERIA
+            }
+        return normalized
+
+    if fmt == "standalone":
+        for qid, question in annotations.get("questions", {}).items():
+            criteria = question.get("criteria", {}) if isinstance(question, dict) else {}
+            row = {
+                criterion: _parse_bool(criteria.get(criterion))
+                for criterion in ANN_CRITERIA
+            }
+            row["overall_valid"] = _parse_bool(question.get("overall_judgment"))
+            if row["overall_valid"] is None:
+                criterion_votes = [vote for vote in row.values() if vote is not None]
+                row["overall_valid"] = (
+                    sum(criterion_votes) >= len(criterion_votes) / 2
+                    if criterion_votes else None
+                )
+            normalized[qid] = row
+        return normalized
+
+    return normalized
+
+
+def _compute_fleiss_kappa(vote_rows: list[list[bool]]) -> dict[str, Any]:
+    """Compute Fleiss's kappa, raw agreement, and Gwet's AC1 for binary ratings."""
+    if not vote_rows:
+        return {"error": "No fully annotated items available for Fleiss's kappa."}
+
+    n_items = len(vote_rows)
+    n_raters = len(vote_rows[0])
+    matrix = np.zeros((n_items, 2), dtype=float)
+    split_patterns: Counter[str] = Counter()
+    unanimous_items = 0
+
+    for idx, votes in enumerate(vote_rows):
+        true_count = sum(1 for vote in votes if vote is True)
+        false_count = n_raters - true_count
+        matrix[idx, 0] = false_count
+        matrix[idx, 1] = true_count
+        split_patterns[f"{true_count} accept / {false_count} reject"] += 1
+        if true_count in {0, n_raters}:
+            unanimous_items += 1
+
+    agreement_by_item = ((matrix ** 2).sum(axis=1) - n_raters) / (n_raters * (n_raters - 1))
+    mean_item_agreement = float(np.mean(agreement_by_item))
+    category_marginals = matrix.sum(axis=0) / (n_items * n_raters)
+    chance_agreement = float(np.sum(category_marginals ** 2))
+    accept_rate = float(category_marginals[1])
+    reject_rate = float(category_marginals[0])
+
+    # For binary nominal ratings, a standard AC1 implementation uses the pooled
+    # category proportions and defines the chance-agreement term as 2π(1-π).
+    gwet_chance_agreement = float(2 * accept_rate * reject_rate)
+    if abs(1 - gwet_chance_agreement) > 1e-12:
+        gwet_ac1 = float(
+            (mean_item_agreement - gwet_chance_agreement) / (1 - gwet_chance_agreement)
+        )
+    else:
+        gwet_ac1 = None
+
+    if abs(1 - chance_agreement) > 1e-12:
+        kappa = float((mean_item_agreement - chance_agreement) / (1 - chance_agreement))
+        if abs(kappa) < 0.05 and mean_item_agreement >= 0.90:
+            kappa_interp = "Skew-sensitive / near-zero under label imbalance"
+            note = (
+                "Raw agreement is high, but Fleiss's kappa is near zero because "
+                "almost all ratings fall into the same category; this is a known "
+                "class-imbalance effect of chance-corrected agreement coefficients."
+            )
+        else:
+            kappa_interp = _interpret_kappa(kappa)
+            note = ""
+    else:
+        kappa = None
+        if np.isclose(mean_item_agreement, 1.0):
+            kappa_interp = "N/A (all reviewers gave the same label to every item)"
+            note = (
+                "Fleiss's kappa is undefined here because all ratings collapse into "
+                "a single category, although raw agreement is perfect."
+            )
+        else:
+            kappa_interp = "N/A"
+            note = "Fleiss's kappa is undefined because chance agreement is 1.0."
+
+    return {
+        "n_items": n_items,
+        "n_raters": n_raters,
+        "raw_agreement": round(mean_item_agreement, 4),
+        "raw_agreement_pct": round(mean_item_agreement * 100, 1),
+        "fleiss_kappa": round(kappa, 4) if kappa is not None else None,
+        "kappa_interp": kappa_interp,
+        "mean_item_agreement": round(mean_item_agreement, 4),
+        "mean_item_agreement_pct": round(mean_item_agreement * 100, 1),
+        "gwet_ac1": round(gwet_ac1, 4) if gwet_ac1 is not None else None,
+        "gwet_chance_agreement": round(gwet_chance_agreement, 4),
+        "unanimous_items": unanimous_items,
+        "non_unanimous_items": n_items - unanimous_items,
+        "unanimous_pct": round(unanimous_items / n_items * 100, 1) if n_items else 0.0,
+        "category_marginals": {
+            "reject": round(reject_rate, 4),
+            "accept": round(accept_rate, 4),
+        },
+        "chance_agreement": round(chance_agreement, 4),
+        "split_patterns": dict(split_patterns),
+        "note": note,
+    }
+
+
+def compute_human_fleiss_kappa(review_files: list[Path]) -> dict[str, Any]:
+    """Compute Fleiss's kappa across reviewers using only overall_valid."""
+    if len(review_files) < 2:
+        return {
+            "error": (
+                "Fleiss's kappa requires at least 2 review files. "
+                f"Received: {len(review_files)}"
+            )
+        }
+
+    reviewer_payloads: list[dict[str, Any]] = []
+    missing_files = [str(path) for path in review_files if not path.exists()]
+    if missing_files:
+        return {"error": f"Review file(s) not found: {missing_files}"}
+
+    for path in review_files:
+        with open(path, encoding="utf-8") as f:
+            annotations = json.load(f)
+        reviewer_payloads.append({
+            "annotator": annotations.get("annotator", path.stem),
+            "path": str(path),
+            "votes": _extract_reviewer_votes(annotations),
+        })
+
+    reviewer_question_sets = [set(payload["votes"]) for payload in reviewer_payloads]
+    shared_questions = sorted(set.intersection(*reviewer_question_sets)) if reviewer_question_sets else []
+    union_questions = sorted(set.union(*reviewer_question_sets)) if reviewer_question_sets else []
+
+    if not shared_questions:
+        return {"error": "No shared question_ids across the provided review files."}
+
+    vote_rows: list[list[bool]] = []
+    overall_question_votes: list[dict[str, Any]] = []
+    for qid in shared_questions:
+        votes = [
+            payload["votes"].get(qid, {}).get("overall_valid")
+            for payload in reviewer_payloads
+        ]
+        if any(vote is None for vote in votes):
+            continue
+        vote_rows.append([bool(vote) for vote in votes])
+        accept_votes = sum(1 for vote in votes if vote is True)
+        reject_votes = len(votes) - accept_votes
+        overall_question_votes.append({
+            "question_id": qid,
+            "accept_votes": accept_votes,
+            "reject_votes": reject_votes,
+            "unanimous": accept_votes in {0, len(votes)},
+        })
+
+    overall_stats = _compute_fleiss_kappa(vote_rows)
+    overall_stats["questions_used"] = len(overall_question_votes)
+    return {
+        "meta": {
+            "reviewers": [payload["annotator"] for payload in reviewer_payloads],
+            "review_files": [payload["path"] for payload in reviewer_payloads],
+            "n_reviewers": len(reviewer_payloads),
+            "n_questions_shared": len(shared_questions),
+            "n_questions_union": len(union_questions),
+        },
+        "overall": overall_stats,
+        "overall_question_votes": overall_question_votes,
+    }
 
 
 def _interpret_kappa(k: float | None) -> str:
@@ -741,7 +1069,7 @@ def _build_standalone_per_question_detail(matched: dict[str, dict]) -> list[dict
     return rows
 
 
-# ── Main human judgment entry point ──────────────────────────────────────────
+# ── Legacy single-review entry point ─────────────────────────────────────────
 
 def compute_human_judgment(
     human_annotation_file: Path,
@@ -894,7 +1222,7 @@ def main():
     import argparse
 
     parser = argparse.ArgumentParser(
-        description="Run MCQGen evaluation metrics (core + human judgment)"
+        description="Run MCQGen evaluation metrics"
     )
     parser.add_argument(
         "--exp", required=True,
@@ -902,11 +1230,17 @@ def main():
     )
     parser.add_argument(
         "--human-json",
+        dest="human_json",
         help=(
-            "Path to human annotation JSON. "
-            "Supports render_review_html.py export (verdicts{}) "
-            "or standalone annotation (questions{})"
+            "Optional review-file spec for Fleiss's kappa: comma-separated JSON paths, "
+            "a directory containing *_review.json, or any path inside that directory. "
+            "If omitted, the 4 default review files next to eval_metrics.py are used."
         )
+    )
+    parser.add_argument(
+        "--human-csv",
+        dest="human_json",
+        help=argparse.SUPPRESS,
     )
     parser.add_argument(
         "--output",
@@ -916,11 +1250,9 @@ def main():
 
     exp_dir       = Config.PROJECT_ROOT / "output" / args.exp
     accepted_file = exp_dir / "08_eval_iwf" / "final_accepted_questions.jsonl"
-    eval_file     = exp_dir / "07_eval" / "evaluated_questions.jsonl"
     topic_file    = Config.TOPIC_LIST_FILE
 
-    gen_mcqs  = load_jsonl(accepted_file) if accepted_file.exists() else []
-    evaluated = load_jsonl(eval_file)        if eval_file.exists()        else []
+    gen_mcqs = load_jsonl(accepted_file) if accepted_file.exists() else []
     try:
         with open(topic_file, encoding="utf-8") as f:
             topic_list = json.load(f)
@@ -940,100 +1272,45 @@ def main():
     print(f"  {tc['num_covered']}/{tc['num_total']} topics "
           f"({tc['coverage_ratio']*100:.1f}%)")
 
-    # ── 2. Judge Pass Rate ─────────────────────────────────────────────────
-    print("\n[2/4] Judge Pass Rate...")
-    if evaluated and accepted_file.exists():
-        pr = compute_judge_pass_rate(eval_file, accepted_file)
-        results["judge_pass_rate"] = pr
-        if "error" not in pr:
-            print(f"  Accepted: {pr['total_accepted']}/{pr['total_evaluated']} "
-                  f"({pr['final_pass_rate']*100:.1f}%)")
-            if pr.get("quality_score_stats"):
-                qs = pr["quality_score_stats"]
-                print(f"  Quality score: mean={qs['mean']}  std={qs['std']}  "
-                      f"median={qs['median']}")
-            if pr.get("iwf_pass_rate") is not None:
-                print(f"  IWF pass rate: {pr['iwf_passed']}/{pr['iwf_total']} "
-                      f"({pr['iwf_pass_rate']*100:.1f}%)")
-        else:
-            print(f"  ⚠️  {pr['error']}")
+    # ── 2. Answer Ratio ───────────────────────────────────────────────────
+    print("\n[2/4] Answer Ratio...")
+    ar = compute_answer_ratio(gen_mcqs)
+    results["answer_ratio"] = ar
+    print(f"  Single: {ar['single_correct']}/{ar['total']} ({ar['single_pct']}%)  "
+          f"Multiple: {ar['multiple_correct']}/{ar['total']} ({ar['multiple_pct']}%)")
+
+    # ── 3. Diversity Openings ──────────────────────────────────────────────
+    print("\n[3/4] Diversity Openings...")
+    div = compute_diversity_openings(gen_mcqs)
+    results["diversity_openings"] = div
+    print(f"  Opening diversity: {div['opening_diversity_pct']}%")
+    print(f"  Distinct opening signatures: {div['unique_opening_signatures']}  "
+          f"| Effective openings: {div['effective_num_openings']}")
+    print(f"  Normalized entropy: {div['normalized_opening_entropy']}  "
+          f"| Repetition rate: {div['repetition_rate_pct']}%")
+
+    # ── 4. Human Review Agreement ──────────────────────────────────────────
+    print("\n[4/4] Human Review Agreement (Fleiss's κ)...")
+    review_files = resolve_human_review_files(args.human_json)
+    hk = compute_human_fleiss_kappa(review_files)
+    results["human_fleiss_kappa"] = hk
+    if "error" not in hk:
+        meta = hk.get("meta", {})
+        overall = hk.get("overall", {})
+        print(f"  Reviewers: {meta.get('n_reviewers', 0)}  "
+              f"| Shared questions: {meta.get('n_questions_shared', 0)}")
+        print(f"  Raw agreement: {overall.get('raw_agreement_pct', 0):.1f}%")
+        print(f"  Gwet's AC1: {overall.get('gwet_ac1', 'N/A')}  "
+              f"| AC1 chance: {overall.get('gwet_chance_agreement', 'N/A')}")
+        print(f"  Overall Fleiss's κ: {overall.get('fleiss_kappa', 'N/A')} "
+              f"({overall.get('kappa_interp', 'N/A')})")
+        print(f"  Mean item agreement: {overall.get('mean_item_agreement_pct', 0):.1f}%  "
+              f"| Unanimous items: {overall.get('unanimous_items', 0)}/"
+              f"{overall.get('n_items', 0)}")
+        if overall.get("note"):
+            print(f"  Note: {overall['note']}")
     else:
-        print("  ⚠️  Evaluation files not found — skipping judge pass rate")
-
-    # ── 3. Answer Ratio ───────────────────────────────────────────────────
-    print("\n[3/4] Answer Ratio...")
-    single = sum(1 for q in gen_mcqs if q.get("question_type") == "single_correct")
-    multi  = sum(1 for q in gen_mcqs if q.get("question_type") == "multiple_correct")
-    total  = len(gen_mcqs)
-    results["answer_ratio"] = {
-        "total":             total,
-        "single_correct":    single,
-        "multiple_correct":   multi,
-        "single_pct":        round(single / total * 100, 1) if total else 0.0,
-        "multiple_pct":       round(multi  / total * 100, 1) if total else 0.0,
-    }
-    print(f"  Single: {single}/{total} ({results['answer_ratio']['single_pct']}%)  "
-          f"Multiple: {multi}/{total} ({results['answer_ratio']['multiple_pct']}%)")
-
-    # ── 4. Diversity Openings ──────────────────────────────────────────────
-    print("\n[4/4] Diversity Openings...")
-    WEAK_OPENINGS = [
-        "hãy xác định", "khi nào", "ở đâu", "đâu là",
-        "trong quá trình", "cho biết", "trong các phương pháp",
-    ]
-    weak = sum(
-        1 for q in gen_mcqs
-        if any(p in q.get("question_text", "").lower() for p in WEAK_OPENINGS)
-    )
-    results["diversity_openings"] = {
-        "total":      total,
-        "weak_count": weak,
-        "weak_pct":   round(weak / total * 100, 1) if total else 0.0,
-        "weak_phrases": [
-            p for p in WEAK_OPENINGS
-            if any(p in q.get("question_text", "").lower() for q in gen_mcqs)
-        ],
-    }
-    print(f"  Weak openings: {weak}/{total} ({results['diversity_openings']['weak_pct']}%)")
-
-    # ── 5. Human Judgment ───────────────────────────────────────────────────
-    if args.human_json:
-        print(f"\n[5] Human Judgment...")
-        hj = compute_human_judgment(
-            human_annotation_file=Path(args.human_json),
-            evaluated_file=eval_file,
-            iwf_file=accepted_file,
-        )
-        results["human_judgment"] = hj
-        if "error" not in hj:
-            meta = hj.get("meta", {})
-            fmt_label = {
-                "html_export": "render_review_html.py export",
-                "standalone":  "Standalone annotation JSON",
-            }.get(meta.get("format", ""), meta.get("format", "unknown"))
-            print(f"  Format: {fmt_label} | "
-                  f"annotated={meta.get('n_annotated', 0)}  "
-                  f"matched={meta.get('n_matched', 0)}")
-            overall = hj.get("overall", {})
-            if overall:
-                print(f"  Overall κ={overall.get('kappa', 'N/A')} "
-                      f"({overall.get('kappa_interp', '')})")
-                print(f"  Agreement: {overall.get('agreement_rate', 0)*100:.1f}%  "
-                      f"F1={overall.get('f1_score', 0):.4f}")
-                cm = overall.get("TP", 0), overall.get("TN", 0), \
-                     overall.get("FP", 0), overall.get("FN", 0)
-                print(f"  CM: TP={cm[0]} TN={cm[1]} FP={cm[2]} FN={cm[3]}")
-            iwf_o = hj.get("iwf_overall", {})
-            if iwf_o:
-                print(f"  IWF κ={iwf_o.get('kappa', 'N/A')} "
-                      f"({iwf_o.get('kappa_interp', '')})")
-            if hj.get("disagreement_summary"):
-                print(f"  Top disagreements:")
-                for k, v in sorted(hj["disagreement_summary"].items(),
-                                   key=lambda x: -x[1])[:5]:
-                    print(f"    {k}: {v}")
-        else:
-            print(f"  ⚠️  {hj['error']}")
+        print(f"  ⚠️  {hk['error']}")
 
     print("\n" + "=" * 60)
 
@@ -1089,86 +1366,13 @@ def _generate_markdown(results: dict, exp_name: str) -> str:
             *(f"- {t}\n" for t in tc["topics_missing"]),
         ]
 
-    # ── 2. Judge Pass Rate ────────────────────────────────────────────────
-    pr = results.get("judge_pass_rate", {})
-    if "error" not in pr and pr:
-        pass_pct = pr.get("final_pass_rate", 0) * 100
-        lines += [
-            "\n## 2. LLM Judge Pass Rate\n",
-            f"| Metric | Value |\n",
-            f"|--------|-------|\n",
-            f"| Evaluated | {pr.get('total_evaluated', 0)} |\n",
-            f"| **Accepted** | **{pr.get('total_accepted', 0)} ({pass_pct:.1f}%)** |\n",
-            f"| Rejected | {pr.get('total_rejected', 0)} |\n",
-            f"| IWF pass | {pr.get('iwf_passed', 0)} / {pr.get('iwf_total', 0)} "
-            f"({(pr.get('iwf_pass_rate', 0) or 0)*100:.1f}%) |\n",
-            "\n",
-            "> **≥ 70%**: Pipeline chất lượng tốt.  \n",
-            "> **50–70%**: Trung bình — distractors yếu hoặc poor alignment.  \n",
-            "> **< 50%**: Pipeline cần tuning.\n",
-        ]
-
-        qs = pr.get("quality_score_stats", {})
-        if qs:
-            lines += [
-                f"\n**Quality Score:** mean={qs.get('mean','N/A')}  "
-                f"std={qs.get('std','N/A')}  "
-                f"median={qs.get('median','N/A')}  "
-                f"range=[{qs.get('min','?')}, {qs.get('max','?')}]\n",
-            ]
-
-        cr = pr.get("criterion_pass_rates", {})
-        if cr:
-            lines += [
-                "\n**Per-Criterion Pass Rates:**\n",
-                f"| Criterion | Pass Rate |\n",
-                f"|-----------|----------|\n",
-            ]
-            for c, rate in cr.items():
-                label = c.replace("_pass", "").replace("_", " ").title()
-                lines.append(f"| {label} | {rate*100:.1f}% |\n")
-
-        iwf_tr = pr.get("iwf_type_pass_rates", {})
-        if iwf_tr:
-            lines += [
-                "\n**IWF Distractor Quality Pass Rates:**\n",
-                f"| IWF Type | Pass Rate |\n",
-                f"|----------|----------|\n",
-            ]
-            iwf_labels = {
-                "plausible_distractor": "Plausible Distractor",
-                "vague_terms":          "Vague Terms",
-                "grammar_clue":         "Grammar Clue",
-                "absolute_terms":       "Absolute Terms",
-                "distractor_length":     "Distractor Length",
-                "k_type_combination":    "K-Type Combination",
-            }
-            for k, v in iwf_tr.items():
-                lines.append(f"| {iwf_labels.get(k, k)} | {v*100:.1f}% |\n")
-
-        dr = pr.get("per_difficulty_rates", {})
-        if dr:
-            lines += [
-                "\n**Per-Difficulty Pass Rates:**\n",
-                f"| Difficulty | Evaluated | Accepted | Pass Rate |\n",
-                f"|------------|----------|---------|----------|\n",
-            ]
-            for diff, stats in dr.items():
-                lines.append(
-                    f"| {diff} | {stats['evaluated']} | "
-                    f"{stats['accepted']} | {stats['pass_rate']*100:.1f}% |\n"
-                )
-    else:
-        err = pr.get("error", "Unknown error")
-        lines += [f"\n## 2. LLM Judge Pass Rate\n> Not available: {err}\n"]
-
-    # ── 3. Answer Ratio ─────────────────────────────────────────────────────
+    # ── 2. Answer Ratio ─────────────────────────────────────────────────────
     ar = results.get("answer_ratio", {})
     if ar:
         sp = ar.get("single_pct", 0)
         mp = ar.get("multiple_pct", 0)
         lines += [
-            "\n## 3. Answer Ratio (Single vs Multiple Correct)\n",
+            "\n## 2. Answer Ratio (Single vs Multiple Correct)\n",
             f"| Type | Count | Percentage |\n",
             f"|------|-------|------------|\n",
             f"| Single correct (1 đáp án) | {ar.get('single_correct', 0)} | {sp}% |\n",
@@ -1184,182 +1388,75 @@ def _generate_markdown(results: dict, exp_name: str) -> str:
             ) + "\n",
         ]
 
-    # ── 4. Diversity Openings ──────────────────────────────────────────────
+    # ── 3. Diversity Openings ──────────────────────────────────────────────
     div = results.get("diversity_openings", {})
     if div:
-        wp  = div.get("weak_pct", 0)
-        wc  = div.get("weak_count", 0)
         tot = div.get("total", 0)
-        weak_phrases = div.get("weak_phrases", [])
         lines += [
-            "\n## 4. Diversity Openings (Đa dạng cách đặt câu hỏi)\n",
+            "\n## 3. Diversity Openings (Đa dạng cách đặt câu hỏi)\n",
             f"| Metric | Value |\n",
             f"|--------|-------|\n",
-            f"| Weak openings | {wc}/{tot} ({wp}%) |\n",
-            f"| Good openings | {tot-wc}/{tot} ({100-wp:.1f}%) |\n",
+            f"| Opening diversity score | {div.get('opening_diversity_pct', 0)}% |\n",
+            f"| Unique opening signatures | {div.get('unique_opening_signatures', 0)} |\n",
+            f"| Effective number of openings | {div.get('effective_num_openings', 0)} |\n",
+            f"| Normalized opening entropy | {div.get('normalized_opening_entropy', 0)} |\n",
+            f"| Repetition rate | {div.get('repetition_rate_pct', 0)}% |\n",
             "\n",
-            "❌ **Các cách mở đầu nên tránh:**\n",
-            "- `\"Hãy xác định...\"`, `\"khi nào\"`, `\"ở đâu\"`, `\"đâu là\"`\n",
-            "- `\"Trong quá trình...\"`, `\"Cho biết...\"`, `\"Trong các phương pháp...\"`\n",
-            "\n",
-            "✅ **Các cách mở đầu nên dùng** (tạo sự tò mò):\n",
-            "- `\"Điều gì khiến...\"`, `\"Đâu là điểm khác biệt giữa...\"`\n",
-            "- `\"Trường hợp nào sau đây minh họa đúng nhất về...?\"`\n",
+            "✅ **Primary score:** `opening_diversity_pct` = normalized Shannon entropy trên phân phối opening signatures.  \n",
+            "Opening signature được lấy từ vài token đầu sau khi normalize text, nên metric đo mức độ các cách mở đầu bị dồn vào một vài template hay được phân tán đều hơn.\n",
             "\n",
             "> " + (
-                "✅ Tốt — phần lớn câu hỏi có cách mở đầu đa dạng."
-                if wp < 20 else
-                "⚠️  Cần cải thiện — nhiều câu hỏi dùng cách mở đầu yếu."
+                "✅ Tốt — opening forms được phân bố khá đều."
+                if div.get("opening_diversity_pct", 0) >= 80 else
+                "⚠️  Cần cải thiện — opening forms còn tập trung vào ít template."
             ) + "\n",
         ]
-        if weak_phrases:
+
+        top_openings = div.get("top_openings", [])
+        if top_openings:
             lines += [
-                "\n**Weak phrases found in dataset:**\n",
-                *(f"- `{p}`\n" for p in weak_phrases),
+                "\n**Top opening signatures:**\n",
+                f"| Opening | Count | Percentage |\n",
+                f"|---------|-------|------------|\n",
             ]
+            for row in top_openings:
+                lines.append(
+                    f"| {row['opening']} | {row['count']} | {row['pct']}% |\n"
+                )
 
-
-    # ── 4. Human Judgment ─────────────────────────────────────────────────
-    hj = results.get("human_judgment", {})
-    if hj and "error" not in hj:
-        meta = hj.get("meta", {})
-        fmt_label = {
-            "html_export": "render_review_html.py export (`verdicts{}`)",
-            "standalone":  "Standalone annotation JSON (`questions{}`)",
-        }.get(meta.get("format", ""), meta.get("format", "unknown"))
-
+    # ── 4. Human Review Agreement ──────────────────────────────────────────
+    hk = results.get("human_fleiss_kappa", {})
+    if hk and "error" not in hk:
+        meta = hk.get("meta", {})
+        overall = hk.get("overall", {})
         lines += [
-            "\n## 4. Human Judgment vs LLM Judge\n",
+            "\n## 4. Human Review Agreement (Fleiss's Kappa on overall_valid)\n",
             f"| Metric | Value |\n",
             f"|--------|-------|\n",
-            f"| Annotator | {meta.get('annotator', 'N/A')} |\n",
-            f"| Date | {meta.get('date', 'N/A')} |\n",
-            f"| Format | {fmt_label} |\n",
-            f"| Annotated | {meta.get('n_annotated', 0)} |\n",
-            f"| Matched | {meta.get('n_matched', 0)} |\n",
-            f"| Unmatched | {meta.get('n_unmatched', 0)} |\n",
+            f"| Reviewers | {meta.get('n_reviewers', 0)} |\n",
+            f"| Reviewer names | {', '.join(meta.get('reviewers', [])) or 'N/A'} |\n",
+            f"| Shared questions | {meta.get('n_questions_shared', 0)} |\n",
+            f"| Question union | {meta.get('n_questions_union', 0)} |\n",
+            f"| Raw agreement | **{overall.get('raw_agreement_pct', 0):.1f}%** |\n",
+            f"| Gwet's AC1 | **{overall.get('gwet_ac1', 'N/A')}** |\n",
+            f"| AC1 chance term | {overall.get('gwet_chance_agreement', 'N/A')} |\n",
+            f"| Overall Fleiss's κ | **{overall.get('fleiss_kappa', 'N/A')}** ({overall.get('kappa_interp', 'N/A')}) |\n",
+            f"| Mean item agreement | {overall.get('mean_item_agreement_pct', 0):.1f}% |\n",
+            f"| Unanimous items | {overall.get('unanimous_items', 0)} / {overall.get('n_items', 0)} |\n",
+            f"| Chance agreement | {overall.get('chance_agreement', 'N/A')} |\n",
         ]
-
-        overall = hj.get("overall", {})
-        if overall:
-            lines += [
-                "\n### Overall Accept/Reject Agreement\n",
-                f"| Metric | Value |\n",
-                f"|--------|-------|\n",
-                f"| Cohen's κ | **{overall.get('kappa', 'N/A')}** "
-                f"({overall.get('kappa_interp', '')}) |\n",
-                f"| Agreement rate | {overall.get('agreement_rate', 0)*100:.1f}% |\n",
-                f"| Accuracy | {overall.get('accuracy', 0)*100:.1f}% |\n",
-                f"| Precision | {overall.get('precision', 0)*100:.1f}% |\n",
-                f"| Recall | {overall.get('recall', 0)*100:.1f}% |\n",
-                f"| F1 Score | **{overall.get('f1_score', 0)*100:.1f}%** |\n",
-                f"| P_e (chance) | {overall.get('p_e', 'N/A')} |\n",
-                "\n**Confusion Matrix:**\n",
-                f"| | LLM Accept | LLM Reject |\n",
-                f"|---|---|---|\n",
-                f"| Human Accept | {overall.get('TP', 0)} | {overall.get('FN', 0)} |\n",
-                f"| Human Reject | {overall.get('FP', 0)} | {overall.get('TN', 0)} |\n",
-            ]
-
-        iwf_o = hj.get("iwf_overall", {})
-        if iwf_o:
-            lines += [
-                "\n### IWF Distractor Quality Agreement\n",
-                f"| Metric | Value |\n",
-                f"|--------|-------|\n",
-                f"| Cohen's κ | **{iwf_o.get('kappa', 'N/A')}** "
-                f"({iwf_o.get('kappa_interp', '')}) |\n",
-                f"| Agreement rate | {iwf_o.get('agreement_rate', 0)*100:.1f}% |\n",
-                f"| F1 Score | {iwf_o.get('f1_score', 0)*100:.1f}% |\n",
-            ]
-
-        pc = hj.get("per_criterion", {})
-        if pc:
-            display_criteria = (
-                HTML_EVAL_CRITERIA
-                if meta.get("format") == "html_export"
-                else ANN_CRITERIA
-            )
-            lines += [
-                "\n### Per-Criterion Agreement\n",
-                f"| Criterion | N | Agreement | Cohen's κ | Interpretation |\n",
-                f"|-----------|---|-----------|------------|---------------|\n",
-            ]
-            for c in display_criteria:
-                s = pc.get(c, {})
-                label = c.replace("_pass", "").replace("_", " ").title()
-                lines.append(
-                    f"| {label} | {s.get('n','?')} | "
-                    f"{s.get('agreement_rate',0)*100:.1f}% | "
-                    f"{s.get('cohens_kappa', 'N/A')} | "
-                    f"{s.get('kappa_interp', 'N/A')} |\n"
-                )
-
-        iwf_pt = hj.get("iwf_per_type", {})
-        if iwf_pt:
-            lines += [
-                "\n### IWF Per-Type Pass Rates\n",
-                f"| IWF Type | N | Human Pass | LLM Pass | Agreement |\n",
-                f"|----------|---|-----------|----------|------------|\n",
-            ]
-            iwf_labels = {
-                "plausible_distractor": "Plausible",
-                "vague_terms":         "Vague Terms",
-                "grammar_clue":         "Grammar Clue",
-                "absolute_terms":       "Absolute Terms",
-                "distractor_length":    "Length",
-                "k_type_combination":   "K-Type",
-            }
-            for k in IWF_TYPES:
-                s = iwf_pt.get(k, {})
-                lines.append(
-                    f"| {iwf_labels.get(k, k)} | {s.get('n','?')} | "
-                    f"{s.get('human_pass_rate',0)*100:.1f}% | "
-                    f"{s.get('llm_pass_rate',0)*100:.1f}% | "
-                    f"{s.get('agreement_rate',0)*100:.1f}% |\n"
-                )
-
-        ds = hj.get("disagreement_summary", {})
-        if ds:
-            lines += [
-                "\n### Disagreement Summary (top mismatches)\n",
-                f"| Criterion / IWF | Mismatches |\n",
-                f"|-----------------|------------|\n",
-            ]
-            for k, v in sorted(ds.items(), key=lambda x: -x[1])[:8]:
-                lines.append(f"| {k} | {v} |\n")
-
-        disagreements = hj.get("disagreement_analysis", [])
-        if disagreements:
-            lines += [
-                f"\n### Disagreement Detail ({len(disagreements)} questions)\n",
-            ]
-            for d in disagreements[:10]:
-                flag = "✅ Match" if d.get("overall_match") else "❌ Mismatch"
-                lines += [
-                    f"- **`{d['question_id']}`**  \n",
-                    f"  - Overall: {flag}  \n",
-                ]
-                if d.get("criteria_mismatches"):
-                    lines.append(
-                        f"  - Criteria mismatches: {', '.join(d['criteria_mismatches'])}  \n"
-                    )
-                if d.get("iwf_mismatches"):
-                    lines.append(
-                        f"  - IWF mismatches: {', '.join(d['iwf_mismatches'])}  \n"
-                    )
-                if d.get("notes"):
-                    lines.append(f"  - Notes: {d['notes']}  \n")
-    else:
-        hj_err = (hj or {}).get("error", "Human judgment not computed.")
+        if overall.get("note"):
+            lines += [f"\n> {overall['note']}\n"]
         lines += [
-            "\n## 4. Human Judgment vs LLM Judge\n",
-            f"> Not available: {hj_err}\n",
-            "> Run with `--human-json path/to/annotation.json` to compute.\n",
-            "\n",
-            "> Supported formats:\n",
-            ">   A. **HTML export** → `render_review_html.py` → `verdicts{}`  \n",
-            ">   B. **Standalone JSON** → `questions{}` with per-criterion structure\n",
+            "\n> `Raw agreement` là tỷ lệ đồng thuận quan sát trực tiếp, không hiệu chỉnh chance.  \n",
+            "> `Gwet's AC1` cũng là chance-corrected agreement nhưng ổn định hơn Fleiss/Cohen kappa khi nhãn rất lệch.\n",
+        ]
+    else:
+        hk_err = (hk or {}).get("error", "Human review agreement not computed.")
+        lines += [
+            "\n## 4. Human Review Agreement (Fleiss's Kappa on overall_valid)\n",
+            f"> Not available: {hk_err}\n",
+            "> By default, `eval_metrics.py` looks for the 4 `*_review.json` files next to itself.\n",
         ]
 
     # ── Summary table ─────────────────────────────────────────────────────
@@ -1367,29 +1464,56 @@ def _generate_markdown(results: dict, exp_name: str) -> str:
         v = results.get("topic_coverage", {}).get("coverage_ratio", 0) * 100
         return "✅" if v >= 80 else "⚠️" if v >= 60 else "❌"
 
-    def _pass_status() -> str:
-        v = results.get("judge_pass_rate", {}).get("final_pass_rate", 0) * 100
-        return "✅" if v >= 70 else "⚠️" if v >= 50 else "❌"
-
     def _ar_status() -> str:
         sp = results.get("answer_ratio", {}).get("single_pct", 0)
         return "✅" if abs(sp - 80) <= 15 else "⚠️"
 
     def _div_status() -> str:
-        wp = results.get("diversity_openings", {}).get("weak_pct", 100)
-        return "✅" if wp < 20 else "⚠️" if wp < 40 else "❌"
+        score = results.get("diversity_openings", {}).get("opening_diversity_pct", 0)
+        return "✅" if score >= 80 else "⚠️" if score >= 60 else "❌"
 
-    def _hj_status() -> tuple[str, str]:
-        hj2 = results.get("human_judgment", {})
-        if "error" in hj2 or not hj2:
+    def _hk_status() -> tuple[str, str]:
+        hk2 = results.get("human_fleiss_kappa", {})
+        if "error" in hk2 or not hk2:
             return "N/A", "⚠️"
-        k = hj2.get("overall", {}).get("kappa", 0)
+        overall = hk2.get("overall", {})
+        k = overall.get("fleiss_kappa")
+        if k is None:
+            agreement_pct = overall.get("mean_item_agreement_pct", 0.0)
+            status = "✅" if agreement_pct >= 90 else "⚠️"
+            return f"N/A ({agreement_pct:.1f}% agreement)", status
         return (
-            f"{k:.4f}" if k else "N/A",
+            f"{k:.4f}",
             "✅" if k >= 0.6 else "⚠️" if k >= 0.4 else "❌",
         )
 
-    hj_val, hj_flag = _hj_status()
+    def _ac1_status() -> tuple[str, str]:
+        hk2 = results.get("human_fleiss_kappa", {})
+        if "error" in hk2 or not hk2:
+            return "N/A", "⚠️"
+        ac1 = hk2.get("overall", {}).get("gwet_ac1")
+        if ac1 is None:
+            return "N/A", "⚠️"
+        return (
+            f"{ac1:.4f}",
+            "✅" if ac1 >= 0.6 else "⚠️" if ac1 >= 0.4 else "❌",
+        )
+
+    def _raw_agreement_status() -> tuple[str, str]:
+        hk2 = results.get("human_fleiss_kappa", {})
+        if "error" in hk2 or not hk2:
+            return "N/A", "⚠️"
+        raw = hk2.get("overall", {}).get("raw_agreement_pct")
+        if raw is None:
+            return "N/A", "⚠️"
+        return (
+            f"{raw:.1f}%",
+            "✅" if raw >= 90 else "⚠️" if raw >= 80 else "❌",
+        )
+
+    hk_val, hk_flag = _hk_status()
+    ac1_val, ac1_flag = _ac1_status()
+    raw_val, raw_flag = _raw_agreement_status()
 
     lines += [
         "\n---\n",
@@ -1398,13 +1522,13 @@ def _generate_markdown(results: dict, exp_name: str) -> str:
         f"|--------|-------|--------|--------|\n",
         f"| Topic Coverage | ≥ 80% | "
         f"{results.get('topic_coverage',{}).get('coverage_ratio',0)*100:.1f}% | {_cov_status()} |\n",
-        f"| LLM Judge Pass Rate | ≥ 70% | "
-        f"{results.get('judge_pass_rate',{}).get('final_pass_rate',0)*100:.1f}% | {_pass_status()} |\n",
         f"| Answer Ratio (Single) | ≈ 80% | "
         f"{results.get('answer_ratio',{}).get('single_pct',0):.1f}% | {_ar_status()} |\n",
-        f"| Diversity Openings | ≥ 80% good | "
-        f"{100 - results.get('diversity_openings',{}).get('weak_pct',0):.1f}% good | {_div_status()} |\n",
-        f"| Human vs LLM κ | ≥ 0.6 | {hj_val} | {hj_flag} |\n",
+        f"| Diversity Openings | ≥ 80 entropy score | "
+        f"{results.get('diversity_openings',{}).get('opening_diversity_pct',0):.1f}% | {_div_status()} |\n",
+        f"| Human Raw Agreement | ≥ 90% | {raw_val} | {raw_flag} |\n",
+        f"| Human Gwet's AC1 | ≥ 0.6 | {ac1_val} | {ac1_flag} |\n",
+        f"| Human Fleiss's κ | ≥ 0.6 | {hk_val} | {hk_flag} |\n",
         "\n---\n",
         "*Generated by `eval_metrics.py` — MCQGen Pipeline*\n",
     ]

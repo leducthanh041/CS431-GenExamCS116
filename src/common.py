@@ -21,7 +21,7 @@ from typing import Any
 
 class Config:
     # ⚠️  Đặt tên experiment tại đây — mỗi lần chạy pipeline nên đổi tên
-    EXP_NAME = "hello"  # Mini test: 15 câu, focus ch04/ch07b/ch08
+    EXP_NAME = "full_pipeline"  # Mini test: 15 câu, focus ch04/ch07b/ch08
 
     # ─── Paths (tự động tính từ vị trí file này) ───────────────────
     PROJECT_ROOT = Path(__file__).resolve().parent.parent
