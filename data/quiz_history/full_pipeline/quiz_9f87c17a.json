@@ -1,8 +1,8 @@
 {
-  "session_id": "quiz_2795c745",
-  "exp_name": "exp_10_full_25q",
-  "timestamp": "2026-04-15T17:19:52.536637",
-  "total": 23,
+  "session_id": "quiz_9f87c17a",
+  "exp_name": "full_pipeline",
+  "timestamp": "2026-04-25T13:28:28.246379",
+  "total": 21,
   "correct": 0,
   "accuracy": 0.0,
   "results": [
@@ -19,8 +19,8 @@
     },
     {
       "question_id": "cs116_ch02_0",
-      "topic_id": "ch02_t02",
-      "topic_name": "Pandas",
+      "topic_id": "ch02_t04",
+      "topic_name": "Scikit-learn",
       "user_answer": [],
       "correct_answers": [
         "C"
@@ -30,8 +30,8 @@
     },
     {
       "question_id": "cs116_ch02_1",
-      "topic_id": "ch02_t02",
-      "topic_name": "Pandas",
+      "topic_id": "ch02_t04",
+      "topic_name": "Scikit-learn",
       "user_answer": [],
       "correct_answers": [
         "A"
@@ -40,12 +40,14 @@
       "difficulty": "G2"
     },
     {
-      "question_id": "cs116_ch02_00",
+      "question_id": "cs116_02_02",
       "topic_id": "ch02_t04",
       "topic_name": "Scikit-learn",
       "user_answer": [],
       "correct_answers": [
-        "A"
+        "A",
+        "B",
+        "C"
       ],
       "is_correct": false,
       "difficulty": "G2"
@@ -73,7 +75,7 @@
       "difficulty": "G1"
     },
     {
-      "question_id": "cs116_04_0",
+      "question_id": "cs116_ch04_0",
       "topic_id": "ch04_t01",
       "topic_name": "Missing Data",
       "user_answer": [],
@@ -84,18 +86,20 @@
       "difficulty": "G2"
     },
     {
-      "question_id": "cs116_ch04_1",
+      "question_id": "cs116_04_01",
       "topic_id": "ch04_t01",
       "topic_name": "Missing Data",
       "user_answer": [],
       "correct_answers": [
-        "C"
+        "A",
+        "B",
+        "D"
       ],
       "is_correct": false,
       "difficulty": "G2"
     },
     {
-      "question_id": "cs116_04_0",
+      "question_id": "cs116_ch04_0",
       "topic_id": "ch04_t02",
       "topic_name": "Outlier Detection",
       "user_answer": [],
@@ -106,53 +110,46 @@
       "difficulty": "G2"
     },
     {
-      "question_id": "cs116_04_0",
-      "topic_id": "ch04_t05",
-      "topic_name": "Feature Selection",
+      "question_id": "cs116_4_1",
+      "topic_id": "ch04_t02",
+      "topic_name": "Outlier Detection",
       "user_answer": [],
       "correct_answers": [
-        "A"
-      ],
-      "is_correct": false,
-      "difficulty": "G3"
-    },
-    {
-      "question_id": "cs116_05_0",
-      "topic_id": "ch05_t01",
-      "topic_name": "Classification Metrics",
-      "user_answer": [],
-      "correct_answers": [
-        "A"
-      ],
-      "is_correct": false,
-      "difficulty": "G2"
-    },
-    {
-      "question_id": "cs116_05_1",
-      "topic_id": "ch05_t01",
-      "topic_name": "Classification Metrics",
-      "user_answer": [],
-      "correct_answers": [
-        "A"
-      ],
-      "is_correct": false,
-      "difficulty": "G2"
-    },
-    {
-      "question_id": "cs116_unknown_q_0001",
-      "topic_id": "ch06_t01",
-      "topic_name": "Clustering",
-      "user_answer": [],
-      "correct_answers": [
+        "A",
+        "B",
         "D"
       ],
       "is_correct": false,
       "difficulty": "G2"
     },
     {
-      "question_id": "cs116_6_1",
-      "topic_id": "ch06_t01",
-      "topic_name": "Clustering",
+      "question_id": "cs116_ch05_0",
+      "topic_id": "ch05_t01",
+      "topic_name": "Classification Metrics",
+      "user_answer": [],
+      "correct_answers": [
+        "A"
+      ],
+      "is_correct": false,
+      "difficulty": "G2"
+    },
+    {
+      "question_id": "cs116_ch05_1",
+      "topic_id": "ch05_t01",
+      "topic_name": "Classification Metrics",
+      "user_answer": [],
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ],
+      "is_correct": false,
+      "difficulty": "G2"
+    },
+    {
+      "question_id": "cs116_05_0",
+      "topic_id": "ch05_t03",
+      "topic_name": "Cross-validation",
       "user_answer": [],
       "correct_answers": [
         "A"
@@ -162,25 +159,27 @@
     },
     {
       "question_id": "cs116_ch06_0",
-      "topic_id": "ch06_t02",
-      "topic_name": "Dimensionality Reduction",
+      "topic_id": "ch06_t01",
+      "topic_name": "Clustering",
       "user_answer": [],
       "correct_answers": [
         "A"
       ],
       "is_correct": false,
-      "difficulty": "G3"
+      "difficulty": "G2"
     },
     {
-      "question_id": "cs116_ch07a_0",
-      "topic_id": "ch07a_t01",
-      "topic_name": "Linear Regression",
+      "question_id": "cs116_ch06_01",
+      "topic_id": "ch06_t01",
+      "topic_name": "Clustering",
       "user_answer": [],
       "correct_answers": [
-        "A"
+        "A",
+        "B",
+        "D"
       ],
       "is_correct": false,
-      "difficulty": "G1"
+      "difficulty": "G2"
     },
     {
       "question_id": "cs116_07a_0",
@@ -205,6 +204,19 @@
       "difficulty": "G3"
     },
     {
+      "question_id": "cs116_ch07b_1",
+      "topic_id": "ch07b_t03",
+      "topic_name": "SVM",
+      "user_answer": [],
+      "correct_answers": [
+        "A",
+        "B",
+        "C"
+      ],
+      "is_correct": false,
+      "difficulty": "G3"
+    },
+    {
       "question_id": "cs116_08_0",
       "topic_id": "ch08_t02",
       "topic_name": "CNN",
@@ -221,29 +233,7 @@
       "topic_name": "Grid Search",
       "user_answer": [],
       "correct_answers": [
-        "A"
-      ],
-      "is_correct": false,
-      "difficulty": "G2"
-    },
-    {
-      "question_id": "cs116_ch10_0",
-      "topic_id": "ch10_t02",
-      "topic_name": "Boosting",
-      "user_answer": [],
-      "correct_answers": [
         "C"
-      ],
-      "is_correct": false,
-      "difficulty": "G3"
-    },
-    {
-      "question_id": "cs116_ch10_0",
-      "topic_id": "ch10_t03",
-      "topic_name": "Random Forest",
-      "user_answer": [],
-      "correct_answers": [
-        "B"
       ],
       "is_correct": false,
       "difficulty": "G2"
@@ -254,7 +244,7 @@
       "topic_name": "Model Serving",
       "user_answer": [],
       "correct_answers": [
-        "A"
+        "B"
       ],
       "is_correct": false,
       "difficulty": "G2"

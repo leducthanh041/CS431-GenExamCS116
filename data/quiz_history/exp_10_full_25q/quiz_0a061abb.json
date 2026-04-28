@@ -1,17 +1,17 @@
 {
-  "session_id": "quiz_7688294d",
+  "session_id": "quiz_0a061abb",
   "exp_name": "exp_10_full_25q",
-  "timestamp": "2026-04-15T17:07:07.585189",
+  "timestamp": "2026-04-22T21:49:37.805621",
   "total": 23,
-  "correct": 9,
-  "accuracy": 0.391304347826087,
+  "correct": 16,
+  "accuracy": 0.6956521739130435,
   "results": [
     {
       "question_id": "cs116_ch02_0",
       "topic_id": "ch02_t01",
       "topic_name": "NumPy",
       "user_answer": [
-        "C"
+        "D"
       ],
       "correct_answers": [
         "A"
@@ -24,12 +24,12 @@
       "topic_id": "ch02_t02",
       "topic_name": "Pandas",
       "user_answer": [
-        "C"
+        "D"
       ],
       "correct_answers": [
         "C"
       ],
-      "is_correct": true,
+      "is_correct": false,
       "difficulty": "G2"
     },
     {
@@ -37,12 +37,12 @@
       "topic_id": "ch02_t02",
       "topic_name": "Pandas",
       "user_answer": [
-        "B"
+        "A"
       ],
       "correct_answers": [
         "A"
       ],
-      "is_correct": false,
+      "is_correct": true,
       "difficulty": "G2"
     },
     {
@@ -50,12 +50,12 @@
       "topic_id": "ch02_t04",
       "topic_name": "Scikit-learn",
       "user_answer": [
-        "C"
+        "A"
       ],
       "correct_answers": [
         "A"
       ],
-      "is_correct": false,
+      "is_correct": true,
       "difficulty": "G2"
     },
     {
@@ -63,12 +63,12 @@
       "topic_id": "ch03_t01",
       "topic_name": "Pipeline",
       "user_answer": [
-        "C"
+        "A"
       ],
       "correct_answers": [
         "A"
       ],
-      "is_correct": false,
+      "is_correct": true,
       "difficulty": "G2"
     },
     {
@@ -76,12 +76,12 @@
       "topic_id": "ch03_t02",
       "topic_name": "Exploratory Data Analysis",
       "user_answer": [
-        "C"
+        "A"
       ],
       "correct_answers": [
         "A"
       ],
-      "is_correct": false,
+      "is_correct": true,
       "difficulty": "G1"
     },
     {
@@ -141,19 +141,6 @@
       "topic_id": "ch05_t01",
       "topic_name": "Classification Metrics",
       "user_answer": [
-        "D"
-      ],
-      "correct_answers": [
-        "A"
-      ],
-      "is_correct": false,
-      "difficulty": "G2"
-    },
-    {
-      "question_id": "cs116_05_1",
-      "topic_id": "ch05_t01",
-      "topic_name": "Classification Metrics",
-      "user_answer": [
         "A"
       ],
       "correct_answers": [
@@ -163,11 +150,24 @@
       "difficulty": "G2"
     },
     {
+      "question_id": "cs116_05_1",
+      "topic_id": "ch05_t01",
+      "topic_name": "Classification Metrics",
+      "user_answer": [
+        "C"
+      ],
+      "correct_answers": [
+        "A"
+      ],
+      "is_correct": false,
+      "difficulty": "G2"
+    },
+    {
       "question_id": "cs116_unknown_q_0001",
       "topic_id": "ch06_t01",
       "topic_name": "Clustering",
       "user_answer": [
-        "B"
+        "A"
       ],
       "correct_answers": [
         "D"
@@ -180,7 +180,7 @@
       "topic_id": "ch06_t01",
       "topic_name": "Clustering",
       "user_answer": [
-        "B"
+        "D"
       ],
       "correct_answers": [
         "A"
@@ -193,12 +193,12 @@
       "topic_id": "ch06_t02",
       "topic_name": "Dimensionality Reduction",
       "user_answer": [
-        "B"
+        "A"
       ],
       "correct_answers": [
         "A"
       ],
-      "is_correct": false,
+      "is_correct": true,
       "difficulty": "G3"
     },
     {
@@ -206,12 +206,12 @@
       "topic_id": "ch07a_t01",
       "topic_name": "Linear Regression",
       "user_answer": [
-        "C"
+        "A"
       ],
       "correct_answers": [
         "A"
       ],
-      "is_correct": false,
+      "is_correct": true,
       "difficulty": "G1"
     },
     {
@@ -219,12 +219,12 @@
       "topic_id": "ch07a_t02",
       "topic_name": "Regularization",
       "user_answer": [
-        "C"
+        "A"
       ],
       "correct_answers": [
         "A"
       ],
-      "is_correct": false,
+      "is_correct": true,
       "difficulty": "G3"
     },
     {
@@ -245,12 +245,12 @@
       "topic_id": "ch08_t02",
       "topic_name": "CNN",
       "user_answer": [
-        "B"
+        "A"
       ],
       "correct_answers": [
         "A"
       ],
-      "is_correct": false,
+      "is_correct": true,
       "difficulty": "G3"
     },
     {
@@ -258,12 +258,12 @@
       "topic_id": "ch09_t01",
       "topic_name": "Grid Search",
       "user_answer": [
-        "C"
+        "A"
       ],
       "correct_answers": [
         "A"
       ],
-      "is_correct": false,
+      "is_correct": true,
       "difficulty": "G2"
     },
     {
@@ -297,12 +297,12 @@
       "topic_id": "ch11_t01",
       "topic_name": "Model Serving",
       "user_answer": [
-        "A"
+        "C"
       ],
       "correct_answers": [
         "A"
       ],
-      "is_correct": true,
+      "is_correct": false,
       "difficulty": "G2"
     }
   ]
